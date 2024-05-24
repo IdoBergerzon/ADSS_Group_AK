@@ -1,5 +1,7 @@
 package Domain;
 
+import java.util.Objects;
+
 public class Role {
     private String name;
     private int Role_ID;
@@ -23,5 +25,19 @@ public class Role {
 
     public int getRole_ID() {
         return Role_ID;
+    }
+
+    // Override equals and hashCode
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Role role = (Role) o;
+        return Role_ID == role.Role_ID && Objects.equals(name, role.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Role_ID);
     }
 }
