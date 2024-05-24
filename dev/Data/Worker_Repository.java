@@ -1,14 +1,17 @@
 package Data;
 
 import Domain.Worker;
-
 import java.util.List;
-import java.util.Optional;
+
 
 public interface Worker_Repository {
-    void addWorker(Worker worker);
-    Worker getWorkerById(int id);
-    List<Worker> getAllWorkers();
-    void updateWorker(Worker worker);
+    void addRole(String role_name, int role_id);
+    String getRoleByID(int role_id);
+
+    void addWorker(String worker);
+    String getWorkerById(int id);
+    List<String> getAllWorkers();
+
+    void updateWorker(String worker);
     void deleteWorker(int id);
 }
