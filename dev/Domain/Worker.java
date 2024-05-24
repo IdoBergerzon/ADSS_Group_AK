@@ -7,19 +7,19 @@ public class Worker {
     private String name;
     private int hourly_wage;
     private int monthly_wage;
-    private Date date_of_birth;
+    private Date start_date;
     private Worker direct_manager;
     private Role[] roles;
     private Branch work_branch;
     private int days_off;
     private String departement;
 
-    public Worker(int id, String name, int monthly_wage, int hourly_wage, Date date_of_birth, Worker direct_manager, Branch work_branch, String departement) {
+    public Worker(int id, String name, int monthly_wage, int hourly_wage, Date start_date, Worker direct_manager, Branch work_branch, String departement) {
         this.id = id;
         this.name = name;
         this.monthly_wage = monthly_wage;
         this.hourly_wage = hourly_wage;
-        this.date_of_birth = date_of_birth;
+        this.start_date = start_date;
         this.direct_manager = direct_manager;
         this.work_branch = work_branch;
         this.departement = departement;

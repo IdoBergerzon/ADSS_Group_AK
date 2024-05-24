@@ -1,8 +1,10 @@
 package Domain;
 
-public class HR_Controller {
-    public void Add_New_Worker(String details){
+import netscape.javascript.JSObject;
 
+public class HR_Controller {
+
+    public void createWorker(JSObject json){
 
     }
 }

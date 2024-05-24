@@ -3,7 +3,6 @@ import Domain.Checking_Controller;
 import Domain.HR_manager;
 import Domain.Worker;
 
-import java.util.Optional;
 import java.util.Scanner;
 
 public class Main {
