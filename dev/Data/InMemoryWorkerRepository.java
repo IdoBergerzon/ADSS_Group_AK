@@ -17,8 +17,8 @@ public class InMemoryWorkerRepository implements Worker_Repository {
     }
 
     @Override
-    public Optional<Worker> getWorkerById(int id) {
-        return Optional.ofNullable(workers.get(id));
+    public Worker getWorkerById(int id) {
+        return (workers.get(id));
     }
 
     @Override
