@@ -1,5 +1,6 @@
 package Domain;
 import java.util.Date;
+import java.util.Objects;
 
 
 public class Worker {
@@ -41,8 +42,8 @@ public class Worker {
         return monthly_wage;
     }
 
-    public Date getDate_of_birth() {
-        return date_of_birth;
+    public Date getStart_date() {
+        return start_date;
     }
 
     public Worker getDirect_manager() {
@@ -87,6 +88,20 @@ public class Worker {
 
     public void setWork_branch(Branch work_branch) {
         this.work_branch = work_branch;
+    }
+
+    // Override equals and hashCode
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Worker worker = (Worker) o;
+        return id == worker.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
 
