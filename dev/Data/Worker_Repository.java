@@ -14,4 +14,7 @@ public interface Worker_Repository {
 
     void updateWorker(String worker);
     void deleteWorker(int id);
+
+    void addBranch(String branch_name, int branch_id);
+    String getBranchByID(int id);
 }

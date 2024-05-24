@@ -6,6 +6,7 @@ import java.util.*;
 public class InMemoryWorkerRepository implements Worker_Repository {
     private final Map<Integer, String[]> workers = new HashMap<>();
     private final Map<Integer, String> roles = new HashMap<>();
+    private final Map<Integer, String> branches = new HashMap<>();
 
     @Override
     public void addWorker(String worker) {
@@ -84,5 +85,12 @@ public class InMemoryWorkerRepository implements Worker_Repository {
     @Override
     public String getRoleByID(int id){
         return roles.get(id);
+    }
+
+    public void addBranch(String branch_name, int branch_id){
+        branches.put(branch_id, branch_name);
+    }
+    public String getBranchByID(int id){
+        return branches.get(id);
     }
 }
