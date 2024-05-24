@@ -8,19 +8,19 @@ public class Worker {
     private int hourly_wage;
     private int monthly_wage;
     private Date start_date;
-    private Worker direct_manager;
+    private int direct_manager_ID;
     private Role[] roles;
     private Branch work_branch;
     private int days_off;
     private String departement;
 
-    public Worker(int id, String name, int monthly_wage, int hourly_wage, Date start_date, Worker direct_manager, Branch work_branch, String departement) {
+    public Worker(int id, String name, int monthly_wage, int hourly_wage, Date start_date, int direct_manager_ID,Role[] roles, Branch work_branch, String departement) {
         this.id = id;
         this.name = name;
         this.monthly_wage = monthly_wage;
         this.hourly_wage = hourly_wage;
         this.start_date = start_date;
-        this.direct_manager = direct_manager;
+        this.direct_manager_ID = direct_manager_ID;
         this.work_branch = work_branch;
         this.departement = departement;
     }
@@ -42,11 +42,11 @@ public class Worker {
     }
 
     public Date getDate_of_birth() {
-        return date_of_birth;
+        return start_date;
     }
 
-    public Worker getDirect_manager() {
-        return direct_manager;
+    public int getDirect_manager() {
+        return direct_manager_ID;
     }
 
     public Role[] getRoles() {
@@ -77,8 +77,8 @@ public class Worker {
         this.monthly_wage = monthly_wage;
     }
 
-    public void setDirect_manager(Worker direct_manager) {
-        this.direct_manager = direct_manager;
+    public void setDirect_manager(int direct_manager_ID) {
+        this.direct_manager_ID = direct_manager_ID;
     }
 
     public void setRoles(Role[] roles) {

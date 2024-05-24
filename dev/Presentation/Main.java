@@ -13,9 +13,9 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Please enter your ID: ");
         int userID = Integer.parseInt(scanner.nextLine());
-        Worker worker=check.checking_ID(userID);//check the ID of the worker
+        int worker=check.checking_ID(userID);//check the ID of the worker
 
-        if(worker instanceof HR_manager){ //in case of HR manager
+        if(worker == 1){ //in case of HR manager
             HR_Main main1=new HR_Main();
             System.out.println("1.display worker details\n" +
                     "2.edit worker details\n" +
@@ -33,28 +33,28 @@ public class Main {
             // Use a switch statement to handle the user's choice
             switch (choice) {
                 case 1:
-                    displayWorkerDetails();
+                    //displayWorkerDetails();
                     break;
                 case 2:
-                    editWorkerDetails();
+                    //editWorkerDetails();
                     break;
                 case 3:
-                    addNewWorker();
+                    main1.addNewWorker();
                     break;
                 case 4:
-                    addNewRoleForWorker();
+                    //addNewRoleForWorker();
                     break;
                 case 5:
-                    createNewRole();
+                    //createNewRole();
                     break;
                 case 6:
-                    displayWorkersByShift();
+                    //displayWorkersByShift();
                     break;
                 case 7:
-                    createNewRoster();
+                    //createNewRoster();
                     break;
                 case 8:
-                    createNewShift();
+                    //createNewShift();
                     break;
                 default:
                     System.out.println("Invalid choice. Please enter a number between 1 and 8.");
@@ -64,7 +64,7 @@ public class Main {
             // Close the scanner
             scanner.close();
         }
-        if(worker instanceof Worker){//in case of regular worker
+        if(worker == 0){//in case of regular worker
             Worker_Main main2=new Worker_Main();
 
             System.out.println("1.display details\n" +
@@ -77,19 +77,19 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    displayWorkerDetails();
+                    //displayWorkerDetails();
                     break;
                 case 2:
-                    editWorkerDetails();
+                    //editWorkerDetails();
                     break;
                 case 3:
-                    addNewWorker();
+                    //addNewWorker();
                     break;
                 case 4:
-                    addNewRoleForWorker();
+                    //addNewRoleForWorker();
                     break;
                 case 5:
-                    createNewRole();
+                    //createNewRole();
                     break;
                 default:
                     System.out.println("Invalid choice. Please enter a number between 1 and 5.");
