@@ -9,6 +9,7 @@ public class InMemoryWorkerRepository implements Worker_Repository {
 
     @Override
     public void addWorker(String worker) {
+
         String[] workerDetails = worker.split(",");
         Integer workerId = Integer.parseInt(workerDetails[0]);
 
@@ -25,6 +26,7 @@ public class InMemoryWorkerRepository implements Worker_Repository {
 
     @Override
     public String getWorkerById(int id) {
+
         String worker= null;
         if (workers.get(id)!=null){
             String[] workerDetails = workers.get(id);
@@ -39,6 +41,7 @@ public class InMemoryWorkerRepository implements Worker_Repository {
 
     @Override
     public List<String> getAllWorkers() {
+
         Set<Integer> workers_id = workers.keySet();
         List<String> active_workers = new ArrayList<>();
         for (Integer id : workers_id) {
@@ -60,24 +63,26 @@ public class InMemoryWorkerRepository implements Worker_Repository {
         if (workers.get(workerId)!=null) {
             workers.replace(workerId,Arrays.copyOfRange(workerDetails, 1, workerDetails.length));
         } else {
+            ///****Can Change exception here
             throw new IllegalArgumentException("Worker with id " + workerDetails[0] + " does not exist.");
         }
     }
 
     @Override
     public void deleteWorker(int id) {
+
         String[] worker_details=workers.get(id);
         // "0" means worker is not active
         worker_details[worker_details.length-1] = "0";
     }
     @Override
     public void addRole(String role_name, int role_id){
+
         roles.put(role_id, role_name);
     }
 
     @Override
     public String getRoleByID(int id){
-
         return roles.get(id);
     }
 }
