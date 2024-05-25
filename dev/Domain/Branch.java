@@ -53,5 +53,12 @@ public class Branch {
         return Objects.hash(branch_ID);
     }
 
+    public String toString(){
+        String result_str="";
+        result_str+="Branch ID: "+this.getBranchID()+", ";
+        result_str+="Branch name: "+this.getBranch_name()+", ";
+        result_str+="Address: "+this.getAddress();
+        return result_str;
+    }
 
 }

@@ -46,6 +46,7 @@ public class HR_Main {
             int id = scanner.nextInt();
             try {
                 hr_controller.Display_Worker_Details(id);
+                break;
             } catch (Exception e) {
 
             }

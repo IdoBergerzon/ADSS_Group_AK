@@ -40,4 +40,11 @@ public class Role {
     public int hashCode() {
         return Objects.hash(Role_ID);
     }
+
+    public String toString(){
+        String result_str="";
+        result_str+="Role ID: "+this.getRoleID()+", ";
+        result_str+="Branch name: "+this.getName();
+        return result_str;
+    }
 }

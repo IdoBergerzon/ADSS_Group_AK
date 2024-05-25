@@ -34,7 +34,7 @@ public class Main {
             // Use a switch statement to handle the user's choice
             switch (choice) {
                 case 1:
-                    System.out.println(main1.Display_Worker_Details());
+                    main1.Display_Worker_Details();
                     break;
                 case 2:
                     main1.Edit_Worker_Details();
