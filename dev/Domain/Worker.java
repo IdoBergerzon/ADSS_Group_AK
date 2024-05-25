@@ -8,13 +8,13 @@ public class Worker {
     private int hourly_wage;
     private int monthly_wage;
     private Date start_date;
-    private int direct_manager_ID;
+    private Integer direct_manager_ID;
     private Role[] roles;
     private Branch work_branch;
     private int days_off;
     private String departement;
 
-    public Worker(int id, String name, int monthly_wage, int hourly_wage, Date start_date, int direct_manager_ID,Role role, Branch work_branch, String departement) {
+    public Worker(int id, String name, int monthly_wage, int hourly_wage, Date start_date, Integer direct_manager_ID,Role role, Branch work_branch, String departement) {
         this.id = id;
         this.name = name;
         this.monthly_wage = monthly_wage;
@@ -55,7 +55,7 @@ public class Worker {
         return start_date;
     }
 
-    public int getDirect_manager() {
+    public Integer getDirect_manager() {
         return direct_manager_ID;
     }
 
@@ -106,5 +106,24 @@ public class Worker {
         this.work_branch = work_branch;
     }
 
+    public String toString() {
+        String result_str="";
+        result_str+="Worker ID: "+this.getId()+"\n";
+        result_str+="Worker name: "+this.getName()+"\n";
+        result_str+="Monthly wage: "+this.getMonthly_wage()+"\n";
+        result_str+="Hourly wage: "+this.getHourly_wage()+"\n";
+        result_str+="Start date: "+this.getStart_Date()+"\n";
+        result_str+="Direct manager ID: "+this.getDirect_manager()+"\n";
+        result_str+="Roles: ";
+        Role[] roles = this.getRoles();
+        for(int i=0;i<this.roles.length;i++){
+            result_str+=", "+roles[i];
+        }
+        result_str+="\n";
+        result_str+=this.getWork_branch()+"\n";
+        result_str+=this.getDepartement()+"\n";
+
+        return result_str;
+    }
 
 }

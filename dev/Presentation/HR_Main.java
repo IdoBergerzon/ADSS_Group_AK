@@ -39,11 +39,17 @@ public class HR_Main {
 
 
     }
-    public String Display_Worker_Details(){
+    public void Display_Worker_Details(){
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Insert ID");
-        int id=scanner.nextInt();
-        return hr_controller.Display_Worker_Details(id);
+        while(true) {
+            System.out.println("Insert ID");
+            int id = scanner.nextInt();
+            try {
+                hr_controller.Display_Worker_Details(id);
+            } catch (Exception e) {
+
+            }
+        }
     }
 
     public void addNewRoleForWorker(){
@@ -70,6 +76,7 @@ public class HR_Main {
             String role_name = sc.nextLine();
             try{
                 hr_controller.cteateNewRole(role_id, role_name);
+                break;
             } catch (Exception e){
 
             }

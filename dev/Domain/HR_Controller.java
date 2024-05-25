@@ -50,30 +50,15 @@ public class HR_Controller {
         return 1;
     };
 
-    public String Display_Worker_Details(int id){
-        String roles="";
+    public void Display_Worker_Details(int id){
+
         Worker result=workers_memory.getWorkerById(id);
         if(result==null){
-            return "Worker doesn't exist\n";
+            throw new IllegalArgumentException("Worker with ID " + id + " does not exist");
         }
-        String result_str="";
-        result_str+="Worker ID: "+result.getId()+"\n";
-        result_str+="Worker name: "+result.getName()+"\n";
-        result_str+="Monthly wage: "+result.getMonthly_wage()+"\n";
-        result_str+="Hourly wage: "+result.getHourly_wage()+"\n";
-        result_str+="Start date: "+result.getStart_Date()+"\n";
-        result_str+="Direct manager ID: "+result.getDirect_manager()+"\n";
-        result_str+="Roles: ";
-        for(int i=0;i<result.getRoles().length;i++){
-            result_str+=result.getRoles()[i]+", ";
-            if(i==result.getRoles().length-1){
-                result_str+=result.getRoles()[i];
-            }
-        }
-        result_str+=result.getWork_branch().getBranch_name()+"\n";
-        result_str+=result.getDepartement()+"\n";
 
-        return result_str;
+        System.out.println(result.toString());
+
 
     }
     public String Edit_Worker_Details(int id){

@@ -1,6 +1,6 @@
 package Presentation;
 import Domain.Checking_Controller;
-import Domain.HR_manager;
+//import Domain.HR_manager;
 import Domain.Worker;
 
 import java.net.StandardSocketOptions;
@@ -34,7 +34,7 @@ public class Main {
             // Use a switch statement to handle the user's choice
             switch (choice) {
                 case 1:
-                    main1.Display_Worker_Details();
+                    System.out.println(main1.Display_Worker_Details());
                     break;
                 case 2:
                     main1.Edit_Worker_Details();
