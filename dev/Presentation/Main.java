@@ -1,23 +1,48 @@
 package Presentation;
 import Domain.Checking_Controller;
-//import Domain.HR_manager;
 import Domain.Worker;
 
-import java.net.StandardSocketOptions;
+
 import java.util.Scanner;
 
 public class Main {
-
-
     public static void main(String[] args) {
-        Checking_Controller check = new Checking_Controller();
+        int choice;
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Please enter your ID: ");
-        int userID = Integer.parseInt(scanner.nextLine());
-        int worker=check.checking_ID(userID);//check the ID of the worker
+        Checking_Controller check = new Checking_Controller();
+        while (true) {
+            System.out.print("1.Enter id to make action \n" +
+                    "2.exit \n");
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    System.out.print("Please enter your ID: ");
+                    int userID = scanner.nextInt();
+                    int worker = check.checking_ID(userID);//check the ID of the worker
 
-        if(worker == 1){ //in case of HR manager
-            HR_Main main1=new HR_Main();
+                    if (worker == 1) { //in case of HR manager
+                        hr_menu(worker);
+                    }
+                    if (worker == 0) {//in case of regular worker
+                        worker_menu(worker);
+                    }
+                    break;
+                case 2:
+                    return;
+
+            }
+            scanner.close();
+
+        }
+    }
+
+
+
+    public static void hr_menu(int worker_id){
+        Scanner scanner = new Scanner(System.in);
+
+        HR_Main main1=new HR_Main();
+        while (true) {
             System.out.println("1.display worker details\n" +
                     "2.edit worker details\n" +
                     "3.add new worker\n" +
@@ -59,23 +84,26 @@ public class Main {
                     //createNewShift();
                     break;
                 case 9:
-                    break;
+                    return;
+
                 default:
                     System.out.println("Invalid choice. Please enter a number between 1 and 9.");
                     break;
             }
-
-            // Close the scanner
-            scanner.close();
         }
-        if(worker == 0){//in case of regular worker
-            Worker_Main main2=new Worker_Main();
 
+
+    }
+
+    public static void worker_menu(int worker_id){
+        Scanner scanner = new Scanner(System.in);
+        Worker_Main main2=new Worker_Main();
+        while (true) {
             System.out.println("1.display details\n" +
                     "2.add request\n" +
                     "3.edit exist request\n" +
                     "4.past shifts\n" +
-                    "5.retire massage\n"+
+                    "5.retire massage\n" +
                     "6.exit\n");
             System.out.print("Please enter your choice (1-5): ");
             int choice = scanner.nextInt();
@@ -96,12 +124,14 @@ public class Main {
                 case 5:
                     //createNewRole();
                 case 6:
-                    break;
+                    return;
                 default:
                     System.out.println("Invalid choice. Please enter a number between 1 and 6.");
                     break;
             }
         }
-
     }
 }
+
+
+

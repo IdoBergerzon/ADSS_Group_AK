@@ -114,14 +114,14 @@ public class Worker {
         result_str+="Hourly wage: "+this.getHourly_wage()+"\n";
         result_str+="Start date: "+this.getStart_Date()+"\n";
         result_str+="Direct manager ID: "+this.getDirect_manager()+"\n";
-        result_str+="Roles: ";
+        result_str+="Roles: "+ roles[0];
         Role[] roles = this.getRoles();
-        for(int i=0;i<this.roles.length;i++){
-            result_str+=", "+roles[i];
+        for(int i=1;i<this.roles.length;i++){
+            result_str+= ", " + roles[i];
         }
         result_str+="\n";
         result_str+=this.getWork_branch()+"\n";
-        result_str+=this.getDepartement()+"\n";
+        result_str+="Department: "+this.getDepartement()+"\n";
 
         return result_str;
     }

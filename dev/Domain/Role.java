@@ -44,7 +44,7 @@ public class Role {
     public String toString(){
         String result_str="";
         result_str+="Role ID: "+this.getRoleID()+", ";
-        result_str+="Branch name: "+this.getName();
+        result_str+="Role name: "+this.getName();
         return result_str;
     }
 }
