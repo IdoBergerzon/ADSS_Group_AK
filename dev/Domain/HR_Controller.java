@@ -47,6 +47,7 @@ public class HR_Controller {
 
 
         Worker new_worker = new Worker(new_ID, new_name,new_monthly_wage, new_hourly_wage, curr,managerID, role, new_branch, department);
+        workers_memory.addWorker(new_worker);
         return 1;
     };
 
