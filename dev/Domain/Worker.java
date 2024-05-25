@@ -23,6 +23,7 @@ public class Worker {
         this.direct_manager_ID = direct_manager_ID;
         this.work_branch = work_branch;
         this.departement = departement;
+
     }
 
     public int getId() {

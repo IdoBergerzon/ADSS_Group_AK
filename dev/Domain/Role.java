@@ -15,7 +15,7 @@ public class Role {
         this.name = name;
     }
 
-    public void setRole_ID(int role_ID) {
+    public void setRoleID(int role_ID) {
         Role_ID = role_ID;
     }
 
@@ -23,7 +23,7 @@ public class Role {
         return name;
     }
 
-    public int getRole_ID() {
+    public int getRoleID() {
         return Role_ID;
     }
 

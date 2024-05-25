@@ -13,11 +13,11 @@ public class Branch {
         this.address = address;
     }
 
-    public int getBranch_ID() {
+    public int getBranchID() {
         return branch_ID;
     }
 
-    public void setBranch_ID(int branch_ID) {
+    public void setBranchID(int branch_ID) {
         this.branch_ID = branch_ID;
     }
 
@@ -25,7 +25,7 @@ public class Branch {
         return branch_name;
     }
 
-    public void setBranch_name(String branch_name) {
+    public void setBranchName(String branch_name) {
         this.branch_name = branch_name;
     }
 

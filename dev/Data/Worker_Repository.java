@@ -1,20 +1,21 @@
 package Data;
 
+import Domain.Role;
 import Domain.Worker;
+import Domain.Branch;
 import java.util.List;
 
 
 public interface Worker_Repository {
-    void addRole(String role_name, int role_id);
-    String getRoleByID(int role_id);
+    void addRole(Role role);
+    Role getRoleByID(int role_id);
 
-    void addWorker(String worker);
-    String getWorkerById(int id);
-    List<String> getAllWorkers();
-
-    void updateWorker(String worker);
+    void addWorker(Worker worker);
+    Worker getWorkerById(int id);
+    List<Worker> getAllWorkers();
+    void updateWorker(Worker worker);
     void deleteWorker(int id);
 
-    void addBranch(String branch_name, int branch_id);
-    String getBranchByID(int id);
+    void addBranch(Branch branch);
+    Branch getBranchByID(int id);
 }
