@@ -1,5 +1,7 @@
 package Domain;
 import java.util.Date;
+import java.util.Scanner;
+
 import Data.InMemoryWorkerRepository;
 
 public class HR_Controller {
@@ -23,13 +25,11 @@ public class HR_Controller {
 
         //check if the role is exist
         int role_ID = Integer.parseInt(string_details[5]);
-        Role[] roles;
+        Role role;
         if (workers_memory.getRoleByID(role_ID) == null) {
             return -1;
         } else {
-            Role role = new Role(role_ID, workers_memory.getRoleByID(new_ID));
-            roles = new Role[1];
-            roles[1] = role;
+            role = workers_memory.getRoleByID(role_ID);
         }
         ;
 
@@ -40,18 +40,95 @@ public class HR_Controller {
         if (workers_memory.getBranchByID(branch_ID) == null) {
             return -1;
         } else {
-            String[] branch_details = workers_memory.getBranchByID(branch_ID).split(",");
-            String branch_name = branch_details[0];
-            String address = branch_details[1];
-            new_branch = new Branch(branch_ID, branch_name, address);
+            new_branch = workers_memory.getBranchByID(branch_ID);
+
         }
-        int dayoff = 0;
         String department = string_details[7];
 
 
-        Worker new_worker = new Worker(new_ID, new_name,new_monthly_wage, new_hourly_wage, curr,managerID, roles, new_branch, department);
+        Worker new_worker = new Worker(new_ID, new_name,new_monthly_wage, new_hourly_wage, curr,managerID, role, new_branch, department);
         return 1;
     };
+
+    public String Display_Worker_Details(int id){
+        String roles="";
+        Worker result=workers_memory.getWorkerById(id);
+        if(result==null){
+            return "Worker doesn't exist\n";
+        }
+        String result_str="";
+        result_str+="Worker ID: "+result.getId()+"\n";
+        result_str+="Worker name: "+result.getName()+"\n";
+        result_str+="Monthly wage: "+result.getMonthly_wage()+"\n";
+        result_str+="Hourly wage: "+result.getHourly_wage()+"\n";
+        result_str+="Start date: "+result.getStart_Date()+"\n";
+        result_str+="Direct manager ID: "+result.getDirect_manager()+"\n";
+        result_str+="Roles: ";
+        for(int i=0;i<result.getRoles().length;i++){
+            result_str+=result.getRoles()[i]+", ";
+            if(i==result.getRoles().length-1){
+                result_str+=result.getRoles()[i];
+            }
+        }
+        result_str+=result.getWork_branch().getBranch_name()+"\n";
+        result_str+=result.getDepartement()+"\n";
+
+        return result_str;
+
+    }
+    public String Edit_Worker_Details(int id){
+        Worker to_update=workers_memory.getWorkerById(id);
+        if(to_update==null){
+            return "Worker doesn't exist\n";
+        }
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("what you want to update for WorkerID: "+to_update.getId()+" ?\n"
+        +"1.name\n"+
+        "2.monthly wage\n"
+        +"3.hourly wage\n"
+        +"4.direct manager ID\n"
+        +"5.departement\n");
+        int choice = scanner.nextInt();
+
+        switch (choice) {
+            case 1:
+                System.out.println("insert new name: \n");
+                String new_name=scanner.nextLine();
+                to_update.setName(new_name);
+                return "update name success \n";
+
+            case 2:
+                System.out.println("insert new monthly wage: \n");
+                int new_monthly_wage=scanner.nextInt();
+                to_update.setMonthly_wage(new_monthly_wage);
+                return "update wage success \n";
+
+            case 3:
+                System.out.println("insert new hourly wage: \n");
+                int new_hourly_wage=scanner.nextInt();
+                to_update.setHourly_wage(new_hourly_wage);
+                return "update wage success \n";
+
+            case 4:
+                System.out.println("insert new manager ID: \n");
+                int new_manager_ID=scanner.nextInt();
+                to_update.setDirect_manager(new_manager_ID);
+                return "update manager ID success \n";
+
+            case 5:
+                System.out.println("insert new department: \n");
+                String new_department=scanner.nextLine();
+                to_update.setDepartement(new_department);
+                return "update department success \n";
+
+            default:
+                System.out.println("Invalid choice. Please enter a number between 1 and 5.");
+                break;
+        }
+        return "";
+
+
+    }
 
 
     public void addNewRoleForWorker(int workerID, int roleID){

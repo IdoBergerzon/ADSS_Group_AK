@@ -46,6 +46,11 @@ public class Worker {
         return monthly_wage;
     }
 
+    public void setDepartement(String departement) {
+        this.departement = departement;
+    }
+
+
     public Date getStart_Date() {
         return start_date;
     }

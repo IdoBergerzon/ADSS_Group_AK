@@ -3,6 +3,7 @@ import Domain.Checking_Controller;
 import Domain.HR_manager;
 import Domain.Worker;
 
+import java.net.StandardSocketOptions;
 import java.util.Scanner;
 
 public class Main {
@@ -33,19 +34,19 @@ public class Main {
             // Use a switch statement to handle the user's choice
             switch (choice) {
                 case 1:
-                    //displayWorkerDetails();
+                    main1.Display_Worker_Details();
                     break;
                 case 2:
-                    //editWorkerDetails();
+                    main1.Edit_Worker_Details();
                     break;
                 case 3:
                     main1.addNewWorker();
                     break;
                 case 4:
-                    //addNewRoleForWorker();
+                    main1.addNewRoleForWorker();
                     break;
                 case 5:
-                    //createNewRole();
+                    main1.createNewRole();
                     break;
                 case 6:
                     //displayWorkersByShift();
