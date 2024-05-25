@@ -18,17 +18,20 @@ public class Main {
                 case 1:
                     System.out.print("Please enter your ID: ");
                     int userID = scanner.nextInt();
-                    int worker = check.checking_ID(userID);//check the ID of the worker
+                    int is_manager = check.checking_ID(userID);//check the ID of the worker
 
-                    if (worker == 1) { //in case of HR manager
-                        hr_menu(worker);
+                    if (is_manager == 1) { //in case of HR manager
+                        hr_menu(userID);
                     }
-                    if (worker == 0) {//in case of regular worker
-                        worker_menu(worker);
+                    if (is_manager == 0) {//in case of regular worker
+                        worker_menu(userID);
                     }
                     break;
                 case 2:
                     return;
+                default:
+                    System.out.println("Invalid choice. Please enter a number 1 to 2.");
+                    break;
 
             }
             //scanner.close();
@@ -87,7 +90,7 @@ public class Main {
                     return;
 
                 default:
-                    System.out.println("Invalid choice. Please enter a number between 1 and 9.");
+                    System.out.println("Invalid choice. Please enter a number 1 to 9.");
                     break;
             }
         }
@@ -126,7 +129,7 @@ public class Main {
                 case 6:
                     return;
                 default:
-                    System.out.println("Invalid choice. Please enter a number between 1 and 6.");
+                    System.out.println("Invalid choice. Please enter a number 1 to 6.");
                     break;
             }
         }

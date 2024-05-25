@@ -7,23 +7,40 @@ import java.util.*;
 
 
 public class InMemoryWorkerRepository implements Worker_Repository {
-    private final Map<Integer, Worker> workers = new HashMap<>();
-    private final Map<Integer, Worker> noActiveWorkers = new HashMap<>();
-    private final Map<Integer, Role> roles = new HashMap<>();
-    private final Map<Integer, Branch> branches = new HashMap<>();
+    private final Map<Integer, Worker> workers;
+    private final Map<Integer, Worker> noActiveWorkers;
+    private final Map<Integer, Role> roles;
+    private final Map<Integer, Branch> branches;
 
     // Making this class singletone so we only create one instance while runs
-    private static InMemoryWorkerRepository instance;
+    //private static InMemoryWorkerRepository instance;
+//    public static synchronized InMemoryWorkerRepository getInstance() {
+//        if (instance == null) {
+//            instance = new InMemoryWorkerRepository();
+//        }
+//        return instance;
+//    }
+
     private InMemoryWorkerRepository() {
+        this.workers = new HashMap<>();
+        this.noActiveWorkers = new HashMap<>();
+        this.roles = new HashMap<>();
+        this.branches = new HashMap<>();
+    }
+
+    /**
+     * SingletonHolder is loaded on the first execution of Singleton.getInstance()
+     * or the first access to SingletonHolder.INSTANCE, not before.
+     */
+    private static class InMemoryHolder {
+        private final static InMemoryWorkerRepository INSTANCE = new InMemoryWorkerRepository();
     }
 
     //public static method that returns the single instance of the class
-    public static synchronized InMemoryWorkerRepository getInstance() {
-        if (instance == null) {
-            instance = new InMemoryWorkerRepository();
-        }
-        return instance;
+    public static InMemoryWorkerRepository getInstance() {
+        return InMemoryHolder.INSTANCE;
     }
+
 
 //private InMemoryWorkerRepository() {
 //}
@@ -99,6 +116,12 @@ public class InMemoryWorkerRepository implements Worker_Repository {
         return roles.get(id);
     }
 
+    @Override
+    public List<Role> getAllRoles() {
+        return new ArrayList<>(roles.values());
+    }
+
+    @Override
     public void addBranch(Branch branch) {
         if (branch == null) {
             throw new IllegalArgumentException("Role cannot be null");
@@ -109,7 +132,14 @@ public class InMemoryWorkerRepository implements Worker_Repository {
         branches.put(branch.getBranchID(), branch);
     }
 
+    @Override
     public Branch getBranchByID(int id) {
         return branches.get(id);
+    }
+
+
+    @Override
+    public List<Branch> getAllBranches() {
+        return new ArrayList<>(branches.values());
     }
 }
