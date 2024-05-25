@@ -35,4 +35,34 @@ public class HR_Main {
 
 ;
     }
+
+    public void addNewRoleForWorker(){
+        Scanner sc = new Scanner(System.in);
+        while(true) {
+            System.out.println("Enter worker id:");
+            int worker_id = sc.nextInt();
+            System.out.println("Enter new worker's role id:");
+            int role_id = sc.nextInt();
+            try {
+                hr_controller.addNewRoleForWorker(worker_id, role_id);
+                break;
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    public void createNewRole(){
+        Scanner sc = new Scanner(System.in);
+        while(true) {
+            System.out.println("Enter new role id:");
+            int role_id = sc.nextInt();
+            System.out.println("Enter new role name:");
+            String role_name = sc.nextLine();
+            try{
+                hr_controller.cteateNewRole(role_id, role_name);
+            } catch (Exception e){
+
+            }
+        }
+    }
 }

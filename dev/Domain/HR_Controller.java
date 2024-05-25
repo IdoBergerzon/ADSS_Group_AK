@@ -4,7 +4,7 @@ import Data.InMemoryWorkerRepository;
 
 public class HR_Controller {
 
-    private final InMemoryWorkerRepository workers_memory=new InMemoryWorkerRepository();
+    private final InMemoryWorkerRepository workers_memory=InMemoryWorkerRepository.getInstance();
 
     public int Add_New_Worker(String details) {
         //ID,name,hourly wage, monthly wage,start date,role,branch,dayoff=0,department
@@ -52,4 +52,21 @@ public class HR_Controller {
         Worker new_worker = new Worker(new_ID, new_name,new_monthly_wage, new_hourly_wage, curr,managerID, roles, new_branch, department);
         return 1;
     };
+
+
+    public void addNewRoleForWorker(int workerID, int roleID){
+        if (workers_memory.getWorkerById(workerID) == null) {
+            throw new IllegalArgumentException("Worker with ID " + workerID + " does not exist");
+        } if (workers_memory.getRoleByID(roleID) == null) {
+            throw new IllegalArgumentException("Role with ID " + roleID + " does not exist");
+        }
+
+        workers_memory.getWorkerById(workerID).addNewRole(workers_memory.getRoleByID(roleID));
+    }
+
+    public void cteateNewRole(int roleId, String roleName){
+        Role newRole= new Role(roleId,roleName);
+        workers_memory.addRole(newRole);
+
+    }
 }
