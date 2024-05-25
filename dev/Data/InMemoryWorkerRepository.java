@@ -12,14 +12,6 @@ public class InMemoryWorkerRepository implements Worker_Repository {
     private final Map<Integer, Role> roles;
     private final Map<Integer, Branch> branches;
 
-    // Making this class singletone so we only create one instance while runs
-    //private static InMemoryWorkerRepository instance;
-//    public static synchronized InMemoryWorkerRepository getInstance() {
-//        if (instance == null) {
-//            instance = new InMemoryWorkerRepository();
-//        }
-//        return instance;
-//    }
 
     private InMemoryWorkerRepository() {
         this.workers = new HashMap<>();
@@ -36,26 +28,13 @@ public class InMemoryWorkerRepository implements Worker_Repository {
         private final static InMemoryWorkerRepository INSTANCE = new InMemoryWorkerRepository();
     }
 
-    //public static method that returns the single instance of the class
+    /**
+     * public static method that returns the single instance of the class
+     */
+
     public static InMemoryWorkerRepository getInstance() {
         return InMemoryHolder.INSTANCE;
     }
-
-
-//private InMemoryWorkerRepository() {
-//}
-//
-//    /**
-//     * SingletonHolder is loaded on the first execution of Singleton.getInstance()
-//     * or the first access to SingletonHolder.INSTANCE, not before.
-//     */
-//    private static class InMemoryHolder {
-//        private final static InMemoryWorkerRepository INSTANCE = new InMemoryWorkerRepository();
-//    }
-//
-//    public static InMemoryWorkerRepository getInstance() {
-//        return InMemoryHolder.INSTANCE;
-//    }
 
 
     @Override
