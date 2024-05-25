@@ -31,7 +31,7 @@ public class Main {
                     return;
 
             }
-            scanner.close();
+            //scanner.close();
 
         }
     }
@@ -110,7 +110,7 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    //displayWorkerDetails();
+                    main2.displayMyDetails(worker_id);
                     break;
                 case 2:
                     //editWorkerDetails();

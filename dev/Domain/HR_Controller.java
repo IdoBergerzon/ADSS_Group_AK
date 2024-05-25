@@ -14,17 +14,18 @@ public class HR_Controller {
 
         Date curr = new Date();
         int new_ID = Integer.parseInt(string_details[0]);
-        if (workers_memory.getWorkerById(new_ID) == null) {
+        if (workers_memory.getWorkerById(new_ID) != null) {
             return -1;
         }
         String new_name = string_details[1];
-        int new_monthly_wage = Integer.parseInt(string_details[2]);
-        int new_hourly_wage = Integer.parseInt(string_details[3]);
-        int managerID=Integer.parseInt(string_details[4]);
+        int new_hourly_wage = Integer.parseInt(string_details[2]);
+        int new_monthly_wage = Integer.parseInt(string_details[3]);
+        int role_ID = Integer.parseInt(string_details[4]);
+
 
 
         //check if the role is exist
-        int role_ID = Integer.parseInt(string_details[5]);
+
         Role role;
         if (workers_memory.getRoleByID(role_ID) == null) {
             return -1;
@@ -35,7 +36,7 @@ public class HR_Controller {
 
         //check if branch is exist
 
-        int branch_ID = Integer.parseInt(string_details[6]);
+        int branch_ID = Integer.parseInt(string_details[5]);
         Branch new_branch;
         if (workers_memory.getBranchByID(branch_ID) == null) {
             return -1;
@@ -43,7 +44,8 @@ public class HR_Controller {
             new_branch = workers_memory.getBranchByID(branch_ID);
 
         }
-        String department = string_details[7];
+        String department = string_details[6];
+        int managerID=Integer.parseInt(string_details[7]);
 
 
         Worker new_worker = new Worker(new_ID, new_name,new_monthly_wage, new_hourly_wage, curr,managerID, role, new_branch, department);
@@ -59,7 +61,6 @@ public class HR_Controller {
         }
 
         System.out.println(result.toString());
-
 
     }
     public String Edit_Worker_Details(int id){
