@@ -25,7 +25,8 @@ public class Main {
                     "5.create new role\n" +
                     "6.display worker that can work by shift\n" +
                     "7.create new roster\n" +
-                    "8.create new shift\n");
+                    "8.create new shift\n" +
+                    "9.exit\n");
 
             System.out.print("Please enter your choice (1-8): ");
             int choice = scanner.nextInt();
@@ -57,8 +58,10 @@ public class Main {
                 case 8:
                     //createNewShift();
                     break;
+                case 9:
+                    break;
                 default:
-                    System.out.println("Invalid choice. Please enter a number between 1 and 8.");
+                    System.out.println("Invalid choice. Please enter a number between 1 and 9.");
                     break;
             }
 
@@ -72,7 +75,8 @@ public class Main {
                     "2.add request\n" +
                     "3.edit exist request\n" +
                     "4.past shifts\n" +
-                    "5.retire massage\n");
+                    "5.retire massage\n"+
+                    "6.exit\n");
             System.out.print("Please enter your choice (1-5): ");
             int choice = scanner.nextInt();
 
@@ -91,9 +95,10 @@ public class Main {
                     break;
                 case 5:
                     //createNewRole();
+                case 6:
                     break;
                 default:
-                    System.out.println("Invalid choice. Please enter a number between 1 and 5.");
+                    System.out.println("Invalid choice. Please enter a number between 1 and 6.");
                     break;
             }
         }
