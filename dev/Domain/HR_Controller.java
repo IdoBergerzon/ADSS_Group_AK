@@ -185,4 +185,23 @@ public class HR_Controller {
         }
         return roles_str;
     }
+    public void createNewShift(int branch_id,int day,int shift_type,int[][] shiftWorkers){
+
+        //if()
+    }
+
+    public Boolean isBranch(int branch_id){
+        if(workers_memory.getBranchByID(branch_id) == null) {
+            return false;
+        }
+        return true;
+    }
+
+    public void createNewRoster(int branch_id){
+        Week.setWeek();
+        int week=Week.getWeek();
+
+
+
+    }
 }

@@ -101,14 +101,9 @@ public class HR_Main {
         hr_controller.displayWorkersByShift(day,shift_type);
     }
 
-    public void createNewShift(){
+    public void createNewShift(int branch_id, int day, int shift_type){
         Scanner sc = new Scanner(System.in);
-        System.out.println("insert day (1-sunday,2-monday...)\n");
-        int day=sc.nextInt();
-        System.out.println("insert shift type (0-morning,1-evening...)\n");
-        int shift_type=sc.nextInt();
-        System.out.println("insert Branch id)\n");
-        int branch_id=sc.nextInt();
+        System.out.println("Now you're creating shift at day " + day+1 + " and shift type: " + shift_type + "\n");
 
         String[] roles=hr_controller.getAllRoles().split(",");
 
@@ -123,7 +118,24 @@ public class HR_Main {
                 shiftWorkers[i][j]=worker_id;
             }
         }
-        hr_controller.createNewShift(day,shift_type,shiftWorkers);
+        hr_controller.createNewShift(branch_id,day,shift_type,shiftWorkers);
     }
 
+
+    public void createNewRoster(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("insert branch id\n");
+        int branch_id=sc.nextInt();
+        if(!hr_controller.isBranch(branch_id)){
+            System.out.println("branch doesn't exist\n");
+            return;
+        }
+        for(int day=0; day < 7; day++){
+            for(int shift_type=0; shift_type < 2; shift_type++) {
+                createNewShift(branch_id, day, shift_type);
+            }
+        }
+        createNewRoster();
+
+    }
 }
