@@ -1,5 +1,6 @@
 package Domain;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 import Data.InMemoryWorkerRepository;
@@ -174,5 +175,14 @@ public class HR_Controller {
             }
         }
         System.out.println(result_workers);
+    }
+
+    public String getAllRoles(){
+        List<Role> roles= workers_memory.getAllRoles();
+        String roles_str=roles.get(0).getName();
+        for(int i=0;i<roles.size();i++){
+            roles_str+="," + roles.get(i).getName();
+        }
+        return roles_str;
     }
 }

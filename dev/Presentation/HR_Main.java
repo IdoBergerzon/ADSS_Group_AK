@@ -101,4 +101,29 @@ public class HR_Main {
         hr_controller.displayWorkersByShift(day,shift_type);
     }
 
+    public void createNewShift(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("insert day (1-sunday,2-monday...)\n");
+        int day=sc.nextInt();
+        System.out.println("insert shift type (0-morning,1-evening...)\n");
+        int shift_type=sc.nextInt();
+        System.out.println("insert Branch id)\n");
+        int branch_id=sc.nextInt();
+
+        String[] roles=hr_controller.getAllRoles().split(",");
+
+        int[][] shiftWorkers=new int[roles.length][];
+        for(int i=0;i<roles.length;i++){
+            System.out.println("How many "+ roles[i] + " for this shift? ");
+            int amount=sc.nextInt();
+            shiftWorkers[i]=new int[amount];
+            for(int j=0;j<amount;j++){
+                System.out.println("Enter " + j+1 + " " + roles[i] +" worker id:\n");
+                int worker_id=sc.nextInt();
+                shiftWorkers[i][j]=worker_id;
+            }
+        }
+        hr_controller.createNewShift(day,shift_type,shiftWorkers);
+    }
+
 }
