@@ -135,7 +135,7 @@ public class HR_Main {
                 createNewShift(branch_id, day, shift_type);
             }
         }
-        createNewRoster();
+        hr_controller.createNewRoster(branch_id);
 
     }
 }

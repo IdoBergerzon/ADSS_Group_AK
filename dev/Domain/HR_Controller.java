@@ -5,11 +5,13 @@ import java.util.Scanner;
 
 import Data.InMemoryWorkerRepository;
 import Data.InMemoryRequestRepository;
+import Data.InMemoryShiftRepository;
 
 public class HR_Controller {
 
     private final InMemoryWorkerRepository workers_memory=InMemoryWorkerRepository.getInstance();
     private final InMemoryRequestRepository requests_repository=InMemoryRequestRepository.getInstance();
+    private final InMemoryShiftRepository shifts_repository=InMemoryShiftRepository.getInstance();
 
     public int Add_New_Worker(String details) {
         //ID,name,hourly wage, monthly wage,start date,role,branch,dayoff=0,department
@@ -200,6 +202,11 @@ public class HR_Controller {
     public void createNewRoster(int branch_id){
         Week.setWeek();
         int week=Week.getWeek();
+        Shift[][] new_roster=Shift[2][7]
+        for (int i=0;i<14;i++){
+
+        }
+
 
 
 
