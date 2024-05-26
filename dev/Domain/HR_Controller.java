@@ -160,10 +160,17 @@ public class HR_Controller {
     }
     public void displayWorkersByShift(int day,int shift_type){
         String result_workers="";
+        String roles="";
         Request[] request_list=requests_repository.getAllRequests();
         for(int i=0;i<request_list.length;i++){
             if(request_list[i].getRequest()[shift_type][day-1]){
-                result_workers+=request_list[i].getWorker().getId()+request_list[i].getWorker().getName()+"\n"+request_list[i].getWorker().getRoles()+request_list[i].getWorker().getWork_branch()+"\n\n";
+                for(int j=0;j<request_list[i].getWorker().getRoles().length;j++){
+                    roles+="Role ID: "+request_list[i].getWorker().getRoles()[j].getRoleID()+","+"Role name: "+request_list[i].getWorker().getRoles()[j].getName()+"   ,";
+                    if (j==request_list[i].getWorker().getRoles().length-1){
+                        roles+="Role ID: "+request_list[i].getWorker().getRoles()[j].getRoleID()+","+"Role name: "+request_list[i].getWorker().getRoles()[j].getName()+"\n";
+                    }
+                }
+                result_workers+=request_list[i].getWorker().getId()+"\n"+request_list[i].getWorker().getName()+"\n"+roles+request_list[i].getWorker().getWork_branch()+"\n\n";
             }
         }
         System.out.println(result_workers);
