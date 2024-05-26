@@ -79,16 +79,38 @@ public class HR_Controller {
 
         switch (choice) {
             case 1:
-                System.out.println("insert new name: \n");
-                String new_name=scanner.nextLine();
+                String new_name;
+                while (true) {
+                    System.out.println("insert new name: \n");
+                    try {
+                        new_name = scanner.nextLine();
+                        break;
+                    } catch (Exception e) {
+                        System.out.println("insert valid monthly name \n");
+                    }
+                }
+
                 to_update.setName(new_name);
                 return "update name success \n";
 
+
+
             case 2:
-                System.out.println("insert new monthly wage: \n");
-                int new_monthly_wage=scanner.nextInt();
-                to_update.setMonthly_wage(new_monthly_wage);
-                return "update wage success \n";
+                int new_monthly_wage = 0;
+                while(true) {
+                    System.out.println("insert new monthly wage: \n");
+                    try {
+                        new_monthly_wage = scanner.nextInt();
+                        break;
+                    } catch (Exception e) {
+                        System.out.println("insert valid monthly wage \n");
+                    }
+                }
+
+                    to_update.setMonthly_wage(new_monthly_wage);
+                    return "update wage success \n";
+
+
 
             case 3:
                 System.out.println("insert new hourly wage: \n");

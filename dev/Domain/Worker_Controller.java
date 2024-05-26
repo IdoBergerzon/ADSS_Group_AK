@@ -9,4 +9,8 @@ public class Worker_Controller {
         Worker result=workers_memory.getWorkerById(id);
         System.out.println(result);
     }
+
+    public void addRequest(int id, Boolean[][] requestArray){
+        Work_Request newRequest = new Work_Request(id,requestArray,0) //לשנות את השבוע ולבנות בדיקות אם קיים כבר בקשה או אם המערך לא נכון או משהו
+    }
 }

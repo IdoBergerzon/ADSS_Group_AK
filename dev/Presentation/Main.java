@@ -116,7 +116,7 @@ public class Main {
                     main2.displayMyDetails(worker_id);
                     break;
                 case 2:
-                    //editWorkerDetails();
+                    //addRequest(worker_id);
                     break;
                 case 3:
                     //addNewWorker();
