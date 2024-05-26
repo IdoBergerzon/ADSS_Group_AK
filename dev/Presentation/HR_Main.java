@@ -92,5 +92,13 @@ public class HR_Main {
         int id_to_update=scanner.nextInt();
         return hr_controller.Edit_Worker_Details(id_to_update);
     }
+    public void displayWorkersByShift(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("insert day (1-sunday,2-monday...)\n");
+        int day=scanner.nextInt();
+        System.out.println("insert shift type (0-morning,1-evening...)\n");
+        int shift_type=scanner.nextInt();
+        hr_controller.displayWorkersByShift(day,shift_type);
+    }
 
 }
