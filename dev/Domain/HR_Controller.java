@@ -19,7 +19,6 @@ public class HR_Controller {
         HR_Controller.week += 1;
     }
 
-
     public int Add_New_Worker(String details) {
         //ID,name,hourly wage, monthly wage,start date,role,branch,dayoff=0,department
         String[] string_details = details.split(",");
@@ -75,6 +74,7 @@ public class HR_Controller {
         System.out.println(result.toString());
 
     }
+
     public String Edit_Worker_Details(int id){
         Worker to_update=workers_memory.getWorkerById(id);
         if(to_update==null){
