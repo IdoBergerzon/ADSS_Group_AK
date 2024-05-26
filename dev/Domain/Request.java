@@ -1,15 +1,13 @@
 package Domain;
 
-import java.util.Date;
-
-public class Work_Request {
+public class Request {
     private Worker worker;
-    private Boolean[][] request;
+    private Boolean[][] weeklyRequest;
     private int week;
 
-    public Work_Request(Worker worker, Boolean[][] request, int week) {
+    public Request(Worker worker, Boolean[][] weeklyRequest, int week) {
         this.worker = worker;
-        this.request = request;
+        this.weeklyRequest = weeklyRequest;
         this.week = week;
     }
 
@@ -18,7 +16,7 @@ public class Work_Request {
     }
 
     public Boolean[][] getRequest() {
-        return request;
+        return weeklyRequest;
     }
 
     public int getWeek() {
@@ -29,8 +27,8 @@ public class Work_Request {
         this.worker = worker;
     }
 
-    public void setRequest(Boolean[][] request) {
-        this.request = request;
+    public void setRequest(Boolean[][] newRequest) {
+        this.weeklyRequest = newRequest;
     }
 
     public void setWeek(int week) {
