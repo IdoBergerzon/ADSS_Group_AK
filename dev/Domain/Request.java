@@ -5,10 +5,10 @@ public class Request {
     private Boolean[][] weeklyRequest;
     private int week;
 
-    public Request(Worker worker, Boolean[][] weeklyRequest, int week) {
+    public Request(Worker worker, Boolean[][] weeklyRequest) {
         this.worker = worker;
         this.weeklyRequest = weeklyRequest;
-        this.week = week;
+        this.week = Week.getWeek();
     }
 
     public Worker getWorker() {

@@ -9,15 +9,6 @@ public class HR_Controller {
 
     private final InMemoryWorkerRepository workers_memory=InMemoryWorkerRepository.getInstance();
     private final InMemoryRequestRepository requests_repository=InMemoryRequestRepository.getInstance();
-    private static int week=0;
-
-    public static int getWeek() {
-        return week;
-    }
-
-    public static void setWeek() {
-        HR_Controller.week += 1;
-    }
 
     public int Add_New_Worker(String details) {
         //ID,name,hourly wage, monthly wage,start date,role,branch,dayoff=0,department
@@ -172,7 +163,7 @@ public class HR_Controller {
         Request[] request_list=requests_repository.getAllRequests();
         for(int i=0;i<request_list.length;i++){
             if(request_list[i].getRequest()[shift_type][day-1]){
-                result_workers+=request_list[i].getWorker().getId()+request_list[i].getWorker().getName()+"\n"+request_list[i].getWorker().getRoles().toString()+request_list[i].getWorker().getWork_branch().toString()+"\n\n";
+                result_workers+=request_list[i].getWorker().getId()+request_list[i].getWorker().getName()+"\n"+request_list[i].getWorker().getRoles()+request_list[i].getWorker().getWork_branch()+"\n\n";
             }
         }
         System.out.println(result_workers);

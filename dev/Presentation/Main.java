@@ -119,13 +119,13 @@ public class Main {
                     //addRequest(worker_id);
                     break;
                 case 3:
-                    //addNewWorker();
+                    //EditRequest();
                     break;
                 case 4:
-                    //addNewRoleForWorker();
+                    //PastShifts();
                     break;
                 case 5:
-                    //createNewRole();
+                    //RetireMassage();
                 case 6:
                     return;
                 default:
