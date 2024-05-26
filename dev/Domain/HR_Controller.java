@@ -188,8 +188,15 @@ public class HR_Controller {
         return roles_str;
     }
     public void createNewShift(int branch_id,int day,int shift_type,int[][] shiftWorkers){
-
-        //if()
+        Branch branch=workers_memory.getBranchByID(branch_id);
+        Boolean type;
+        if(shift_type==0){
+            type=true;
+        }else type=false;
+        Worker[][] arrangment=new Worker[shiftWorkers.length][];
+        for (int i=0;i<shiftWorkers.length;i++){
+            //צריך להחליף מתעודות זהות של עובדים לאינסטנסים שלהם
+        }
     }
 
     public Boolean isBranch(int branch_id){
@@ -200,12 +207,13 @@ public class HR_Controller {
     }
 
     public void createNewRoster(int branch_id){
-        Week.setWeek();
         int week=Week.getWeek();
-        Shift[][] new_roster=Shift[2][7]
-        for (int i=0;i<14;i++){
 
-        }
+        Branch branch=workers_memory.getBranchByID(branch_id);
+        Shift[][] shifts_for_roster=shifts_repository.getCurrentShifts(branch_id,week);
+        Roster new_roster =new Roster(branch,shifts_for_roster,week);
+        shifts_repository.addRoster(new_roster);
+        Week.setWeek();
 
 
 
