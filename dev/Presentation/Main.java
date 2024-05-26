@@ -78,7 +78,7 @@ public class Main {
                     main1.createNewRole();
                     break;
                 case 6:
-                    //displayWorkersByShift();
+                    main1.displayWorkersByShift();
                     break;
                 case 7:
                     //createNewRoster();
