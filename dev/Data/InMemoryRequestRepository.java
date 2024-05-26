@@ -1,14 +1,15 @@
 package Data;
 
 import Domain.Request;
-import com.sun.jdi.request.DuplicateRequestException;
+import Domain.Week;
+
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class InMemoryRequestRepository {
     private final Map<Pair, Request> curr_requests;
-    private final Map<Integer, Request> past_requests;///need to change here
+    private final Map<Integer, Request[]> past_requests;///need to change here
 
     private InMemoryRequestRepository() {
         curr_requests = new HashMap<>();
@@ -26,21 +27,47 @@ public class InMemoryRequestRepository {
         return InMemoryRequestRepository.InRequestHolder.INSTANCE;
     }
 
-    public void addRequest(Request request) {
+    public void addRequest(Request request) throws Exception {
         Pair<Integer,Integer> requestKey = new Pair<>(request.getWorker().getId(), request.getWeek());
         if (curr_requests.containsKey(requestKey)) {
-            throw new DuplicateRequestException("Request already exists");
+            throw new Exception("Request already exists");
         }
         curr_requests.put(requestKey, request);
 
+    }
+
+    public void editRequest(Request request) throws Exception {
+        Pair<Integer,Integer> requestKey = new Pair<>(request.getWorker().getId(), request.getWeek());
+        if (!curr_requests.containsKey(requestKey)){
+            throw new Exception("Request not exist, can't edit");
+        }
+        curr_requests.put(requestKey, request);
     }
 
     public Request[] getAllRequests() {
         return curr_requests.values().toArray(new Request[0]);
     }
 
-    public void newWeek(){
+    public Request getRequestByWorker(int worker_id) {
+        Pair<Integer,Integer> requestKey = new Pair<>(worker_id, Week.getWeek());
+        return curr_requests.get(requestKey);
+    }
 
+    /**
+     * Function that move all current request into past request which
+     * past_request save them by week and list of all employee request
+     */
+    public void newWeek(){
+        Request[] requests = getAllRequests();
+        past_requests.put(Week.getWeek(),requests);
+        for (Pair key : curr_requests.keySet()) {
+            curr_requests.put(key,null);
+        }
+
+    }
+
+    public Request[] getPastRequests(int week) {
+        return past_requests.get(week);
     }
 
 }
