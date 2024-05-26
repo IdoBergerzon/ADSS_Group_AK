@@ -7,44 +7,32 @@ public class Shift {
     private int Day_of_week;
     private boolean shift_type;//true=morning,false=evening
     private Worker[][] shift_workers;
- //true=morning,false=evening
 
 
-    public Shift(int amount_of_workers, Worker shift_manager, Worker[][] shift_workers, boolean shift_type, Date date_of_shift) {
-
-        this.amount_of_workers = amount_of_workers;
-        this.shift_manager = shift_manager;
-        this.shift_workers = shift_workers;
+    public Shift(int weekNum, int branch_id, int day_of_week, boolean shift_type, Worker[][] shift_workers) {
+        this.weekNum = weekNum;
+        this.branch_id = branch_id;
+        Day_of_week = day_of_week;
         this.shift_type = shift_type;
-
-    }
-
-
-
-
-    public int getAmount_of_workers() {
-        return amount_of_workers;
-    }
-
-    public void setAmount_of_workers(int amount_of_workers) {
-        this.amount_of_workers = amount_of_workers;
-    }
-
-    public Worker getShift_manager() {
-        return shift_manager;
-    }
-
-    public void setShift_manager(Worker shift_manager) {
-        this.shift_manager = shift_manager;
-    }
-
-    public Worker[] getShift_workers() {
-        return shift_workers;
-    }
-
-    public void setShift_workers(Worker[] shift_workers) {
         this.shift_workers = shift_workers;
     }
+
+
+    public int getWeekNum() {
+        return weekNum;
+    }
+
+    public int getBranch_id() {
+        return branch_id;
+    }
+
+    public int getDay_of_week() {
+        return Day_of_week;
+    }
+
+
+
+
 
 
 
