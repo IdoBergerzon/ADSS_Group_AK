@@ -16,6 +16,9 @@ public class Truck {
     public String getTruckType() { return truckType; }
     public double getTruckWeight() { return truckWeight; }
     public double getMaxWeight() { return MaxWeight; }
+    public void setMaxWeight(double maxWeight) {
+        MaxWeight = maxWeight;
+    }
 
     @Override
     public String toString() {

@@ -25,6 +25,11 @@ public abstract class Location {
         return phone;
     }
 
+    public void setName(String name) { this.Name = name; }
+    public void setAddress(String address) { this.address = address; }
+    public void setContact(String contact) { this.Contact = contact; }
+    public void setPhone(String phone) { this.phone = phone; }
+
     @Override
     public String toString() {
         return "Name='" + Name + '\'' +
