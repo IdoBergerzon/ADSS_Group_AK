@@ -1,8 +1,5 @@
 package Domain;
 
-import Data.Licenses;
-import Data.Trucks;
-import Domain.TruckController;
 
 public class Main {
     public static void main(String[] args) {
