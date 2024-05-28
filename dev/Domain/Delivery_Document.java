@@ -11,11 +11,11 @@ public class Delivery_Document {
     private Time timeOfDepurture;
     private int trackNumber;
     private String driversName;
-    private Supplier source;
-    private Store destination;
+    private Store source;
+    private Supplier destination;
     private HashMap<Item,Integer> items;
 
-    public Delivery_Document(Supplier source, Date date, Time timeOfDepurture, int trackNumber, String driversName, int documentID, Store destination, HashMap<Item,Integer> items) {
+    public Delivery_Document(Store source, Date date, Time timeOfDepurture, int trackNumber, String driversName, int documentID, Supplier destination, HashMap<Item,Integer> items) {
         this.source = source;
         this.date = date;
         this.timeOfDepurture = timeOfDepurture;
@@ -31,8 +31,8 @@ public class Delivery_Document {
     public Time getTimeOfDepurture() {return timeOfDepurture;}
     public int getTrackNumber() {return trackNumber;}
     public String getDriversName() {return driversName;}
-    public Supplier getSource() {return source;}
-    public Store getDestination() {return destination;}
+    public Store  getSource() {return source;}
+    public Supplier getDestination() {return destination;}
     public HashMap<Item,Integer> getItems() {return items;}
 
     public void setDate(Date date) {
@@ -51,11 +51,11 @@ public class Delivery_Document {
         this.driversName = driversName;
     }
 
-    public void setSource(Supplier source) {
+    public void setSource(Store source) {
         this.source = source;
     }
 
-    public void setDestination(Store destination) {
+    public void setDestination(Supplier destination) {
         this.destination = destination;
     }
 

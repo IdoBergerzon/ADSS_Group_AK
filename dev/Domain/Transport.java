@@ -10,12 +10,12 @@ public class Transport {
     private Time timeOfDepurture;
     private Truck truck;
     private Driver driver;
-    private Supplier source;
-    private List<Store> destinations;
+    private Store source;
+    private List<Supplier> destinations;
     private double totalWeight;
     private String comments;
 
-    public Transport(int transportID, Date date, Time timeOfDepurture, Truck truck, Driver driver, Supplier source, List<Store> destinations, String comments) {
+    public Transport(int transportID, Date date, Time timeOfDepurture, Truck truck, Driver driver, Store source, List<Supplier> destinations, String comments) {
         this.transportID = transportID;
         this.date = date;
         this.timeOfDepurture = timeOfDepurture;
@@ -46,11 +46,11 @@ public class Transport {
         return driver;
     }
 
-    public Supplier getSource() {
+    public Store getSource() {
         return source;
     }
 
-    public List<Store> getDestinations() {
+    public List<Supplier> getDestinations() {
         return destinations;
     }
 
@@ -76,11 +76,11 @@ public class Transport {
         this.truck = truck;
     }
 
-    public void setSource(Supplier source) {
+    public void setSource(Store source) {
         this.source = source;
     }
 
-    public void setDestinations(List<Store> destinations) {
+    public void setDestinations(List<Supplier> destinations) {
         this.destinations = destinations;
     }
 

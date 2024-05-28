@@ -2,8 +2,8 @@ package Domain;
 
 public class Store extends Location {
 
-    public Store(String name, String address, String contact, String phone) {
-        super(name, address, contact, phone);
+    public Store(String name, String address, String contact, String phone, int shippingArea) {
+        super(name, address, contact, phone, shippingArea);
     }
 
     @Override
