@@ -14,7 +14,7 @@ public class Drivers {
         this.drivers = new HashMap<>();
     }
 
-    public List<License> getLicenses() {
-        return licenses;
+    public HashMap<Driver, List<License>> getDrivers() {
+        return drivers;
     }
 }

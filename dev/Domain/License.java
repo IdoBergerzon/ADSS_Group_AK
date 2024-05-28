@@ -13,6 +13,7 @@ public class License {
     public void setTitle(String title) {this.title = title;}
     public void setMaxWeight(double maxWeight) {this.maxWeight = maxWeight;}
 
+
     @Override
     public String toString() {
         return "License{" +

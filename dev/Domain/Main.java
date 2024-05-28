@@ -1,15 +1,24 @@
-package Domain;
+package Main;
 
+import Data.Drivers;
 import Data.Licenses;
+import Domain.Driver;
+import Domain.DriverController;
+import Domain.License;
+
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        Licenses licenses = new Licenses();
-// Add licenses to the list
-        DriverController.addLicense(new License("License 1", 100.0), licenses);
-        DriverController.addLicense(new License("License 2", 200.0), licenses);
-// Print all licenses
-        DriverController.printAllLicenses(licenses);
+        DriverController driverController = new DriverController();
 
+        // Add licenses using the addLicense method in DriverController
+        driverController.addLicense("Car License", 3000);
+        driverController.addLicense("Truck License", 7000);
+        driverController.addLicense("Motorcycle License", 500);
+
+
+
+        driverController.printAllLicenses();
     }
 }
