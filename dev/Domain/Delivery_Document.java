@@ -13,9 +13,9 @@ public class Delivery_Document {
     private String driversName;
     private Supplier source;
     private Store destination;
-    private List<Item> items;
+    private HashMap<Item,Integer> items;
 
-    public Delivery_Document(Supplier source, Date date, Time timeOfDepurture, int trackNumber, String driversName, int documentID, Store destination, List<Item> items) {
+    public Delivery_Document(Supplier source, Date date, Time timeOfDepurture, int trackNumber, String driversName, int documentID, Store destination, HashMap<Item,Integer> items) {
         this.source = source;
         this.date = date;
         this.timeOfDepurture = timeOfDepurture;
@@ -33,7 +33,7 @@ public class Delivery_Document {
     public String getDriversName() {return driversName;}
     public Supplier getSource() {return source;}
     public Store getDestination() {return destination;}
-    public List<Item> getItems() {return items;}
+    public HashMap<Item,Integer> getItems() {return items;}
 
     public void setDate(Date date) {
         this.date = date;
@@ -59,7 +59,7 @@ public class Delivery_Document {
         this.destination = destination;
     }
 
-    public void setItems(List<Item> items) {
+    public void setItems(HashMap<Item,Integer> items) {
         this.items = items;
     }
 

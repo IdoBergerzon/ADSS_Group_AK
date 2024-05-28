@@ -10,6 +10,8 @@ public class License {
     }
     public String getTitle() {return title;}
     public double getMaxWeight() {return maxWeight;}
+    public void setTitle(String title) {this.title = title;}
+    public void setMaxWeight(double maxWeight) {this.maxWeight = maxWeight;}
 
     @Override
     public String toString() {
