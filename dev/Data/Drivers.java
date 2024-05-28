@@ -13,8 +13,4 @@ public class Drivers {
     public Drivers() {
         this.drivers = new HashMap<>();
     }
-
-    public List<License> getLicenses() {
-        return licenses;
-    }
 }
