@@ -3,6 +3,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 
 public class Delivery_Document {
     private int documentID;
@@ -12,9 +13,9 @@ public class Delivery_Document {
     private String driversName;
     private Supplier source;
     private Store destination;
-    private HashMap<String,Integer> items;
+    private List<Item> items;
 
-    public Delivery_Document(Supplier source, Date date, Time timeOfDepurture, int trackNumber, String driversName, int documentID, Store destination, HashMap<String,Integer> items) {
+    public Delivery_Document(Supplier source, Date date, Time timeOfDepurture, int trackNumber, String driversName, int documentID, Store destination, List<Item> items) {
         this.source = source;
         this.date = date;
         this.timeOfDepurture = timeOfDepurture;
@@ -32,7 +33,7 @@ public class Delivery_Document {
     public String getDriversName() {return driversName;}
     public Supplier getSource() {return source;}
     public Store getDestination() {return destination;}
-    public HashMap<String,Integer> getItems() {return items;}
+    public List<Item> getItems() {return items;}
 
     public void setDate(Date date) {
         this.date = date;
@@ -58,7 +59,21 @@ public class Delivery_Document {
         this.destination = destination;
     }
 
-    public void setItems(HashMap<String, Integer> items) {
+    public void setItems(List<Item> items) {
         this.items = items;
+    }
+
+    @Override
+    public String toString() {
+        return "Delivery_Document{" +
+                "documentID=" + documentID +
+                ", date=" + date +
+                ", timeOfDepurture=" + timeOfDepurture +
+                ", trackNumber=" + trackNumber +
+                ", driversName='" + driversName + '\'' +
+                ", source=" + source +
+                ", destination=" + destination +
+                ", items=" + items +
+                '}';
     }
 }

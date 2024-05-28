@@ -2,6 +2,7 @@ package Domain;
 
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 
 public class Transport {
     private int transportID;
@@ -10,10 +11,11 @@ public class Transport {
     private Truck truck;
     private Driver driver;
     private Supplier source;
-    private Store destinations;
+    private List<Store> destinations;
+    private double totalWeight;
     private String comments;
 
-    public Transport(int transportID, Date date, Time timeOfDepurture, Truck truck, Driver driver, Supplier source, Store destinations, String comments) {
+    public Transport(int transportID, Date date, Time timeOfDepurture, Truck truck, Driver driver, Supplier source, List<Store> destinations, String comments) {
         this.transportID = transportID;
         this.date = date;
         this.timeOfDepurture = timeOfDepurture;
@@ -48,9 +50,14 @@ public class Transport {
         return source;
     }
 
-    public Store getDestinations() {
+    public List<Store> getDestinations() {
         return destinations;
     }
+
+    public double getTotalWeight() {
+        return this.totalWeight;
+    }
+
     public String getComments() { return comments; }
 
     public void setDate(Date date) {
@@ -73,8 +80,12 @@ public class Transport {
         this.source = source;
     }
 
-    public void setDestinations(Store destinations) {
+    public void setDestinations(List<Store> destinations) {
         this.destinations = destinations;
+    }
+
+    public void setTotalWeight(double totalWeight) {
+        this.totalWeight = totalWeight;
     }
 
     public void setComments(String comments) {
