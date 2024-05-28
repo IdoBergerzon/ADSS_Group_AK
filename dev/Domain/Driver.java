@@ -5,18 +5,18 @@ public class Driver {
     private int driverID;
     private String driverName;
     private boolean available;
-    private List<License> licenses;
+    //private List<License> licenses;
 
     public Driver(int driverID, String driverName, boolean available, List<License> licenses) {
         this.driverID = driverID;
         this.driverName = driverName;
         this.available = available;
-        this.licenses = licenses;
+    //    this.licenses = licenses;
     }
     public int getDriverID() {return driverID;}
     public String getDriverName() {return driverName;}
     public boolean isAvailable() {return available;}
-    public List<License> getLicenses() {return licenses;}
+    //public List<License> getLicenses() {return licenses;}
 
     public void setDriverID(int driverID) {
         this.driverID = driverID;
@@ -27,9 +27,9 @@ public class Driver {
     }
     public void setAvailable(boolean available) { this.available = available; }
 
-    public void setLicenses(List<License> licenses) {
-        this.licenses = licenses;
-    }
+    //public void setLicenses(List<License> licenses) {
+    //    this.licenses = licenses;
+    //}
 
     @Override
     public String toString() {
@@ -37,7 +37,7 @@ public class Driver {
                 "driverID=" + driverID +
                 ", driverName='" + driverName + '\'' +
                 ", available=" + available +
-                ", licenses=" + licenses.toString() +
+    //            ", licenses=" + licenses.toString() +
                 '}';
     }
 }

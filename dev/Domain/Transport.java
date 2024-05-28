@@ -2,6 +2,7 @@ package Domain;
 
 import java.sql.Time;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class Transport {
@@ -10,12 +11,13 @@ public class Transport {
     private Time timeOfDepurture;
     private Truck truck;
     private Driver driver;
-    private Store source;
+    private List<Store> source;
     private List<Supplier> destinations;
-    private double totalWeight;
+    private List<Double> totalWeights;
+    private List<Delivery_Document> delivery_documents;
     private String comments;
 
-    public Transport(int transportID, Date date, Time timeOfDepurture, Truck truck, Driver driver, Store source, List<Supplier> destinations, String comments) {
+    public Transport(int transportID, Date date, Time timeOfDepurture, Truck truck, Driver driver, List<Store> source, List<Supplier> destinations, List<Double> totalWeights, List<Delivery_Document> delivery_documents, String comments) {
         this.transportID = transportID;
         this.date = date;
         this.timeOfDepurture = timeOfDepurture;
@@ -23,6 +25,8 @@ public class Transport {
         this.driver = driver;
         this.source = source;
         this.destinations = destinations;
+        this.totalWeights = totalWeights;
+        this.delivery_documents = delivery_documents;
         this.comments = comments;
     }
 
@@ -46,7 +50,7 @@ public class Transport {
         return driver;
     }
 
-    public Store getSource() {
+    public List<Store> getSource() {
         return source;
     }
 
@@ -54,8 +58,11 @@ public class Transport {
         return destinations;
     }
 
-    public double getTotalWeight() {
-        return this.totalWeight;
+    public List<Double> getTotalWeights() {
+        return totalWeights;
+    }
+    public List<Delivery_Document> getDelivery_documents() {
+        return delivery_documents;
     }
 
     public String getComments() { return comments; }
@@ -76,7 +83,7 @@ public class Transport {
         this.truck = truck;
     }
 
-    public void setSource(Store source) {
+    public void setSource(List<Store> source) {
         this.source = source;
     }
 
@@ -84,12 +91,32 @@ public class Transport {
         this.destinations = destinations;
     }
 
-    public void setTotalWeight(double totalWeight) {
-        this.totalWeight = totalWeight;
+    public void setTotalWeights(List<Double> totalWeights) {
+        this.totalWeights = totalWeights;
+    }
+
+    public void setDelivery_documents(List<Delivery_Document> delivery_documents) {
+        this.delivery_documents = delivery_documents;
     }
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public void addStore(Store store) {
+        this.source.add(store);
+    }
+
+    public void addSupplier(Supplier supplier) {
+        this.destinations.add(supplier);
+    }
+
+    public void removeSupplier(Supplier supplier) {
+        this.destinations.remove(supplier);
+    }
+
+    public void addComment(String comment) {
+        this.comments = comment;
     }
 
     @Override
@@ -102,6 +129,7 @@ public class Transport {
                 ", driver=" + driver +
                 ", source=" + source +
                 ", destinations=" + destinations +
+                ", totalWeights=" + totalWeights +
                 ", comments='" + comments + '\'' +
                 '}';
     }
