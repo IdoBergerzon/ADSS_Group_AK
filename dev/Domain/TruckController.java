@@ -10,8 +10,8 @@ public class TruckController {
     }
 
     public void addNewTruck(int truckID, String truckType, double truckWeight, double MaxWeight) {
-        Truck addtruck = new Truck(truckID, truckType, truckWeight, MaxWeight, false);
-        this.trucks.addTruck(addtruck);
+        Truck newtruck = new Truck(truckID, truckType, truckWeight, MaxWeight, false);
+        this.trucks.addTruck(newtruck);
     }
 
     public Truck getTruck(int truckID) {

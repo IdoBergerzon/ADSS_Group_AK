@@ -14,6 +14,5 @@ public class Main {
 
         truckController.showTrucks(1);
         truckController.showTrucks(2);
-
     }
 }
