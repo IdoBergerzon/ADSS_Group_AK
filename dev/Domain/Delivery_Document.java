@@ -9,17 +9,17 @@ public class Delivery_Document {
     private int documentID;
     private Date date;
     private Time timeOfDepurture;
-    private int trackNumber;
+    private Truck truck;
     private String driversName;
     private Store source;
     private Supplier destination;
     private HashMap<Item,Integer> items;
 
-    public Delivery_Document(Store source, Date date, Time timeOfDepurture, int trackNumber, String driversName, int documentID, Supplier destination, HashMap<Item,Integer> items) {
+    public Delivery_Document(Store source, Date date, Time timeOfDepurture, Truck truck, String driversName, int documentID, Supplier destination, HashMap<Item,Integer> items) {
         this.source = source;
         this.date = date;
         this.timeOfDepurture = timeOfDepurture;
-        this.trackNumber = trackNumber;
+        this.truck = truck;
         this.driversName = driversName;
         this.documentID = documentID;
         this.destination = destination;
@@ -29,7 +29,7 @@ public class Delivery_Document {
     public int getDocumentID() {return documentID;}
     public Date getDate() {return date;}
     public Time getTimeOfDepurture() {return timeOfDepurture;}
-    public int getTrackNumber() {return trackNumber;}
+    public Truck getTruck() {return truck;}
     public String getDriversName() {return driversName;}
     public Store  getSource() {return source;}
     public Supplier getDestination() {return destination;}
@@ -43,8 +43,8 @@ public class Delivery_Document {
         this.timeOfDepurture = timeOfDepurture;
     }
 
-    public void setTrackNumber(int trackNumber) {
-        this.trackNumber = trackNumber;
+    public void setTruck(Truck truck) {
+        this.truck = truck;
     }
 
     public void setDriversName(String driversName) {
@@ -69,7 +69,7 @@ public class Delivery_Document {
                 "documentID=" + documentID +
                 ", date=" + date +
                 ", timeOfDepurture=" + timeOfDepurture +
-                ", trackNumber=" + trackNumber +
+                ", trackNumber=" + truck +
                 ", driversName='" + driversName + '\'' +
                 ", source=" + source +
                 ", destination=" + destination +
