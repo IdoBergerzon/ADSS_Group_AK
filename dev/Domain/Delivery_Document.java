@@ -1,25 +1,23 @@
 package Domain;
 import java.util.HashMap;
-import java.util.Map;
 import java.sql.Time;
 import java.util.Date;
-import java.util.List;
 
 public class Delivery_Document {
     private int documentID;
     private Date date;
     private Time timeOfDepurture;
-    private int trackNumber;
+    private Truck truck;
     private Driver driver;
     private Store source;
     private Supplier destination;
     private HashMap<Item,Integer> items;
 
-    public Delivery_Document(Store source, Date date, Time timeOfDepurture, int trackNumber, Driver driver, int documentID, Supplier destination, HashMap<Item,Integer> items) {
+    public Delivery_Document(Store source, Date date, Time timeOfDepurture, Truck truck, Driver driver, int documentID, Supplier destination, HashMap<Item,Integer> items) {
         this.source = source;
         this.date = date;
         this.timeOfDepurture = timeOfDepurture;
-        this.trackNumber = trackNumber;
+        this.truck = truck;
         this.driver = driver;
         this.documentID = documentID;
         this.destination = destination;
@@ -29,7 +27,7 @@ public class Delivery_Document {
     public int getDocumentID() {return documentID;}
     public Date getDate() {return date;}
     public Time getTimeOfDepurture() {return timeOfDepurture;}
-    public int getTrackNumber() {return trackNumber;}
+    public Truck getTruck() {return truck;}
     public Driver getDriver() {return driver;}
     public Store  getSource() {return source;}
     public Supplier getDestination() {return destination;}
@@ -43,8 +41,8 @@ public class Delivery_Document {
         this.timeOfDepurture = timeOfDepurture;
     }
 
-    public void setTrackNumber(int trackNumber) {
-        this.trackNumber = trackNumber;
+    public void setTruck(Truck truck) {
+        this.truck = truck;
     }
 
     public void setDriver(Driver driver) {
@@ -69,8 +67,8 @@ public class Delivery_Document {
                 "documentID=" + documentID +
                 ", date=" + date +
                 ", timeOfDepurture=" + timeOfDepurture +
-                ", trackNumber=" + trackNumber +
-                ", driversName='" + driver + '\'' +
+                ", truck=" + truck +
+                ", driver='" + driver + '\'' +
                 ", source=" + source +
                 ", destination=" + destination +
                 ", items=" + items +
