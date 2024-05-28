@@ -10,17 +10,17 @@ public class Delivery_Document {
     private Date date;
     private Time timeOfDepurture;
     private int trackNumber;
-    private String driversName;
+    private Driver driver;
     private Store source;
     private Supplier destination;
     private HashMap<Item,Integer> items;
 
-    public Delivery_Document(Store source, Date date, Time timeOfDepurture, int trackNumber, String driversName, int documentID, Supplier destination, HashMap<Item,Integer> items) {
+    public Delivery_Document(Store source, Date date, Time timeOfDepurture, int trackNumber, Driver driver, int documentID, Supplier destination, HashMap<Item,Integer> items) {
         this.source = source;
         this.date = date;
         this.timeOfDepurture = timeOfDepurture;
         this.trackNumber = trackNumber;
-        this.driversName = driversName;
+        this.driver = driver;
         this.documentID = documentID;
         this.destination = destination;
         this.items = items;
@@ -30,7 +30,7 @@ public class Delivery_Document {
     public Date getDate() {return date;}
     public Time getTimeOfDepurture() {return timeOfDepurture;}
     public int getTrackNumber() {return trackNumber;}
-    public String getDriversName() {return driversName;}
+    public Driver getDriver() {return driver;}
     public Store  getSource() {return source;}
     public Supplier getDestination() {return destination;}
     public HashMap<Item,Integer> getItems() {return items;}
@@ -47,8 +47,8 @@ public class Delivery_Document {
         this.trackNumber = trackNumber;
     }
 
-    public void setDriversName(String driversName) {
-        this.driversName = driversName;
+    public void setDriver(Driver driver) {
+        this.driver = driver;
     }
 
     public void setSource(Store source) {
@@ -70,7 +70,7 @@ public class Delivery_Document {
                 ", date=" + date +
                 ", timeOfDepurture=" + timeOfDepurture +
                 ", trackNumber=" + trackNumber +
-                ", driversName='" + driversName + '\'' +
+                ", driversName='" + driver + '\'' +
                 ", source=" + source +
                 ", destination=" + destination +
                 ", items=" + items +
