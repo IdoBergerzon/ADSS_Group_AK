@@ -8,5 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Drivers {
-    private HashMap<Driver, List<Location>> drivers;
+    private HashMap<Driver, List<License>> drivers;
+
+    public Drivers() {
+        this.drivers = new HashMap<>();
+    }
+
+    public List<License> getLicenses() {
+        return licenses;
+    }
 }
