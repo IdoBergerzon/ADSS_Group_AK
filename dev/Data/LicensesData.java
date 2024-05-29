@@ -20,4 +20,5 @@ public class LicensesData {
     public void addLicense(License license) {
         this.licenses.add(license);
     }
+
 }
