@@ -103,7 +103,12 @@ public class HR_Main {
 
     public void createNewShift(int branch_id, int day, int shift_type) throws Exception {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Now you're creating shift at day " + day + 1 + " and shift type: " + shift_type + "\n");
+
+        String str_shift_type = (shift_type == 0) ? "morning" : "evening";
+        String[] daysOfWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+        String str_day = daysOfWeek[day];
+
+        System.out.println("Now you're creating shift at " + str_day + " and shift type: " + str_shift_type + "\n");
 
         List<Integer> roles_for_shift = new ArrayList<>();
         roles_for_shift.add(2);      //in every shift must have a shift manager

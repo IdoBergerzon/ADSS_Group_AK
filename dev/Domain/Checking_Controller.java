@@ -1,15 +1,24 @@
 package Domain;
+import Data.InMemoryShiftRepository;
 import Data.InMemoryWorkerRepository;
+import Data.Shift_Respository;
 import Data.Worker_Repository;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class Checking_Controller {
     private Worker_Repository WR;
+    private InMemoryShiftRepository SR;
 
+    /**
+     * This function is Our initialize for the System
+     */
     public Checking_Controller() {
         this.WR = InMemoryWorkerRepository.getInstance();
+        this.SR = InMemoryShiftRepository.getInstance();
 
         ///Enitilize the system with some information
         Role hr = new Role(1, "hr");
@@ -45,6 +54,23 @@ public class Checking_Controller {
         WR.addRole(storekeeper);
         WR.addRole(delivery);
         WR.addRole(Cashier);
+
+        Shift[][] shifts = new Shift[7][2];
+        for (int day = 0; day < 7; day++) {
+            for(int i=0; i < 2; i++) {
+                // Morning shifts
+                shifts[day][i]=new Shift(br1.getBranchID(), day, i, new Worker[]{ido, aviv}, List.of(hr, shift_manager));
+                shifts[day][i]=new Shift(br2.getBranchID(), day, i, new Worker[]{hezi, lior}, List.of(shift_manager, storekeeper));
+
+            }
+        }
+
+        // Assuming you have a ShiftRepository to add shifts to
+        Roster roster = new Roster(br2,shifts);
+        SR.addRoster(roster);
+
+        System.out.println(roster);
+
     }
 
 

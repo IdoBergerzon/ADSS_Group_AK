@@ -96,6 +96,13 @@ public class Worker {
     }
 
     public void addNewRole(Role role) {
+        
+        for(int i = 0; i< roles.length; i++) {
+            if(roles[i]==role) {
+                throw new IllegalArgumentException("Role already exists");
+            }
+
+        }
         Role[] newRoles = new Role[roles.length+1];
         System.arraycopy(roles, 0, newRoles, 0, roles.length);
         newRoles[newRoles.length-1] = role;
