@@ -18,10 +18,15 @@ public class TransportsData {
     public void addTransport(Transport transport) {
         this.transports.put(transport.getTransportID(), transport);
     }
-    private HashMap<Integer, Transport> transports;
 
-    public Transport getTransportById(int trackId) {
-        return transports.get(trackId);
+    public Transport getTransportById(int transportID) {
+        if (this.transports.containsKey(transportID)) {
+            return this.transports.get(transportID);
+        }
+        else {
+            System.out.println("transport not found");
+            return null;
+        }
     }
 }
 
