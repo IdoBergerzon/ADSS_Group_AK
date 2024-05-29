@@ -19,7 +19,7 @@ public class HR_Main {
         Scanner sc = new Scanner(System.in);
         String newWorker = "";
         //enter all worker details by order id, name, ...
-        System.out.println("Enter worker id;");
+        System.out.println("Enter worker id:");
         newWorker += sc.nextLine()+ ",";
         System.out.println("Enter worker name:");
         newWorker += sc.nextLine()+ ",";
@@ -140,7 +140,7 @@ public class HR_Main {
     }
 
 
-    public void createNewRoster(){
+    public void createNewRoster() throws Exception {
         Scanner sc = new Scanner(System.in);
         System.out.println("insert branch id\n");
         int branch_id=sc.nextInt();
@@ -180,7 +180,4 @@ public class HR_Main {
 
 
     }
-
-
-
 }

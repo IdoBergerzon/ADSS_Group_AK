@@ -54,4 +54,29 @@ public class Request {
     public void setWeek(int week) {
         this.week = week;
     }
+    public String toString(){
+        String to_return="";
+        String morning_request="";
+        String evening_request="";
+        for (int i=0;i<weeklyRequest[0].length;i++){
+            for (int j=0;j<weeklyRequest.length;j++){
+                if(j==0){
+                    if(weeklyRequest[j][i]==true){
+                        morning_request+="Y";
+                    }
+                    else morning_request+="N";
+                }
+                if(j==1){
+                    if(weeklyRequest[j][i]==true){
+                        evening_request+="Y";
+                    }
+                    else evening_request+="N";
+                }
+
+            }
+        }
+        to_return="morning requests: "+morning_request+"\n"+"evening requests: "+evening_request;
+        return to_return;
+
+    }
 }

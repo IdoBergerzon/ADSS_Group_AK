@@ -6,7 +6,7 @@ import Domain.Worker;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         int choice;
         Scanner scanner = new Scanner(System.in);
         Checking_Controller check = new Checking_Controller();
@@ -41,7 +41,7 @@ public class Main {
 
 
 
-    public static void hr_menu(int worker_id){
+    public static void hr_menu(int worker_id) throws Exception {
         Scanner scanner = new Scanner(System.in);
 
         HR_Main main1=new HR_Main();
@@ -123,12 +123,12 @@ public class Main {
                     main2.EditRequest(worker_id);
                     break;
                 case 4:
-                    //main2.ShowPastShifts(worker_id);
+                    main2.ShowPastShifts(worker_id);
                     break;
                 case 5:
                     main2.ShowCurrRoster(worker_id);
                 case 6:
-                    //RetireMassage(worker_id);
+                    //main2.RetireMassage(worker_id);
                 case 7:
                     return;
                 default:

@@ -110,8 +110,8 @@ public class Worker {
         String result_str="";
         result_str+="Worker ID: "+this.getId()+"\n";
         result_str+="Worker name: "+this.getName()+"\n";
-        result_str+="Monthly wage: "+this.getMonthly_wage()+"\n";
-        result_str+="Hourly wage: "+this.getHourly_wage()+"\n";
+        result_str+="Monthly wage: "+this.getMonthly_wage()+"$"+"\n";
+        result_str+="Hourly wage: "+this.getHourly_wage()+"$"+"\n";
         result_str+="Start date: "+this.getStart_Date()+"\n";
         result_str+="Direct manager ID: "+this.getDirect_manager()+"\n";
         result_str+="Roles: "+ roles[0];

@@ -8,6 +8,15 @@ public class Shift {
     private int branch_id;
     private int Day_of_week;
     private int shift_type;//true=morning,false=evening
+
+    public Worker[] getShift_workers() {
+        return shift_workers;
+    }
+
+    public List<Role> getShift_Roles() {
+        return shift_Roles;
+    }
+
     private Worker[] shift_workers;
     private List<Role> shift_Roles;
 
@@ -42,5 +51,9 @@ public class Shift {
 
     public void setShift_type(int shift_type) {
         this.shift_type = shift_type;
+    }
+
+    public String toString(){
+        return "Shift details: \n"+"branch: "+this.branch_id+"\n"+"week number: "+this.weekNum+"\n"+"shift day: "+this.Day_of_week+"\n"+"\n\n";
     }
 }

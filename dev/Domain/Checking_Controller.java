@@ -43,6 +43,8 @@ public class Checking_Controller {
         WR.addRole(hr);
         WR.addRole(shift_manager);
         WR.addRole(storekeeper);
+        WR.addRole(delivery);
+        WR.addRole(Cashier);
     }
 
 

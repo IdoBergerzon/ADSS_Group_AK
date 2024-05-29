@@ -4,7 +4,9 @@ import Domain.Roster;
 import Domain.Shift;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class InMemoryShiftRepository {
@@ -48,6 +50,12 @@ public class InMemoryShiftRepository {
         roster.addShift(shift);
         rosters.put(key,roster);
     }
+    public List<Roster> getAllRosters(){
+        return new ArrayList<Roster>(rosters.values());
+    }
+
+
+
 
 
 }

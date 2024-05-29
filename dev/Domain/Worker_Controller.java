@@ -1,14 +1,16 @@
 package Domain;
 
 import Data.InMemoryRequestRepository;
+import Data.InMemoryShiftRepository;
 import Data.InMemoryWorkerRepository;
 import Data.InMemoryShiftRepository;
+
+import java.util.List;
 
 public class Worker_Controller {
     private final InMemoryWorkerRepository workers_memory=InMemoryWorkerRepository.getInstance();
     private final InMemoryRequestRepository requests_repository=InMemoryRequestRepository.getInstance();
     private final InMemoryShiftRepository shifts_repository=InMemoryShiftRepository.getInstance();
-
     public void displayMyDetails(int id){
         Worker result=workers_memory.getWorkerById(id);
         System.out.println(result);
@@ -43,5 +45,32 @@ public class Worker_Controller {
             throw new Exception("Your branch doesn't have roster for this week");
         }
         return roster.toString();
+    }
+
+    public String ShowPastShifts(int worker_id){
+        List<Roster> roters_list=shifts_repository.getAllRosters();
+        String toreturn="";
+        for(int i=0;i<roters_list.size();i++) {
+            for (int j = 0; j < 7; j++) {
+                for (int k = 0; k < 2; k++) {
+
+                    if(ifworkinshift(worker_id,roters_list.get(i).getShift_arrangment()[j][k].getShift_workers())){
+                        toreturn+= roters_list.get(i).getShift_arrangment()[j][k].toString();
+                    }
+                }
+            }
+        }
+        return toreturn;
+    }
+    public Boolean ifworkinshift(int workerID,Worker[] worker_list ){
+        for(int i=0;i<worker_list.length;i++){
+            if(worker_list[i].getId()==workerID){
+                return true;
+            }
+        }
+        return false;
+    }
+    public String getrequestById(int id){
+        return requests_repository.getRequestByWorker(id).toString();
     }
 }
