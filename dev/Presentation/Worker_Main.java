@@ -97,7 +97,7 @@ public class Worker_Main {
                 "2.Show past Roster\n");
         int choice = sc.nextInt();
         if(choice == 1){
-            controller.ShowCurrRoster(worker_id);
+            System.out.println(controller.ShowCurrRoster(worker_id));
         } else if(choice == 2){
             System.out.println("Please enter week for past Roster: \n");
             try {

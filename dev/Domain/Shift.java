@@ -7,7 +7,9 @@ public class Shift {
     private int weekNum;
     private int branch_id;
     private int Day_of_week;
-    private int shift_type;//true=morning,false=evening
+    private int shift_type;
+    private Worker[] shift_workers;
+    private List<Role> shift_Roles;
 
     public Worker[] getShift_workers() {
         return shift_workers;
@@ -17,8 +19,7 @@ public class Shift {
         return shift_Roles;
     }
 
-    private Worker[] shift_workers;
-    private List<Role> shift_Roles;
+
 
 
     public Shift(int branch_id, int day_of_week, int shift_type, Worker[] shift_workers, List<Role> shift_Roles) {
@@ -54,6 +55,14 @@ public class Shift {
     }
 
     public String toString(){
-        return "Shift details: \n"+"branch: "+this.branch_id+"\n"+"week number: "+this.weekNum+"\n"+"shift day: "+this.Day_of_week+"\n"+"\n\n";
+        String workerstring="";
+        for(int i=0;i<this.shift_workers.length;i++){
+            workerstring+= "the worker: "+shift_workers[i].getName() +" work as a: "+shift_Roles.get(i).getName()+"\n";
+        }
+        String day_type="";
+        if(this.shift_type==0){
+            day_type="morning";
+        }else day_type="evening";
+        return "Shift details: \n"+"branch: "+this.branch_id+"\n"+"week number: "+this.weekNum+"\n"+"shift day: "+this.Day_of_week+"\n"+"shift type: "+day_type+"\n"+workerstring+"\n\n";
     }
 }

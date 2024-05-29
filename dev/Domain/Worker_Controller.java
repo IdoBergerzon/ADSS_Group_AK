@@ -64,6 +64,9 @@ public class Worker_Controller {
                 }
             }
         }
+        if(toreturn==""){
+            return "there is not past shift\n";
+        }
         return toreturn;
     }
     public Boolean ifworkinshift(int workerID,Worker[] worker_list ){

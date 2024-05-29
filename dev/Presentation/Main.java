@@ -56,7 +56,7 @@ public class Main {
                     "8.create new shift\n" +
                     "9.exit\n");
 
-            System.out.print("Please enter your choice (1-8): ");
+            System.out.print("Please enter your choice (1-9): ");
             int choice = scanner.nextInt();
 
 
@@ -114,21 +114,23 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    main2.displayMyDetails(worker_id);
+                    main2.displayMyDetails(worker_id);//done
                     break;
                 case 2:
-                    main2.addRequest(worker_id);
+                    main2.addRequest(worker_id);//done
                     break;
                 case 3:
-                    main2.EditRequest(worker_id);
+                    main2.EditRequest(worker_id);//done
                     break;
                 case 4:
-                    main2.ShowPastShifts(worker_id);
+                    main2.ShowPastShifts(worker_id);//done
                     break;
                 case 5:
-                    main2.ShowCurrRoster(worker_id);
+                    main2.ShowCurrRoster(worker_id);//done
+                    break;
                 case 6:
                     main2.RetireMassage(worker_id);
+                    break;
                 case 7:
                     return;
                 default:
