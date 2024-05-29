@@ -34,16 +34,16 @@ public class InMemoryShiftRepository {
     }
 
     public void addRoster(Roster roster) {
-        if (rosters.get(new Pair(roster.getBranch(), roster.getWeek()))!=null){
+        if (rosters.get(new Pair(roster.getBranch().getBranchID(), roster.getWeek()))!=null){
             throw new IllegalArgumentException("Roster already exists");
         }
-        rosters.put(new Pair(roster.getBranch(), roster.getWeek()),roster);
+        rosters.put(new Pair(roster.getBranch().getBranchID(), roster.getWeek()),roster);
     }
 
     public void setShift( Shift shift) {
         Pair key = new Pair<>(shift.getBranch_id(), shift.getWeekNum());
         Roster roster = rosters.get(key);
-        roster.setShift(shift);
+        roster.addShift(shift);
         rosters.put(key,roster);
     }
 

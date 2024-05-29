@@ -188,14 +188,14 @@ public class HR_Controller {
         }
         return roles_str;
     }
-    public void createNewShift(int branch_id,int day,int shift_type,int[] shiftWorkers,List<Integer> roles_for_shift){
-        //Branch branch=workers_memory.getBranchByID(branch_id);
+    public void createNewShift(int branch_id,int day,int shift_type,int[] shiftWorkers,List<Integer> roles_for_shift) throws Exception {
+
         Worker[] arrangment=new Worker[shiftWorkers.length];
         List<Role> roleList = new ArrayList<>();
         for (int i=0;i<shiftWorkers.length;i++){
             roleList.add(workers_memory.getRoleByID(roles_for_shift.get(i)));
             if (workers_memory.getWorkerById(shiftWorkers[i])==null || workers_memory.getWorkerById(shiftWorkers[i]).getWork_branch().getBranchID()!=branch_id){
-                //throw Error
+                throw new Exception("ilegal worker ID");
             }else{
                 arrangment[i]=workers_memory.getWorkerById(shiftWorkers[i]);
             }

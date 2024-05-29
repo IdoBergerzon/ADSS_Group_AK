@@ -101,7 +101,7 @@ public class HR_Main {
         hr_controller.displayWorkersByShift(day,shift_type);
     }
 
-    public void createNewShift(int branch_id, int day, int shift_type) {
+    public void createNewShift(int branch_id, int day, int shift_type) throws Exception {
         Scanner sc = new Scanner(System.in);
         System.out.println("Now you're creating shift at day " + day + 1 + " and shift type: " + shift_type + "\n");
 
@@ -122,11 +122,6 @@ public class HR_Main {
             System.out.println("Enter the ID of an worker who can fill the roll ID: "+ roles_for_shift.get(i) + " for this shift \n");
             answer=sc.nextInt();
             shiftWorkers[i]=answer;
-//            for(int j=0;j<amount;j++){
-//                System.out.println("Enter " + j+1 + " " + roles[i] +" worker id:\n");
-//                int worker_id=sc.nextInt();
-//                shiftWorkers[i][j]=worker_id;
-//            }
         }
 
         hr_controller.createNewShift(branch_id,day,shift_type,shiftWorkers,roles_for_shift);
