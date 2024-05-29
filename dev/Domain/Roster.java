@@ -1,6 +1,5 @@
 package Domain;
 
-import java.time.LocalDate;
 
 public class Roster {
     private Branch branch;
@@ -60,5 +59,6 @@ public class Roster {
         }
         shift_arrangment[shift.getDay_of_week()][shift.getShift_type()]=shift;
     }
+
 
 }

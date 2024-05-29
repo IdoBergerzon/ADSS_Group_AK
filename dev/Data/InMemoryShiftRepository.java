@@ -2,9 +2,8 @@ package Data;
 
 import Domain.Roster;
 import Domain.Shift;
+import Domain.Week;
 
-
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,7 +40,9 @@ public class InMemoryShiftRepository {
         rosters.put(new Pair(roster.getBranch(), roster.getWeek()),roster);
     }
 
-
+    public void setShift(int branch_id, Shift shift) {
+        rosters.get(new Pair<>(branch_id, Week.getWeek())).setShift(shift);
+    }
 
 
     /////// need to create the whole function to add new Shift and one more function to add roster

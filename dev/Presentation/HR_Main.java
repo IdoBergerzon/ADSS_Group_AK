@@ -1,7 +1,7 @@
 package Presentation;
 
 import Domain.HR_Controller;
-import Domain.Worker;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -130,13 +130,28 @@ public class HR_Main {
             System.out.println("branch doesn't exist\n");
             return;
         }
-        hr_controller.createNewRoster(branch_id);
-        /// אנחנו צריכים לממש פונקציה בזיכרון שתממש את ההכנסה של שיפט חדש לזיכרון
+        while (true) {
+            try {
+                hr_controller.createNewRoster(branch_id);
+                break;
+            } catch (Exception e) {
+               System.out.println("branch already has a roster for this week\n" +
+                       "Would you like to create a new roster for another branch? (y/n)");
+               String choice = sc.nextLine();
+               if(choice.equals("n")){
+                   return;
+               }
+            }
+        }
         for(int day=0; day < 7; day++){
             for(int shift_type=0; shift_type < 2; shift_type++) {
                 createNewShift(branch_id, day, shift_type);
             }
         }
+
+        System.out.println("Great, the Roster is ready");
+        hr_controller.setWeek();
+
 
 
     }

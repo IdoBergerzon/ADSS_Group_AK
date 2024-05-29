@@ -208,12 +208,14 @@ public class HR_Controller {
     }
 
     public void createNewRoster(int branch_id){
-        int week=Week.getWeek();
+
         Branch branch=workers_memory.getBranchByID(branch_id);
         Roster new_roster =new Roster(branch);
         shifts_repository.addRoster(new_roster);
+
+    }
+
+    public void setWeek(){
         Week.setWeek();
-
-
     }
 }

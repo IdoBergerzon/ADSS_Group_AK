@@ -81,7 +81,7 @@ public class Main {
                     main1.displayWorkersByShift();
                     break;
                 case 7:
-                    //createNewRoster();
+                    main1.createNewRoster();
                     break;
                 case 8:
                     //createNewShift();
@@ -105,10 +105,11 @@ public class Main {
             System.out.println("1.display details\n" +
                     "2.add request\n" +
                     "3.edit exist request\n" +
-                    "4.past shifts\n" +
-                    "5.retire massage\n" +
-                    "6.exit\n");
-            System.out.print("Please enter your choice (1-6): ");
+                    "4.Show past shifts\n" +
+                    "5.Show current roster\n" +
+                    "6.retire massage\n" +
+                    "7.exit\n");
+            System.out.print("Please enter your choice (1-7): ");
             int choice = scanner.nextInt();
 
             switch (choice) {
@@ -122,11 +123,13 @@ public class Main {
                     main2.EditRequest(worker_id);
                     break;
                 case 4:
-                    //ShowPastShifts();
+                    //ShowPastShifts(worker_id);
                     break;
                 case 5:
-                    //RetireMassage();
+                    //ShowCuerrRoster(worker_id);
                 case 6:
+                    //RetireMassage(worker_id);
+                case 7:
                     return;
                 default:
                     System.out.println("Invalid choice. Please enter a number 1 to 6.");

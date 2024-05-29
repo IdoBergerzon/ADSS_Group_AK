@@ -18,6 +18,8 @@ public class Shift {
     }
 
 
+
+
     public int getWeekNum() {
         return weekNum;
     }
