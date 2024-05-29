@@ -1,6 +1,5 @@
 package Presentation;
 import Domain.Checking_Controller;
-import Domain.Worker;
 
 
 import java.util.Scanner;
@@ -128,7 +127,7 @@ public class Main {
                 case 5:
                     main2.ShowCurrRoster(worker_id);
                 case 6:
-                    //RetireMassage(worker_id);
+                    main2.RetireMassage(worker_id);
                 case 7:
                     return;
                 default:

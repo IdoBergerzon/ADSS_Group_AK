@@ -44,4 +44,8 @@ public class Worker_Controller {
         }
         return roster.toString();
     }
+
+    public void RetireMassage(int worker_id){
+        workers_memory.deleteWorker(worker_id);
+    }
 }
