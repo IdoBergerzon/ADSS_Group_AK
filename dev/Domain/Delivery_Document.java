@@ -1,8 +1,10 @@
 package Domain;
+import java.sql.Time;
+import java.util.Date;
 import java.util.HashMap;
 
 public class Delivery_Document {
-    private int documentID;
+    private final int documentID;
     private Store source;
     private Supplier destination;
     private HashMap<Item,Integer> items;

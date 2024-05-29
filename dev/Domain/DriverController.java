@@ -35,14 +35,4 @@ public class DriverController {
 //        drivers.getDrivers().put(driver, driverLicenses);
 //        System.out.println("License added successfully to driver " + driver.getDriverName());
 //    }
-
-    public void printAllDriverLicenses(DriversData drivers) {
-        for (Driver driver : drivers.getDrivers().keySet()) {
-            System.out.println("Driver: " + driver.getDriverName());
-            List<License> licenses = drivers.getDrivers().get(driver);
-            for (License license : licenses) {
-                System.out.println(license);
-            }
-        }
-    }
 }

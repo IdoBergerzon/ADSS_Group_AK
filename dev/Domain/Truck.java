@@ -1,8 +1,8 @@
 package Domain;
 
 public class Truck {
-    private int truckID;
-    private String truckType;
+    private final int truckID;
+    private final String truckType;
     private double truckWeight;
     private double MaxWeight;
     private boolean available;

@@ -1,7 +1,7 @@
 package Domain;
 
 public class Item {
-    private int itemID;
+    private final int itemID;
     private String itemName;
     private double weight;
 

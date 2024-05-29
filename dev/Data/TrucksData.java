@@ -12,5 +12,8 @@ public class TrucksData {
     public void addTruck(Truck truck) {
         trucks.put(truck.getTruckID(), truck);
     }
+    public void removeTruck(Truck truck) {
+        trucks.remove(truck.getTruckID());
+    }
 
 }

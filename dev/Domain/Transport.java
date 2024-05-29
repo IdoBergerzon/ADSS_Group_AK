@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Transport {
-    private int transportID;
+    private final int transportID;
     private Date date;
     private Time timeOfDepurture;
     private Truck truck;
