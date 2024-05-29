@@ -80,6 +80,7 @@ public class Transport {
     }
 
     public void setTruck(Truck truck) {
+        truck.setAvailable(false);
         this.truck = truck;
     }
 
@@ -101,6 +102,10 @@ public class Transport {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public void addWeight(double weight) {
+        this.totalWeights.add(weight);
     }
 
     public void addStore(Store store) {
