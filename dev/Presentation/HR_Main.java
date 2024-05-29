@@ -151,7 +151,13 @@ public class HR_Main {
         }
         for(int day=0; day < 7; day++){
             for(int shift_type=0; shift_type < 2; shift_type++) {
-                createNewShift(branch_id, day, shift_type);
+                while(true){
+                    try {
+                        createNewShift(branch_id, day, shift_type);
+                    } catch (Exception e) {
+                        System.out.println("Shift is not available please try again");
+                    }
+                }
             }
         }
 

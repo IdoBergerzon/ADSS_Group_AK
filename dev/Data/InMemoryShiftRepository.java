@@ -2,7 +2,7 @@ package Data;
 
 import Domain.Roster;
 import Domain.Shift;
-import Domain.Week;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,13 +34,15 @@ public class InMemoryShiftRepository {
     }
 
     public void addRoster(Roster roster) {
-        if (rosters.get(new Pair(roster.getBranch().getBranchID(), roster.getWeek()))!=null){
+        Pair key = new Pair<>(roster.getBranch(), roster.getWeek());
+        if (rosters.get(key) != null) {
             throw new IllegalArgumentException("Roster already exists");
         }
-        rosters.put(new Pair(roster.getBranch().getBranchID(), roster.getWeek()),roster);
+        rosters.put(key, roster);
+
     }
 
-    public void setShift( Shift shift) {
+    public void setShift(Shift shift) {
         Pair key = new Pair<>(shift.getBranch_id(), shift.getWeekNum());
         Roster roster = rosters.get(key);
         roster.addShift(shift);
@@ -48,15 +50,7 @@ public class InMemoryShiftRepository {
     }
 
 
-    /////// need to create the whole function to add new Shift and one more function to add roster
-//    public void addShift(Shift shift) {
-//        Shift[][] arr = currentShifts.containsKey(new Pair<>(shift.getBranch_id(),shift.getWeekNum()));
-//        if(arr == null) {
-//            arr=new Shift[7][2];
-//        }
-//        int shift_type = shift.getShift_type() ? 1 : 0;
-//        arr[shift.getDay_of_week()][shift_type] = shift;
-//    }
+
 
 
 }

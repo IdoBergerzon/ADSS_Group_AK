@@ -14,6 +14,9 @@ public class HR_Controller {
     private final InMemoryRequestRepository requests_repository=InMemoryRequestRepository.getInstance();
     private final InMemoryShiftRepository shifts_repository=InMemoryShiftRepository.getInstance();
 
+    public HR_Controller(){
+        new Week();
+    }
     public int Add_New_Worker(String details) {
         //ID,name,hourly wage, monthly wage,start date,role,branch,dayoff=0,department
         String[] string_details = details.split(",");
@@ -189,17 +192,36 @@ public class HR_Controller {
         return roles_str;
     }
     public void createNewShift(int branch_id,int day,int shift_type,int[] shiftWorkers,List<Integer> roles_for_shift) throws Exception {
-
+        /// Declaration part
+        Worker worker;
         Worker[] arrangment=new Worker[shiftWorkers.length];
         List<Role> roleList = new ArrayList<>();
+
         for (int i=0;i<shiftWorkers.length;i++){
             roleList.add(workers_memory.getRoleByID(roles_for_shift.get(i)));
-            if (workers_memory.getWorkerById(shiftWorkers[i])==null || workers_memory.getWorkerById(shiftWorkers[i]).getWork_branch().getBranchID()!=branch_id){
-                throw new Exception("ilegal worker ID");
-            }else{
-                arrangment[i]=workers_memory.getWorkerById(shiftWorkers[i]);
+            worker = workers_memory.getWorkerById(shiftWorkers[i]);
+            //Test to make sure adding this worker is not against the rules
+            if (worker==null){
+                throw new Exception("Worker ID does not exist");
+            } else if (worker.getWork_branch().getBranchID()!=branch_id) {
+                throw new Exception("Worker does not works in this branch");
+            } else{
+                boolean roleExists = false;
+                for (Role role : worker.getRoles()) {
+                    if (role.getRoleID() == roles_for_shift.get(i)) { // Assuming Role class has a getID() method
+                        roleExists = true;
+                        break;
+                    }
+                }
+                if (!roleExists) {
+                    throw new Exception("Worker " + worker.getId() + " does not have the required role for the shift");
+                }
+                arrangment[i] = worker;
             }
+            
         }
+
+        //Creating the shift and add to memory
         Shift new_shift=new Shift(branch_id,day,shift_type,arrangment,roleList);
         shifts_repository.setShift(new_shift);
 
@@ -213,9 +235,9 @@ public class HR_Controller {
     }
 
     public void createNewRoster(int branch_id){
-
         Branch branch=workers_memory.getBranchByID(branch_id);
         Roster new_roster =new Roster(branch);
+
         shifts_repository.addRoster(new_roster);
 
     }
