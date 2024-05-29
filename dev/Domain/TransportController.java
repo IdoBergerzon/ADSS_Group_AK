@@ -57,10 +57,6 @@ public class TransportController {
         else System.out.println("transport does not exist");
     }
 
-    /**
-     * Calculates the total transport weight + the weight of the truck
-     * @param transportID
-     */
     public void calc_transportWeight(int transportID) {
         Transport transport=transportsData.getTransports().get(transportID);
         double totalW = 0;
@@ -70,12 +66,6 @@ public class TransportController {
         transport.addWeight(totalW + transport.getTruck().getTruckWeight());
     }
 
-    /**
-     * Removing an item from the transport (from all shipments in which the item is included)
-     * in case of excess weight, and updating the weight for each shipment
-     * @param transportID
-     * @param item
-     */
     public void removeItem(int transportID, Item item) {
         Transport transport=transportsData.getTransports().get(transportID);
         int flag = 0;
@@ -88,40 +78,38 @@ public class TransportController {
         if (flag == 0) System.out.println("item does not exist in transport");
     }
 
-    /**
-     * Truck replacement in case of overweight
-     * @param transportID
-     * @param truck
-     */
     public void replaceTruck(int transportID, Truck truck) {
         Transport transport=transportsData.getTransports().get(transportID);
         transport.getTruck().setAvailable(true);
         transport.setTruck(truck);
     }
 
+
+
+
     public void setShipping_area(Address address, int shipping_area) {
         address.setShipping_area(shipping_area);
         System.out.println("Shipping area set successfully for address: " + address.getFull_address());
     }
 //to add alarm
-    public void changeDriver(int transportID, Driver newDriver) {
+    public void changeDriver(int Id, Driver newDriver) {
         // Retrieve the transport associated with the given track ID
-        Transport transport = transportsData.getTransportById(transportID);
+        Transport transport = transportsData.getTransportById(trackId);
 
         if (transport != null) {
             transport.getDriver().setAvailable(true);
             // Update the driver object of the transport
             transport.setDriver(newDriver);
-            System.out.println("Driver changed successfully for track " + transportID);
+            System.out.println("Driver changed successfully for track " + trackId);
         } else {
-            System.out.println("Transport not found with ID: " + transportID);
+            System.out.println("Transport not found with ID: " + trackId);
         }
 
     }
 
 
 
-}
+    }
 
 
 
