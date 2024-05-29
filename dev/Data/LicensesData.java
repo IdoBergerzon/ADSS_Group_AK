@@ -8,6 +8,7 @@ import java.util.List;
 public class LicensesData {
     private List<License> licenses;
 
+
     public LicensesData() {
         this.licenses = new ArrayList<>();
     }
@@ -19,4 +20,5 @@ public class LicensesData {
     public void addLicense(License license) {
         this.licenses.add(license);
     }
+
 }

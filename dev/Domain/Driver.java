@@ -35,4 +35,5 @@ public class Driver {
                ", licenseMaxWeight=" + licenseMaxWeight +
                 '}';
     }
+
 }
