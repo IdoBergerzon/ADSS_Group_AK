@@ -10,19 +10,7 @@ public class Main {
         License license1 = new License("B", 3500);
         License license2 = new License("C", 7500);
 
-        // Add licenses to the license data
-        controller.addLicense(license1.getTitle(), license1.getMaxWeight());
-        controller.addLicense(license2.getTitle(), license2.getMaxWeight());
 
-        // Add drivers
-        controller.addDriver(1, "John Doe", true, 1);
-        controller.addDriver(2, "Jane Smith", true, 3);
-
-        // Add a new license to an existing driver
-        controller.addLicenseToDriver(2, 22);
-
-        // Print all licenses
-        controller.printAllLicenses();
 
         // Print all drivers and their licenses
         controller.printAllDrivers();

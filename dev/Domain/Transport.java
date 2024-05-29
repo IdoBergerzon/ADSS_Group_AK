@@ -76,6 +76,7 @@ public class Transport {
     }
 
     public void setDriver(Driver driver) {
+        this.driver.setAvailable(false);
         this.driver = driver;
     }
 

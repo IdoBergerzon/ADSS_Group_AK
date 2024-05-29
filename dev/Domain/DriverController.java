@@ -1,6 +1,7 @@
 package Domain;
 
 import Data.DriversData;
+import Data.LicensesData;
 
 public class DriverController {
     private DriversData driversData;

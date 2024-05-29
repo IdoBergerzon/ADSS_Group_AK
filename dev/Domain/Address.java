@@ -5,10 +5,10 @@ public class Address {
     private final int address_code;
     private int shipping_area;
 
-    private Address(String full_address, int address_code, int shipping_area) {
+    private Address(String full_address, int address_code) {
         this.full_address = full_address;
         this.address_code = address_code;
-        this.shipping_area = shipping_area;
+        this.shipping_area = 0;
     }
 
     public String getFull_address() {
@@ -19,6 +19,10 @@ public class Address {
     }
     public int getShipping_area() {
         return shipping_area;
+    }
+
+    public void setShipping_area(int shipping_area) {
+        this.shipping_area = shipping_area;
     }
 
     public String toString() {

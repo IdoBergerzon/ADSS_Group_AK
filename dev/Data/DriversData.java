@@ -2,10 +2,7 @@ package Data;
 
 import Domain.Driver;
 
-
-
 import java.util.HashSet;
-
 
 public class DriversData {
     private HashSet<Driver> drivers;

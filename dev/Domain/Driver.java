@@ -6,6 +6,7 @@ public class Driver {
     private boolean available;
     private int licenseMaxWeight;
 
+
     public Driver(int driverID, String driverName, boolean available, int licenseMaxWeight) {
         this.driverID = driverID;
         this.driverName = driverName;
