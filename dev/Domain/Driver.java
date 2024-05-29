@@ -1,28 +1,27 @@
 package Domain;
-import java.util.List;
 
 public class Driver {
     private final int driverID;
     private String driverName;
     private boolean available;
-    private License license;
+    private int licenseMaxWeight;
 
-    public Driver(int driverID, String driverName, boolean available, License license) {
+    public Driver(int driverID, String driverName, boolean available, int licenseMaxWeight) {
         this.driverID = driverID;
         this.driverName = driverName;
         this.available = available;
-        this.license = license;
+        this.licenseMaxWeight = licenseMaxWeight;
     }
     public int getDriverID() {return driverID;}
     public String getDriverName() {return driverName;}
     public boolean isAvailable() {return available;}
-    public License getLicense() {return license;}
+    public int getLicenseMaxWeight() {return licenseMaxWeight;}
 
     public void setDriverName(String driverName) {
         this.driverName = driverName;
     }
     public void setAvailable(boolean available) { this.available = available; }
-    public void setLicense(License license) { this.license = license; }
+    public void setLicenseMaxWeight(int licenseMaxWeight) { this.licenseMaxWeight = licenseMaxWeight; }
 
 
 
@@ -32,7 +31,7 @@ public class Driver {
                 "driverID=" + driverID +
                 ", driverName='" + driverName + '\'' +
                 ", available=" + available +
-               ", license=" + (license != null ? license.toString() : "No license") +
+               ", licenseMaxWeight=" + licenseMaxWeight +
                 '}';
     }
 }

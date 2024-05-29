@@ -15,11 +15,11 @@ public class Main {
         controller.addLicense(license2.getTitle(), license2.getMaxWeight());
 
         // Add drivers
-        controller.addDriver(1, "John Doe", true, license1);
-        controller.addDriver(2, "Jane Smith", true, null);
+        controller.addDriver(1, "John Doe", true, 1);
+        controller.addDriver(2, "Jane Smith", true, 3);
 
         // Add a new license to an existing driver
-        controller.addLicenseToDriver(2, license2);
+        controller.addLicenseToDriver(2, 22);
 
         // Print all licenses
         controller.printAllLicenses();
