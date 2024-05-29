@@ -130,12 +130,14 @@ public class HR_Main {
             System.out.println("branch doesn't exist\n");
             return;
         }
+        hr_controller.createNewRoster(branch_id);
+        /// אנחנו צריכים לממש פונקציה בזיכרון שתממש את ההכנסה של שיפט חדש לזיכרון
         for(int day=0; day < 7; day++){
             for(int shift_type=0; shift_type < 2; shift_type++) {
                 createNewShift(branch_id, day, shift_type);
             }
         }
-        hr_controller.createNewRoster(branch_id);
+
 
     }
 }

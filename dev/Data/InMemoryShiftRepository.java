@@ -4,17 +4,18 @@ import Domain.Roster;
 import Domain.Shift;
 
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
 public class InMemoryShiftRepository {
     private final Map<Pair, Roster> rosters;
 
-    private Map<Pair,Shift[][]> currentShifts;
+
 
     private InMemoryShiftRepository() {
         rosters = new HashMap<>();
-        currentShifts = new HashMap<>();
+
     }
 
     private static class InShiftHolder {
@@ -30,18 +31,28 @@ public class InMemoryShiftRepository {
     }
 
     public Shift[][] getCurrentShifts(int branch_id, int week) {
-        return currentShifts.get(new Pair<>(branch_id,week));
+        return rosters.get(new Pair<>(branch_id,week)).getShift_arrangment();
     }
-    /////// need to create the whole function to add new Shift and one more function to add roster
-    public void addShift(Shift shift) {
-        Shift[][] arr = currentShifts.containsKey(new Pair<>(shift.getBranch_id(),shift.getWeekNum()))
-        if(arr) {
-            arr=new Shift[7][2];
 
-            arr[shift.getDay_of_week()][shift.setShift_type()] =shift;
-
+    public void addRoster(Roster roster) {
+        if (rosters.get(new Pair(roster.getBranch(), roster.getWeek()))!=null){
+            throw new IllegalArgumentException("Roster already exists");
         }
+        rosters.put(new Pair(roster.getBranch(), roster.getWeek()),roster);
     }
+
+
+
+
+    /////// need to create the whole function to add new Shift and one more function to add roster
+//    public void addShift(Shift shift) {
+//        Shift[][] arr = currentShifts.containsKey(new Pair<>(shift.getBranch_id(),shift.getWeekNum()));
+//        if(arr == null) {
+//            arr=new Shift[7][2];
+//        }
+//        int shift_type = shift.getShift_type() ? 1 : 0;
+//        arr[shift.getDay_of_week()][shift_type] = shift;
+//    }
 
 
 }

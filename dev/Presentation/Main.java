@@ -108,7 +108,7 @@ public class Main {
                     "4.past shifts\n" +
                     "5.retire massage\n" +
                     "6.exit\n");
-            System.out.print("Please enter your choice (1-5): ");
+            System.out.print("Please enter your choice (1-6): ");
             int choice = scanner.nextInt();
 
             switch (choice) {
@@ -122,7 +122,7 @@ public class Main {
                     main2.EditRequest(worker_id);
                     break;
                 case 4:
-                    //PastShifts();
+                    //ShowPastShifts();
                     break;
                 case 5:
                     //RetireMassage();
