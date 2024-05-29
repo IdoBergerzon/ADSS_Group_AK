@@ -1,4 +1,5 @@
 package Domain;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -187,16 +188,20 @@ public class HR_Controller {
         }
         return roles_str;
     }
-    public void createNewShift(int branch_id,int day,int shift_type,int[][] shiftWorkers){
-        Branch branch=workers_memory.getBranchByID(branch_id);
-        Boolean type;
-        if(shift_type==0){
-            type=true;
-        }else type=false;
-        Worker[][] arrangment=new Worker[shiftWorkers.length][];
+    public void createNewShift(int branch_id,int day,int shift_type,int[] shiftWorkers,List<Integer> roles_for_shift){
+        //Branch branch=workers_memory.getBranchByID(branch_id);
+        Worker[] arrangment=new Worker[shiftWorkers.length];
+        List<Role> roleList = new ArrayList<>();
         for (int i=0;i<shiftWorkers.length;i++){
-            //צריך להחליף מתעודות זהות של עובדים לאינסטנסים שלהם
+            roleList.add(workers_memory.getRoleByID(roles_for_shift.get(i)));
+            if (workers_memory.getWorkerById(shiftWorkers[i])==null || workers_memory.getWorkerById(shiftWorkers[i]).getWork_branch().getBranchID()!=branch_id){
+                //throw Error
+            }else{
+                arrangment[i]=workers_memory.getWorkerById(shiftWorkers[i]);
+            }
         }
+        Shift new_shift=new Shift(branch_id,day,shift_type,arrangment,roleList);
+        shifts_repository.setShift(new_shift);
 
     }
 

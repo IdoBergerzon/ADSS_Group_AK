@@ -1,11 +1,11 @@
 package Presentation;
 
 import Domain.HR_Controller;
+import Domain.Role;
+import Domain.Worker;
 
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class HR_Main {
     private HR_Controller hr_controller;
@@ -101,24 +101,35 @@ public class HR_Main {
         hr_controller.displayWorkersByShift(day,shift_type);
     }
 
-    public void createNewShift(int branch_id, int day, int shift_type){
+    public void createNewShift(int branch_id, int day, int shift_type) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Now you're creating shift at day " + day+1 + " and shift type: " + shift_type + "\n");
+        System.out.println("Now you're creating shift at day " + day + 1 + " and shift type: " + shift_type + "\n");
 
-        String[] roles=hr_controller.getAllRoles().split(",");
-
-        int[][] shiftWorkers=new int[roles.length][];
-        for(int i=0;i<roles.length;i++){
-            System.out.println("How many "+ roles[i] + " for this shift? ");
-            int amount=sc.nextInt();
-            shiftWorkers[i]=new int[amount];
-            for(int j=0;j<amount;j++){
-                System.out.println("Enter " + j+1 + " " + roles[i] +" worker id:\n");
-                int worker_id=sc.nextInt();
-                shiftWorkers[i][j]=worker_id;
+        List<Integer> roles_for_shift = new ArrayList<>();
+        roles_for_shift.add(2);      //in every shift must have a shift manager
+        int answer;
+        while (true) {
+            System.out.println("enter role id you need to this shift(if you finish insert 0): ");
+            answer = sc.nextInt();
+            if(answer==0){
+                break;
             }
+            roles_for_shift.add(answer);
+
         }
-        hr_controller.createNewShift(branch_id,day,shift_type,shiftWorkers);
+        int[] shiftWorkers=new int[roles_for_shift.size()];
+        for(int i=0;i<roles_for_shift.size();i++){
+            System.out.println("Enter the ID of an worker who can fill the roll ID: "+ roles_for_shift.get(i) + " for this shift \n");
+            answer=sc.nextInt();
+            shiftWorkers[i]=answer;
+//            for(int j=0;j<amount;j++){
+//                System.out.println("Enter " + j+1 + " " + roles[i] +" worker id:\n");
+//                int worker_id=sc.nextInt();
+//                shiftWorkers[i][j]=worker_id;
+//            }
+        }
+
+        hr_controller.createNewShift(branch_id,day,shift_type,shiftWorkers,roles_for_shift);
     }
 
 

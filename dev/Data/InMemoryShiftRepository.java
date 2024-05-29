@@ -40,8 +40,11 @@ public class InMemoryShiftRepository {
         rosters.put(new Pair(roster.getBranch(), roster.getWeek()),roster);
     }
 
-    public void setShift(int branch_id, Shift shift) {
-        rosters.get(new Pair<>(branch_id, Week.getWeek())).setShift(shift);
+    public void setShift( Shift shift) {
+        Pair key = new Pair<>(shift.getBranch_id(), shift.getWeekNum());
+        Roster roster = rosters.get(key);
+        roster.setShift(shift);
+        rosters.put(key,roster);
     }
 
 
