@@ -82,6 +82,7 @@ public class TransportController {
         for (Delivery_Document delivery_doc : transport.getDelivery_documents()) {
             if (delivery_doc.getItems().containsKey(item)){
                 delivery_doc.removeItemWeight(item);
+                delivery_doc.setItemsStatus(Delivery_ItemsStatus.itemMissing);
                 flag = 1;
             }
         }
@@ -99,15 +100,24 @@ public class TransportController {
         transport.setTruck(truck);
     }
 
+    /**
+     * Division into shipping areas
+     * @param address
+     * @param shipping_area
+     */
     public void setShipping_area(Address address, int shipping_area) {
         address.setShipping_area(shipping_area);
         System.out.println("Shipping area set successfully for address: " + address.getFull_address());
     }
-//to add alarm
+
+    /**
+     * Replacing a driver in case he does not have the appropriate license for the truck
+     * @param transportID
+     * @param newDriver
+     */
     public void changeDriver(int transportID, Driver newDriver) {
         // Retrieve the transport associated with the given track ID
         Transport transport = transportsData.getTransportById(transportID);
-
         if (transport != null) {
             transport.getDriver().setAvailable(true);
             // Update the driver object of the transport
@@ -116,11 +126,30 @@ public class TransportController {
         } else {
             System.out.println("Transport not found with ID: " + transportID);
         }
+    }
 
+    /**
+     * Transport closing (driver release, truck release, delivery status update)
+     * @param transport
+     * @return
+     */
+    public String finishTransport(Transport transport) {
+        transport.getDriver().setAvailable(true);
+        transport.getTruck().setAvailable(true);
+        for(Delivery_Document delivery : transport.getDelivery_documents()){
+            delivery.setDelivery_status(Delivery_DocumentStatus.finished);
+        }
+        return "Transport finished successfully";
     }
 
 
 
+    //התראה על שיבוץ לא מתאים של נהג
+    //התראה על חריגה במשקל
+    //תכנון נסיעה
+    //הוספת הערות במקרה של חריגה במשקל
+    //הורדה לתכנון מחדש של נסיעה?
+    //שינוי יעדים במקרה של חריגה במשקל
 }
 
 
