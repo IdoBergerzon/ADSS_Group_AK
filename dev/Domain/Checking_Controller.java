@@ -55,21 +55,24 @@ public class Checking_Controller {
         WR.addRole(delivery);
         WR.addRole(Cashier);
 
-        Shift[][] shifts = new Shift[7][2];
+        Shift[][] shifts1 = new Shift[7][2];
+        Shift[][] shifts2 = new Shift[7][2];
         for (int day = 0; day < 7; day++) {
             for(int i=0; i < 2; i++) {
                 // Morning shifts
-                shifts[day][i]=new Shift(br1.getBranchID(), day, i, new Worker[]{ido, aviv}, List.of(hr, shift_manager));
-                shifts[day][i]=new Shift(br2.getBranchID(), day, i, new Worker[]{hezi, lior}, List.of(shift_manager, storekeeper));
+                shifts1[day][i]=new Shift(br1.getBranchID(), day, i, new Worker[]{ido, aviv}, List.of(hr, shift_manager));
+                shifts2[day][i]=new Shift(br2.getBranchID(), day, i, new Worker[]{hezi, lior}, List.of(shift_manager, storekeeper));
 
             }
         }
 
-        // Assuming you have a ShiftRepository to add shifts to
-        Roster roster = new Roster(br2,shifts);
-        SR.addRoster(roster);
+        Roster roster1 = new Roster(br1,shifts1);
+        Roster roster2 = new Roster(br2,shifts2);
+        SR.addRoster(roster1);
+        SR.addRoster(roster2);
+        Week.setWeek();
 
-        System.out.println(roster);
+
 
     }
 
