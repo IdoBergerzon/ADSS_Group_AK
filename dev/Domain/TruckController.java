@@ -30,10 +30,17 @@ public class TruckController {
         else System.out.println("truck not found");
     }
 
-    public void showTrucks(int truckID) {
+    public String showTrucks(int truckID) {
         if (this.getTruck(truckID) != null) {
-            System.out.println(this.getTruck(truckID).toString());
+            return this.getTruck(truckID).toString();
         }
+        else return "Truck not found";
+    }
+    public void setAvailable(int truckID, boolean available) {
+        if (this.getTruck(truckID) != null) {
+            this.getTruck(truckID).setAvailable(available);
+        }
+        else System.out.println("truck not found");
     }
 
 
