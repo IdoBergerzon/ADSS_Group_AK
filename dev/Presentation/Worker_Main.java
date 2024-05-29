@@ -109,4 +109,16 @@ public class Worker_Main {
 
     }
 
+    public void RetireMassage(int worker_id){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("We are sorry to see you leave, are you sure you want to resign? (y/n)");
+        String answer = sc.nextLine();
+        if(answer.equals("y")){
+            controller.RetireMassage(worker_id);
+            System.out.println("Bye Bye!!");
+        } else{
+            System.out.println("You choose to stay, Awesome!!!");
+        }
+    }
+
 }

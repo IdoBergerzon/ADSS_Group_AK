@@ -1,7 +1,6 @@
 package Domain;
 
 import Data.InMemoryRequestRepository;
-import Data.InMemoryShiftRepository;
 import Data.InMemoryWorkerRepository;
 import Data.InMemoryShiftRepository;
 
@@ -11,6 +10,7 @@ public class Worker_Controller {
     private final InMemoryWorkerRepository workers_memory=InMemoryWorkerRepository.getInstance();
     private final InMemoryRequestRepository requests_repository=InMemoryRequestRepository.getInstance();
     private final InMemoryShiftRepository shifts_repository=InMemoryShiftRepository.getInstance();
+
     public void displayMyDetails(int id){
         Worker result=workers_memory.getWorkerById(id);
         System.out.println(result);
@@ -45,6 +45,10 @@ public class Worker_Controller {
             throw new Exception("Your branch doesn't have roster for this week");
         }
         return roster.toString();
+    }
+
+    public void RetireMassage(int worker_id){
+        workers_memory.deleteWorker(worker_id);
     }
 
     public String ShowPastShifts(int worker_id){

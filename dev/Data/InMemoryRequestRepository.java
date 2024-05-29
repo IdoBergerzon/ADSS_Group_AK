@@ -7,7 +7,7 @@ import Domain.Week;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryRequestRepository {
+public class InMemoryRequestRepository implements Request_Repository{
     private final Map<Pair, Request> curr_requests;
     private final Map<Integer, Request[]> past_requests;///need to change here
 
