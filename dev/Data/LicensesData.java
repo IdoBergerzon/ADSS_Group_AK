@@ -8,6 +8,7 @@ import java.util.List;
 public class LicensesData {
     private List<License> licenses;
 
+
     public LicensesData() {
         this.licenses = new ArrayList<>();
     }
