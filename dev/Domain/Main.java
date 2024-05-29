@@ -1,27 +1,42 @@
-package Main;
+package Domain;
 
-import Domain.TruckController;
-import Domain.DriverController;
+import java.util.Objects;
 
 public class Main {
     public static void main(String[] args) {
+        DriverController controller = new DriverController();
 
-        TruckController truckController = new TruckController();
-        DriverController driverController = new DriverController();
+        // Create some licenses
+        License license1 = new License("B", 3500);
+        License license2 = new License("C", 7500);
 
-        // Add licenses using the addLicense method in DriverController
-        driverController.addLicense("Car License", 3000);
-        driverController.addLicense("Truck License", 7000);
-        driverController.addLicense("Motorcycle License", 500);
-        driverController.printAllLicenses();
+        // Add licenses to the license data
+        controller.addLicense(license1.getTitle(), license1.getMaxWeight());
+        controller.addLicense(license2.getTitle(), license2.getMaxWeight());
 
+        // Add drivers
+        controller.addDriver(1, "John Doe", true, license1);
+        controller.addDriver(2, "Jane Smith", true, null);
 
+        // Add a new license to an existing driver
+        controller.addLicenseToDriver(2, license2);
 
-//Trucks
-        truckController.addNewTruck(1, "Toyota", 5000.0, 10000.0);
-        truckController.addNewTruck(2, "BMW", 6000.0, 12000.0);
+        // Print all licenses
+        controller.printAllLicenses();
 
-        truckController.showTrucks(1);
-        truckController.showTrucks(2);
+        // Print all drivers and their licenses
+        controller.printAllDrivers();
+
+        // Print initial driver availability
+        System.out.println("Initial driver availability:");
+        controller.printAllDrivers();
+
+        // Change availability of a driver
+        controller.changeDriverAvailability(1, false);
+        System.out.println("Driver availability changed for driver 1.");
+
+        // Print updated driver availability
+        System.out.println("Updated driver availability:");
+        controller.printAllDrivers();
     }
 }

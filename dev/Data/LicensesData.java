@@ -15,6 +15,7 @@ public class LicensesData {
     public List<License> getLicenses() {
         return licenses;
     }
+
     public void addLicense(License license) {
         this.licenses.add(license);
     }
