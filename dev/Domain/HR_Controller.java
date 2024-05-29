@@ -193,30 +193,34 @@ public class HR_Controller {
     }
     public void createNewShift(int branch_id,int day,int shift_type,int[] shiftWorkers,List<Integer> roles_for_shift) throws Exception {
         /// Declaration part
-        Worker worker;
+        Worker new_worker;
+        Role new_role;
         Worker[] arrangment=new Worker[shiftWorkers.length];
         List<Role> roleList = new ArrayList<>();
 
         for (int i=0;i<shiftWorkers.length;i++){
-            roleList.add(workers_memory.getRoleByID(roles_for_shift.get(i)));
-            worker = workers_memory.getWorkerById(shiftWorkers[i]);
+            new_role = workers_memory.getRoleByID(roles_for_shift.get(i));
+
+            new_worker = workers_memory.getWorkerById(shiftWorkers[i]);
             //Test to make sure adding this worker is not against the rules
-            if (worker==null){
+            if (new_worker==null){
                 throw new Exception("Worker ID does not exist");
-            } else if (worker.getWork_branch().getBranchID()!=branch_id) {
+            } else if (new_worker.getWork_branch().getBranchID()!=branch_id) {
                 throw new Exception("Worker does not works in this branch");
             } else{
+                /// Making sure the worker can work in this role
                 boolean roleExists = false;
-                for (Role role : worker.getRoles()) {
-                    if (role.getRoleID() == roles_for_shift.get(i)) { // Assuming Role class has a getID() method
+                for (Role role : new_worker.getRoles()) {
+                    if (role == new_role) { // Assuming Role class has a getID() method
                         roleExists = true;
                         break;
                     }
                 }
                 if (!roleExists) {
-                    throw new Exception("Worker " + worker.getId() + " does not have the required role for the shift");
+                    throw new Exception("Worker " + new_worker.getId() + " does not have the required role for the shift");
                 }
-                arrangment[i] = worker;
+                roleList.add(new_role);
+                arrangment[i] = new_worker;
             }
             
         }

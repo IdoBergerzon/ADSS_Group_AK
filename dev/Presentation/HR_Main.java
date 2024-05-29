@@ -119,8 +119,20 @@ public class HR_Main {
         }
         int[] shiftWorkers=new int[roles_for_shift.size()];
         for(int i=0;i<roles_for_shift.size();i++){
-            System.out.println("Enter the ID of an worker who can fill the roll ID: "+ roles_for_shift.get(i) + " for this shift \n");
-            answer=sc.nextInt();
+            while(true) {
+                System.out.println("Enter the ID of an worker who can fill the roll ID: " + roles_for_shift.get(i) + " for this shift \n");
+                answer = sc.nextInt();
+                boolean is_exist=false;
+                for (int j = 0; j < i; j++) {
+                    if (shiftWorkers[j] == answer) {
+                        System.out.println("Worker with ID" + answer + " already exists in shift \n" +
+                                "please choose another worker ID");
+                        is_exist=true;
+                        break;
+                    }
+                }
+                if(!is_exist){ break; }
+            }
             shiftWorkers[i]=answer;
         }
 
@@ -154,8 +166,9 @@ public class HR_Main {
                 while(true){
                     try {
                         createNewShift(branch_id, day, shift_type);
+                        break;
                     } catch (Exception e) {
-                        System.out.println("Shift is not available please try again");
+                        System.out.println(e.getMessage());
                     }
                 }
             }
@@ -167,4 +180,7 @@ public class HR_Main {
 
 
     }
+
+
+
 }

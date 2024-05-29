@@ -106,7 +106,7 @@ public class Main {
                     "2.add request\n" +
                     "3.edit exist request\n" +
                     "4.Show past shifts\n" +
-                    "5.Show current roster\n" +
+                    "5.Show current/past roster\n" +
                     "6.retire massage\n" +
                     "7.exit\n");
             System.out.print("Please enter your choice (1-7): ");
@@ -123,10 +123,10 @@ public class Main {
                     main2.EditRequest(worker_id);
                     break;
                 case 4:
-                    //ShowPastShifts(worker_id);
+                    //main2.ShowPastShifts(worker_id);
                     break;
                 case 5:
-                    //ShowCuerrRoster(worker_id);
+                    main2.ShowCurrRoster(worker_id);
                 case 6:
                     //RetireMassage(worker_id);
                 case 7:

@@ -60,5 +60,16 @@ public class Roster {
         shift_arrangment[shift.getDay_of_week()][shift.getShift_type()]=shift;
     }
 
+    public String toString(){
+        String str = "Roster's week: " + week + "\n";
+        str+="Branch: " + branch + "\n";
+        for(int i=0; i<7; i++){
+            for(int j=0; j<2; j++){
+                str+=shift_arrangment[i][j]+"\n";
+            }
+        }
+        return str;
+    }
+
 
 }

@@ -66,4 +66,23 @@ public class Worker_Main {
         }
     }
 
+    public void ShowCurrRoster(int worker_id){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Please enter your choice: \n" +
+                "1.Show current week Roster\n" +
+                "2.Show past Roster\n");
+        int choice = sc.nextInt();
+        if(choice == 1){
+            controller.ShowCurrRoster(worker_id);
+        } else if(choice == 2){
+            System.out.println("Please enter week for past Roster: \n");
+            try {
+                controller.ShowPastRoster(worker_id, sc.nextInt());
+            } catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
+
+    }
+
 }

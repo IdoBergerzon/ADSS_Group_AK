@@ -32,6 +32,12 @@ public class Checking_Controller {
 
         WR.addWorker(ido);
         WR.addWorker(aviv);
+        WR.addWorker(hezi);
+        WR.addWorker(lior);
+        WR.addWorker(asaf);
+        WR.addWorker(rudi);
+        WR.addWorker(tamir);
+        WR.addWorker(daniel);
         WR.addBranch(br1);
         WR.addBranch(br2);
         WR.addRole(hr);
