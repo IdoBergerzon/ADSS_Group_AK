@@ -1,16 +1,15 @@
 package Domain;
 
-import Data.Drivers;
-import Data.Licenses;
+import Data.DriversData;
+import Data.LicensesData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DriverController {
-    private Licenses licensesData;
+    private LicensesData licensesData;
 
     public DriverController() {
-        this.licensesData = new Licenses();
+        this.licensesData = new LicensesData();
     }
 
     public void addLicense(String title, double maxWeight) {
@@ -37,7 +36,7 @@ public class DriverController {
 //        System.out.println("License added successfully to driver " + driver.getDriverName());
 //    }
 
-    public void printAllDriverLicenses(Drivers drivers) {
+    public void printAllDriverLicenses(DriversData drivers) {
         for (Driver driver : drivers.getDrivers().keySet()) {
             System.out.println("Driver: " + driver.getDriverName());
             List<License> licenses = drivers.getDrivers().get(driver);

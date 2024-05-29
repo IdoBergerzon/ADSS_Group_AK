@@ -5,10 +5,10 @@ import Domain.License;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Licenses {
+public class LicensesData {
     private List<License> licenses;
 
-    public Licenses() {
+    public LicensesData() {
         this.licenses = new ArrayList<>();
     }
 

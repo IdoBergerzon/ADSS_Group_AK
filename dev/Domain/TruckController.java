@@ -1,22 +1,22 @@
 package Domain;
 
 
-import Data.Trucks;
+import Data.TrucksData;
 
 public class TruckController {
-    private Trucks trucks;
+    private TrucksData trucksData;
     public TruckController() {
-        this.trucks = new Trucks();
+        this.trucksData = new TrucksData();
     }
 
     public void addNewTruck(int truckID, String truckType, double truckWeight, double MaxWeight) {
         Truck newtruck = new Truck(truckID, truckType, truckWeight, MaxWeight, false);
-        this.trucks.addTruck(newtruck);
+        this.trucksData.addTruck(newtruck);
     }
 
     public Truck getTruck(int truckID) {
-        if (trucks.getTrucks().get(truckID) != null)
-            return trucks.getTrucks().get(truckID);
+        if (trucksData.getTrucks().get(truckID) != null)
+            return trucksData.getTrucks().get(truckID);
         else return null;
     }
 

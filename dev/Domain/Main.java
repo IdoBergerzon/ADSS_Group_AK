@@ -1,14 +1,7 @@
 package Main;
 
-import Data.Drivers;
-import Data.Licenses;
-import Data.Trucks;
 import Domain.TruckController;
-import Domain.Driver;
 import Domain.DriverController;
-import Domain.License;
-
-import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {

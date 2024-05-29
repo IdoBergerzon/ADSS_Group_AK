@@ -2,6 +2,6 @@ package Presentation;
 
 import Domain.TransportController;
 
-public class Transport {
+public class Transport_Presentation {
     private TransportController transportController;
 }

@@ -2,15 +2,14 @@ package Data;
 
 import Domain.Driver;
 import Domain.License;
-import Domain.Location;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class Drivers {
+public class DriversData {
     private HashMap<Driver, List<License>> drivers;
 
-    public Drivers() {
+    public DriversData() {
         this.drivers = new HashMap<>();
     }
 

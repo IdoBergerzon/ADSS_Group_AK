@@ -4,10 +4,10 @@ import Domain.Truck;
 
 import java.util.HashMap;
 
-public class Trucks {
+public class TrucksData {
     private HashMap<Integer, Truck> trucks;
 
-    public Trucks() { this.trucks = new HashMap<>();}
+    public TrucksData() { this.trucks = new HashMap<>();}
     public HashMap<Integer, Truck> getTrucks() { return trucks; }
     public void addTruck(Truck truck) {
         trucks.put(truck.getTruckID(), truck);
