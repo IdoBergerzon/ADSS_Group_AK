@@ -2,15 +2,17 @@ package Domain;
 
 import Data.TransportsData;
 
+import java.util.List;
+
 public class TransportController {
     private TransportsData transportsData;
     public TransportController() {
         transportsData = new TransportsData();
     }
+
     public TransportsData getTransportsData() {
         return transportsData;
     }
-
 
     /**
      * Add Delivery_document to transport
@@ -20,10 +22,20 @@ public class TransportController {
     public void addDelivery(int transportID, Delivery_Document delivery_doc) {
         if (transportsData.getTransports().containsKey(transportID)) {
             Transport transport =transportsData.getTransports().get(transportID);
-            if (!transport.getDelivery_documents().contains(delivery_doc)) {
-                transport.getDelivery_documents().add(delivery_doc);
+            if (transport.getTotalWeights().get(transport.getTotalWeights().size()-1) + delivery_doc.getTotalWeight() <= transport.getTruck().getMaxWeight() + transport.getTruck().getTruckWeight()) {
+                if (!transport.getDelivery_documents().contains(delivery_doc)) {
+                    transport.getDelivery_documents().add(delivery_doc);
+                    transport.addSource(delivery_doc.getSource());
+                    transport.addDestination(delivery_doc.getDestination());
+                    transport.calc_transportWeight();
+                }
+                else{
+                    System.out.println("delivery already exists");
+                }
             }
-            else System.out.println("delivery already exists");
+            else {
+                transport.addComment("Overweight: Transport weight exceeds the permissible weight for the truck.\n" + delivery_doc + " Not add to the transport.\n");
+            }
         }
         else System.out.println("transport does not exist");
     }
@@ -49,25 +61,51 @@ public class TransportController {
                 }
             }
             if (flagS == 0)
-                transport.getSource().remove(delivery_doc.getSource());
+                transport.removeSource(delivery_doc.getSource());
             if (flagD == 0)
-                transport.getDestinations().remove(delivery_doc.getDestination());
-            //להוסיף הורדה של המיקום מהמסלול
+                transport.removeDestination(delivery_doc.getDestination());
         }
         else System.out.println("transport does not exist");
     }
 
     /**
-     * Calculates the total transport weight + the weight of the truck
+     * Removing source location from the transport, and updating the transport form
      * @param transportID
+     * @param source
      */
-    public void calc_transportWeight(int transportID) {
-        Transport transport=transportsData.getTransports().get(transportID);
-        double totalW = 0;
-        for (Delivery_Document delivery_doc : transport.getDelivery_documents()) {
-            totalW += delivery_doc.getTotalWeight();
+    public void removeSource(int transportID, Store source) {
+        Transport transport =transportsData.getTransportById(transportID);
+        transport.removeSource(source);
+        transport.addComment("Remove Source: " + source + " from the transport");
+    }
+
+    /**
+     * Removing destination location from the transport, and updating the transport form
+     * @param transportID
+     * @param destination
+     */
+    public void removeDestination(int transportID, Supplier destination) {
+        Transport transport =transportsData.getTransportById(transportID);
+        transport.removeDestination(destination);
+        transport.addComment("Remove Destination: " + destination + " from the transport");
+    }
+
+    /**
+     * Removal of an item from delivery on an transport
+     * @param transportID
+     * @param deliveryID
+     * @param item
+     */
+    public void removeItemFromDelivery(int transportID, int deliveryID, Item item) {
+        Transport transport =transportsData.getTransportById(transportID);
+        Delivery_Document delivery_doc = transport.getDelivery_documents().get(deliveryID);
+        if (delivery_doc.getItems().containsValue(item)) {
+            delivery_doc.removeItemWeight(item);
+            transport.calc_transportWeight();
+            delivery_doc.setItemsStatus(Delivery_ItemsStatus.itemMissing);
+            transport.addComment("Removed Item: " + item +" removed from" + delivery_doc + "\n");
         }
-        transport.addWeight(totalW + transport.getTruck().getTruckWeight());
+        else System.out.println("item does not exist in this delivery.\n");
     }
 
     /**
@@ -86,7 +124,12 @@ public class TransportController {
                 flag = 1;
             }
         }
-        if (flag == 0) System.out.println("item does not exist in transport");
+        if (flag == 0)
+            System.out.println("item does not exist in transport");
+        else {
+            transport.calc_transportWeight();
+            transport.addComment("Remove Item: " + item +" removed from transport\n");
+        }
     }
 
     /**
@@ -96,36 +139,46 @@ public class TransportController {
      */
     public void replaceTruck(int transportID, Truck truck) {
         Transport transport=transportsData.getTransports().get(transportID);
-        transport.getTruck().setAvailable(true);
-        transport.setTruck(truck);
-    }
-
-    /**
-     * Division into shipping areas
-     * @param address
-     * @param shipping_area
-     */
-    public void setShipping_area(Address address, int shipping_area) {
-        address.setShipping_area(shipping_area);
-        System.out.println("Shipping area set successfully for address: " + address.getFull_address());
+        if (truck != null) {
+            if (truck.isAvailable()) {
+                if (truck.getMaxWeight() + truck.getTruckWeight() >= transport.getTotalWeights().get(transport.getTotalWeights().size() - 1)) {
+                    if (transport.getTruck() != null)
+                    {
+                        transport.getTruck().setAvailable(true);
+                    }
+                    transport.setTruck(truck);
+                    transport.calc_transportWeight();
+                    transport.addComment("Replace Truck: " + truck + "has been successfully paired\n");
+                } else System.out.println("The truck is too small");
+            } else System.out.println("truck is not available");
+        }
+        else System.out.println("truck is null");
     }
 
     /**
      * Replacing a driver in case he does not have the appropriate license for the truck
      * @param transportID
-     * @param newDriver
+     * @param driver
      */
-    public void changeDriver(int transportID, Driver newDriver) {
-        // Retrieve the transport associated with the given track ID
-        Transport transport = transportsData.getTransportById(transportID);
-        if (transport != null) {
-            transport.getDriver().setAvailable(true);
-            // Update the driver object of the transport
-            transport.setDriver(newDriver);
-            System.out.println("Driver changed successfully for track " + transportID);
-        } else {
-            System.out.println("Transport not found with ID: " + transportID);
+    public void replaceDriver(int transportID, Driver driver) {
+        Transport transport=transportsData.getTransports().get(transportID);
+        if (driver != null) {
+            if (driver.isAvailable()) {
+                if (driver.getLicenseMaxWeight() >= transport.getTotalWeights().get(transport.getTotalWeights().size()-1)) {
+                    if (transport.getDriver() != null) {
+                        transport.getDriver().setAvailable(true);
+                    }
+                    driver.setAvailable(false);
+                    transport.setDriver(driver);
+                    transport.addComment("Replace Driver: " + driver + "has been successfully paired\n");
+                    System.out.println("Driver added successfully for track " + transportID);
+                } else {
+                    System.out.println("Invalid match: Driver without proper license");
+                }
+            }
+            else System.out.println("driver is not available");
         }
+        else System.out.println("Driver does not exist");
     }
 
     /**
@@ -133,20 +186,41 @@ public class TransportController {
      * @param transport
      * @return
      */
-    public String finishTransport(Transport transport) {
+    public void finishTransport(Transport transport) {
         transport.getDriver().setAvailable(true);
         transport.getTruck().setAvailable(true);
         for(Delivery_Document delivery : transport.getDelivery_documents()){
             delivery.setDelivery_status(Delivery_DocumentStatus.finished);
         }
-        return "Transport finished successfully";
+        System.out.println("Transport finished successfully");
     }
 
 
+    /**
+     * Planning a trip for the first time, and adding it to the database
+     * @param transportID
+     * @param truck
+     * @param driver
+     * @param delivery_documents
+     * @param comments
+     */
+    public void planTransport(int transportID, Truck truck, Driver driver, List<Delivery_Document> delivery_documents, String comments) {
+        if (transportsData.getTransports().containsKey(transportID)) {
+            System.out.println("TransportID already exists");
+        }
+        else if (!driver.isAvailable()){
+            System.out.println("driver is not available");
+        } else if (!truck.isAvailable()) {
+            System.out.println("truck is not available");
+        }
+        else {
+            Transport transport = new Transport(transportID, truck, driver, delivery_documents, comments);
+            transportsData.addTransport(transport);
+            System.out.println("Transport added successfully");
+        }
+    }
 
-    //התראה על שיבוץ לא מתאים של נהג
     //התראה על חריגה במשקל
-    //תכנון נסיעה
     //הוספת הערות במקרה של חריגה במשקל
     //הורדה לתכנון מחדש של נסיעה?
     //שינוי יעדים במקרה של חריגה במשקל
