@@ -1,11 +1,21 @@
 package Presentation;
 
+import Domain.Delivery_DocumentsController;
 import Domain.DriverController;
+import Domain.LocationController;
+import Domain.TransportController;
+import Domain.TruckController;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Delivery_DocumentsController deliveryController = new Delivery_DocumentsController();
+        DriverController driverController = new DriverController();
+        LocationController locationController = new LocationController();
+        TransportController transportController = new TransportController();
+        TruckController truckController = new TruckController();
+
         Scanner scanner = new Scanner(System.in);
         int choice;
 
@@ -33,7 +43,76 @@ public class Main {
 
                 //Display
                 case 3:
+                    int display;
+                    //Display Menu
+                    System.out.println("Enter display number:");
+                    System.out.println("1. Display truck details");
+                    System.out.println("2. Display driver details");
+                    System.out.println("3. Display transport");
+                    System.out.println("4. Display delivery documents");
+                    System.out.println("5. Display location details");
+                    System.out.println("6. Display all transports");
+                    System.out.println("7. Display all trucks");
+                    System.out.println("8. Display all drivers");
+                    System.out.println("0. Back to Main Menu");
 
+                    display = scanner.nextInt();
+                    switch (display) {
+                        case 0: // Back to Main Menu
+                            System.out.println("Returning to the main menu.");
+                            break;
+
+                        case 1: // Display truck details
+                            System.out.println("Insert truck ID:");
+                            int truckID = scanner.nextInt();
+                            if (truckController.getTruck(truckID) == null){
+                                System.out.println("Truck does not exist.");
+                            }
+                            else
+                                System.out.println(truckController.getTruck(truckID));
+                            break;
+
+                        //Display driver details
+                        case 2:
+                            System.out.println("Insert driver ID:");
+                            int driverID = scanner.nextInt();
+                            if (driverController.getDriver(driverID) == null){
+                                System.out.println("Driver does not exist.");
+                            }
+                            else
+                                System.out.println(driverController.getDriver(driverID));
+                            break;
+
+                        //Display transport
+                        case 3:
+                            System.out.println("Insert transport ID:");
+                            int transportID = scanner.nextInt();
+                            if (transportController.getTransport(transportID) == null){
+                                System.out.println("Transport does not exist.");
+                            }
+                            else
+                                System.out.println(transportController.getTransport(transportID));
+                            break;
+
+                        case 4:
+                            System.out.println("Insert delivery documents ID:");
+                            int deliveryDocumentsID = scanner.nextInt();
+                            if (deliveryController.getDelivery_Document(deliveryDocumentsID) == null)
+                                System.out.println("Delivery Document does not exist.");
+                            else
+                                System.out.println(deliveryController.getDelivery_Document(deliveryDocumentsID));
+                            break;
+
+                        case 5:
+                            System.out.println("Insert location documents ID:");
+                            int locationDocumentsID = scanner.nextInt();
+                            break;
+
+
+                        default: // Invalid choice in the sub-menu
+                            System.out.println("Invalid choice. Returning to the main menu.");
+                            break;
+                    }
                     break;
 
                 //Execute Transport

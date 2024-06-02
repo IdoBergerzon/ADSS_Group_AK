@@ -14,6 +14,13 @@ public class TransportController {
         return transportsData;
     }
 
+    public Transport getTransport(int transportID) {
+        if (!transportsData.getTransports().containsKey(transportID)) {
+            return null;
+        }
+        return transportsData.getTransports().get(transportID);
+    }
+
     /**
      * Add Delivery_document to transport
      * @param transportID
