@@ -27,7 +27,7 @@ public class HR_Main {
         newWorker += sc.nextLine()+ ",";
         System.out.println("Enter worker monthly wage:");
         newWorker += sc.nextLine()+ ",";
-        System.out.println("Enter worker role:");
+        System.out.println("Enter worker role ID:");
         newWorker += sc.nextLine()+ ",";
         System.out.println("Enter worker branch:");
         newWorker += sc.nextLine() + ",";
@@ -66,6 +66,7 @@ public class HR_Main {
                 hr_controller.addNewRoleForWorker(worker_id, role_id);
                 break;
             } catch (Exception e) {
+                System.out.println(e.getMessage()+"\n");
             }
         }
     }
@@ -76,21 +77,22 @@ public class HR_Main {
             System.out.println("Enter new role id:");
             int role_id = sc.nextInt();
             System.out.println("Enter new role name:");
-            String role_name = sc.nextLine();
+            String role_name = sc.next();
             try{
                 hr_controller.cteateNewRole(role_id, role_name);
+                System.out.println("New role created\n");
                 break;
             } catch (Exception e){
-
+                System.out.println(e.getMessage());
             }
         }
     }
 
-    public String Edit_Worker_Details(){
+    public void Edit_Worker_Details(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Insert ID");
         int id_to_update=scanner.nextInt();
-        return hr_controller.Edit_Worker_Details(id_to_update);
+        System.out.println(hr_controller.Edit_Worker_Details(id_to_update));
     }
     public void displayWorkersByShift(){
         Scanner scanner = new Scanner(System.in);

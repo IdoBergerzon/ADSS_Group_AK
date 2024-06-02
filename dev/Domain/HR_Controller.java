@@ -24,6 +24,7 @@ public class HR_Controller {
         Date curr = new Date();
         int new_ID = Integer.parseInt(string_details[0]);
         if (workers_memory.getWorkerById(new_ID) != null) {
+            System.out.println("worker ID already exist\n");
             return -1;
         }
         String new_name = string_details[1];
@@ -37,6 +38,7 @@ public class HR_Controller {
 
         Role role;
         if (workers_memory.getRoleByID(role_ID) == null) {
+            System.out.println("role doesn't exist\n");
             return -1;
         } else {
             role = workers_memory.getRoleByID(role_ID);
@@ -48,6 +50,7 @@ public class HR_Controller {
         int branch_ID = Integer.parseInt(string_details[5]);
         Branch new_branch;
         if (workers_memory.getBranchByID(branch_ID) == null) {
+            System.out.println("branch doesn't exist\n");
             return -1;
         } else {
             new_branch = workers_memory.getBranchByID(branch_ID);
@@ -55,6 +58,10 @@ public class HR_Controller {
         }
         String department = string_details[6];
         int managerID=Integer.parseInt(string_details[7]);
+        if (workers_memory.getWorkerById(managerID) == null) {
+            System.out.println("manager ID doesn't exist\n");
+            return -1;
+        }
 
 
         Worker new_worker = new Worker(new_ID, new_name,new_monthly_wage, new_hourly_wage, curr,managerID, role, new_branch, department);
@@ -93,15 +100,16 @@ public class HR_Controller {
                 while (true) {
                     System.out.println("insert new name: \n");
                     try {
-                        new_name = scanner.nextLine();
+                        new_name = scanner.next();
                         break;
                     } catch (Exception e) {
                         System.out.println("insert valid monthly name \n");
                     }
                 }
 
-                to_update.setName(new_name);
-                return "update name success \n";
+                    to_update.setName(new_name);
+                    return "update name success \n";
+
 
 
 
@@ -177,7 +185,7 @@ public class HR_Controller {
                         roles+="Role ID: "+request_list[i].getWorker().getRoles()[j].getRoleID()+","+"Role name: "+request_list[i].getWorker().getRoles()[j].getName()+"\n";
                     }
                 }
-                result_workers+=request_list[i].getWorker().getId()+"\n"+request_list[i].getWorker().getName()+"\n"+roles+request_list[i].getWorker().getWork_branch()+"\n\n";
+                result_workers+="Worker ID: "+request_list[i].getWorker().getId()+"\n"+"Worker name: "+request_list[i].getWorker().getName()+"\n"+roles+request_list[i].getWorker().getWork_branch()+"\n\n";
             }
         }
         System.out.println(result_workers);

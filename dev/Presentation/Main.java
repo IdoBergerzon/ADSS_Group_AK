@@ -30,12 +30,13 @@ public class Main {
                 case 2:
                     return;
                 default:
-                    System.out.println("Invalid choice. Please enter a number 1 to 2.");
+                    System.out.println("ID doesn't exist,please try again\n");
                     break;
 
             }
-            //scanner.close();
 
+            //scanner.close();
+            //System.out.println("");
         }
     }
 
