@@ -1,11 +1,7 @@
 package Presentation;
-
-import Domain.Delivery_DocumentsController;
-import Domain.DriverController;
-import Domain.LocationController;
+import Data.TrucksData;
+import Domain.*;
 import Domain.TransportController;
-import Domain.TruckController;
-
 import java.util.Scanner;
 
 public class Main {
@@ -33,8 +29,101 @@ public class Main {
             switch (choice) {
                 // Add
                 case 1:
+                    int add;
+                    System.out.println("Add Menu:");
+                    System.out.println("Enter your choice: ");
+                    System.out.println("1. Add Truck");
+                    System.out.println("2. Add Driver");
+                    System.out.println("3. Add Location");
+                    System.out.println("4. Add Transport");
 
-                    break;
+                    add = scanner.nextInt();
+
+                    switch (add) {
+                        case 0: // Back to Main Menu
+                            System.out.println("Returning to the main menu.");
+                            break;
+                        case 1:
+                            // Add Truck
+                            System.out.println("Insert truck ID:");
+                            int truckID = scanner.nextInt();
+                            if (truckController.getTruck(truckID) != null){
+                                System.out.print("The truck already exists in the system");
+                            }
+                            else {
+                                System.out.print("Insert truck Type: ");
+                                String truckType = scanner.nextLine();
+                                scanner.nextLine();
+                                System.out.println("Insert truck Weight:");
+                                double truckWeight = scanner.nextDouble();
+                                scanner.nextLine();
+                                System.out.println("Insert truck Max Weight:");
+                                double MaxWeight = scanner.nextDouble();
+                                truckController.addNewTruck(truckID,truckType,MaxWeight,truckWeight);
+                                break;
+                            }
+                        case 2:
+                            // Add Driver
+                            System.out.print("Enter Driver ID: ");
+                            int driverID = scanner.nextInt();
+                            if (driverController.getDriver(driverID) != null) {
+                                System.out.print("The Driver already exists in the system");
+                            }
+                            else {
+                            System.out.print("Enter Driver Name: ");
+                            String driverName = scanner.nextLine();
+                            System.out.print("Enter the driver's license number");
+                            int licenseNumber = scanner.nextInt();
+                                driverController.addDriver(driverID, driverName, licenseNumber);
+                                break;
+                            }
+                        case 3:
+                            int locationChoice;
+                            System.out.println("1. Add Supplier");
+                            System.out.println("2. Add Store");
+                            System.out.print("Enter your choice: ");
+                            locationChoice = scanner.nextInt();
+                            scanner.nextLine(); // Consume newline
+
+                            if (locationChoice == 1 || locationChoice == 2) {
+                                System.out.print("Enter Location ID: ");
+                                int locationID = scanner.nextInt();
+                                scanner.nextLine(); // Consume newline
+
+                                System.out.print("Enter Address details: ");
+                                String full_address = scanner.nextLine();
+
+                                System.out.print("Enter address_code: ");
+                                int address_code = scanner.nextInt();
+                                scanner.nextLine(); // Consume newline
+
+                                Address address = new Address(full_address, address_code);
+
+                                System.out.print("Enter contact: ");
+                                String contact = scanner.nextLine();
+
+                                System.out.print("Enter phone: ");
+                                String phone = scanner.nextLine();
+
+                                String l_type = (locationChoice == 1) ? "Supplier" : "Store";
+                                locationController.addLocation(locationID, address, contact, phone, l_type);
+                                System.out.println(l_type + " added successfully.");
+                            } else {
+                                System.out.println("Invalid choice for the given location type.");
+                            }
+                            break;
+                            case 4:
+
+
+
+                        default:
+                            System.out.println("Invalid choice. Please try again.");
+                            break;
+                    }
+
+
+
+
 
                 //Update
                 case 2:
@@ -159,5 +248,8 @@ public class Main {
         // Print updated driver availability
         System.out.println("Updated driver availability:");
         controller.printAllDrivers();
+
+
+        }
     }
-}
+

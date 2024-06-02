@@ -34,6 +34,12 @@ public class LocationController {
             System.out.println("location already exists");
         }
     }
+    public ALocation getLocation(int locationID) {
+            if (locationsData.getLocations().get(locationID) != null) {
+                return locationsData.getLocations().get(locationID);
+            }
+            return null;
+        }
 
     public void updateAddress(int locationID, Address address) {
         if (!locationsData.getLocations().containsKey(locationID)) {
