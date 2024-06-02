@@ -5,6 +5,10 @@ import Domain.License;
 
 public class Main {
     public static void main(String[] args) {
+
+
+
+
         DriverController controller = new DriverController();
 
         // Create some licenses
