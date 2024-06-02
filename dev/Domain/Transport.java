@@ -1,32 +1,40 @@
 package Domain;
 
-import java.sql.Time;
-import java.util.Date;
-import java.util.HashMap;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Set;
 
 public class Transport {
     private final int transportID;
-    private Date date;
-    private Time timeOfDepurture;
+    private LocalDate date;
+    private LocalTime timeOfDepurture;
     private Truck truck;
     private Driver driver;
-    private List<Store> source;
-    private List<Supplier> destinations;
+    private Set<Store> source;
+    private Set<Supplier> destinations;
     private List<Double> totalWeights;
     private List<Delivery_Document> delivery_documents;
     private String comments;
 
-    public Transport(int transportID, Date date, Time timeOfDepurture, Truck truck, Driver driver, List<Store> source, List<Supplier> destinations, List<Double> totalWeights, List<Delivery_Document> delivery_documents, String comments) {
+    public Transport(int transportID, Truck truck, Driver driver, List<Delivery_Document> delivery_documents, String comments) {
         this.transportID = transportID;
-        this.date = date;
-        this.timeOfDepurture = timeOfDepurture;
+        this.date = LocalDate.now();
+        this.timeOfDepurture = LocalTime.now();
+        truck.setAvailable(false);
         this.truck = truck;
+        driver.setAvailable(false);
         this.driver = driver;
-        this.source = source;
-        this.destinations = destinations;
-        this.totalWeights = totalWeights;
         this.delivery_documents = delivery_documents;
+        for (Delivery_Document delivery_document : delivery_documents) {
+            this.source.add(delivery_document.getSource());
+        }
+        for (Delivery_Document delivery_document : delivery_documents) {
+            this.destinations.add(delivery_document.getDestination());
+        }
+        for (Delivery_Document delivery_document : delivery_documents) {
+            this.totalWeights.add(delivery_document.getTotalWeight());
+        }
         this.comments = comments;
     }
 
@@ -34,11 +42,11 @@ public class Transport {
         return transportID;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public Time getTimeOfDepurture() {
+    public LocalTime getTimeOfDepurture() {
         return timeOfDepurture;
     }
 
@@ -50,11 +58,11 @@ public class Transport {
         return driver;
     }
 
-    public List<Store> getSource() {
+    public Set<Store> getSource() {
         return source;
     }
 
-    public List<Supplier> getDestinations() {
+    public Set<Supplier> getDestinations() {
         return destinations;
     }
 
@@ -67,11 +75,11 @@ public class Transport {
 
     public String getComments() { return comments; }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public void setTimeOfDepurture(Time timeOfDepurture) {
+    public void setTimeOfDepurture(LocalTime timeOfDepurture) {
         this.timeOfDepurture = timeOfDepurture;
     }
 
@@ -85,11 +93,11 @@ public class Transport {
         this.truck = truck;
     }
 
-    public void setSource(List<Store> source) {
+    public void setSource(Set<Store> source) {
         this.source = source;
     }
 
-    public void setDestinations(List<Supplier> destinations) {
+    public void setDestinations(Set<Supplier> destinations) {
         this.destinations = destinations;
     }
 
@@ -109,20 +117,49 @@ public class Transport {
         this.totalWeights.add(weight);
     }
 
-    public void addStore(Store store) {
+    public void addSource(Store store) {
         this.source.add(store);
     }
 
-    public void addSupplier(Supplier supplier) {
+    public void addDestination(Supplier supplier) {
         this.destinations.add(supplier);
     }
 
-    public void removeSupplier(Supplier supplier) {
+    public void removeDestination(Supplier supplier) {
+        for (Delivery_Document delivery_document : delivery_documents) {
+            if (delivery_document.getDestination().equals(supplier)) {
+                delivery_documents.remove(delivery_document);
+            }
+        }
+        this.calc_transportWeight();
         this.destinations.remove(supplier);
     }
 
+    public void removeSource(Store store) {
+        for (Delivery_Document delivery_document : delivery_documents) {
+            if (delivery_document.getSource().equals(store)) {
+                delivery_documents.remove(delivery_document);
+            }
+        }
+        this.calc_transportWeight();
+        this.source.remove(store);
+    }
+
+
     public void addComment(String comment) {
         this.comments = comment;
+    }
+
+    /**
+     * Calculates the total transport weight + the weight of the truck
+     */
+    public void calc_transportWeight() {
+        double totalW = 0;
+        for (Delivery_Document delivery_doc : this.getDelivery_documents()) {
+            totalW += delivery_doc.getTotalWeight();
+        }
+        this.addWeight(totalW + this.getTruck().getTruckWeight());
+        this.addComment(this.totalWeights.size() + ". Total Weight: " + totalW +this.getTruck().getTruckWeight() + "\n");
     }
 
     @Override

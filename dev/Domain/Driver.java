@@ -7,10 +7,10 @@ public class Driver {
     private int licenseMaxWeight;
 
 
-    public Driver(int driverID, String driverName, boolean available, int licenseMaxWeight) {
+    public Driver(int driverID, String driverName, int licenseMaxWeight) {
         this.driverID = driverID;
         this.driverName = driverName;
-        this.available = available;
+        this.available = true;
         this.licenseMaxWeight = licenseMaxWeight;
     }
     public int getDriverID() {return driverID;}

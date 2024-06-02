@@ -1,7 +1,6 @@
 package Domain;
 
 import Data.DriversData;
-import Data.LicensesData;
 
 public class DriverController {
     private DriversData driversData;
@@ -10,8 +9,8 @@ public class DriverController {
         this.driversData = new DriversData();
     }
 
-    public void addDriver(int driverID, String driverName, boolean available, int license) {
-        Driver newDriver = new Driver(driverID, driverName, available, license);
+    public void addDriver(int driverID, String driverName, int license) {
+        Driver newDriver = new Driver(driverID, driverName, license);
         if (!driversData.getDrivers().contains(newDriver)) {
             driversData.addDriver(newDriver);
             System.out.println("Driver added successfully: " + newDriver);
@@ -28,11 +27,11 @@ public class DriverController {
     }
 
 
-    public void addLicenseToDriver(int driverID, int license) {
+    public void updateLicenseToDriver(int driverID, int license) {
         for (Driver driver : driversData.getDrivers()) {
             if (driver.getDriverID() == driverID) {
                 driver.setLicenseMaxWeight(license);
-                System.out.println("License added successfully to driver " + driver.getDriverName());
+                System.out.println("License updated successfully to driver " + driver.getDriverName());
                 return;
             }
         }
@@ -49,6 +48,12 @@ public class DriverController {
             System.out.println("Driver availability changed successfully.");
         } else {
             System.out.println("Driver not found with ID: " + driverID);
+        }
+    }
+
+    public void allDriversAvailable(){
+        for (Driver driver : driversData.getDrivers()) {
+            driver.setAvailable(true);
         }
     }
 

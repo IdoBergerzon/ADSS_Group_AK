@@ -43,5 +43,10 @@ public class TruckController {
         else System.out.println("truck not found");
     }
 
+    public void allTrucksAvailable() {
+        for (Truck truck : trucksData.getTrucks().values()) {
+            truck.setAvailable(true);
+        }
+    }
 
 }
