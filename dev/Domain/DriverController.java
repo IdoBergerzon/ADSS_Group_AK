@@ -19,6 +19,15 @@ public class DriverController {
         }
     }
 
+    public Driver getDriver(int driverID) {
+        for (Driver driver : driversData.getDrivers()) {
+            if (driver.getDriverID() == driverID) {
+                return driver;
+            }
+        }
+        return null;
+    }
+
         public void printAllDrivers() {
         System.out.println("All Drivers:");
         for (Driver driver : driversData.getDrivers()) {

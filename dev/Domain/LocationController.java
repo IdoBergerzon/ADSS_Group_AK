@@ -3,6 +3,8 @@ package Domain;
 import Domain.ALocation;
 import Data.LocationsData;
 
+import javax.xml.stream.Location;
+
 public class LocationController {
     private LocationsData locationsData;
     public LocationController() {
