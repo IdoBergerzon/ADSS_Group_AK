@@ -9,6 +9,10 @@ public class DriverController {
         this.driversData = new DriversData();
     }
 
+    public DriversData getDriversData() {
+        return driversData;
+    }
+
     public void addDriver(int driverID, String driverName, int license) {
         Driver newDriver = new Driver(driverID, driverName, license);
         if (!driversData.getDrivers().contains(newDriver)) {

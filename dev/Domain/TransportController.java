@@ -226,7 +226,6 @@ public class TransportController {
             System.out.println("Transport added successfully");
         }
     }
-
     //התראה על חריגה במשקל
     //הוספת הערות במקרה של חריגה במשקל
     //הורדה לתכנון מחדש של נסיעה?
