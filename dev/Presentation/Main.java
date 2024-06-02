@@ -1,7 +1,6 @@
 package Presentation;
 
 import Domain.DriverController;
-import Domain.License;
 
 public class Main {
     public static void main(String[] args) {

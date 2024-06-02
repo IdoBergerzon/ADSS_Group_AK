@@ -114,7 +114,7 @@ public class TransportController {
      * @param transportID
      * @param item
      */
-    public void removeItem(int transportID, Item item) {
+    public void removeAllItems(int transportID, Item item) {
         Transport transport=transportsData.getTransports().get(transportID);
         int flag = 0;
         for (Delivery_Document delivery_doc : transport.getDelivery_documents()) {

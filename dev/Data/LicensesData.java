@@ -1,7 +1,5 @@
 package Data;
 
-import Domain.License;
-
 import java.util.ArrayList;
 import java.util.List;
 
