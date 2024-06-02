@@ -28,6 +28,16 @@ public class TransportsData {
             return null;
         }
     }
+
+    @Override
+    public String toString() {
+        StringBuilder tranStr = new StringBuilder();
+        tranStr.append("All Transports:\n");
+        for (Transport transport : transports.values()) {
+            tranStr.append(transport + "\n");
+        }
+        return tranStr.toString();
+    }
 }
 
 

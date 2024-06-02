@@ -1,6 +1,7 @@
 package Data;
 
 import Domain.Driver;
+import Domain.Truck;
 
 import java.util.HashSet;
 
@@ -33,4 +34,13 @@ public class DriversData {
         return null; // Return null if driver with given ID is not found
     }
 
+    @Override
+    public String toString() {
+        StringBuilder driversStr = new StringBuilder();
+        driversStr.append("All Drivers:\n");
+        for (Driver driver : getDrivers()) {
+            driversStr.append(driver + "\n");
+        }
+        return driversStr.toString();
+    }
 }

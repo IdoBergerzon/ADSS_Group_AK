@@ -18,6 +18,15 @@ public class LocationController {
         this.locationsData = locationsData;
     }
 
+    public ALocation getLocation(int locationID) {
+        for ( int i = 0; i < locationsData.getLocations().size(); i++ ) {
+            if ( locationsData.getLocations().get(i).getLocationID() == locationID ) {
+                return locationsData.getLocations().get(i);
+            }
+        }
+        return null;
+    }
+
     public void addLocation(int locationID, Address address, String contact, String phone, String l_type) {
         if (!locationsData.getLocations().containsKey(locationID)) {
             if (l_type == "Supplier"){

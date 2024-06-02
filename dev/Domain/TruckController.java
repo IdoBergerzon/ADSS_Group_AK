@@ -9,6 +9,10 @@ public class TruckController {
         this.trucksData = new TrucksData();
     }
 
+    public TrucksData getTrucksData() {
+        return trucksData;
+    }
+
     public void addNewTruck(int truckID, String truckType, double truckWeight, double MaxWeight) {
         if (trucksData.getTrucks().containsKey(truckID)) {
             System.out.println("Truck already exists");

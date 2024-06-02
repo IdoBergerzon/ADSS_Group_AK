@@ -183,6 +183,7 @@ public class Main {
                                 System.out.println(transportController.getTransport(transportID));
                             break;
 
+                        //Display delivery documents
                         case 4:
                             System.out.println("Insert delivery documents ID:");
                             int deliveryDocumentsID = scanner.nextInt();
@@ -192,10 +193,41 @@ public class Main {
                                 System.out.println(deliveryController.getDelivery_Document(deliveryDocumentsID));
                             break;
 
+                        //Display location details
                         case 5:
                             System.out.println("Insert location documents ID:");
                             int locationDocumentsID = scanner.nextInt();
+                            if (locationController.getLocation(locationDocumentsID) == null)
+                                System.out.println("Location Document does not exist.");
+                            else
+                                System.out.println(locationController.getLocation(locationDocumentsID));
                             break;
+
+                            //Display all transports
+                            case 6:
+                            if (transportController.getTransportsData().getTransports().isEmpty())
+                                System.out.println("There are no transports in the system.");
+                            else {
+                                System.out.println(transportController.getTransportsData().toString());
+                            }
+                            break;
+
+                        //Display all trucks
+                        case 7:
+                            if (truckController.getTrucksData().getTrucks().isEmpty())
+                                System.out.println("There are no trucks in the system.");
+                            else
+                                System.out.println(truckController.getTrucksData().toString());
+                            break;
+
+                        //Display all drivers
+                        case 8:
+                            if (driverController.getDriversData().getDrivers().isEmpty())
+                                System.out.println("There are no drivers in the system.");
+                            else
+                                System.out.println(driverController.getDriversData().toString());
+                            break;
+
 
 
                         default: // Invalid choice in the sub-menu

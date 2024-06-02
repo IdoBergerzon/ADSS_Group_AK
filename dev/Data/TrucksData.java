@@ -1,5 +1,6 @@
 package Data;
 
+import Domain.Transport;
 import Domain.Truck;
 
 import java.util.HashMap;
@@ -16,4 +17,13 @@ public class TrucksData {
         trucks.remove(truck.getTruckID());
     }
 
+    @Override
+    public String toString() {
+        StringBuilder trucksStr = new StringBuilder();
+        trucksStr.append("All Trucks:\n");
+        for (Truck truck : trucks.values()) {
+            trucksStr.append(truck + "\n");
+        }
+        return trucksStr.toString();
+    }
 }
