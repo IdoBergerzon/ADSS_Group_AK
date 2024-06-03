@@ -1,10 +1,6 @@
 package Presentation;
 
-import Domain.Delivery_DocumentsController;
-import Domain.DriverController;
-import Domain.LocationController;
-import Domain.TransportController;
-import Domain.TruckController;
+import Domain.*;
 
 import java.util.Scanner;
 
