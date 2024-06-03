@@ -86,11 +86,16 @@ public class Transport {
     public void setDriver(Driver driver) {
         this.driver.setAvailable(false);
         this.driver = driver;
+        if (this.getDriver() != null)
+            this.getDriver().setAvailable(true);
     }
 
     public void setTruck(Truck truck) {
         truck.setAvailable(false);
         this.truck = truck;
+        this.calc_transportWeight();
+        if (this.getTruck() != null)
+            this.getTruck().setAvailable(true);
     }
 
     public void setSource(Set<Store> source) {
@@ -133,6 +138,7 @@ public class Transport {
         }
         this.calc_transportWeight();
         this.destinations.remove(supplier);
+        this.addComment("Removed Destination:" + supplier);
     }
 
     public void removeSource(Store store) {
@@ -143,6 +149,7 @@ public class Transport {
         }
         this.calc_transportWeight();
         this.source.remove(store);
+        this.addComment("Removed source: " + store);
     }
 
 
@@ -165,6 +172,14 @@ public class Transport {
         this.addWeight(totalW + this.getTruck().getTruckWeight());
         this.addComment(this.totalWeights.size() + ". Total Weight: " + totalW +this.getTruck().getTruckWeight() + "\n");
         return totalW + this.getTruck().getTruckWeight();
+    }
+
+    public boolean checkTransport() {
+        if (this.totalWeights.get(totalWeights.size()-1) <= this.getTruck().getTruckWeight() + this.getTruck().getMaxWeight() &&
+                this.totalWeights.get(totalWeights.size()-1) <= this.getDriver().getLicenseMaxWeight()) {
+            return true;
+        }
+        return false;
     }
 
     @Override

@@ -29,6 +29,10 @@ public class TransportsData {
         }
     }
 
+    public void removeTransportById(int transportID) {
+        this.transports.remove(transportID);
+    }
+
     @Override
     public String toString() {
         StringBuilder tranStr = new StringBuilder();
