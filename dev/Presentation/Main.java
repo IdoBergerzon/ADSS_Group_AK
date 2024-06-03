@@ -580,29 +580,39 @@ public class Main {
                     }
                     break;
 
-/************** Execute Transport *******************************/
+/************** Start Transport *******************************/
 
-                //Execute Transport
+                //Start Transport
                 case 4:
+
 
                     break;
 
-/************** Reset Data Base *******************************/
+/************** Finish Transport *******************************/
 
-                //Reset Data Bases
+                //Finish Transport
                 case 5:
 
                     break;
 
+
+/************** Reset Data Base *******************************/
+
+                //Reset Data Bases
+                case 6:
+
+                    break;
+
+
 /************** Exit *******************************/
 
                 //Exit
-                case 6:
+                case 7:
 
                     break;
             }
         }
-        while (choice != 6);
+        while (choice != 7);
         scanner.close();
 
 
