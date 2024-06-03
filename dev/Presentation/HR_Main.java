@@ -1,8 +1,6 @@
 package Presentation;
 
 import Domain.HR_Controller;
-import Domain.Role;
-import Domain.Worker;
 
 
 import java.util.*;
@@ -94,6 +92,7 @@ public class HR_Main {
         int id_to_update=scanner.nextInt();
         System.out.println(hr_controller.Edit_Worker_Details(id_to_update));
     }
+
     public void displayWorkersByShift(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("insert day (1-sunday,2-monday...)\n");

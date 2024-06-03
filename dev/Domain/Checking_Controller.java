@@ -19,18 +19,29 @@ public class Checking_Controller {
     public Checking_Controller() {
         this.WR = InMemoryWorkerRepository.getInstance();
         this.SR = InMemoryShiftRepository.getInstance();
-
-        ///Enitilize the system with some information
         Role hr = new Role(1, "hr");
+        Branch br1 = new Branch(1, "branch1", "BeerSheva");
+        Date dt1 = new Date(2024,1,1);
+        Worker ido = new Worker(1,"Ido", 5000,0, dt1, null, hr, br1, "hr");
+
+        WR.addWorker(ido);
+        WR.addBranch(br1);
+        WR.addRole(hr);
+
+    }
+
+    public void startWithObject(){
+        ///Enitilize the system with some information
+
         Role shift_manager = new Role(2, "shift_manager");
         Role storekeeper = new Role(3, "storekeeper");
         Role Cashier = new Role(4, "cashier");
         Role delivery = new Role(5, "delivery");
-        Branch br1 = new Branch(1, "branch1", "BeerSheva");
+
         Branch br2 = new Branch(2, "branch2", "Ashdod");
-        Date dt1 = new Date(2024,1,1);
+
         Date dt2 = new Date(2024,2,1);
-        Worker ido = new Worker(1,"Ido", 5000,0, dt1, null, hr, br1, "hr");
+        Branch br1=WR.getBranchByID(1);
         Worker aviv = new Worker(2,"Aviv", 0,50, dt2, 1, shift_manager, br1, "managment");
         Worker hezi = new Worker(3,"hezi", 0,50, dt2, 1, shift_manager, br2, "managment");
         Worker lior = new Worker(4,"lior", 0,50, dt2, 3, storekeeper, br2, "managment");
@@ -39,7 +50,7 @@ public class Checking_Controller {
         Worker tamir = new Worker(7,"tamir", 0,50, dt2, 3, Cashier, br2, "managment");
         Worker daniel = new Worker(8,"daniel", 0,50, dt2, 1, delivery, br2, "managment");
 
-        WR.addWorker(ido);
+
         WR.addWorker(aviv);
         WR.addWorker(hezi);
         WR.addWorker(lior);
@@ -47,9 +58,9 @@ public class Checking_Controller {
         WR.addWorker(rudi);
         WR.addWorker(tamir);
         WR.addWorker(daniel);
-        WR.addBranch(br1);
+
         WR.addBranch(br2);
-        WR.addRole(hr);
+
         WR.addRole(shift_manager);
         WR.addRole(storekeeper);
         WR.addRole(delivery);
@@ -60,7 +71,7 @@ public class Checking_Controller {
         for (int day = 0; day < 7; day++) {
             for(int i=0; i < 2; i++) {
                 // Morning shifts
-                shifts1[day][i]=new Shift(br1.getBranchID(), day, i, new Worker[]{ido, aviv}, List.of(hr, shift_manager));
+                shifts1[day][i]=new Shift(br1.getBranchID(), day, i, new Worker[]{aviv}, List.of(shift_manager));
                 shifts2[day][i]=new Shift(br2.getBranchID(), day, i, new Worker[]{hezi, lior}, List.of(shift_manager, storekeeper));
 
             }
@@ -71,11 +82,7 @@ public class Checking_Controller {
         SR.addRoster(roster1);
         SR.addRoster(roster2);
         Week.setWeek();
-
-
-
     }
-
 
 
     public int checking_ID(int ID){

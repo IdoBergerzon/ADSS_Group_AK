@@ -98,7 +98,7 @@ public class HR_Controller {
             case 1:
                 String new_name;
                 while (true) {
-                    System.out.println("insert new name: \n");
+                    System.out.println("insert new name: ");
                     try {
                         new_name = scanner.next();
                         break;

@@ -1,42 +1,67 @@
 package Presentation;
 import Domain.Checking_Controller;
-import Domain.Worker;
 
 
 import java.util.Scanner;
 
 public class Main {
+
+    private static int counter=0;
     public static void main(String[] args) throws Exception {
         int choice;
         Scanner scanner = new Scanner(System.in);
         Checking_Controller check = new Checking_Controller();
         while (true) {
-            System.out.print("1.Enter id to make action \n" +
-                    "2.exit \n");
-            choice = scanner.nextInt();
-            switch (choice) {
-                case 1:
-                    System.out.print("Please enter your ID: ");
-                    int userID = scanner.nextInt();
-                    int is_manager = check.checking_ID(userID);//check the ID of the worker
+            if(counter==0){
+                System.out.print("Please choose one of the following\n" +
+                        "1.Start system without any details \n" +
+                        "2.Start system with details  \n" +
+                        "3.exit \n");
+                choice = scanner.nextInt();
 
-                    if (is_manager == 1) { //in case of HR manager
-                        hr_menu(userID);
-                    }
-                    if (is_manager == 0) {//in case of regular worker
-                        worker_menu(userID);
-                    }
-                    break;
-                case 2:
-                    return;
-                default:
-                    System.out.println("ID doesn't exist,please try again\n");
-                    break;
+                switch (choice) {
+                    case 1:
+                        counter++;
+                        break;
+                    case 2:
+                        check.startWithObject();
+                        counter++;
+                        break;
+                    case 3:
+                        return;
+                    default:
+                        System.out.println("Please enter valid input\n");
+                        break;
+
+                }
+            }
+            else {
+                counter+=1;
+                System.out.print("1.Enter id to make action \n" +
+                        "2.exit \n");
+                choice = scanner.nextInt();
+                switch (choice) {
+                    case 1:
+                        System.out.print("Please enter your ID: ");
+                        int userID = scanner.nextInt();
+                        int is_manager = check.checking_ID(userID);//check the ID of the worker
+
+                        if (is_manager == 1) { //in case of HR manager
+                            hr_menu(userID);
+                        }
+                        if (is_manager == 0) {//in case of regular worker
+                            worker_menu(userID);
+                        }
+                        break;
+                    case 2:
+                        return;
+                    default:
+                        System.out.println("Please enter valid input\n");
+                        break;
+
+                }
 
             }
-
-            //scanner.close();
-            //System.out.println("");
         }
     }
 
