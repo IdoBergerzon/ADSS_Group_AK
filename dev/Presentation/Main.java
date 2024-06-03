@@ -20,9 +20,10 @@ public class Main {
             System.out.println("1. Add");
             System.out.println("2. Update");
             System.out.println("3. Display");
-            System.out.println("4. Execute Transport");
-            System.out.println("5. Reset Data Bases");
-            System.out.println("6. Exit");
+            System.out.println("4. Start Transport");
+            System.out.println("5. Finish Transport");
+            System.out.println("6. Reset Data Bases");
+            System.out.println("7. Exit");
 
             choice = scanner.nextInt();
 
@@ -193,6 +194,10 @@ public class Main {
                                     driverController.getDriver(driverID).setLicenseMaxWeight(license);
                                     System.out.println("Driver's license were updated.\n" + driverController.getDriver(driverID));
                                     break;
+
+                                default:
+                                    System.out.println("Invalid choice. Please try again.");
+                                    break;
                             }
                             break;
 
@@ -235,6 +240,11 @@ public class Main {
                                     System.out.println("Insert new phone number:");
                                     String phoneNumber = scanner.next();
                                     locationController.updatePhone(locationID, phoneNumber);
+                                    break;
+
+
+                                default:
+                                    System.out.println("Invalid choice. Please try again.");
                                     break;
                             }
                             break;
@@ -305,6 +315,10 @@ public class Main {
                                     String newComment = scanner.next();
                                     transport.addComment(newComment);
                                     System.out.println("Comment added\n" + transport);
+                                    break;
+
+                                default:
+                                    System.out.println("Invalid choice. Please try again.");
                                     break;
                             }
                             break;
@@ -445,7 +459,15 @@ public class Main {
                                         System.out.println("The weight is " + deliveryDocument.getTotalWeight());
                                     }
                                     break;
+
+                                default:
+                                    System.out.println("Invalid choice. Please try again.");
+                                    break;
                             }
+                            break;
+
+                        default:
+                            System.out.println("Invalid choice. Please try again.");
                             break;
                     }
                     break;
@@ -552,8 +574,8 @@ public class Main {
 
 
 
-                        default: // Invalid choice in the sub-menu
-                            System.out.println("Invalid choice. Returning to the main menu.");
+                        default:
+                            System.out.println("Invalid choice. Please try again.");
                             break;
                     }
                     break;
