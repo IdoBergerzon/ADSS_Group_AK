@@ -1,9 +1,6 @@
 package Domain;
 
-import Domain.ALocation;
 import Data.LocationsData;
-
-import javax.xml.stream.Location;
 
 public class LocationController {
     private LocationsData locationsData;
@@ -86,7 +83,7 @@ public class LocationController {
         else {
             ALocation location = locationsData.getLocations().get(locationID);
             location.getAddress().setShipping_area(shipping_area);
-            System.out.println("Shipping area set successfully for address: " + location.getAddress().getShipping_area());
+            System.out.println("Shipping area set successfully: " + location);
         }
     }
 

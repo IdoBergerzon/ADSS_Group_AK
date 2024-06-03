@@ -1,11 +1,8 @@
 package Presentation;
 
-import Domain.Delivery_DocumentsController;
-import Domain.DriverController;
-import Domain.LocationController;
-import Domain.TransportController;
-import Domain.TruckController;
+import Domain.*;
 
+import javax.xml.transform.Source;
 import java.util.Scanner;
 
 public class Main {
@@ -36,16 +33,338 @@ public class Main {
 
                     break;
 
+/************** Update *******************************/
+
                 //Update
                 case 2:
+                    int update;
+                    System.out.println("Enter number:");
+                    System.out.println("1. Update truck availability");
+                    System.out.println("2. Update driver details");
+                    System.out.println("3. Update location details");
+                    System.out.println("4. Update transport details");
+                    System.out.println("5. Update delivery details");
+                    System.out.println("0. Back to Main Menu");
 
+                    update = scanner.nextInt();
+                    switch (update) {
+                        case 0: // Back to Main Menu
+                            System.out.println("Returning to the main menu.");
+                            break;
+
+                        //Update truck availability
+                        case 1:
+                            System.out.println("Insert truck ID:");
+                            int truckID = scanner.nextInt();
+                            System.out.println("Insert status available (true/false):");
+                            boolean truckAvailable = scanner.nextBoolean();
+                            if (truckController.getTruck(truckID) == null)
+                                System.out.println("Truck does not exist.");
+                            else {
+                                truckController.getTruck(truckID).setAvailable(truckAvailable);
+                                System.out.println("Truck's availability were updated.\n" + truckController.getTruck(truckID));
+                            }
+                            break;
+
+                        //Update driver details
+                        case 2:
+                            System.out.println("Insert driver ID:");
+                            int driverID = scanner.nextInt();
+                            if (driverController.getDriver(driverID) == null) {
+                                System.out.println("Driver does not exist.");
+                                break;
+                            }
+                            System.out.println("Driver update menu:");
+                            System.out.println("1. Update driver availability");
+                            System.out.println("2. Update driver license");
+                            System.out.println("0. Back to Main Menu");
+
+                            update = scanner.nextInt();
+                            switch (update) {
+                                //Back to main menu
+                                case 0:
+                                    System.out.println("Returning to the main menu.");
+                                    break;
+
+                                //Update driver availability
+                                case 1:
+                                    System.out.println("Insert status available (true/false):");
+                                    boolean driverAvailable = scanner.nextBoolean();
+                                    driverController.getDriver(driverID).setAvailable(driverAvailable);
+                                    System.out.println("Driver's availability were updated.\n" + driverController.getDriver(driverID));
+                                    break;
+
+                                //Update driver license
+                                case 2:
+                                    System.out.println("Insert new license (int):");
+                                    int license = scanner.nextInt();
+                                    driverController.getDriver(driverID).setLicenseMaxWeight(license);
+                                    System.out.println("Driver's license were updated.\n" + driverController.getDriver(driverID));
+                                    break;
+                            }
+                            break;
+
+                        //Update location details
+                        case 3:
+                            System.out.println("Insert location ID:");
+                            int locationID = scanner.nextInt();
+                            if (locationController.getLocation(locationID) == null) {
+                                System.out.println("Location does not exist.");
+                                break;
+                            }
+                            System.out.println("Location update menu:");
+                            System.out.println("1. Update shipping area");
+                            System.out.println("2. Update contact");
+                            System.out.println("3. Update phone number");
+                            System.out.println("0. Back to Main Menu");
+
+                            update = scanner.nextInt();
+                            switch (update) {
+                                case 0:
+                                    System.out.println("Returning to the main menu.");
+                                    break;
+
+                                //Update shipping area
+                                case 1:
+                                    System.out.println("Insert number of shipping area:");
+                                    int shippingArea = scanner.nextInt();
+                                    locationController.setShipping_area(locationID, shippingArea);
+                                    break;
+
+                                //Update contact
+                                case 2:
+                                    System.out.println("Insert new contact:");
+                                    String contact = scanner.next();
+                                    locationController.updateContact(locationID, contact);
+                                    break;
+
+                                //Update phone number
+                                case 3:
+                                    System.out.println("Insert new phone number:");
+                                    String phoneNumber = scanner.next();
+                                    locationController.updatePhone(locationID, phoneNumber);
+                                    break;
+                            }
+                            break;
+
+                        //Update transport
+                        case 4:
+                            System.out.println("Insert transport ID:");
+                            int transportID = scanner.nextInt();
+                            if (transportController.getTransport(transportID) == null) {
+                                System.out.println("Transport does not exist.");
+                                break;
+                            }
+                            Transport transport = transportController.getTransport(transportID);
+                            System.out.println("Transport update menu:");
+                            System.out.println("1. Change truck");
+                            System.out.println("2. Change driver");
+                            System.out.println("3. Add delivery");
+                            System.out.println("4. Remove delivery");
+                            System.out.println("5. Transport weighting");
+                            System.out.println("6. Replanning transport");
+                            System.out.println("0. Back to Main Menu");
+
+                            update = scanner.nextInt();
+                            switch (update) {
+                                case 0:
+                                    System.out.println("Returning to the main menu.");
+                                    break;
+
+                                //Change truck
+                                case 1:
+                                    System.out.println("Insert new truck ID:");
+                                    int newTruckID = scanner.nextInt();
+                                    if (truckController.getTruck(newTruckID) == null) {
+                                        break;
+                                    }
+                                    Truck newTruck = truckController.getTruck(newTruckID);
+                                    transport.setTruck(newTruck);
+                                    System.out.println("Transport's truck was changed\n" + transport);
+                                    break;
+
+                                //Change driver
+                                case 2:
+                                    System.out.println("Insert new driver ID:");
+                                    int newDriverID = scanner.nextInt();
+                                    if (driverController.getDriver(newDriverID) == null) {
+                                        break;
+                                    }
+                                    Driver newDriver = driverController.getDriver(newDriverID);
+                                    transport.setDriver(newDriver);
+                                    System.out.println("Driver's driver was changed\n" + transport);
+                                    break;
+
+                                //Add delivery
+                                case 3:
+                                    System.out.println("Insert new delivery ID:");
+                                    int newDeliveryID = scanner.nextInt();
+                                    if (deliveryController.getDelivery_Document(newDeliveryID) == null) {
+                                        break;
+                                    }
+                                    Delivery_Document newDelivery = deliveryController.getDelivery_Document(newDeliveryID);
+                                    transport.addDeliveryDocument(newDelivery);
+                                    System.out.println("Delivery's document was changed\n" + transport);
+                                    break;
+
+                                //Add comment
+                                case 4:
+                                    System.out.println("Insert new comment:");
+                                    String newComment = scanner.next();
+                                    transport.addComment(newComment);
+                                    System.out.println("Comment added\n" + transport);
+                                    break;
+                            }
+                            break;
+
+                        //Update delivery document
+                        case 5:
+                            System.out.println("Insert delivery ID:");
+                            int deliveryID = scanner.nextInt();
+                            if (deliveryController.getDelivery_Document(deliveryID) == null) {
+                                break;
+                            }
+
+                            Delivery_Document deliveryDocument = deliveryController.getDelivery_Document(deliveryID);
+                            System.out.println("Delivery document menu:");
+                            System.out.println("1. Change source");
+                            System.out.println("2. Change destination");
+                            System.out.println("3. Change delivery status");
+                            System.out.println("4. Change item status");
+                            System.out.println("5. Add item");
+                            System.out.println("6. Remove item");
+                            System.out.println("0. Back to Main Menu");
+
+                            update = scanner.nextInt();
+                            switch (update) {
+                                //Back to the main menu
+                                case 0:
+                                    System.out.println("Returning to the main menu.");
+                                    break;
+
+                                //Change source
+                                case 1:
+                                    System.out.println("Insert new source ID:");
+                                    int newSourceID = scanner.nextInt();
+                                    if (locationController.getLocation(newSourceID) == null) {
+                                        break;
+                                    }
+                                    if (locationController.getLocation(newSourceID).getL_type() == "Supplier") {
+                                        System.out.println("The ID is that of a supplier");
+                                        break;
+                                    }
+                                    Store newSource = (Store) locationController.getLocation(newSourceID);
+                                    deliveryDocument.setSource(newSource);
+                                    System.out.println("Source's document was changed\n" + deliveryDocument);
+                                    break;
+
+                                //Change destination
+                                case 2:
+                                    System.out.println("Insert new destination ID:");
+                                    int newDestinationID = scanner.nextInt();
+                                    if (locationController.getLocation(newDestinationID) == null) {
+                                        break;
+                                    }
+                                    if (locationController.getLocation(newDestinationID).getL_type() == "Store") {
+                                        System.out.println("The ID is that of a store");
+                                        break;
+                                    }
+                                    Supplier newDestination = (Supplier) locationController.getLocation(newDestinationID);
+                                    deliveryDocument.setDestination(newDestination);
+                                    System.out.println("Destination's document was changed\n" + deliveryDocument);
+                                    break;
+
+                                //Change delivery status
+                                case 3:
+                                    System.out.println("Insert new delivery status (in_Progress, finished, waiting):");
+                                    String deliveryStatus = scanner.next();
+                                    if (deliveryStatus.equals("in_Progress")) {
+                                        deliveryDocument.setDelivery_status(Delivery_DocumentStatus.in_Progress);
+                                    }
+                                    else if (deliveryStatus.equals("finished")) {
+                                        deliveryDocument.setDelivery_status(Delivery_DocumentStatus.finished);
+                                    }
+                                    else if (deliveryStatus.equals("waiting")) {
+                                        deliveryDocument.setDelivery_status(Delivery_DocumentStatus.waiting);
+                                    }
+                                    else {
+                                        System.out.println("Delivery document status is not in in_Progress or finished");
+                                        break;
+                                    }
+                                    System.out.println("Delivery document" + deliveryID + ",status was changed to" + deliveryDocument.getDelivery_Status());
+                                    break;
+
+                                //Change item status
+                                case 4:
+                                    System.out.println("Insert new item status (complete, itemMissing, in_Progress):");
+                                    String deliveryItemStatus = scanner.next();
+                                    if (deliveryItemStatus.equals("complete")) {
+                                        deliveryDocument.setItemsStatus(Delivery_ItemsStatus.complete);
+                                    }
+                                    else if (deliveryItemStatus.equals("itemMissing")) {
+                                        deliveryDocument.setItemsStatus(Delivery_ItemsStatus.itemMissing);
+                                    }
+                                    else if (deliveryItemStatus.equals("in_Progress")) {
+                                        deliveryDocument.setItemsStatus(Delivery_ItemsStatus.in_Progress);
+                                    }
+                                    else {
+                                        System.out.println("Delivery document status is not in in_Progress or completed");
+                                        break;
+                                    }
+                                    System.out.println("Delivery document" + deliveryID + ",item status was changed to" + deliveryDocument.getItemsStatus());
+                                    break;
+
+                                //Add item
+                                case 5:
+                                    System.out.println("Insert item ID to add");
+                                    int newitemID = scanner.nextInt();
+                                    System.out.println("Insert item name");
+                                    String itemName = scanner.next();
+                                    System.out.println("Insert item weight");
+                                    int itemWeight = scanner.nextInt();
+                                    System.out.println("Insert amount");
+                                    int itemAmount = scanner.nextInt();
+                                    Item item = new Item(newitemID, itemName, itemWeight);
+                                    if (deliveryDocument.getItems().containsKey(item)) {
+                                        deliveryDocument.getItems().put(item, itemAmount + deliveryDocument.getItems().get(item));
+                                    }
+                                    else
+                                        deliveryDocument.getItems().put(item, itemAmount);
+                                    System.out.println("item" + item + "was added to the delivery document");
+                                    System.out.println("The weight is " + deliveryDocument.getTotalWeight());
+                                    break;
+
+                                //Remove item
+                                case 6:
+                                    System.out.println("Insert item ID to remove");
+                                    int itemID = scanner.nextInt();
+                                    int flag = 0;
+                                    for (Item item1 : deliveryDocument.getItems().keySet()){
+                                        if (itemID == item1.getItemID()) {
+                                            deliveryDocument.getItems().remove(item1);
+                                            flag = 1;
+                                        }
+                                    }
+                                    if (flag == 0) {
+                                        System.out.println("item does not exist");
+                                    }
+                                    else {
+                                        System.out.println("item" + itemID + "was removed from the delivery document");
+                                        System.out.println("The weight is " + deliveryDocument.getTotalWeight());
+                                    }
+                                    break;
+                            }
+                            break;
+                    }
                     break;
+
+/************** Display *******************************/
 
                 //Display
                 case 3:
                     int display;
                     //Display Menu
-                    System.out.println("Enter display number:");
+                    System.out.println("Enter number:");
                     System.out.println("1. Display truck details");
                     System.out.println("2. Display driver details");
                     System.out.println("3. Display transport");
@@ -147,15 +466,21 @@ public class Main {
                     }
                     break;
 
+/************** Execute Transport *******************************/
+
                 //Execute Transport
                 case 4:
 
                     break;
 
+/************** Reset Data Base *******************************/
+
                 //Reset Data Bases
                 case 5:
 
                     break;
+
+/************** Exit *******************************/
 
                 //Exit
                 case 6:

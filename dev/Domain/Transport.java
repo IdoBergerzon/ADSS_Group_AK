@@ -150,16 +150,21 @@ public class Transport {
         this.comments = comment;
     }
 
+    public void addDeliveryDocument(Delivery_Document delivery_document) {
+        this.delivery_documents.add(delivery_document);
+    }
+
     /**
      * Calculates the total transport weight + the weight of the truck
      */
-    public void calc_transportWeight() {
+    public double calc_transportWeight() {
         double totalW = 0;
         for (Delivery_Document delivery_doc : this.getDelivery_documents()) {
             totalW += delivery_doc.getTotalWeight();
         }
         this.addWeight(totalW + this.getTruck().getTruckWeight());
         this.addComment(this.totalWeights.size() + ". Total Weight: " + totalW +this.getTruck().getTruckWeight() + "\n");
+        return totalW + this.getTruck().getTruckWeight();
     }
 
     @Override
