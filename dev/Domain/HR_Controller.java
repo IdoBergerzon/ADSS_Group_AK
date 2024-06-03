@@ -212,9 +212,9 @@ public class HR_Controller {
             new_worker = workers_memory.getWorkerById(shiftWorkers[i]);
             //Test to make sure adding this worker is not against the rules
             if (new_worker==null){
-                throw new Exception("Worker ID does not exist");
+                throw new Exception("Worker with ID-" + shiftWorkers[i]+ " does not exist");
             } else if (new_worker.getWork_branch().getBranchID()!=branch_id) {
-                throw new Exception("Worker does not works in this branch");
+                throw new Exception("Worker  with ID-" + shiftWorkers[i]+ "does not works in this branch");
             } else{
                 /// Making sure the worker can work in this role
                 boolean roleExists = false;
@@ -256,5 +256,28 @@ public class HR_Controller {
 
     public void setWeek(){
         Week.setWeek();
+    }
+
+    public void fireWorker(int worker_id){
+       try {
+           workers_memory.deleteWorker(worker_id);
+       } catch (Exception e){
+           throw e;
+       }
+    }
+
+    public boolean isAvailable(int worker_id, int day, int shift_type){
+        Request request = requests_repository.getRequestByWorker(worker_id);
+        if(request==null){
+            return true;
+        }
+
+        Boolean[][] request_array = request.getRequest();
+        if(request_array[day][shift_type]){
+
+            return true;
+        } else {
+            return false;
+        }
     }
 }

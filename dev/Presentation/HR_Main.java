@@ -124,25 +124,52 @@ public class HR_Main {
 
         }
         int[] shiftWorkers=new int[roles_for_shift.size()];
+
         for(int i=0;i<roles_for_shift.size();i++){
             while(true) {
                 System.out.println("Enter the ID of an worker who can fill the roll ID: " + roles_for_shift.get(i) + " for this shift \n");
                 answer = sc.nextInt();
+
+                // First we will check if worker already sign for this shift, then we will check if he's available for work
                 boolean is_exist=false;
                 for (int j = 0; j < i; j++) {
                     if (shiftWorkers[j] == answer) {
-                        System.out.println("Worker with ID" + answer + " already exists in shift \n" +
+                        System.out.println("Worker with ID " + answer + " already exists in shift \n" +
                                 "please choose another worker ID");
                         is_exist=true;
                         break;
                     }
                 }
-                if(!is_exist){ break; }
+
+                boolean is_available=hr_controller.isAvailable(answer,day,shift_type);
+                if(!is_available){
+                    System.out.println("Worker with ID " + answer + " is not available for this shift \n" +
+                            "please choose another worker ID");
+                }
+
+                if(!is_exist && is_available){ break; }
             }
             shiftWorkers[i]=answer;
         }
 
         hr_controller.createNewShift(branch_id,day,shift_type,shiftWorkers,roles_for_shift);
+    }
+
+    public void fireWorker(){
+        Scanner sc = new Scanner(System.in);
+        while(true) {
+            System.out.println("Enter worker id:");
+            int worker_id = sc.nextInt();
+            try{
+                hr_controller.fireWorker(worker_id);
+                System.out.println("Worker fire completed\n");
+                return;
+            } catch (Exception e){
+                System.out.println(e.getMessage()+"\n");
+            }
+        }
+
+
     }
 
 

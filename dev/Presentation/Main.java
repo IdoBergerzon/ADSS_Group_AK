@@ -51,6 +51,8 @@ public class Main {
                         }
                         if (is_manager == 0) {//in case of regular worker
                             worker_menu(userID);
+                        } else{
+                            System.out.println("The ID you enter doesn't belong to an existing worker\n");
                         }
                         break;
                     case 2:
@@ -79,7 +81,7 @@ public class Main {
                     "5.create new role\n" +
                     "6.display worker that can work by shift\n" +
                     "7.create new roster\n" +
-                    "8.create new shift\n" +
+                    "8.to fire an worker\n" +
                     "9.exit\n");
 
             System.out.print("Please enter your choice (1-9): ");
@@ -110,7 +112,7 @@ public class Main {
                     main1.createNewRoster();
                     break;
                 case 8:
-                    //createNewShift();
+                    main1.fireWorker();
                     break;
                 case 9:
                     return;
@@ -156,11 +158,11 @@ public class Main {
                     break;
                 case 6:
                     main2.RetireMassage(worker_id);
-                    break;
+                    return;
                 case 7:
                     return;
                 default:
-                    System.out.println("Invalid choice. Please enter a number 1 to 6.");
+                    System.out.println("Invalid choice. Please enter a number 1 to 7.");
                     break;
             }
         }
