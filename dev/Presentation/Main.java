@@ -108,7 +108,11 @@ public class Main {
                                 int address_code = scanner.nextInt();
                                 scanner.nextLine(); // Consume newline
 
-                                Address address = new Address(full_address, address_code);
+                                System.out.print("Enter Shipping area:");
+                                int shipping_area = scanner.nextInt();
+
+
+                                Address address = new Address(full_address, address_code, shipping_area);
 
                                 System.out.print("Enter contact:\n");
                                 String contact = scanner.nextLine();
