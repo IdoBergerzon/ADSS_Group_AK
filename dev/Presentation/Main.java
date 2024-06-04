@@ -54,16 +54,15 @@ public class Main {
                             // Add Truck
                             System.out.println("Insert truck ID:");
                             int truckID = scanner.nextInt();
+                            scanner.nextLine();
                             if (truckController.getTruck(truckID) != null){
                                 System.out.print("The truck already exists in the system");
                             }
                             else {
                                 System.out.print("Insert truck Type:\n");
                                 String truckType = scanner.nextLine();
-                                scanner.nextLine();
                                 System.out.println("Insert truck Weight:");
                                 double truckWeight = scanner.nextDouble();
-                                scanner.nextLine();
                                 System.out.println("Insert truck Max Weight:");
                                 double MaxWeight = scanner.nextDouble();
                                 truckController.addNewTruck(truckID,truckType,MaxWeight,truckWeight);
@@ -73,17 +72,18 @@ public class Main {
 
                         case 2:
                             // Add Driver
-                            System.out.print("Enter Driver ID:");
+                            System.out.print("Enter Driver ID:\n");
                             int driverID = scanner.nextInt();
+                            scanner.nextLine();
                             if (driverController.getDriver(driverID) != null) {
                                 System.out.print("The Driver already exists in the system");
                             }
                             else {
                             System.out.print("Enter Driver Name:\n");
                             String driverName = scanner.nextLine();
-                            System.out.print("Enter the driver's license number");
+                            System.out.print("Enter the driver's license number:\n");
                             int licenseNumber = scanner.nextInt();
-                                driverController.addDriver(driverID, driverName, licenseNumber);
+                            driverController.addDriver(driverID, driverName, licenseNumber);
                                 break;
                             }
 

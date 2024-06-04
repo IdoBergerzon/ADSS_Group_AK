@@ -20,6 +20,13 @@ public class test {
 
     }
 
+    void add_Driver() {
+        driverController = new DriverController();
+    }
+
+    void add_DeliveryDocuments() {
+        deliveryController = new Delivery_DocumentsController();
+    }
     void add_Transport() {
 
     }

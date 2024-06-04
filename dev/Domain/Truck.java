@@ -7,12 +7,12 @@ public class Truck {
     private double MaxWeight;
     private boolean available;
 
-    public Truck(int truckID, String truckType, double truckWeight, double MaxWeight, boolean available) {
+    public Truck(int truckID, String truckType, double truckWeight, double MaxWeight) {
         this.truckID = truckID;
         this.truckType = truckType;
         this.truckWeight = truckWeight;
         this.MaxWeight = MaxWeight;
-        this.available = available;
+        this.available = true;
     }
     public int getTruckID() {return truckID;}
     public String getTruckType() { return truckType; }
@@ -28,7 +28,7 @@ public class Truck {
     public String toString() {
         return "Truck{" +
                 "truckID=" + truckID +
-                ", truckType='" + truckType + '\'' +
+                ", truckType=" + truckType  +
                 ", truckWeight=" + truckWeight +
                 ", MaxWeight=" + MaxWeight +
                 ", available=" + available +
