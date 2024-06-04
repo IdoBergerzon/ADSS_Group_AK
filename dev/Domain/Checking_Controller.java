@@ -52,6 +52,7 @@ public class Checking_Controller {
 
 
         WR.addWorker(aviv);
+        WR.addWorker(noa);
         WR.addWorker(hezi);
         WR.addWorker(lior);
         WR.addWorker(asaf);

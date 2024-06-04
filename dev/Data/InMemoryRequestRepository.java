@@ -53,18 +53,7 @@ public class InMemoryRequestRepository implements Request_Repository{
         return curr_requests.get(requestKey);
     }
 
-    /**
-     * Function that move all current request into past request which
-     * past_request save them by week and list of all employee request
-     */
-    public void newWeek(){
-        Request[] requests = getAllRequests();
-        past_requests.put(Week.getWeek(),requests);
-        for (Pair key : curr_requests.keySet()) {
-            curr_requests.put(key,null);
-        }
 
-    }
 
     public Request[] getPastRequests(int week) {
         return past_requests.get(week);

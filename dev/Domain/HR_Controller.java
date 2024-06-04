@@ -283,7 +283,7 @@ public class HR_Controller {
         }
 
         Boolean[][] request_array = request.getRequest();
-        if(request_array[day][shift_type]){
+        if(request_array[shift_type][day]){
 
             return true;
         } else {
