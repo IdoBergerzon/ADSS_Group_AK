@@ -178,8 +178,21 @@ public class Main {
                             break;
 
                         case 5:
-
-
+                            System.out.print("Enter Item ID:");
+                            int itemID = scanner.nextInt();
+                            scanner.nextLine();
+                            if (deliveryController.getItemsData().getItem(itemID) != null) {
+                                System.out.println("Item already exists in the system");
+                            }
+                            else {
+                                System.out.println("Enter item name:");
+                                String name = scanner.nextLine();
+                                System.out.print("Enter item weight:");
+                                double weight = scanner.nextDouble();
+                                Item item = new Item(itemID, name, weight);
+                                deliveryController.getItemsData().addItem(item);
+                                System.out.println("Item added successfully.");
+                            }
                             break;
 
 
