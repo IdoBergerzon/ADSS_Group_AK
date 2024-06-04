@@ -48,6 +48,7 @@ public class Checking_Controller {
         Worker rudi = new Worker(6,"rudi", 0,50, dt2, 3, storekeeper, br2, "managment","Yahav:1525358");
         Worker tamir = new Worker(7,"tamir", 0,50, dt2, 3, Cashier, br2, "managment","Hapoalim:9753146");
         Worker daniel = new Worker(8,"daniel", 0,50, dt2, 1, delivery, br2, "managment","Leumi:6612389");
+        Worker noa = new Worker(9,"Noa", 0,50, dt2, 1, shift_manager, br2, "managment","Hapoalim:1234567");
 
 
         WR.addWorker(aviv);

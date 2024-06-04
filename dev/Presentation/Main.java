@@ -42,14 +42,13 @@ public class Main {
                 choice = scanner.nextInt();
                 switch (choice) {
                     case 1:
-                        System.out.print("Please enter your ID: ");
+                        System.out.print("Please enter your ID: \n");
                         int userID = scanner.nextInt();
                         int is_manager = check.checking_ID(userID);//check the ID of the worker
 
                         if (is_manager == 1) { //in case of HR manager
                             hr_menu(userID);
-                        }
-                        if (is_manager == 0) {//in case of regular worker
+                        } else if (is_manager == 0) {//in case of regular worker
                             worker_menu(userID);
                         } else{
                             System.out.println("The ID you enter doesn't belong to an existing worker\n");
@@ -84,7 +83,7 @@ public class Main {
                     "8.to fire an worker\n" +
                     "9.exit\n");
 
-            System.out.print("Please enter your choice (1-9): ");
+            System.out.print("Please enter your choice (1-9): \n");
             int choice = scanner.nextInt();
 
 
@@ -137,7 +136,7 @@ public class Main {
                     "5.Show current/past roster\n" +
                     "6.retire massage\n" +
                     "7.exit\n");
-            System.out.print("Please enter your choice (1-7): ");
+            System.out.print("Please enter your choice (1-7): \n");
             int choice = scanner.nextInt();
 
             switch (choice) {
