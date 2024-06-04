@@ -769,7 +769,7 @@ public class Main {
                                 if (locationController.getLocation(destinationID).getL_type() != "Supplier")
                                     System.out.println("The location is Store.");
                                 else {
-                                    Supplier destination = (Supplier) locationController.getLocation(sourceID);
+                                    Supplier destination = (Supplier) locationController.getLocation(destinationID);
                                     if (newTransport.getDestinations().contains(destination)) {
                                         newTransport.removeDestination(destination);
                                         if (newTransport.checkTransport()) {
@@ -842,7 +842,7 @@ public class Main {
                     System.out.println("Invalid choice. Please try again.");
             }
         }
-        while (choice != 7);
+        while (choice != 6);
         scanner.close();
         }
     }
