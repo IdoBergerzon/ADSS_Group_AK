@@ -48,6 +48,7 @@ public class Delivery_Document {
         for (Item item : items.keySet()) {
             totalWeight += item.getWeight() * items.get(item);
         }
+        this.totalWeight = totalWeight;
         return totalWeight;
     }
 

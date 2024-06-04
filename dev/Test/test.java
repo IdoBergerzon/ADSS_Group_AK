@@ -14,6 +14,9 @@ public class test {
     void add_Trunck() {
         truckController = new TruckController();
         truckController.addNewTruck(1, "Toyota",1500,1000);
+        truckController.addNewTruck(2, "M",700,800);
+        truckController.addNewTruck(1, "Toyota",1500,1000);
+        truckController.addNewTruck(2, "M",700,800);
 
     }
 
