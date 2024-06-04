@@ -33,6 +33,8 @@ public class HR_Main {
         newWorker += sc.nextLine() + ",";
         System.out.println("Enter managerID:");
         newWorker += sc.nextLine() + ",";
+        System.out.println("Enter Bank details:(format: BANK_NAME:ACCOUNT_NUMBER) ");
+        newWorker += sc.nextLine() + ",";
 
 
         hr_controller.Add_New_Worker(newWorker);

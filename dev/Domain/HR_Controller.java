@@ -62,9 +62,10 @@ public class HR_Controller {
             System.out.println("manager ID doesn't exist\n");
             return -1;
         }
+        String bank_details=string_details[8];
 
 
-        Worker new_worker = new Worker(new_ID, new_name,new_monthly_wage, new_hourly_wage, curr,managerID, role, new_branch, department);
+        Worker new_worker = new Worker(new_ID, new_name,new_monthly_wage, new_hourly_wage, curr,managerID, role, new_branch, department,bank_details);
         workers_memory.addWorker(new_worker);
         return 1;
     };
@@ -91,7 +92,8 @@ public class HR_Controller {
         "2.monthly wage\n"
         +"3.hourly wage\n"
         +"4.direct manager ID\n"
-        +"5.departement\n");
+        +"5.departement\n"
+        +"6.bank details\n");
         int choice = scanner.nextInt();
 
         switch (choice) {
@@ -144,10 +146,14 @@ public class HR_Controller {
 
             case 5:
                 System.out.println("insert new department: \n");
-                String new_department=scanner.nextLine();
+                String new_department=scanner.next();
                 to_update.setDepartement(new_department);
                 return "update department success \n";
-
+            case 6:
+                System.out.println("insert new Bank details:(format: BANK_NAME:ACCOUNT_NUMBER) ");
+                String new_bank_details=scanner.next();
+                to_update.setBank_details(new_bank_details);
+                return "update bank details success \n";
             default:
                 System.out.println("Invalid choice. Please enter a number between 1 and 5.");
                 break;
@@ -251,6 +257,10 @@ public class HR_Controller {
         Roster new_roster =new Roster(branch);
 
         shifts_repository.addRoster(new_roster);
+        List<Worker> list=workers_memory.getAllWorkers();
+        for (int i=0;i<list.size();i++){
+            list.get(i).setDays_off(list.get(i).getDays_off()+0.25);
+        }
 
     }
 

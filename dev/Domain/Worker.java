@@ -11,10 +11,19 @@ public class Worker {
     private Integer direct_manager_ID;
     private Role[] roles;
     private Branch work_branch;
-    private int days_off;
+    private Double days_off;
     private String departement;
+    private String bank_details;
 
-    public Worker(int id, String name, int monthly_wage, int hourly_wage, Date start_date, Integer direct_manager_ID,Role role, Branch work_branch, String departement) {
+    public String getBank_details() {
+        return bank_details;
+    }
+
+    public void setBank_details(String bank_details) {
+        this.bank_details = bank_details;
+    }
+
+    public Worker(int id, String name, int monthly_wage, int hourly_wage, Date start_date, Integer direct_manager_ID, Role role, Branch work_branch, String departement, String bank_details) {
         this.id = id;
         this.name = name;
         this.monthly_wage = monthly_wage;
@@ -25,7 +34,8 @@ public class Worker {
         this.departement = departement;
         this.roles= new Role[1];
         this.roles[0] = role;
-        this.days_off = 0;
+        this.days_off = 0.0;
+        this.bank_details=bank_details;
 
 
     }
@@ -67,7 +77,7 @@ public class Worker {
         return work_branch;
     }
 
-    public int getDays_off() {
+    public Double getDays_off() {
         return days_off;
     }
 
@@ -113,6 +123,10 @@ public class Worker {
         this.work_branch = work_branch;
     }
 
+    public void setDays_off(Double days_off) {
+        this.days_off = days_off;
+    }
+
     public String toString() {
         String result_str="";
         result_str+="Worker ID: "+this.getId()+"\n";
@@ -129,6 +143,8 @@ public class Worker {
         result_str+="\n";
         result_str+=this.getWork_branch()+"\n";
         result_str+="Department: "+this.getDepartement()+"\n";
+        result_str+="Days off: "+this.getDays_off()+"Days \n";
+        result_str+="Bank Details: "+this.getBank_details()+"\n";
 
         return result_str;
     }
