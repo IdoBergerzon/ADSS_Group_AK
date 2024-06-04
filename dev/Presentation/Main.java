@@ -57,7 +57,7 @@ public class Main {
                                 System.out.print("The truck already exists in the system");
                             }
                             else {
-                                System.out.print("Insert truck Type: ");
+                                System.out.print("Insert truck Type:");
                                 String truckType = scanner.nextLine();
                                 scanner.nextLine();
                                 System.out.println("Insert truck Weight:");
@@ -72,13 +72,13 @@ public class Main {
 
                         case 2:
                             // Add Driver
-                            System.out.print("Enter Driver ID: ");
+                            System.out.print("Enter Driver ID:");
                             int driverID = scanner.nextInt();
                             if (driverController.getDriver(driverID) != null) {
                                 System.out.print("The Driver already exists in the system");
                             }
                             else {
-                            System.out.print("Enter Driver Name: ");
+                            System.out.print("Enter Driver Name:");
                             String driverName = scanner.nextLine();
                             System.out.print("Enter the driver's license number");
                             int licenseNumber = scanner.nextInt();
@@ -91,28 +91,28 @@ public class Main {
                             int locationChoice;
                             System.out.println("1. Add Supplier");
                             System.out.println("2. Add Store");
-                            System.out.print("Enter your choice: ");
+                            System.out.print("Enter your choice:");
                             locationChoice = scanner.nextInt();
                             scanner.nextLine(); // Consume newline
 
                             if (locationChoice == 1 || locationChoice == 2) {
-                                System.out.print("Enter Location ID: ");
+                                System.out.print("Enter Location ID:");
                                 int locationID = scanner.nextInt();
                                 scanner.nextLine(); // Consume newline
 
-                                System.out.print("Enter Address details: ");
+                                System.out.print("Enter Address details:");
                                 String full_address = scanner.nextLine();
 
-                                System.out.print("Enter address_code: ");
+                                System.out.print("Enter address_code:");
                                 int address_code = scanner.nextInt();
                                 scanner.nextLine(); // Consume newline
 
                                 Address address = new Address(full_address, address_code);
 
-                                System.out.print("Enter contact: ");
+                                System.out.print("Enter contact:");
                                 String contact = scanner.nextLine();
 
-                                System.out.print("Enter phone: ");
+                                System.out.print("Enter phone:");
                                 String phone = scanner.nextLine();
 
                                 String l_type = (locationChoice == 1) ? "Supplier" : "Store";
@@ -124,13 +124,13 @@ public class Main {
                             break;
 
                         case 4:
-                            System.out.print("Enter Delivery Document ID: ");
+                            System.out.print("Enter Delivery Document ID:");
                             int deliveryDocumentID = scanner.nextInt();
                             if (deliveryController.getDelivery_Document(deliveryDocumentID) != null) {
                                 System.out.print("The Delivery Document already exists in the system");
                             }
                             else {
-                                System.out.println("Enter Source ID: ");
+                                System.out.println("Enter Source ID:");
                                 int sourceID = scanner.nextInt();
                                 if (locationController.getLocation(sourceID) == null) {
                                     System.out.println("Invalid source ID");
@@ -138,7 +138,7 @@ public class Main {
                                     System.out.print("The location is Supplier (destination)");
                                 }
                                 else {
-                                    System.out.print("Enter Destination ID: ");
+                                    System.out.print("Enter Destination ID:");
                                     int destinationID = scanner.nextInt();
                                     if (locationController.getLocation(destinationID) == null) {
                                         System.out.println("Invalid destination ID");
@@ -150,17 +150,17 @@ public class Main {
                                         HashMap<Item, Integer> newItems = new HashMap<>();
                                         int moreItem = 1;
                                         while (moreItem != 0) {
-                                            System.out.print("Enter Item ID: ");
+                                            System.out.print("Enter Item ID:");
                                             int itemID = scanner.nextInt();
-                                            System.out.print("Enter Item Name: ");
+                                            System.out.print("Enter Item Name:");
                                             String itemName = scanner.nextLine();
-                                            System.out.print("Enter Weight: ");
+                                            System.out.print("Enter Weight:");
                                             double weight = scanner.nextDouble();
                                             Item item = new Item(itemID, itemName, weight);
-                                            System.out.print("Enter Quantity: ");
+                                            System.out.print("Enter Quantity:");
                                             int quantity = scanner.nextInt();
                                             newItems.put(item, quantity);
-                                            System.out.print("Add more item? (0 = No, 1 = Yes) ");
+                                            System.out.print("Add more item? (0 = No, 1 = Yes)");
                                             moreItem = scanner.nextInt();
                                         }
                                         deliveryController.addDelivery_Document(deliveryDocumentID, store, supplier, newItems);
@@ -174,6 +174,7 @@ public class Main {
                             System.out.println("Invalid choice. Please try again.");
                             break;
                     }
+                    break;
 
 
 
@@ -475,13 +476,13 @@ public class Main {
 
                                 //Add item
                                 case 5:
-                                    System.out.println("Insert item ID to add");
+                                    System.out.println("Insert item ID to add:");
                                     int newitemID = scanner.nextInt();
-                                    System.out.println("Insert item name");
+                                    System.out.println("Insert item name:");
                                     String itemName = scanner.next();
-                                    System.out.println("Insert item weight");
+                                    System.out.println("Insert item weight:");
                                     int itemWeight = scanner.nextInt();
-                                    System.out.println("Insert amount");
+                                    System.out.println("Insert amount:");
                                     int itemAmount = scanner.nextInt();
                                     Item item = new Item(newitemID, itemName, itemWeight);
                                     if (deliveryDocument.getItems().containsKey(item)) {
@@ -495,7 +496,7 @@ public class Main {
 
                                 //Remove item
                                 case 6:
-                                    System.out.println("Insert item ID to remove");
+                                    System.out.println("Insert item ID to remove:");
                                     int itemID = scanner.nextInt();
                                     int flag = 0;
                                     for (Item item1 : deliveryDocument.getItems().keySet()){
