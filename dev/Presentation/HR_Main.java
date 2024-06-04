@@ -110,51 +110,71 @@ public class HR_Main {
         String str_shift_type = (shift_type == 0) ? "morning" : "evening";
         String[] daysOfWeek = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
         String str_day = daysOfWeek[day];
-
-        System.out.println("Now you're creating shift at " + str_day + " and shift type: " + str_shift_type + "\n");
-
         List<Integer> roles_for_shift = new ArrayList<>();
-        roles_for_shift.add(2);      //in every shift must have a shift manager
-        int answer;
-        while (true) {
-            System.out.println("enter role id you need to this shift(if you finish insert 0): ");
-            answer = sc.nextInt();
-            if(answer==0){
+
+        String is_open = "0";
+        while(true) {
+            System.out.println("Now you're creating shift at " + str_day + " and shift type: " + str_shift_type + "\n" +
+                    "Is branch-" + branch_id + " will be open that day?(Y/N)\n");
+            is_open = sc.nextLine();
+            if(is_open.equals("Y") || is_open.equals("N")){
                 break;
+            } else{
+                System.out.println("Please enter a valid choice- Y or N\n");
             }
-            roles_for_shift.add(answer);
-
         }
-        int[] shiftWorkers=new int[roles_for_shift.size()];
 
-        for(int i=0;i<roles_for_shift.size();i++){
-            while(true) {
-                System.out.println("Enter the ID of an worker who can fill the roll ID: " + roles_for_shift.get(i) + " for this shift \n");
+        if(is_open.equals("N")){
+            System.out.println("Great, everyone gets a day off");
+            hr_controller.createNewShift(branch_id,day,shift_type,new int[0], roles_for_shift);
+            return;
+        }
+
+        else if(is_open.equals("Y")) {
+            roles_for_shift.add(2);      //in every shift must have a shift manager
+            int answer;
+            while (true) {
+                System.out.println("enter role id you need to this shift(if you finish insert 0): ");
                 answer = sc.nextInt();
+                if (answer == 0) {
+                    break;
+                }
+                roles_for_shift.add(answer);
 
-                // First we will check if worker already sign for this shift, then we will check if he's available for work
-                boolean is_exist=false;
-                for (int j = 0; j < i; j++) {
-                    if (shiftWorkers[j] == answer) {
-                        System.out.println("Worker with ID " + answer + " already exists in shift \n" +
+            }
+            int[] shiftWorkers = new int[roles_for_shift.size()];
+
+            for (int i = 0; i < roles_for_shift.size(); i++) {
+                while (true) {
+                    System.out.println("Enter the ID of an worker who can fill the roll ID: " + roles_for_shift.get(i) + " for this shift \n");
+                    answer = sc.nextInt();
+
+                    // First we will check if worker already sign for this shift, then we will check if he's available for work
+                    boolean is_exist = false;
+                    for (int j = 0; j < i; j++) {
+                        if (shiftWorkers[j] == answer) {
+                            System.out.println("Worker with ID " + answer + " already exists in shift \n" +
+                                    "please choose another worker ID");
+                            is_exist = true;
+                            break;
+                        }
+                    }
+
+                    boolean is_available = hr_controller.isAvailable(answer, day, shift_type);
+                    if (!is_available) {
+                        System.out.println("Worker with ID " + answer + " is not available for this shift \n" +
                                 "please choose another worker ID");
-                        is_exist=true;
+                    }
+
+                    if (!is_exist && is_available) {
                         break;
                     }
                 }
-
-                boolean is_available=hr_controller.isAvailable(answer,day,shift_type);
-                if(!is_available){
-                    System.out.println("Worker with ID " + answer + " is not available for this shift \n" +
-                            "please choose another worker ID");
-                }
-
-                if(!is_exist && is_available){ break; }
+                shiftWorkers[i] = answer;
             }
-            shiftWorkers[i]=answer;
-        }
 
-        hr_controller.createNewShift(branch_id,day,shift_type,shiftWorkers,roles_for_shift);
+            hr_controller.createNewShift(branch_id, day, shift_type, shiftWorkers, roles_for_shift);
+        }
     }
 
     public void fireWorker(){
