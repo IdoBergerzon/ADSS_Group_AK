@@ -3,6 +3,7 @@ package Presentation;
 import Domain.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -38,7 +39,8 @@ public class Main {
                     System.out.println("1. Add Truck");
                     System.out.println("2. Add Driver");
                     System.out.println("3. Add Location");
-                    System.out.println("4. Add Transport");
+                    System.out.println("4. Add Delivery Document");
+                    System.out.println("0. Exit");
 
                     add = scanner.nextInt();
 
@@ -46,6 +48,8 @@ public class Main {
                         case 0: // Back to Main Menu
                             System.out.println("Returning to the main menu.");
                             break;
+
+
                         case 1:
                             // Add Truck
                             System.out.println("Insert truck ID:");
@@ -65,6 +69,8 @@ public class Main {
                                 truckController.addNewTruck(truckID,truckType,MaxWeight,truckWeight);
                                 break;
                             }
+
+
                         case 2:
                             // Add Driver
                             System.out.print("Enter Driver ID: ");
@@ -80,6 +86,8 @@ public class Main {
                                 driverController.addDriver(driverID, driverName, licenseNumber);
                                 break;
                             }
+
+                        //Add supplier or Store
                         case 3:
                             int locationChoice;
                             System.out.println("1. Add Supplier");
@@ -115,8 +123,52 @@ public class Main {
                                 System.out.println("Invalid choice for the given location type.");
                             }
                             break;
-                            case 4:
 
+                        case 4:
+                            System.out.print("Enter Delivery Document ID: ");
+                            int deliveryDocumentID = scanner.nextInt();
+                            if (deliveryController.getDelivery_Document(deliveryDocumentID) != null) {
+                                System.out.print("The Delivery Document already exists in the system");
+                            }
+                            else {
+                                System.out.println("Enter Source ID: ");
+                                int sourceID = scanner.nextInt();
+                                if (locationController.getLocation(sourceID) == null) {
+                                    System.out.println("Invalid source ID");
+                                } else if (locationController.getLocation(sourceID).getL_type() == "Supplier") {
+                                    System.out.print("The location is Supplier (destination)");
+                                }
+                                else {
+                                    System.out.print("Enter Destination ID: ");
+                                    int destinationID = scanner.nextInt();
+                                    if (locationController.getLocation(destinationID) == null) {
+                                        System.out.println("Invalid destination ID");
+                                    } else if (locationController.getLocation(destinationID).getL_type() == "Store") {
+                                        System.out.print("The location is Store");
+                                    } else {
+                                        Store store = (Store) locationController.getLocation(sourceID);
+                                        Supplier supplier = (Supplier) locationController.getLocation(destinationID);
+                                        HashMap<Item, Integer> newItems = new HashMap<>();
+                                        int moreItem = 1;
+                                        while (moreItem != 0) {
+                                            System.out.print("Enter Item ID: ");
+                                            int itemID = scanner.nextInt();
+                                            System.out.print("Enter Item Name: ");
+                                            String itemName = scanner.nextLine();
+                                            System.out.print("Enter Weight: ");
+                                            double weight = scanner.nextDouble();
+                                            Item item = new Item(itemID, itemName, weight);
+                                            System.out.print("Enter Quantity: ");
+                                            int quantity = scanner.nextInt();
+                                            newItems.put(item, quantity);
+                                            System.out.print("Add more item? (0 = No, 1 = Yes) ");
+                                            moreItem = scanner.nextInt();
+                                        }
+                                        deliveryController.addDelivery_Document(deliveryDocumentID, store, supplier, newItems);
+                                    }
+                                }
+                            }
+                            break;
 
 
                         default:
@@ -801,34 +853,6 @@ public class Main {
         }
         while (choice != 7);
         scanner.close();
-
-
-
-
-
-
-
-        DriverController controller = new DriverController();
-
-
-
-
-        // Print all drivers and their licenses
-        controller.printAllDrivers();
-
-        // Print initial driver availability
-        System.out.println("Initial driver availability:");
-        controller.printAllDrivers();
-
-        // Change availability of a driver
-        controller.changeDriverAvailability(1, false);
-        System.out.println("Driver availability changed for driver 1.");
-
-        // Print updated driver availability
-        System.out.println("Updated driver availability:");
-        controller.printAllDrivers();
-
-
         }
     }
 

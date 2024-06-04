@@ -10,13 +10,6 @@ public class Address {
         this.address_code = address_code;
         this.shipping_area = 0;
     }
-
-    public String getFull_address() {
-        return full_address;
-    }
-    public int getAddress_code() {
-        return address_code;
-    }
     public int getShipping_area() {
         return shipping_area;
     }

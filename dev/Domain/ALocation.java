@@ -22,17 +22,15 @@ public abstract class ALocation {
     public Address getAddress() {
         return address;
     }
-    public String getContact() {
-        return Contact;
-    }
-    public String getPhone() {
-        return phone;
-    }
+
     public String getL_type() {
         return l_type;
     }
+
     public void setAddress(Address address) { this.address = address; }
+
     public void setContact(String contact) { this.Contact = contact; }
+
     public void setPhone(String phone) { this.phone = phone; }
 
     @Override

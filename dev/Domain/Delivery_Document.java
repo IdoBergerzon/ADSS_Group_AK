@@ -35,12 +35,10 @@ public class Delivery_Document {
         this.destination = destination;
     }
 
-    public void setItems(HashMap<Item,Integer> items) {
-        this.items = items;
-    }
     public void setDelivery_status(Delivery_DocumentStatus status) {
         this.delivery_status = status;
     }
+
     public void setItemsStatus(Delivery_ItemsStatus status) {
         this.itemsStatus = status;
     }
@@ -53,12 +51,10 @@ public class Delivery_Document {
         return totalWeight;
     }
 
-    public void setTotalWeight(double totalWeight) {
-        this.totalWeight = totalWeight;
-    }
     public void removeItemWeight(Item item) {
         this.totalWeight -= item.getWeight();
     }
+
     public void addItemWeight(Item item) {
         this.totalWeight += item.getWeight();
     }
