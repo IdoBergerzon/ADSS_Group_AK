@@ -57,7 +57,7 @@ public class Main {
                                 System.out.print("The truck already exists in the system");
                             }
                             else {
-                                System.out.print("Insert truck Type:");
+                                System.out.print("Insert truck Type:\n");
                                 String truckType = scanner.nextLine();
                                 scanner.nextLine();
                                 System.out.println("Insert truck Weight:");
@@ -78,7 +78,7 @@ public class Main {
                                 System.out.print("The Driver already exists in the system");
                             }
                             else {
-                            System.out.print("Enter Driver Name:");
+                            System.out.print("Enter Driver Name:\n");
                             String driverName = scanner.nextLine();
                             System.out.print("Enter the driver's license number");
                             int licenseNumber = scanner.nextInt();
@@ -100,7 +100,7 @@ public class Main {
                                 int locationID = scanner.nextInt();
                                 scanner.nextLine(); // Consume newline
 
-                                System.out.print("Enter Address details:");
+                                System.out.print("Enter Address details:\n");
                                 String full_address = scanner.nextLine();
 
                                 System.out.print("Enter address_code:");
@@ -109,10 +109,10 @@ public class Main {
 
                                 Address address = new Address(full_address, address_code);
 
-                                System.out.print("Enter contact:");
+                                System.out.print("Enter contact:\n");
                                 String contact = scanner.nextLine();
 
-                                System.out.print("Enter phone:");
+                                System.out.print("Enter phone:\n");
                                 String phone = scanner.nextLine();
 
                                 String l_type = (locationChoice == 1) ? "Supplier" : "Store";
@@ -152,7 +152,7 @@ public class Main {
                                         while (moreItem != 0) {
                                             System.out.print("Enter Item ID:");
                                             int itemID = scanner.nextInt();
-                                            System.out.print("Enter Item Name:");
+                                            System.out.print("Enter Item Name:\n");
                                             String itemName = scanner.nextLine();
                                             System.out.print("Enter Weight:");
                                             double weight = scanner.nextDouble();
@@ -284,14 +284,14 @@ public class Main {
 
                                 //Update contact
                                 case 2:
-                                    System.out.println("Insert new contact:");
+                                    System.out.println("Insert new contact:\n");
                                     String contact = scanner.next();
                                     locationController.updateContact(locationID, contact);
                                     break;
 
                                 //Update phone number
                                 case 3:
-                                    System.out.println("Insert new phone number:");
+                                    System.out.println("Insert new phone number:\n");
                                     String phoneNumber = scanner.next();
                                     locationController.updatePhone(locationID, phoneNumber);
                                     break;
@@ -365,7 +365,7 @@ public class Main {
 
                                 //Add comment
                                 case 4:
-                                    System.out.println("Insert new comment:");
+                                    System.out.println("Insert new comment:\n");
                                     String newComment = scanner.next();
                                     transport.addComment(newComment);
                                     System.out.println("Comment added\n" + transport);
@@ -436,7 +436,7 @@ public class Main {
 
                                 //Change delivery status
                                 case 3:
-                                    System.out.println("Insert new delivery status (in_Progress, finished, waiting):");
+                                    System.out.println("Insert new delivery status (in_Progress, finished, waiting):\n");
                                     String deliveryStatus = scanner.next();
                                     if (deliveryStatus.equals("in_Progress")) {
                                         deliveryDocument.setDelivery_status(Delivery_DocumentStatus.in_Progress);
@@ -456,7 +456,7 @@ public class Main {
 
                                 //Change item status
                                 case 4:
-                                    System.out.println("Insert new item status (complete, itemMissing, in_Progress):");
+                                    System.out.println("Insert new item status (complete, itemMissing, in_Progress):\n");
                                     String deliveryItemStatus = scanner.next();
                                     if (deliveryItemStatus.equals("complete")) {
                                         deliveryDocument.setItemsStatus(Delivery_ItemsStatus.complete);
