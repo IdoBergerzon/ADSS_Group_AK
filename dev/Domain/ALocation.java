@@ -33,6 +33,10 @@ public abstract class ALocation {
 
     public void setPhone(String phone) { this.phone = phone; }
 
+    public int getShippingArea() {
+        return this.address.getShipping_area();
+    }
+
     @Override
     public String toString() {
         return "locationID=" + locationID + ", address=" + address + ", Contact=" + Contact + ", Phone=" + phone + ", L_type=" + l_type;

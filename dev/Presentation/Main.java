@@ -659,7 +659,11 @@ public class Main {
                         break;
                     }
                     Driver driver = driverController.getDriver(driverID);
-
+                    System.out.println("Insert Sources Shipping Area:");
+                    int sourcesArea = scanner.nextInt();
+                    deliveryController.getDeliverySourceInArea(sourcesArea);
+                    int deliverySourceID = scanner.nextInt();
+                    deliveryController.getDeliveryDestinationInArea(deliverySourceID);
                     List <Delivery_Document> deliveryDocs;
                     deliveryDocs = new ArrayList<Delivery_Document>();
                     System.out.println("Insert delivery ID:");
@@ -742,7 +746,7 @@ public class Main {
                             if (locationController.getLocation(sourceID) == null)
                                 System.out.println("Location does not exist.");
                             else {
-                                if (locationController.getLocation(sourceID).getL_type() != "Store")
+                                if (!locationController.getLocation(sourceID).getL_type().equals("Store"))
                                     System.out.println("The location is Supplier.");
                                 else {
                                     Store source = (Store) locationController.getLocation(sourceID);
@@ -767,7 +771,7 @@ public class Main {
                                 System.out.println("Location does not exist.");
                             }
                             else {
-                                if (locationController.getLocation(destinationID).getL_type() != "Supplier")
+                                if (!locationController.getLocation(destinationID).getL_type().equals("Supplier"))
                                     System.out.println("The location is Store.");
                                 else {
                                     Supplier destination = (Supplier) locationController.getLocation(destinationID);
@@ -847,4 +851,3 @@ public class Main {
         scanner.close();
         }
     }
-

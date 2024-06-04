@@ -3,6 +3,7 @@ package Domain;
 import Data.Delivery_DocumentsData;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class Delivery_DocumentsController {
     Delivery_DocumentsData documentsData;
@@ -96,6 +97,24 @@ public class Delivery_DocumentsController {
         Delivery_Document delivery = documentsData.getDelivery_Documents().get(delivery_id);
         delivery.addItemWeight(item);
         return delivery.getTotalWeight();
+    }
+
+    public void getDeliverySourceInArea(int SourceArea){
+        System.out.println("Delivery documents with source in Shipping Area: " + SourceArea + ":");
+        for (Delivery_Document delivery : documentsData.getDelivery_Documents().values()){
+            if (delivery.getSource().getShippingArea() == SourceArea) {
+                System.out.println(delivery.getSource());
+            }
+        }
+    }
+
+    public void getDeliveryDestinationInArea(int DestinationArea){
+        System.out.println("Delivery documents with Destinations in Shipping Area: " + DestinationArea + ":");
+        for (Delivery_Document delivery : documentsData.getDelivery_Documents().values()){
+            if (delivery.getDestination().getShippingArea() == DestinationArea) {
+                System.out.println(delivery.getDestination());
+            }
+        }
     }
 
     public Delivery_DocumentsData getDocumentsData() {
