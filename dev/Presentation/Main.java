@@ -39,6 +39,7 @@ public class Main {
                     System.out.println("2. Add Driver");
                     System.out.println("3. Add Location");
                     System.out.println("4. Add Delivery Document");
+                    System.out.println("5. Add Item");
                     System.out.println("0. Exit");
 
                     add = scanner.nextInt();
@@ -152,21 +153,29 @@ public class Main {
                                         while (moreItem != 0) {
                                             System.out.print("Enter Item ID:");
                                             int itemID = scanner.nextInt();
-                                            System.out.print("Enter Item Name:\n");
-                                            String itemName = scanner.nextLine();
-                                            System.out.print("Enter Weight:");
-                                            double weight = scanner.nextDouble();
-                                            Item item = new Item(itemID, itemName, weight);
-                                            System.out.print("Enter Quantity:");
-                                            int quantity = scanner.nextInt();
-                                            newItems.put(item, quantity);
-                                            System.out.print("Add more item? (0 = No, 1 = Yes)");
-                                            moreItem = scanner.nextInt();
+                                            if (deliveryController.getItemsData().getItem(itemID) == null) {
+                                                System.out.println("Item does not exist in the system");
+                                                break;
+                                            }
+                                            else {
+                                                Item item = deliveryController.getItemsData().getItem(itemID);
+                                                System.out.print("Enter Quantity:");
+                                                int quantity = scanner.nextInt();
+                                                newItems.put(item, quantity);
+                                                System.out.print("Add more item? (0 = No, 1 = Yes)");
+                                                moreItem = scanner.nextInt();
+                                            }
                                         }
                                         deliveryController.addDelivery_Document(deliveryDocumentID, store, supplier, newItems);
                                     }
+
                                 }
                             }
+                            break;
+
+                        case 5:
+
+
                             break;
 
 
@@ -390,9 +399,8 @@ public class Main {
                             System.out.println("1. Change source");
                             System.out.println("2. Change destination");
                             System.out.println("3. Change delivery status");
-                            System.out.println("4. Change item status");
-                            System.out.println("5. Add item");
-                            System.out.println("6. Remove item");
+                            System.out.println("4. Add item");
+                            System.out.println("5. Remove item");
                             System.out.println("0. Back to Main Menu");
 
                             update = scanner.nextInt();
@@ -454,50 +462,34 @@ public class Main {
                                     System.out.println("Delivery document" + deliveryID + ",status was changed to" + deliveryDocument.getDelivery_Status());
                                     break;
 
-                                //Change item status
-                                case 4:
-                                    System.out.println("Insert new item status (complete, itemMissing, in_Progress):\n");
-                                    String deliveryItemStatus = scanner.next();
-                                    if (deliveryItemStatus.equals("complete")) {
-                                        deliveryDocument.setItemsStatus(Delivery_ItemsStatus.complete);
-                                    }
-                                    else if (deliveryItemStatus.equals("itemMissing")) {
-                                        deliveryDocument.setItemsStatus(Delivery_ItemsStatus.itemMissing);
-                                    }
-                                    else if (deliveryItemStatus.equals("in_Progress")) {
-                                        deliveryDocument.setItemsStatus(Delivery_ItemsStatus.in_Progress);
-                                    }
-                                    else {
-                                        System.out.println("Delivery document status is not in in_Progress or completed");
-                                        break;
-                                    }
-                                    System.out.println("Delivery document" + deliveryID + ",item status was changed to" + deliveryDocument.getItemsStatus());
-                                    break;
-
                                 //Add item
-                                case 5:
+                                case 4:
                                     System.out.println("Insert item ID to add:");
                                     int newitemID = scanner.nextInt();
-                                    System.out.println("Insert item name:");
-                                    String itemName = scanner.next();
-                                    System.out.println("Insert item weight:");
-                                    int itemWeight = scanner.nextInt();
-                                    System.out.println("Insert amount:");
-                                    int itemAmount = scanner.nextInt();
-                                    Item item = new Item(newitemID, itemName, itemWeight);
-                                    if (deliveryDocument.getItems().containsKey(item)) {
-                                        deliveryDocument.getItems().put(item, itemAmount + deliveryDocument.getItems().get(item));
+                                    if (deliveryController.getItemsData().getItem(newitemID) == null) {
+                                        System.out.println("Item " + newitemID + " does not exist");
                                     }
-                                    else
-                                        deliveryDocument.getItems().put(item, itemAmount);
-                                    System.out.println("item" + item + "was added to the delivery document");
-                                    System.out.println("The weight is " + deliveryDocument.getTotalWeight());
-                                    break;
+                                    else {
+                                        System.out.println("Insert amount:");
+                                        int itemAmount = scanner.nextInt();
+                                        Item item = deliveryController.getItemsData().getItem(newitemID);
+                                        if (deliveryDocument.getItems().containsKey(item)) {
+                                            deliveryDocument.getItems().put(item, itemAmount + deliveryDocument.getItems().get(item));
+                                        } else
+                                            deliveryDocument.getItems().put(item, itemAmount);
+                                        System.out.println("item" + item + "was added to the delivery document");
+                                        System.out.println("The weight is " + deliveryDocument.getTotalWeight());
+                                        break;
+                                    }
 
                                 //Remove item
-                                case 6:
+                                case 5:
                                     System.out.println("Insert item ID to remove:");
                                     int itemID = scanner.nextInt();
+                                    if (deliveryController.getItemsData().getItem(itemID) == null) {
+                                        System.out.println("Item " + itemID + " does not exist");
+                                    }
+                                    else {
                                     int flag = 0;
                                     for (Item item1 : deliveryDocument.getItems().keySet()){
                                         if (itemID == item1.getItemID()) {
@@ -506,13 +498,14 @@ public class Main {
                                         }
                                     }
                                     if (flag == 0) {
-                                        System.out.println("item does not exist");
+                                        System.out.println("item does not exist in the delivery document");
                                     }
                                     else {
                                         System.out.println("item" + itemID + "was removed from the delivery document");
                                         System.out.println("The weight is " + deliveryDocument.getTotalWeight());
                                     }
                                     break;
+                                    }
 
                                 default:
                                     System.out.println("Invalid choice. Please try again.");
@@ -669,11 +662,14 @@ public class Main {
                     System.out.println("Insert delivery ID:");
                     int deliveryID = scanner.nextInt();
                     while (deliveryID != 0){
-                        System.out.println("Insert delivery documents ID:\n(Press 0 to return to the Main Menu)");
+                        System.out.println("Insert delivery documents ID (not 0):\n(Press 0 to return to the Main Menu)");
                         deliveryID = scanner.nextInt();
                         if (deliveryController.getDelivery_Document(deliveryID) == null) {
                             System.out.println("Delivery Document does not exist.");
                             continue;
+                        }
+                        if (deliveryController.getDelivery_Document(deliveryID).getItemsStatus() == Delivery_ItemsStatus.in_Progress) {
+                            deliveryController.getDelivery_Document(deliveryID).setItemsStatus(Delivery_ItemsStatus.complete);
                         }
                         deliveryDocs.add(deliveryController.getDelivery_Document(deliveryID));
                     }
@@ -799,23 +795,30 @@ public class Main {
                                 Delivery_Document deliveryDoc = newTransport.getDelivery_documents().get(deliveryId);
                                 System.out.println("Insert item ID to remove:");
                                 int itemID = scanner.nextInt();
-                                int itemFlag = 0;
-                                for (Item itemRemove : deliveryDoc.getItems().keySet()){
-                                    if (itemID == itemRemove.getItemID()){
-                                        deliveryDoc.getItems().remove(itemRemove);
-                                        newTransport.calc_transportWeight();
-                                        itemFlag = 1;
+                                if (deliveryController.getItemsData().getItems().get(itemID) == null) {
+                                    System.out.println("Item does not exist.");
+                                } else {
+                                    int itemFlag = 0;
+                                    for (Item itemRemove : deliveryDoc.getItems().keySet()) {
+                                        if (itemID == itemRemove.getItemID()) {
+                                            deliveryDoc.getItems().remove(itemRemove);
+                                            if (deliveryDoc.getItems().isEmpty())
+                                                newTransport.getDelivery_documents().remove(deliveryDoc);
+                                            newTransport.calc_transportWeight();
+                                            itemFlag = 1;
+                                        }
                                     }
+                                    if (itemFlag == 0) {
+                                        System.out.println("item does not exist in this delivery document.");
+                                    } else if (newTransport.checkTransport()) {
+                                        System.out.println("Transport OK, item" + itemID + "was removed from the delivery document in this transport.");
+                                        break;
+                                    } else
+                                        System.out.println("The weight is still exceeded.");
                                 }
-                                if (itemFlag == 0) {
-                                    System.out.println("item does not exist in this delivery document.");
-                                }
-                                else if (newTransport.checkTransport()) {
-                                    System.out.println("Transport OK, item" + itemID + "was removed from the delivery document in this transport.");
-                                    break;
-                                } else
-                                    System.out.println("The weight is still exceeded.");
                             }
+
+
                     } while (reChoice != 0);
 
 /************** Finish Transport *******************************/

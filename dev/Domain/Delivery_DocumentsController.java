@@ -1,14 +1,21 @@
 package Domain;
 
 import Data.Delivery_DocumentsData;
+import Data.ItemsData;
 
 import java.util.HashMap;
 import java.util.List;
 
 public class Delivery_DocumentsController {
     Delivery_DocumentsData documentsData;
+    ItemsData itemsData;
     public Delivery_DocumentsController(){
         documentsData = new Delivery_DocumentsData();
+        itemsData = new ItemsData();
+    }
+
+    public ItemsData getItemsData(){
+        return itemsData;
     }
 
     public void addDelivery_Document(int delivery_id, Store source, Supplier destination, HashMap<Item,Integer> items){
@@ -29,23 +36,6 @@ public class Delivery_DocumentsController {
             System.out.println("delivery " + delivery_id + " does not exist");
             return null;
         }
-    }
-
-    public String showDelivery_Document(int delivery_id){
-        if (documentsData.getDelivery_Documents().containsKey(delivery_id)){
-            return this.documentsData.getDelivery_Documents().toString();
-        }
-        else
-            return null;
-    }
-
-    public void updateStatus(int delivery_id, Delivery_DocumentStatus status){
-        Delivery_Document delivery = documentsData.getDelivery_Documents().get(delivery_id);
-        delivery.setDelivery_status(status);
-    }
-    public void updateItemStatus(Delivery_ItemsStatus status, int delivery_id){
-        Delivery_Document delivery = documentsData.getDelivery_Documents().get(delivery_id);
-        delivery.setItemsStatus(status);
     }
 
     public Delivery_DocumentStatus getDeliveryStatus (int delivery_id){
@@ -87,18 +77,6 @@ public class Delivery_DocumentsController {
         return delivery.getTotalWeight();
     }
 
-    public double removeItemW(int delivery_id, Item item){
-        Delivery_Document delivery = documentsData.getDelivery_Documents().get(delivery_id);
-        delivery.removeItemWeight(item);
-        return delivery.getTotalWeight();
-    }
-
-    public double addItemW(int delivery_id, Item item){
-        Delivery_Document delivery = documentsData.getDelivery_Documents().get(delivery_id);
-        delivery.addItemWeight(item);
-        return delivery.getTotalWeight();
-    }
-
     public void getDeliverySourceInArea(int SourceArea){
         System.out.println("Delivery documents with source in Shipping Area: " + SourceArea + ":");
         for (Delivery_Document delivery : documentsData.getDelivery_Documents().values()){
@@ -114,6 +92,26 @@ public class Delivery_DocumentsController {
             if (delivery.getDestination().getShippingArea() == DestinationArea) {
                 System.out.println(delivery.getDestination());
             }
+        }
+    }
+
+    public void removeItemFromDelivery(int delivery_id, int item_id){
+        Delivery_Document delivery = documentsData.getDelivery_Documents().get(delivery_id);
+        Item item = itemsData.getItem(item_id);
+        delivery.getItems().remove(item);
+        delivery.setItemsStatus(Delivery_ItemsStatus.itemMissing);
+        System.out.println("item " + item_id + " removed from delivery " + delivery_id);
+    }
+
+    public void addItemToDelivery(int delivery_id, int item_id, int quantity){
+        Delivery_Document delivery = getDelivery_Document(delivery_id);
+        if (!itemsData.getItems().containsKey(item_id)){
+            System.out.println("item " + item_id + " does not exist");
+        }
+        else {
+            Item item = itemsData.getItems().get(item_id);
+            delivery.getItems().put(item, quantity);
+            System.out.println("item " + item_id + " added to delivery " + delivery_id);
         }
     }
 
