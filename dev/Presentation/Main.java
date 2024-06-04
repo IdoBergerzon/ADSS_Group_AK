@@ -49,7 +49,7 @@ public class Main {
                         if (is_manager == 1) { //in case of HR manager
                             hr_menu(userID);
                         }
-                        if (is_manager == 0) {//in case of regular worker
+                        else if (is_manager == 0) {//in case of regular worker
                             worker_menu(userID);
                         } else{
                             System.out.println("The ID you enter doesn't belong to an existing worker\n");
