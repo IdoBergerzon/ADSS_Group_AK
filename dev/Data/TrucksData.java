@@ -12,9 +12,14 @@ public class TrucksData {
     public HashMap<Integer, Truck> getTrucks() { return trucks; }
     public void addTruck(Truck truck) {
         trucks.put(truck.getTruckID(), truck);
+        System.out.println("Truck added successfully: " + truck.getTruckID() + "\n");
     }
     public void removeTruck(Truck truck) {
         trucks.remove(truck.getTruckID());
+    }
+
+    public void setTrucks(HashMap<Integer, Truck> trucks) {
+        this.trucks = trucks;
     }
 
     @Override

@@ -29,13 +29,7 @@ public class Delivery_DocumentsController {
     }
 
     public Delivery_Document getDelivery_Document(int delivery_id){
-        if (documentsData.getDelivery_Documents().containsKey(delivery_id)){
-            return documentsData.getDelivery_Documents().get(delivery_id);
-        }
-        else {
-            System.out.println("delivery " + delivery_id + " does not exist");
-            return null;
-        }
+        return documentsData.getDelivery_Documents().getOrDefault(delivery_id, null);
     }
 
     public Delivery_DocumentStatus getDeliveryStatus (int delivery_id){

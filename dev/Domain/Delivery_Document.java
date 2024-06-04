@@ -14,10 +14,10 @@ public class Delivery_Document {
         this.source = source;
         this.documentID = documentID;
         this.destination = destination;
-        this.totalWeight = this.getTotalWeight();
         this.itemsStatus = Delivery_ItemsStatus.in_Progress;
         this.delivery_status = Delivery_DocumentStatus.waiting;
         this.items = items;
+        this.totalWeight = getTotalWeight();
     }
 
     public int getDocumentID() {return documentID;}

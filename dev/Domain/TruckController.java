@@ -18,7 +18,7 @@ public class TruckController {
             System.out.println("Truck already exists");
         }
         else {
-            Truck newtruck = new Truck(truckID, truckType, truckWeight, MaxWeight, false);
+            Truck newtruck = new Truck(truckID, truckType, truckWeight, MaxWeight);
             this.trucksData.addTruck(newtruck);
         }
     }
