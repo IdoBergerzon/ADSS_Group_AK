@@ -106,7 +106,7 @@ public class TransportController {
     public void removeItemFromDelivery(int transportID, int deliveryID, Item item) {
         Transport transport =transportsData.getTransportById(transportID);
         Delivery_Document delivery_doc = transport.getDelivery_documents().get(deliveryID);
-        if (delivery_doc.getItems().containsValue(item)) {
+        if (delivery_doc.getItems().containsKey(item)) {
             delivery_doc.removeItemWeight(item);
             transport.calc_transportWeight();
             delivery_doc.setItemsStatus(Delivery_ItemsStatus.itemMissing);
