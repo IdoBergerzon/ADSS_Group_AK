@@ -50,7 +50,7 @@ public class HR_Main {
                 hr_controller.Display_Worker_Details(id);
                 break;
             } catch (Exception e) {
-
+                System.out.println("Worker ID doesn't exist, please try again\n");
             }
         }
     }
