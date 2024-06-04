@@ -15,6 +15,7 @@ public class Transport {
     private Set<Supplier> destinations;
     private List<Double> totalWeights;
     private List<Delivery_Document> delivery_documents;
+    private boolean finished = false;
     private String comments;
 
     public Transport(int transportID, Truck truck, Driver driver, List<Delivery_Document> delivery_documents, String comments) {
@@ -73,6 +74,10 @@ public class Transport {
         return delivery_documents;
     }
 
+    public boolean isFinished() {
+        return finished;
+    }
+
     public String getComments() { return comments; }
 
     public void setDate(LocalDate date) {
@@ -112,6 +117,10 @@ public class Transport {
 
     public void setDelivery_documents(List<Delivery_Document> delivery_documents) {
         this.delivery_documents = delivery_documents;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 
     public void setComments(String comments) {

@@ -10,13 +10,18 @@ public class TransportsData {
 
     public TransportsData() {
         this.transports = new HashMap<>();
-
     }
+
     public HashMap<Integer, Transport> getTransports() {
         return transports;
     }
+
     public void addTransport(Transport transport) {
         this.transports.put(transport.getTransportID(), transport);
+    }
+
+    public void resetTransports() {
+        this.transports = new HashMap<>();
     }
 
     public Transport getTransportById(int transportID) {

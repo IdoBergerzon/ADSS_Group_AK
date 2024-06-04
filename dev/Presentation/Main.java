@@ -654,13 +654,32 @@ public class Main {
                             }
                             else {
                                 Truck newTruck = truckController.getTruck(newTruckID);
-                                if (newTruck.getTruckWeight() + newTruck.getMaxWeight() >= newTransport.calc_transportWeight()) {
-                                    newTransport.setTruck(newTruck);
-                                    System.out.println("Transport OK, truck was changed successfully.");
-                                    break;
-                                }
-                                else {
-                                    System.out.println("The weight that truck number" + truckID + "can carry is less than the weight of the transport");
+                                if (!newTruck.isAvailable()) {
+                                    System.out.println("Truck does not available.");
+                                } else {
+                                    double tempWeight = newTransport.getTotalWeights().get(newTransport.getTotalWeights().size() - 1) - newTransport.getTruck().getTruckWeight() + newTruck.getTruckWeight();
+                                    if (newTruck.getTruckWeight() + newTruck.getMaxWeight() >= tempWeight) {
+                                        if (newTransport.getDriver().getLicenseMaxWeight() >= tempWeight) {
+                                            newTransport.setTruck(newTruck);
+                                            System.out.println("Transport OK, truck was changed successfully.");
+                                            break;
+                                        } else {
+                                            System.out.println("The driver's license is less than the weight of the transport.\nPlease insert new driverID:\n(Press 0 to return to the Main Menu)\n");
+                                            int ChangeDriverID = scanner.nextInt();
+                                            if (driverController.getDriver(ChangeDriverID) == null) {
+                                                System.out.println("Driver does not exist.");
+                                            }
+                                            else if (!driverController.getDriver(ChangeDriverID).isAvailable()) {
+                                                System.out.println("Driver does not available.");
+                                            } else if (tempWeight <= driverController.getDriver(ChangeDriverID).getLicenseMaxWeight()) {
+                                                newTransport.setDriver(driverController.getDriver(ChangeDriverID));
+                                            }
+                                            else
+                                                System.out.println("The driver's license is less than the weight of the transport.\n");
+                                        }
+                                    } else {
+                                        System.out.println("The weight that truck number" + truckID + "can carry is less than the weight of the transport\n");
+                                    }
                                 }
                             }
 
@@ -747,7 +766,18 @@ public class Main {
 
                 //Finish Transport
                 case 5:
-
+                    System.out.println("Insert transport ID:");
+                    int finishTransportID = scanner.nextInt();
+                    if (transportController.getTransport(finishTransportID) == null) {
+                        System.out.println("Transport does not exist.");
+                    } else if (transportController.getTransport(finishTransportID).isFinished()) {
+                        System.out.println("Transport is already finished.");
+                    }
+                    else {
+                        Transport transportF = transportController.getTransport(finishTransportID);
+                        transportController.finishTransport(transportF);
+                        System.out.println("Transport finished.");
+                    }
                     break;
 
 
@@ -755,7 +785,6 @@ public class Main {
 
                 //Reset Data Bases
                 case 6:
-
                     break;
 
 
@@ -763,8 +792,11 @@ public class Main {
 
                 //Exit
                 case 7:
-
+                    System.out.println("Good bye.");
                     break;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
             }
         }
         while (choice != 7);

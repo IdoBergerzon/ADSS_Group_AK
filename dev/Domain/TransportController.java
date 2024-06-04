@@ -199,6 +199,7 @@ public class TransportController {
         for(Delivery_Document delivery : transport.getDelivery_documents()){
             delivery.setDelivery_status(Delivery_DocumentStatus.finished);
         }
+        transport.setFinished(true);
         System.out.println("Transport finished successfully");
     }
 
