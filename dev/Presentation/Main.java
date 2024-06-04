@@ -25,8 +25,7 @@ public class Main {
             System.out.println("3. Display");
             System.out.println("4. Start Transport");
             System.out.println("5. Finish Transport");
-            System.out.println("6. Reset Data Bases");
-            System.out.println("7. Exit");
+            System.out.println("6. Exit");
 
             choice = scanner.nextInt();
 
@@ -832,18 +831,10 @@ public class Main {
                     }
                     break;
 
-
-/************** Reset Data Base *******************************/
-
-                //Reset Data Bases
-                case 6:
-                    break;
-
-
 /************** Exit *******************************/
 
                 //Exit
-                case 7:
+                case 6:
                     System.out.println("Good bye.");
                     break;
 
