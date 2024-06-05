@@ -66,6 +66,7 @@ public class Delivery_DocumentsController {
         for (Delivery_Document delivery : documentsData.getDelivery_Documents().values()){
             if (delivery.getSource().getShippingArea()==sourceArea && delivery.getDestination().getShippingArea()==destinationArea){
                 System.out.println(delivery);
+                flag = 1;
             }
         }
         if (flag == 0){
