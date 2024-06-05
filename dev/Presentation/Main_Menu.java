@@ -20,6 +20,7 @@ public class Main_Menu {
         Scanner scanner = new Scanner(System.in);
         int choice;
         do {
+            System.out.println("Welcome to SUPER-LI transportation system.");
             System.out.println("Choose one of the following options:");
             System.out.println("1. Import data to the system");
             System.out.println("2. Start a system without data");
