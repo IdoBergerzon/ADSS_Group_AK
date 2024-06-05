@@ -842,12 +842,11 @@ public class Main_Menu {
                     locationController.getAllSourceShippingArea();
                     System.out.println("\nInsert Sources Shipping Area:");
                     int sourcesArea = scanner.nextInt();
-                    deliveryController.getDeliverySourceInArea(sourcesArea);
                     System.out.println("\nDestination shipping area:");
                     locationController.getAllDestinationShippingArea();
                     System.out.println("\nInsert Destinations Shipping Area:");
-                    int deliverySourceID = scanner.nextInt();
-                    deliveryController.getDeliveryDestinationInArea(deliverySourceID);
+                    int destinationArea = scanner.nextInt();
+                    deliveryController.getDeliveryInArea(sourcesArea, destinationArea);
                     List<Delivery_Document> deliveryDocs;
                     deliveryDocs = new ArrayList<Delivery_Document>();
                     int addMore = 1;
