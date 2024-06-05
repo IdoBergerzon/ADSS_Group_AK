@@ -64,7 +64,7 @@ public class Delivery_DocumentsController {
         System.out.println("Delivery in Shipping Area: Source= " + sourceArea + ", Destination= " + destinationArea + ":");
         int flag = 0;
         for (Delivery_Document delivery : documentsData.getDelivery_Documents().values()){
-            if (delivery.getSource().equals(sourceArea) && delivery.getDestination().equals(destinationArea)){
+            if (delivery.getSource().getShippingArea()==sourceArea && delivery.getDestination().getShippingArea()==destinationArea){
                 System.out.println(delivery);
             }
         }
