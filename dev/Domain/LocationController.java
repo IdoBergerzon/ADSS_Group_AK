@@ -41,12 +41,24 @@ public class LocationController {
             return null;
         }
 
-    public void getAllShippingArea() {
-        Set <Integer> sa = new HashSet();
+    public void getAllSourceShippingArea() {
+        Set <Integer> ssa = new HashSet();
         for (ALocation location : locationsData.getLocations().values()) {
-            sa.add(location.getShippingArea());
+            if (location.getL_type().equals("Store")) {
+                ssa.add(location.getShippingArea());
+            }
         }
-        System.out.println(sa);
+        System.out.println(ssa);
+    }
+
+    public void getAllDestinationShippingArea() {
+        Set <Integer> dsa = new HashSet();
+        for (ALocation location : locationsData.getLocations().values()) {
+            if (location.getL_type().equals("Supplier")) {
+                dsa.add(location.getShippingArea());
+            }
+        }
+        System.out.println(dsa);
     }
 
 

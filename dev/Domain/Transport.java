@@ -18,7 +18,7 @@ public class Transport {
     private List<Double> totalWeights;
     private List<Delivery_Document> delivery_documents;
     private boolean finished = false;
-    private String comments;
+    private String comments = "";
 
     public Transport(int transportID, Truck truck, Driver driver, List<Delivery_Document> delivery_documents, String comments) {
         this.transportID = transportID;
