@@ -2,6 +2,8 @@ package Domain;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -26,6 +28,9 @@ public class Transport {
         this.truck = truck;
         driver.setAvailable(false);
         this.driver = driver;
+        this.source = new HashSet<>();
+        this.destinations = new HashSet<>();
+        this.totalWeights = new ArrayList<>();
         this.delivery_documents = delivery_documents;
         for (Delivery_Document delivery_document : delivery_documents) {
             this.source.add(delivery_document.getSource());
@@ -41,14 +46,6 @@ public class Transport {
 
     public int getTransportID() {
         return transportID;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public LocalTime getTimeOfDepurture() {
-        return timeOfDepurture;
     }
 
     public Truck getTruck() {
@@ -67,9 +64,6 @@ public class Transport {
         return destinations;
     }
 
-    public List<Double> getTotalWeights() {
-        return totalWeights;
-    }
     public List<Delivery_Document> getDelivery_documents() {
         return delivery_documents;
     }
@@ -78,87 +72,100 @@ public class Transport {
         return finished;
     }
 
-    public String getComments() { return comments; }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public void setTimeOfDepurture(LocalTime timeOfDepurture) {
-        this.timeOfDepurture = timeOfDepurture;
-    }
 
     public void setDriver(Driver driver) {
-        this.driver.setAvailable(false);
-        this.driver = driver;
-        if (this.getDriver() != null)
-            this.getDriver().setAvailable(true);
+        if (driver.getLicenseMaxWeight() >= totalWeights.get(totalWeights.size()-1)) {
+            this.driver.setAvailable(false);
+            this.driver = driver;
+            if (this.getDriver() != null)
+                this.getDriver().setAvailable(true);
+        }
+        else {
+            System.out.println("The driver's license is less than the weight of the transport.\n");
+        }
     }
 
-    public void setTruck(Truck truck) {
-        truck.setAvailable(false);
-        this.truck = truck;
-        this.calc_transportWeight();
-        if (this.getTruck() != null)
-            this.getTruck().setAvailable(true);
+    public boolean setTruck(Truck truck) {
+        double newWeight = totalWeights.get(totalWeights.size() - 1) - this.truck.getTruckWeight() + truck.getTruckWeight();
+        if (truck.getMaxWeight() + truck.getTruckWeight() >= newWeight) {
+            if (this.getDriver().getLicenseMaxWeight() >= newWeight) {
+                if (truck.isAvailable()) {
+                    if (this.getTruck() != null)
+                        this.getTruck().setAvailable(true);
+                    truck.setAvailable(false);
+                    this.truck = truck;
+                    this.calc_transportWeight();
+                    return true;
+                }
+                else {
+                    System.out.println("Truck does not available.\n");
+                }
+            }
+            else System.out.println("The driver's license is less than the weight of the transport.\n");
+        }
+        else {
+            System.out.println("The weight that truck number" + truck.getTruckID() + "can carry is less than the weight of the transport\n");
+        }
+        return false;
     }
 
-    public void setSource(Set<Store> source) {
-        this.source = source;
-    }
-
-    public void setDestinations(Set<Supplier> destinations) {
-        this.destinations = destinations;
-    }
-
-    public void setTotalWeights(List<Double> totalWeights) {
-        this.totalWeights = totalWeights;
-    }
-
-    public void setDelivery_documents(List<Delivery_Document> delivery_documents) {
-        this.delivery_documents = delivery_documents;
-    }
 
     public void setFinished(boolean finished) {
+        for (Delivery_Document delivery_document : delivery_documents) {
+            delivery_document.setDelivery_status(Delivery_DocumentStatus.finished);
+        }
         this.finished = finished;
     }
 
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
 
     public void addWeight(double weight) {
         this.totalWeights.add(weight);
     }
 
-    public void addSource(Store store) {
-        this.source.add(store);
-    }
-
-    public void addDestination(Supplier supplier) {
-        this.destinations.add(supplier);
-    }
-
     public void removeDestination(Supplier supplier) {
-        for (Delivery_Document delivery_document : delivery_documents) {
+        this.destinations.remove(supplier);
+        for (int i=0; i<this.delivery_documents.size(); i++) {
+            Delivery_Document delivery_document = this.delivery_documents.get(i);
             if (delivery_document.getDestination().equals(supplier)) {
-                delivery_documents.remove(delivery_document);
+                delivery_document.setDelivery_status(Delivery_DocumentStatus.waiting);
+                this.removeDeliveryDocument(delivery_document);
             }
         }
+        if (destinations.isEmpty()){
+            source.clear();
+        }
         this.calc_transportWeight();
-        this.destinations.remove(supplier);
         this.addComment("Removed Destination:" + supplier);
     }
 
     public void removeSource(Store store) {
-        for (Delivery_Document delivery_document : delivery_documents) {
+        this.source.remove(store);
+        for (int i=0; i<this.delivery_documents.size(); i++) {
+            Delivery_Document delivery_document = this.delivery_documents.get(i);
             if (delivery_document.getSource().equals(store)) {
-                delivery_documents.remove(delivery_document);
+                delivery_document.setDelivery_status(Delivery_DocumentStatus.waiting);
+                this.removeDeliveryDocument(delivery_document);
             }
         }
+        if (source.isEmpty()){
+            destinations.clear();
+        }
         this.calc_transportWeight();
-        this.source.remove(store);
         this.addComment("Removed source: " + store);
+    }
+
+    public void printAllSources() {
+        System.out.println("Sources:");
+        for (Store store : source) {
+            System.out.println(store);
+        }
+    }
+
+    public void printAllDestinations() {
+        System.out.println("Destinations:");
+        for (Supplier supplier : destinations) {
+            System.out.println(supplier);
+        }
     }
 
 
@@ -168,6 +175,39 @@ public class Transport {
 
     public void addDeliveryDocument(Delivery_Document delivery_document) {
         this.delivery_documents.add(delivery_document);
+        this.source.add(delivery_document.getSource());
+        this.destinations.add(delivery_document.getDestination());
+        delivery_document.setDelivery_status(Delivery_DocumentStatus.in_Progress);
+        this.calc_transportWeight();
+    }
+
+    public void removeDeliveryDocument(Delivery_Document delivery_document) {
+        if (this.delivery_documents.contains(delivery_document)) {
+            delivery_document.setDelivery_status(Delivery_DocumentStatus.waiting);
+            this.delivery_documents.remove(delivery_document);
+            Store store = delivery_document.getSource();
+            Supplier supplier = delivery_document.getDestination();
+            int flagS = 0;
+            int flagD = 0;
+            for (Delivery_Document document : delivery_documents) {
+                if (document.getSource().equals(store)) {
+                    flagS = 1;
+                }
+                if (document.getDestination().equals(supplier)) {
+                    flagD = 1;
+                }
+            }
+            if (flagS == 0) {
+                source.remove(store);
+                System.out.println("Removed Source:" + store);
+            }
+            if (flagD == 0) {
+                destinations.remove(supplier);
+                System.out.println("Removed Destination:" + supplier);
+            }
+        }else {
+            System.out.println("The delivery Document does not exist in this transport\n.");
+        }
     }
 
     /**
@@ -178,9 +218,10 @@ public class Transport {
         for (Delivery_Document delivery_doc : this.getDelivery_documents()) {
             totalW += delivery_doc.getTotalWeight();
         }
-        this.addWeight(totalW + this.getTruck().getTruckWeight());
-        this.addComment(this.totalWeights.size() + ". Total Weight: " + totalW +this.getTruck().getTruckWeight() + "\n");
-        return totalW + this.getTruck().getTruckWeight();
+        totalW += this.getTruck().getTruckWeight();
+        this.addWeight(totalW);
+        this.addComment(this.totalWeights.size() + ". Total Weight:" + totalW + "\n");
+        return totalW;
     }
 
     public boolean checkTransport() {
@@ -191,18 +232,24 @@ public class Transport {
         return false;
     }
 
+    public void printAllDeliveryDocuments() {
+        for (Delivery_Document delivery_document : this.getDelivery_documents()) {
+            System.out.println(delivery_document);
+        }
+    }
+
     @Override
     public String toString() {
         return "Transport{" +
-                "transportID=" + transportID +
-                ", date=" + date +
-                ", timeOfDepurture=" + timeOfDepurture +
-                ", truck=" + truck +
-                ", driver=" + driver +
-                ", source=" + source +
-                ", destinations=" + destinations +
-                ", totalWeights=" + totalWeights +
-                ", comments='" + comments + '\'' +
+                "\ntransportID=" + transportID +
+                "\n date=" + date +
+                "\n timeOfDepurture=" + timeOfDepurture +
+                "\n truck=" + truck +
+                "\n driver=" + driver +
+                "\n source=" + source +
+                "\n destinations=" + destinations +
+                "\n totalWeight=" + totalWeights.get(totalWeights.size()-1) +
+                "\n comments='" + comments + '\'' +
                 '}';
     }
 }

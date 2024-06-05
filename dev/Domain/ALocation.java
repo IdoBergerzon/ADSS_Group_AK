@@ -27,7 +27,6 @@ public abstract class ALocation {
         return l_type;
     }
 
-    public void setAddress(Address address) { this.address = address; }
 
     public void setContact(String contact) { this.Contact = contact; }
 

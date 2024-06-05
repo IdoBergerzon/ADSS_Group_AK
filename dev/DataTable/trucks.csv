@@ -1,6 +1,6 @@
 MaxWeight,truckWeight,truckType,truckID
-1000,100,Toyota,1
-1500,200,Hyundai,2
+100,100,Toyota,1
+100,200,Hyundai,2
 2000,300,Suzuki,3
 2500,400,Kia,4
 3000,500,Chevrolet,5

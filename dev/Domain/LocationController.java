@@ -2,6 +2,9 @@ package Domain;
 
 import Data.LocationsData;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class LocationController {
     private LocationsData locationsData;
     public LocationController() {
@@ -38,15 +41,14 @@ public class LocationController {
             return null;
         }
 
-    public void updateAddress(int locationID, Address address) {
-        if (!locationsData.getLocations().containsKey(locationID)) {
-            System.out.println("location does not exist");
+    public void getAllShippingArea() {
+        Set <Integer> sa = new HashSet();
+        for (ALocation location : locationsData.getLocations().values()) {
+            sa.add(location.getShippingArea());
         }
-        else {
-            ALocation location = locationsData.getLocations().get(locationID);
-            location.setAddress(address);
-        }
+        System.out.println(sa);
     }
+
 
     public void updateContact(int locationID, String contact) {
         if (!locationsData.getLocations().containsKey(locationID)) {

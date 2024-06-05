@@ -52,23 +52,32 @@ public class Delivery_Document {
         return totalWeight;
     }
 
-    public void removeItemWeight(Item item) {
-        this.totalWeight -= item.getWeight();
+    public boolean removeItem(Item item) {
+        if (items.containsKey(item)) {
+            items.remove(item);
+            this.getTotalWeight();
+            return true;
+        }
+        else
+            System.out.println("item does not exist in this delivery document.\n");
+        return false;
     }
 
-    public void addItemWeight(Item item) {
-        this.totalWeight += item.getWeight();
+    public void printAllItems() {
+        for (Item item : items.keySet()) {
+            System.out.println(item + "," + items.get(item));
+        }
     }
 
     @Override
     public String toString() {
         //להוסיף את הפרטים החסרים מהובלה
-        return "Delivery_Document{" + '\'' +
-                "documentID=" + documentID +
-                ", source=" + source.toString() +
-                ", destination=" + destination.toString() +
-                ", items=" + items +
-                ", status=" + delivery_status.toString() +
+        return "     Delivery_Document{" + '\'' +
+                "\n     documentID=" + documentID +
+                "\n     source=" + source.toString() +
+                "\n     destination=" + destination.toString() +
+                "\n     items=" + items +
+                "\n     status=" + delivery_status.toString() +
                 '}';
     }
 }

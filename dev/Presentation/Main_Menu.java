@@ -9,7 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 
-public class Main {
+public class Main_Menu {
     public static void main(String[] args) {
         Delivery_DocumentsController deliveryController = new Delivery_DocumentsController();
         DriverController driverController = new DriverController();
@@ -38,6 +38,27 @@ public class Main {
 
                     HashMap<Integer, ALocation> locationHashMap = readLocationsFromCSV("C:\\Users\\WIN10\\Documents\\שנה ב\\ניתו''צ\\עבודה 1 ניתוצ\\ADSS_Group_AK\\dev\\DataTable\\location.csv");
                     locationController.getLocationsData().setLocations(locationHashMap);
+
+                    HashMap<Item, Integer> itemIntegerHashMap1 = new HashMap<>();
+                    itemIntegerHashMap1.put(deliveryController.getItemsData().getItem(1), 10);
+                    itemIntegerHashMap1.put(deliveryController.getItemsData().getItem(2), 20);
+                    itemIntegerHashMap1.put(deliveryController.getItemsData().getItem(3), 30);
+                    Delivery_Document document1 = new Delivery_Document((Store) locationController.getLocation(2), 1, (Supplier) locationController.getLocation(1), itemIntegerHashMap1);
+                    deliveryController.getDocumentsData().addDelivery_Document(document1);
+
+                    HashMap<Item, Integer> itemIntegerHashMap2 = new HashMap<>();
+                    itemIntegerHashMap2.put(deliveryController.getItemsData().getItem(28), 10);
+                    itemIntegerHashMap2.put(deliveryController.getItemsData().getItem(5), 25);
+                    itemIntegerHashMap2.put(deliveryController.getItemsData().getItem(15), 15);
+                    Delivery_Document document2 = new Delivery_Document((Store) locationController.getLocation(4), 2, (Supplier) locationController.getLocation(1), itemIntegerHashMap2);
+                    deliveryController.getDocumentsData().addDelivery_Document(document2);
+
+                    HashMap<Item, Integer> itemIntegerHashMap3 = new HashMap<>();
+                    itemIntegerHashMap3.put(deliveryController.getItemsData().getItem(20), 50);
+                    itemIntegerHashMap3.put(deliveryController.getItemsData().getItem(17), 25);
+                    itemIntegerHashMap3.put(deliveryController.getItemsData().getItem(12), 10);
+                    Delivery_Document document3 = new Delivery_Document((Store) locationController.getLocation(2), 3, (Supplier) locationController.getLocation(3), itemIntegerHashMap3);
+                    deliveryController.getDocumentsData().addDelivery_Document(document3);
                     System.out.println("System started with data");
                     break;
 
@@ -49,7 +70,7 @@ public class Main {
                     System.out.println("Wrong choice. Please try again.");
                     break;
             }
-        }while (choice != 2 && choice != 1);
+        } while (choice != 2 && choice != 1);
 
 
         do {
@@ -89,17 +110,16 @@ public class Main {
                             System.out.println("Insert truck ID:");
                             int truckID = scanner.nextInt();
                             scanner.nextLine();
-                            if (truckController.getTruck(truckID) != null){
+                            if (truckController.getTruck(truckID) != null) {
                                 System.out.print("The truck already exists in the system\n");
-                            }
-                            else {
+                            } else {
                                 System.out.print("Insert truck Type:\n");
                                 String truckType = scanner.nextLine();
                                 System.out.println("Insert truck Weight:");
                                 double truckWeight = scanner.nextDouble();
                                 System.out.println("Insert truck Max Weight:");
                                 double MaxWeight = scanner.nextDouble();
-                                truckController.addNewTruck(truckID,truckType,MaxWeight,truckWeight);
+                                truckController.addNewTruck(truckID, truckType, MaxWeight, truckWeight);
                                 System.out.println("Truck added successfully");
                             }
                             break;
@@ -112,13 +132,12 @@ public class Main {
                             scanner.nextLine();
                             if (driverController.getDriver(driverID) != null) {
                                 System.out.print("The Driver already exists in the system\n");
-                            }
-                            else {
-                            System.out.print("Enter Driver Name:\n");
-                            String driverName = scanner.nextLine();
-                            System.out.print("Enter the driver's license number:\n");
-                            int licenseNumber = scanner.nextInt();
-                            driverController.addDriver(driverID, driverName, licenseNumber);
+                            } else {
+                                System.out.print("Enter Driver Name:\n");
+                                String driverName = scanner.nextLine();
+                                System.out.print("Enter the driver's license number:\n");
+                                int licenseNumber = scanner.nextInt();
+                                driverController.addDriver(driverID, driverName, licenseNumber);
                             }
                             break;
 
@@ -137,8 +156,7 @@ public class Main {
                                 scanner.nextLine(); // Consume newline
                                 if (locationController.getLocation(locationID) != null) {
                                     System.out.print("The location already exists in the system\n");
-                                }
-                                else {
+                                } else {
                                     System.out.print("Enter Address details:\n");
                                     String full_address = scanner.nextLine();
 
@@ -174,8 +192,7 @@ public class Main {
                             scanner.nextLine();
                             if (deliveryController.getDelivery_Document(deliveryDocumentID) != null) {
                                 System.out.print("The Delivery Document already exists in the system\n");
-                            }
-                            else {
+                            } else {
                                 System.out.println("Enter Source ID:");
                                 int sourceID = scanner.nextInt();
                                 scanner.nextLine();
@@ -183,8 +200,7 @@ public class Main {
                                     System.out.println("Invalid source ID\n");
                                 } else if (locationController.getLocation(sourceID).getL_type() == "Supplier") {
                                     System.out.print("The location is Supplier (destination)\n");
-                                }
-                                else {
+                                } else {
                                     System.out.print("Enter Destination ID:\n");
                                     int destinationID = scanner.nextInt();
                                     scanner.nextLine();
@@ -204,8 +220,7 @@ public class Main {
                                             if (deliveryController.getItemsData().getItem(itemID) == null) {
                                                 System.out.println("Item does not exist in the system\n");
                                                 break;
-                                            }
-                                            else {
+                                            } else {
                                                 Item item = deliveryController.getItemsData().getItem(itemID);
                                                 System.out.print("Enter Quantity:");
                                                 int quantity = scanner.nextInt();
@@ -229,8 +244,7 @@ public class Main {
                             scanner.nextLine();
                             if (deliveryController.getItemsData().getItem(itemID) != null) {
                                 System.out.println("Item already exists in the system\n");
-                            }
-                            else {
+                            } else {
                                 System.out.println("Enter item name:");
                                 String name = scanner.nextLine();
                                 System.out.print("Enter item weight:\n");
@@ -249,20 +263,16 @@ public class Main {
                     break;
 
 
-
-
-
 /************** Update *******************************/
 
                 //Update
                 case 2:
                     int update;
                     System.out.println("Enter number:");
-                    System.out.println("1. Update truck availability");
-                    System.out.println("2. Update driver details");
-                    System.out.println("3. Update location details");
-                    System.out.println("4. Update transport details");
-                    System.out.println("5. Update delivery details");
+                    System.out.println("1. Update driver details");
+                    System.out.println("2. Update location details");
+                    System.out.println("3. Update transport details");
+                    System.out.println("4. Update delivery details");
                     System.out.println("0. Back to Main Menu");
 
                     update = scanner.nextInt();
@@ -271,22 +281,8 @@ public class Main {
                             System.out.println("Returning to the main menu.\n");
                             break;
 
-                        //Update truck availability
-                        case 1:
-                            System.out.println("Insert truck ID:");
-                            int truckID = scanner.nextInt();
-                            System.out.println("Insert status available (true/false):");
-                            boolean truckAvailable = scanner.nextBoolean();
-                            if (truckController.getTruck(truckID) == null)
-                                System.out.println("Truck does not exist.\n");
-                            else {
-                                truckController.getTruck(truckID).setAvailable(truckAvailable);
-                                System.out.println("Truck's availability were updated.\n" + truckController.getTruck(truckID));
-                            }
-                            break;
-
                         //Update driver details
-                        case 2:
+                        case 1:
                             System.out.println("Insert driver ID:");
                             int driverID = scanner.nextInt();
                             scanner.nextLine();
@@ -295,8 +291,7 @@ public class Main {
                                 break;
                             }
                             System.out.println("Driver update menu:");
-                            System.out.println("1. Update driver availability");
-                            System.out.println("2. Update driver license");
+                            System.out.println("1. Update driver license");
                             System.out.println("0. Back to Main Menu");
 
                             update = scanner.nextInt();
@@ -306,16 +301,9 @@ public class Main {
                                     System.out.println("Returning to the main menu.\n");
                                     break;
 
-                                //Update driver availability
-                                case 1:
-                                    System.out.println("Insert status available (true/false):");
-                                    boolean driverAvailable = scanner.nextBoolean();
-                                    driverController.getDriver(driverID).setAvailable(driverAvailable);
-                                    System.out.println("Driver's availability were updated.\n" + driverController.getDriver(driverID) + "\n");
-                                    break;
 
                                 //Update driver license
-                                case 2:
+                                case 1:
                                     System.out.println("Insert new license (int):");
                                     int license = scanner.nextInt();
                                     driverController.getDriver(driverID).setLicenseMaxWeight(license);
@@ -329,7 +317,7 @@ public class Main {
                             break;
 
                         //Update location details
-                        case 3:
+                        case 2:
                             System.out.println("Insert location ID:");
                             int locationID = scanner.nextInt();
                             scanner.nextLine();
@@ -354,20 +342,23 @@ public class Main {
                                     System.out.println("Insert number of shipping area:");
                                     int shippingArea = scanner.nextInt();
                                     locationController.setShipping_area(locationID, shippingArea);
+                                    System.out.println("Shipping area updated successfully.\n");
                                     break;
 
                                 //Update contact
                                 case 2:
-                                    System.out.println("Insert new contact:\n");
+                                    System.out.println("Insert new contact:");
                                     String contact = scanner.next();
                                     locationController.updateContact(locationID, contact);
+                                    System.out.println("Contact updated successfully.\n");
                                     break;
 
                                 //Update phone number
                                 case 3:
-                                    System.out.println("Insert new phone number:\n");
+                                    System.out.println("Insert new phone number:");
                                     String phoneNumber = scanner.next();
                                     locationController.updatePhone(locationID, phoneNumber);
+                                    System.out.println("Phone number updated successfully.\n");
                                     break;
 
 
@@ -378,7 +369,7 @@ public class Main {
                             break;
 
                         //Update transport
-                        case 4:
+                        case 3:
                             System.out.println("Insert transport ID:");
                             int transportID = scanner.nextInt();
                             scanner.nextLine();
@@ -390,10 +381,9 @@ public class Main {
                             System.out.println("Transport update menu:");
                             System.out.println("1. Change truck");
                             System.out.println("2. Change driver");
-                            System.out.println("3. Add delivery");
-                            System.out.println("4. Remove delivery");
+                            System.out.println("3. Add delivery document to transport");
+                            System.out.println("4. Remove delivery document from transport");
                             System.out.println("5. Transport weighting");
-                            System.out.println("6. Replanning transport");
                             System.out.println("0. Back to Main Menu");
 
                             update = scanner.nextInt();
@@ -404,6 +394,7 @@ public class Main {
 
                                 //Change truck
                                 case 1:
+                                    truckController.printAllAvailableTrucks();
                                     System.out.println("Insert new truck ID:");
                                     int newTruckID = scanner.nextInt();
                                     scanner.nextLine();
@@ -417,6 +408,7 @@ public class Main {
 
                                 //Change driver
                                 case 2:
+                                    driverController.printAllAvailableDrivers();
                                     System.out.println("Insert new driver ID:");
                                     int newDriverID = scanner.nextInt();
                                     scanner.nextLine();
@@ -437,16 +429,32 @@ public class Main {
                                         break;
                                     }
                                     Delivery_Document newDelivery = deliveryController.getDelivery_Document(newDeliveryID);
+                                    if (newDelivery.getDelivery_Status().equals(Delivery_DocumentStatus.in_Progress) || newDelivery.getDelivery_Status().equals(Delivery_DocumentStatus.finished)) {
+                                        System.out.println("Delivery has already been initiated.\n");
+                                        break;
+                                    }
                                     transport.addDeliveryDocument(newDelivery);
                                     System.out.println("Delivery's document was changed\n" + transport);
                                     break;
 
-                                //Add comment
+                                //Remove delivery
                                 case 4:
-                                    System.out.println("Insert new comment:\n");
-                                    String newComment = scanner.next();
-                                    transport.addComment(newComment);
-                                    System.out.println("Comment added\n" + transport + "\n");
+                                    transport.printAllDeliveryDocuments();
+                                        System.out.println("Insert delivery ID to remove:\n");
+                                        int removeID = scanner.nextInt();
+                                        scanner.nextLine();
+                                        if (deliveryController.getDelivery_Document(removeID) == null) {
+                                            System.out.println("Delivery Document does not exist.\n");
+                                        }
+                                        else {
+                                            Delivery_Document removeDeliveryDocument = deliveryController.getDelivery_Document(removeID);
+                                            transport.removeDeliveryDocument(removeDeliveryDocument);
+                                            System.out.println("Delivery's document was changed\n" + transport);
+                                        }
+                                    break;
+
+                                case 5:
+                                    transport.calc_transportWeight();
                                     break;
 
                                 default:
@@ -456,7 +464,7 @@ public class Main {
                             break;
 
                         //Update delivery document
-                        case 5:
+                        case 4:
                             System.out.println("Insert delivery ID:");
                             int deliveryID = scanner.nextInt();
                             scanner.nextLine();
@@ -486,6 +494,7 @@ public class Main {
                                     int newSourceID = scanner.nextInt();
                                     scanner.nextLine();
                                     if (locationController.getLocation(newSourceID) == null) {
+                                        System.out.println("Location does not exist.\n");
                                         break;
                                     }
                                     if (locationController.getLocation(newSourceID).getL_type() == "Supplier") {
@@ -521,14 +530,11 @@ public class Main {
                                     scanner.nextLine();
                                     if (deliveryStatus.equals("in_Progress")) {
                                         deliveryDocument.setDelivery_status(Delivery_DocumentStatus.in_Progress);
-                                    }
-                                    else if (deliveryStatus.equals("finished")) {
+                                    } else if (deliveryStatus.equals("finished")) {
                                         deliveryDocument.setDelivery_status(Delivery_DocumentStatus.finished);
-                                    }
-                                    else if (deliveryStatus.equals("waiting")) {
+                                    } else if (deliveryStatus.equals("waiting")) {
                                         deliveryDocument.setDelivery_status(Delivery_DocumentStatus.waiting);
-                                    }
-                                    else {
+                                    } else {
                                         System.out.println("Delivery document status is not in in_Progress or finished\n");
                                         break;
                                     }
@@ -542,8 +548,7 @@ public class Main {
                                     scanner.nextLine();
                                     if (deliveryController.getItemsData().getItem(newitemID) == null) {
                                         System.out.println("Item " + newitemID + " does not exist\n");
-                                    }
-                                    else {
+                                    } else {
                                         System.out.println("Insert amount:");
                                         int itemAmount = scanner.nextInt();
                                         Item item = deliveryController.getItemsData().getItem(newitemID);
@@ -553,34 +558,30 @@ public class Main {
                                             deliveryDocument.getItems().put(item, itemAmount);
                                         System.out.println("item" + item + "was added to the delivery document\n");
                                         System.out.println("The weight is " + deliveryDocument.getTotalWeight() + "\n");
-                                        break;
                                     }
+                                    break;
 
                                 //Remove item
                                 case 5:
+                                    System.out.println("All items in this delivery document:\n");
+                                    deliveryDocument.printAllItems();
                                     System.out.println("Insert item ID to remove:");
                                     int itemID = scanner.nextInt();
                                     scanner.nextLine();
                                     if (deliveryController.getItemsData().getItem(itemID) == null) {
                                         System.out.println("Item " + itemID + " does not exist\n");
-                                    }
-                                    else {
-                                    int flag = 0;
-                                    for (Item item1 : deliveryDocument.getItems().keySet()){
-                                        if (itemID == item1.getItemID()) {
-                                            deliveryDocument.getItems().remove(item1);
-                                            flag = 1;
+                                    } else {
+                                        Item item = deliveryController.getItemsData().getItem(itemID);
+                                        Set<Item> itemSet = deliveryDocument.getItems().keySet();
+                                        if (itemSet.contains(item)) {
+                                            deliveryDocument.getItems().remove(item);
+                                            System.out.println("item " + itemID + " was removed from the delivery document\n");
+                                            System.out.println("The weight is " + deliveryDocument.getTotalWeight() + "\n");
+                                        } else {
+                                            System.out.println("item does not exist in the delivery document\n");
                                         }
                                     }
-                                    if (flag == 0) {
-                                        System.out.println("item does not exist in the delivery document\n");
-                                    }
-                                    else {
-                                        System.out.println("item" + itemID + "was removed from the delivery document\n");
-                                        System.out.println("The weight is " + deliveryDocument.getTotalWeight() + "\n");
-                                    }
                                     break;
-                                    }
 
                                 default:
                                     System.out.println("Invalid choice. Please try again.\n");
@@ -621,10 +622,9 @@ public class Main {
                             System.out.println("Insert truck ID:");
                             int truckID = scanner.nextInt();
                             scanner.nextLine();
-                            if (truckController.getTruck(truckID) == null){
+                            if (truckController.getTruck(truckID) == null) {
                                 System.out.println("Truck does not exist.\n");
-                            }
-                            else
+                            } else
                                 System.out.println(truckController.getTruck(truckID));
                             break;
 
@@ -633,10 +633,9 @@ public class Main {
                             System.out.println("Insert driver ID:");
                             int driverID = scanner.nextInt();
                             scanner.nextLine();
-                            if (driverController.getDriver(driverID) == null){
+                            if (driverController.getDriver(driverID) == null) {
                                 System.out.println("Driver does not exist.\n");
-                            }
-                            else
+                            } else
                                 System.out.println(driverController.getDriver(driverID));
                             break;
 
@@ -645,10 +644,9 @@ public class Main {
                             System.out.println("Insert transport ID:");
                             int transportID = scanner.nextInt();
                             scanner.nextLine();
-                            if (transportController.getTransport(transportID) == null){
+                            if (transportController.getTransport(transportID) == null) {
                                 System.out.println("Transport does not exist.\n");
-                            }
-                            else
+                            } else
                                 System.out.println(transportController.getTransport(transportID));
                             break;
 
@@ -674,8 +672,8 @@ public class Main {
                                 System.out.println(locationController.getLocation(locationDocumentsID) + "\n");
                             break;
 
-                            //Display all transports
-                            case 6:
+                        //Display all transports
+                        case 6:
                             if (transportController.getTransportsData().getTransports().isEmpty())
                                 System.out.println("There are no transports in the system.\n");
                             else {
@@ -700,7 +698,6 @@ public class Main {
                             break;
 
 
-
                         default:
                             System.out.println("Invalid choice. Please try again.\n");
                             break;
@@ -714,10 +711,11 @@ public class Main {
                     System.out.println("Insert transport ID:");
                     int transportID = scanner.nextInt();
                     scanner.nextLine();
-                    if (transportController.getTransport(transportID) != null){
+                    if (transportController.getTransport(transportID) != null) {
                         System.out.println("Transport already exists.\n");
                         break;
                     }
+                    truckController.printAllAvailableTrucks();
                     System.out.println("Insert truck ID:");
                     int truckID = scanner.nextInt();
                     scanner.nextLine();
@@ -727,6 +725,7 @@ public class Main {
                     }
                     Truck truck = truckController.getTruck(truckID);
 
+                    driverController.printAllAvailableDrivers();
                     System.out.println("Insert driver ID:");
                     int driverID = scanner.nextInt();
                     scanner.nextLine();
@@ -735,27 +734,40 @@ public class Main {
                         break;
                     }
                     Driver driver = driverController.getDriver(driverID);
-                    System.out.println("Insert Sources Shipping Area:");
+
+                    System.out.println("\nShipping area:");
+                    locationController.getAllShippingArea();
+                    System.out.println("\nInsert Sources Shipping Area:");
                     int sourcesArea = scanner.nextInt();
                     deliveryController.getDeliverySourceInArea(sourcesArea);
+                    System.out.println("\nInsert Destinations Shipping Area:");
                     int deliverySourceID = scanner.nextInt();
                     deliveryController.getDeliveryDestinationInArea(deliverySourceID);
-                    List <Delivery_Document> deliveryDocs;
+                    List<Delivery_Document> deliveryDocs;
                     deliveryDocs = new ArrayList<Delivery_Document>();
-                    System.out.println("Insert delivery ID:");
-                    int deliveryID = scanner.nextInt();
-                    while (deliveryID != 0){
-                        System.out.println("Insert delivery documents ID (not 0):\n(Press 0 to return to the Main Menu)\n");
-                        deliveryID = scanner.nextInt();
+                    int addMore = 1;
+                    while (addMore != 0) {
+                        System.out.println("Insert delivery document ID: \n(Press 0 to return to the Main Menu)\n");
+                        int deliveryID = scanner.nextInt();
                         scanner.nextLine();
+                        if (deliveryID == 0) {
+                            break;
+                        }
                         if (deliveryController.getDelivery_Document(deliveryID) == null) {
                             System.out.println("Delivery Document does not exist.\n");
+                            continue;
+                        }
+                        if (deliveryController.getDelivery_Document(deliveryID).getDelivery_Status().equals(Delivery_DocumentStatus.finished) ||
+                        deliveryController.getDelivery_Document(deliveryID).getDelivery_Status().equals(Delivery_DocumentStatus.in_Progress)){
+                            System.out.println("Delivery has already been initiated.\n");
                             continue;
                         }
                         if (deliveryController.getDelivery_Document(deliveryID).getItemsStatus() == Delivery_ItemsStatus.in_Progress) {
                             deliveryController.getDelivery_Document(deliveryID).setItemsStatus(Delivery_ItemsStatus.complete);
                         }
                         deliveryDocs.add(deliveryController.getDelivery_Document(deliveryID));
+                        System.out.println("Add more delivery document ID? (No = 0, Yes = 1)");
+                        addMore = scanner.nextInt();
                     }
                     //Create transport and add it to TransportData
                     Transport newTransport = new Transport(transportID, truck, driver, deliveryDocs, "");
@@ -765,185 +777,175 @@ public class Main {
                         System.out.println("Proper Transport " + newTransport + "\n");
                         break;
                     }
-                    //Replanning transport
-                    System.out.println("Overweight, please choose one from the following numbers:");
-                    System.out.println("1. Change truck");
-                    System.out.println("2. Remove source");
-                    System.out.println("3. Remove destination");
-                    System.out.println("4. Remove Item from delivery");
-                    System.out.println("0. Exit and Delete transport");
+
                     int reChoice;
-                    reChoice = scanner.nextInt();
+                    do {
+                        //Replanning transport
+                        System.out.println("Overweight, please choose one from the following numbers:");
+                        System.out.println("1. Change truck");
+                        System.out.println("2. Remove source");
+                        System.out.println("3. Remove destination");
+                        System.out.println("4. Remove Item from delivery");
+                        System.out.println("0. Exit and Delete transport");
+                        reChoice = scanner.nextInt();
 
-                    switch (reChoice) {
-                        case 0:
-                            transportController.getTransportsData().removeTransportById(transportID);
-                            System.out.println("Returning to the main menu.\n");
-                            break;
+                        switch (reChoice) {
+                            case 0:
+                                transportController.getTransportsData().removeTransportById(transportID);
+                                System.out.println("Returning to the main menu.\n");
+                                break;
 
-                        //Change truck
-                        case 1:
-                            System.out.println("Insert new truck ID:");
-                            int newTruckID = scanner.nextInt();
-                            scanner.nextLine();
-                            if (truckController.getTruck(newTruckID) == null){
-                                System.out.println("Truck does not exist.\n");
-                            }
-                            else {
-                                Truck newTruck = truckController.getTruck(newTruckID);
-                                if (!newTruck.isAvailable()) {
-                                    System.out.println("Truck does not available.\n");
-                                } else {
-                                    double tempWeight = newTransport.getTotalWeights().get(newTransport.getTotalWeights().size() - 1) - newTransport.getTruck().getTruckWeight() + newTruck.getTruckWeight();
-                                    if (newTruck.getTruckWeight() + newTruck.getMaxWeight() >= tempWeight) {
-                                        if (newTransport.getDriver().getLicenseMaxWeight() >= tempWeight) {
-                                            newTransport.setTruck(newTruck);
+                            //Change truck
+                            case 1:
+                                truckController.printAllAvailableTrucks();
+
+                                    System.out.println("Insert new truck ID:\n(Press 0 to return to the Main Menu)\n");
+                                    int newTruckID = scanner.nextInt();
+                                    scanner.nextLine();
+                                    if (newTruckID == 0) {
+                                        transportController.getTransportsData().removeTransportById(transportID);
+                                        reChoice = 0;
+                                        break;
+                                    }
+                                    if (truckController.getTruck(newTruckID) == null) {
+                                        System.out.println("Truck does not exist.\n");
+                                    } else {
+                                        Truck newTruck = truckController.getTruck(newTruckID);
+                                        if (newTransport.setTruck(newTruck)) {
                                             System.out.println("Transport OK, truck was changed successfully.\n");
+                                            reChoice = 0;
                                             break;
-                                        } else {
-                                            System.out.println("The driver's license is less than the weight of the transport.\nPlease insert new driverID:\n(Press 0 to return to the Main Menu)\n");
-                                            int ChangeDriverID = scanner.nextInt();
-                                            scanner.nextLine();
-                                            if (driverController.getDriver(ChangeDriverID) == null) {
-                                                System.out.println("Driver does not exist.\n");
-                                            }
-                                            else if (!driverController.getDriver(ChangeDriverID).isAvailable()) {
-                                                System.out.println("Driver does not available.\n");
-                                            } else if (tempWeight <= driverController.getDriver(ChangeDriverID).getLicenseMaxWeight()) {
-                                                newTransport.setDriver(driverController.getDriver(ChangeDriverID));
+                                        }
+                                    }
+                                break;
+
+                            //Remove source
+                            case 2:
+                                newTransport.printAllSources();
+                                System.out.println("Insert source ID to remove:");
+                                int sourceID = scanner.nextInt();
+                                scanner.nextLine();
+                                if (locationController.getLocation(sourceID) == null)
+                                    System.out.println("Location does not exist.\n");
+                                else {
+                                    if (!locationController.getLocation(sourceID).getL_type().equals("Store"))
+                                        System.out.println("The location is a destination.\n");
+                                    else {
+                                        Store source = (Store) locationController.getLocation(sourceID);
+                                        if (newTransport.getSource().contains(source)) {
+                                            newTransport.removeSource(source);
+                                            if (newTransport.checkTransport()) {
+                                                System.out.println("Transport OK, source removed successfully.\n");
+                                                reChoice = 0;
+                                                break;
+                                            } else
+                                                System.out.println("The weight is still exceeded.\n");
+                                        } else
+                                            System.out.println("Source" + source + "does not exist in this transport.\n");
+                                    }
+                                }
+                                break;
+
+                            //Remove destination
+                            case 3:
+                                newTransport.printAllDestinations();
+                                System.out.println("Insert destination ID to remove:");
+                                int destinationID = scanner.nextInt();
+                                scanner.nextLine();
+                                if (locationController.getLocation(destinationID) == null) {
+                                    System.out.println("Location does not exist.\n");
+                                } else {
+                                    if (!locationController.getLocation(destinationID).getL_type().equals("Supplier"))
+                                        System.out.println("The location is Store.\n");
+                                    else {
+                                        Supplier destination = (Supplier) locationController.getLocation(destinationID);
+                                        if (newTransport.getDestinations().contains(destination)) {
+                                            newTransport.removeDestination(destination);
+                                            if (newTransport.checkTransport()) {
+                                                System.out.println("Transport OK, destination removed successfully.\n");
+                                                reChoice = 0;
+                                                break;
+                                            } else
+                                                System.out.println("The weight is still exceeded.\n");
+                                        } else
+                                            System.out.println("Destination" + destination + "does not exist in this transport.\n");
+                                    }
+                                }
+                                break;
+
+                            //Remove item from delivery in transport
+                            case 4:
+                                System.out.println("Delivery documents in this transport:");
+                                newTransport.printAllDeliveryDocuments();
+                                System.out.println("Insert delivery ID to remove from:");
+                                int deliveryId = scanner.nextInt();
+                                scanner.nextLine();
+                                if (deliveryController.getDelivery_Document(deliveryId) == null) {
+                                    System.out.println("Delivery does not exist.\n");
+                                }
+                                if (!newTransport.getDelivery_documents().contains(deliveryController.getDelivery_Document(deliveryId))) {
+                                    System.out.println("Delivery Document does not exist in this transport.\n");
+                                } else {
+                                    Delivery_Document deliveryDoc = newTransport.getDelivery_documents().get(deliveryId);
+                                    System.out.println("Items in this delivery documents:\n");
+                                    deliveryDoc.printAllItems();
+                                    System.out.println("Insert item ID to remove:");
+                                    int itemID = scanner.nextInt();
+                                    scanner.nextLine();
+                                    if (deliveryController.getItemsData().getItems().get(itemID) == null) {
+                                        System.out.println("Item does not exist.\n");
+                                    }
+                                    else {
+                                        Item removedItem = deliveryController.getItemsData().getItems().get(itemID);
+                                        if (deliveryDoc.removeItem(removedItem)) {
+                                            System.out.println("Item" + removedItem + "removed successfully.\n");
+                                            if (newTransport.checkTransport()) {
+                                                System.out.println("Transport OK, item" + itemID + "was removed from the delivery document in this transport.\n");
+                                                reChoice = 0;
+                                                break;
                                             }
                                             else
-                                                System.out.println("The driver's license is less than the weight of the transport.\n");
-                                        }
-                                    } else {
-                                        System.out.println("The weight that truck number" + truckID + "can carry is less than the weight of the transport\n");
-                                    }
-                                }
-                            }
-
-                        //Remove source
-                        case 2:
-                            System.out.println("Insert source ID to remove:");
-                            int sourceID = scanner.nextInt();
-                            scanner.nextLine();
-                            if (locationController.getLocation(sourceID) == null)
-                                System.out.println("Location does not exist.\n");
-                            else {
-                                if (!locationController.getLocation(sourceID).getL_type().equals("Store"))
-                                    System.out.println("The location is Supplier.\n");
-                                else {
-                                    Store source = (Store) locationController.getLocation(sourceID);
-                                    if (newTransport.getSource().contains(source)) {
-                                        newTransport.removeSource(source);
-                                        if (newTransport.checkTransport()) {
-                                            System.out.println("Transport OK, source removed successfully.\n");
-                                            break;
-                                        } else
-                                            System.out.println("The weight is still exceeded.\n");
-                                    }
-                                    else
-                                        System.out.println("Source" + source + "does not exist in this transport.\n");
-                                }
-                            }
-
-                        //Remove destination
-                        case 3:
-                            System.out.println("Insert destination ID to remove:");
-                            int destinationID = scanner.nextInt();
-                            scanner.nextLine();
-                            if (locationController.getLocation(destinationID) == null) {
-                                System.out.println("Location does not exist.\n");
-                            }
-                            else {
-                                if (!locationController.getLocation(destinationID).getL_type().equals("Supplier"))
-                                    System.out.println("The location is Store.\n");
-                                else {
-                                    Supplier destination = (Supplier) locationController.getLocation(destinationID);
-                                    if (newTransport.getDestinations().contains(destination)) {
-                                        newTransport.removeDestination(destination);
-                                        if (newTransport.checkTransport()) {
-                                            System.out.println("Transport OK, destination removed successfully.\n");
-                                            break;
-                                        } else
-                                            System.out.println("The weight is still exceeded.\n");
-                                    }
-                                    else
-                                        System.out.println("Destination" + destination + "does not exist in this transport.\n");
-                                }
-                            }
-
-                        //Remove item from delivery in transport
-                        case 4:
-                            System.out.println("Insert delivery ID to remove from:");
-                            int deliveryId = scanner.nextInt();
-                            scanner.nextLine();
-                            if (!newTransport.getDelivery_documents().contains(deliveryId)) {
-                                System.out.println("Delivery Document does not exist in this transport.\n");
-                            }
-                            else {
-                                Delivery_Document deliveryDoc = newTransport.getDelivery_documents().get(deliveryId);
-                                System.out.println("Insert item ID to remove:");
-                                int itemID = scanner.nextInt();
-                                scanner.nextLine();
-                                if (deliveryController.getItemsData().getItems().get(itemID) == null) {
-                                    System.out.println("Item does not exist.\n");
-                                } else {
-                                    int itemFlag = 0;
-                                    for (Item itemRemove : deliveryDoc.getItems().keySet()) {
-                                        if (itemID == itemRemove.getItemID()) {
-                                            deliveryDoc.getItems().remove(itemRemove);
-                                            if (deliveryDoc.getItems().isEmpty())
-                                                newTransport.getDelivery_documents().remove(deliveryDoc);
-                                            newTransport.calc_transportWeight();
-                                            itemFlag = 1;
+                                                System.out.println("The weight is still exceeded.\n");
                                         }
                                     }
-                                    if (itemFlag == 0) {
-                                        System.out.println("item does not exist in this delivery document.\n");
-                                    } else if (newTransport.checkTransport()) {
-                                        System.out.println("Transport OK, item" + itemID + "was removed from the delivery document in this transport.\n");
-                                        break;
-                                    } else
-                                        System.out.println("The weight is still exceeded.\n");
                                 }
-                            }
-
-
-                    } while (reChoice != 0);
+                                break;
+                        }
+                    }while (reChoice != 0) ;
+            break;
 
 /************** Finish Transport *******************************/
 
-                //Finish Transport
-                case 5:
-                    System.out.println("Insert transport ID:");
-                    int finishTransportID = scanner.nextInt();
-                    scanner.nextLine();
-                    if (transportController.getTransport(finishTransportID) == null) {
-                        System.out.println("Transport does not exist.\n");
-                    } else if (transportController.getTransport(finishTransportID).isFinished()) {
-                        System.out.println("Transport is already finished.\n");
-                    }
-                    else {
-                        Transport transportF = transportController.getTransport(finishTransportID);
-                        transportController.finishTransport(transportF);
-                        System.out.println("Transport finished.\n");
-                    }
-                    break;
+            //Finish Transport
+            case 5:
+                System.out.println("Insert transport ID:");
+                int finishTransportID = scanner.nextInt();
+                scanner.nextLine();
+                if (transportController.getTransport(finishTransportID) == null) {
+                    System.out.println("Transport does not exist.\n");
+                } else if (transportController.getTransport(finishTransportID).isFinished()) {
+                    System.out.println("Transport is already finished.\n");
+                } else {
+                    Transport transportF = transportController.getTransport(finishTransportID);
+                    transportController.finishTransport(transportF);
+                    System.out.println("Transport finished.\n");
+                }
+                break;
 
 /************** Exit *******************************/
 
-                //Exit
-                case 6:
-                    System.out.println("Good bye.\n");
-                    break;
+            //Exit
+            case 6:
+                System.out.println("Good bye.\n");
+                break;
 
-                default:
-                    System.out.println("Invalid choice. Please try again.\n");
-            }
+            default:
+                System.out.println("Invalid choice. Please try again.\n");
         }
-        while (choice != 6);
+    }
+        while(choice !=6);
         scanner.close();
-        }
+}
     public static HashSet<Driver> readDriversFromCSV(String csvFilePath) {
         HashSet<Driver> driversD = new HashSet<>();
         try (BufferedReader br = new BufferedReader(new FileReader(csvFilePath))) {

@@ -32,82 +32,34 @@ public class Delivery_DocumentsController {
         return documentsData.getDelivery_Documents().getOrDefault(delivery_id, null);
     }
 
-    public Delivery_DocumentStatus getDeliveryStatus (int delivery_id){
-        Delivery_Document delivery = documentsData.getDelivery_Documents().get(delivery_id);
-        return delivery.getDelivery_Status();
-    }
-    public Delivery_ItemsStatus getItemsStatus (int delivery_id){
-        Delivery_Document delivery = documentsData.getDelivery_Documents().get(delivery_id);
-        return delivery.getItemsStatus();
-    }
-
-    public void setDestPhone(int delivery_id, String phone){
-        Delivery_Document delivery = documentsData.getDelivery_Documents().get(delivery_id);
-        delivery.getDestination().setPhone(phone);
-    }
-
-    public void setDestContact(int delivery_id, String contact){
-        Delivery_Document delivery = documentsData.getDelivery_Documents().get(delivery_id);
-        delivery.getDestination().setContact(contact);
-    }
-    public void setDestAddress(int delivery_id, Address address){
-        Delivery_Document delivery = documentsData.getDelivery_Documents().get(delivery_id);
-        delivery.getDestination().setAddress(address);
-    }
-    public void setSourcePhone(int delivery_id, String phone){
-        Delivery_Document delivery = documentsData.getDelivery_Documents().get(delivery_id);
-        delivery.getSource().setPhone(phone);
-    }
-    public void setSourceContact(int delivery_id, String contact){
-        Delivery_Document delivery = documentsData.getDelivery_Documents().get(delivery_id);
-        delivery.getSource().setContact(contact);
-    }
-    public void setSourceAddress(int delivery_id, Address address){
-        Delivery_Document delivery = documentsData.getDelivery_Documents().get(delivery_id);
-        delivery.getSource().setAddress(address);
-    }
-    public double getTotalWeight(int delivery_id){
-        Delivery_Document delivery = documentsData.getDelivery_Documents().get(delivery_id);
-        return delivery.getTotalWeight();
-    }
-
     public void getDeliverySourceInArea(int SourceArea){
         System.out.println("Delivery documents with source in Shipping Area: " + SourceArea + ":");
+        int flag = 0;
         for (Delivery_Document delivery : documentsData.getDelivery_Documents().values()){
             if (delivery.getSource().getShippingArea() == SourceArea) {
-                System.out.println(delivery.getSource());
+                System.out.println(delivery);
+                flag = 1;
             }
+        }
+        if (flag == 0){
+            System.out.println("No source in this shipping area");
         }
     }
 
     public void getDeliveryDestinationInArea(int DestinationArea){
         System.out.println("Delivery documents with Destinations in Shipping Area: " + DestinationArea + ":");
+        int flag = 0;
         for (Delivery_Document delivery : documentsData.getDelivery_Documents().values()){
             if (delivery.getDestination().getShippingArea() == DestinationArea) {
-                System.out.println(delivery.getDestination());
+                System.out.println(delivery);
+                flag = 1;
             }
         }
-    }
-
-    public void removeItemFromDelivery(int delivery_id, int item_id){
-        Delivery_Document delivery = documentsData.getDelivery_Documents().get(delivery_id);
-        Item item = itemsData.getItem(item_id);
-        delivery.getItems().remove(item);
-        delivery.setItemsStatus(Delivery_ItemsStatus.itemMissing);
-        System.out.println("item " + item_id + " removed from delivery " + delivery_id);
-    }
-
-    public void addItemToDelivery(int delivery_id, int item_id, int quantity){
-        Delivery_Document delivery = getDelivery_Document(delivery_id);
-        if (!itemsData.getItems().containsKey(item_id)){
-            System.out.println("item " + item_id + " does not exist");
-        }
-        else {
-            Item item = itemsData.getItems().get(item_id);
-            delivery.getItems().put(item, quantity);
-            System.out.println("item " + item_id + " added to delivery " + delivery_id);
+        if (flag == 0){
+            System.out.println("No destination in this shipping area");
         }
     }
+
 
     public Delivery_DocumentsData getDocumentsData() {
         return documentsData;

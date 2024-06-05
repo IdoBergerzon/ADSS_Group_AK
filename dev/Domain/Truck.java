@@ -15,13 +15,9 @@ public class Truck {
         this.available = true;
     }
     public int getTruckID() {return truckID;}
-    public String getTruckType() { return truckType; }
     public double getTruckWeight() { return truckWeight; }
     public double getMaxWeight() { return MaxWeight; }
     public boolean isAvailable() { return available; }
-    public void setMaxWeight(double maxWeight) {
-        MaxWeight = maxWeight;
-    }
     public void setAvailable(boolean available) { this.available = available; }
 
     @Override

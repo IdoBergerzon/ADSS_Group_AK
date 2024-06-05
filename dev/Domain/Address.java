@@ -19,6 +19,6 @@ public class Address {
     }
 
     public String toString() {
-        return full_address + " " + address_code + " " + shipping_area;
+        return full_address + ", address code=" + address_code + ",shipping area= " + shipping_area;
     }
 }

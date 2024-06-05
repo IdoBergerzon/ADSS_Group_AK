@@ -13,6 +13,15 @@ public class TruckController {
         return trucksData;
     }
 
+    public void printAllAvailableTrucks() {
+        System.out.println("Available Trucks:");
+        for (Truck truck : trucksData.getTrucks().values()) {
+            if (truck.isAvailable()) {
+                System.out.println(truck);
+            }
+        }
+    }
+
     public void addNewTruck(int truckID, String truckType, double truckWeight, double MaxWeight) {
         if (trucksData.getTrucks().containsKey(truckID)) {
             System.out.println("Truck already exists");
@@ -28,29 +37,6 @@ public class TruckController {
             return trucksData.getTrucks().get(truckID);
         else return null;
     }
-    public void removeTruck(int truckID) {
-        if (trucksData.getTrucks().get(truckID) != null)
-            trucksData.getTrucks().remove(truckID);
-        else System.out.println("truck not found");
-    }
 
-    public String showTrucks(int truckID) {
-        if (this.getTruck(truckID) != null) {
-            return this.getTruck(truckID).toString();
-        }
-        else return "Truck not found";
-    }
-    public void setAvailable(int truckID, boolean available) {
-        if (this.getTruck(truckID) != null) {
-            this.getTruck(truckID).setAvailable(available);
-        }
-        else System.out.println("truck not found");
-    }
-
-    public void allTrucksAvailable() {
-        for (Truck truck : trucksData.getTrucks().values()) {
-            truck.setAvailable(true);
-        }
-    }
 
 }
