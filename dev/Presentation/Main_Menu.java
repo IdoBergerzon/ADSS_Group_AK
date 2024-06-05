@@ -139,7 +139,7 @@ public class Main_Menu {
                     itemIntegerHashMap13.put(deliveryController.getItemsData().getItem(10), 30);
                     itemIntegerHashMap13.put(deliveryController.getItemsData().getItem(11), 25);
                     itemIntegerHashMap13.put(deliveryController.getItemsData().getItem(12), 10);
-                    Delivery_Document document13 = new Delivery_Document((Store) locationController.getLocation(6), 13, (Supplier) locationController.getLocation(3), itemIntegerHashMap13);
+                    Delivery_Document document13 = new Delivery_Document((Store) locationController.getLocation(6), 13, (Supplier) locationController.getLocation(9), itemIntegerHashMap13);
                     deliveryController.getDocumentsData().addDelivery_Document(document13);
 
                     HashMap<Item, Integer> itemIntegerHashMap14 = new HashMap<>();
