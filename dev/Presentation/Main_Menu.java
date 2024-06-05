@@ -2,11 +2,13 @@ package Presentation;
 
 import Domain.*;
 
+import java.nio.file.Path;
 import java.util.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.File;
 
 
 public class Main_Menu {
@@ -28,16 +30,17 @@ public class Main_Menu {
             switch (choice) {
 
                 case 1:
-                    HashSet<Driver> driverHashSet = readDriversFromCSV("C:\\Users\\WIN10\\Documents\\שנה ב\\ניתו''צ\\עבודה 1 ניתוצ\\ADSS_Group_AK\\dev\\DataTable\\drivers.csv");
+
+                    HashSet<Driver> driverHashSet = readDriversFromCSV("dev/DataTable/drivers.csv");
                     driverController.getDriversData().setDrivers(driverHashSet);
 
-                    HashMap<Integer, Truck> truckHashMap = readTrucksFromCSV("C:\\Users\\WIN10\\Documents\\שנה ב\\ניתו''צ\\עבודה 1 ניתוצ\\ADSS_Group_AK\\dev\\DataTable\\trucks.csv");
+                    HashMap<Integer, Truck> truckHashMap = readTrucksFromCSV("dev/DataTable/trucks.csv");
                     truckController.getTrucksData().setTrucks(truckHashMap);
 
-                    HashMap<Integer, Item> itemHashMap = readItemsFromCSV("C:\\Users\\WIN10\\Documents\\שנה ב\\ניתו''צ\\עבודה 1 ניתוצ\\ADSS_Group_AK\\dev\\DataTable\\items.csv");
+                    HashMap<Integer, Item> itemHashMap = readItemsFromCSV("dev/DataTable/items.csv");
                     deliveryController.getItemsData().setItems(itemHashMap);
 
-                    HashMap<Integer, ALocation> locationHashMap = readLocationsFromCSV("C:\\Users\\WIN10\\Documents\\שנה ב\\ניתו''צ\\עבודה 1 ניתוצ\\ADSS_Group_AK\\dev\\DataTable\\location.csv");
+                    HashMap<Integer, ALocation> locationHashMap = readLocationsFromCSV("dev/DataTable/location.csv");
                     locationController.getLocationsData().setLocations(locationHashMap);
 
                     HashMap<Item, Integer> itemIntegerHashMap1 = new HashMap<>();
@@ -136,7 +139,7 @@ public class Main_Menu {
                             } else {
                                 System.out.print("Enter Driver Name:\n");
                                 String driverName = scanner.nextLine();
-                                System.out.print("Enter the driver's license number:\n");
+                                System.out.print("Enter max weight license:\n");
                                 int licenseNumber = scanner.nextInt();
                                 driverController.addDriver(driverID, driverName, licenseNumber);
                             }
