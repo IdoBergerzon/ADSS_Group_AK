@@ -308,7 +308,7 @@ public class Main_Menu {
 
                                 //Update driver license
                                 case 1:
-                                    System.out.println("Insert new license (int):");
+                                    System.out.println("Insert new max weight license (int):");
                                     int license = scanner.nextInt();
                                     driverController.getDriver(driverID).setLicenseMaxWeight(license);
                                     System.out.println("Driver's license were updated.\n" + driverController.getDriver(driverID) + "\n");
