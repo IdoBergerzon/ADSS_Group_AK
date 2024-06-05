@@ -36,7 +36,7 @@ public class Worker_Main {
                 }
             }
             else {
-                System.out.println("you enter more days than you need to,please try again \n");
+                System.out.println("you enter less/more days than you need to,please try again \n");
             }
         }
         Boolean[][] request= new Boolean[2][7];
@@ -60,12 +60,37 @@ public class Worker_Main {
         }
     }
     public void EditRequest(int id){
+        try {
+            controller.getrequestById(id);
+        }catch (Exception e){
+            System.out.println("request for this week does not exist, please add new request");
+            return;
+        }
         System.out.println("this is the prior request: \n"+controller.getrequestById(id));
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter your work request for next week morning shift starting from Sunday to Saturday? (Y/N)");
-        String morningRequest = scanner.nextLine();
-        System.out.println("Please enter your work request for next week evening shift starting from Sunday to Saturday? (Y/N)");
-        String eveningRequest = scanner.nextLine();
+        String morningRequest="";
+        String eveningRequest="";
+        Boolean flag=true;
+        while(flag) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Please enter your work request for next week morning shift starting from Sunday to Saturday? (Y/N)");
+            morningRequest = scanner.nextLine();
+            System.out.println("Please enter your work request for next week evening shift starting from Sunday to Saturday? (Y/N)");
+            eveningRequest = scanner.nextLine();
+            if(morningRequest.length()==7 && eveningRequest.length()==7){
+                for(int i=0;i<morningRequest.length();i++){
+                    if((morningRequest.charAt(i)=='Y' || morningRequest.charAt(i)=='N')&&((eveningRequest.charAt(i)=='Y' || eveningRequest.charAt(i)=='N'))){
+                        flag=false;
+                    }
+
+                }
+                if(flag){
+                    System.out.println("you enter wrong characters, please try again\n");
+                }
+            }
+            else {
+                System.out.println("you enter less/more days than you need to,please try again \n");
+            }
+        }
         Boolean[][] request= new Boolean[2][7];
         for(int i=0;i<7;i++){
             if(morningRequest.charAt(i)=='Y'){

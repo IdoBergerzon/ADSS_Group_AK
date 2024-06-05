@@ -78,6 +78,10 @@ public class Worker_Controller {
         return false;
     }
     public String getrequestById(int id){
+        if(requests_repository.getRequestByWorker(id).getRequest()==null){
+            return null;
+        }
+
         return requests_repository.getRequestByWorker(id).toString();
     }
 }
