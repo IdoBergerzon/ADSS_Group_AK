@@ -36,7 +36,7 @@ public class Delivery_DocumentsController {
         System.out.println("Delivery documents with source in Shipping Area: " + SourceArea + ":");
         int flag = 0;
         for (Delivery_Document delivery : documentsData.getDelivery_Documents().values()){
-            if (delivery.getSource().getShippingArea() == SourceArea) {
+            if (delivery.getSource().getShippingArea() == SourceArea && delivery.getDelivery_Status().equals(Delivery_DocumentStatus.waiting)) {
                 System.out.println(delivery);
                 flag = 1;
             }
@@ -50,7 +50,7 @@ public class Delivery_DocumentsController {
         System.out.println("Delivery documents with Destinations in Shipping Area: " + DestinationArea + ":");
         int flag = 0;
         for (Delivery_Document delivery : documentsData.getDelivery_Documents().values()){
-            if (delivery.getDestination().getShippingArea() == DestinationArea) {
+            if (delivery.getDestination().getShippingArea() == DestinationArea && delivery.getDelivery_Status().equals(Delivery_DocumentStatus.waiting)) {
                 System.out.println(delivery);
                 flag = 1;
             }
