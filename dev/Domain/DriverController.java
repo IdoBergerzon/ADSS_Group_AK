@@ -32,10 +32,10 @@ public class DriverController {
         return null;
     }
 
-        public void printAllAvailableDrivers() {
+        public void printAllAvailableDrivers(double weight) {
         System.out.println("All Available Drivers:");
         for (Driver driver : driversData.getDrivers()) {
-            if (driver.isAvailable()) {
+            if (driver.isAvailable() && driver.getLicenseMaxWeight() >= weight) {
                 System.out.println(driver);
             }
         }

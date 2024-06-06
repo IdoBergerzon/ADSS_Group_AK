@@ -13,10 +13,10 @@ public class TruckController {
         return trucksData;
     }
 
-    public void printAllAvailableTrucks() {
+    public void printAllAvailableTrucks(double weight) {
         System.out.println("Available Trucks:");
         for (Truck truck : trucksData.getTrucks().values()) {
-            if (truck.isAvailable()) {
+            if (truck.isAvailable() && truck.getTruckWeight()+truck.getMaxWeight() >= weight) {
                 System.out.println(truck);
             }
         }

@@ -497,7 +497,7 @@ public class Main_Menu {
 
                                 //Change truck
                                 case 1:
-                                    truckController.printAllAvailableTrucks();
+                                    truckController.printAllAvailableTrucks(transport.calc_transportWeight());
                                     System.out.println("Insert new truck ID:");
                                     int newTruckID = scanner.nextInt();
                                     scanner.nextLine();
@@ -511,7 +511,7 @@ public class Main_Menu {
 
                                 //Change driver
                                 case 2:
-                                    driverController.printAllAvailableDrivers();
+                                    driverController.printAllAvailableDrivers(transport.calc_transportWeight());
                                     System.out.println("Insert new driver ID:");
                                     int newDriverID = scanner.nextInt();
                                     scanner.nextLine();
@@ -818,7 +818,7 @@ public class Main_Menu {
                         System.out.println("Transport already exists.\n");
                         break;
                     }
-                    truckController.printAllAvailableTrucks();
+                    truckController.printAllAvailableTrucks(0);
                     System.out.println("Insert truck ID:");
                     int truckID = scanner.nextInt();
                     scanner.nextLine();
@@ -828,7 +828,7 @@ public class Main_Menu {
                     }
                     Truck truck = truckController.getTruck(truckID);
 
-                    driverController.printAllAvailableDrivers();
+                    driverController.printAllAvailableDrivers(0);
                     System.out.println("Insert driver ID:");
                     int driverID = scanner.nextInt();
                     scanner.nextLine();
@@ -838,40 +838,51 @@ public class Main_Menu {
                     }
                     Driver driver = driverController.getDriver(driverID);
 
-                    System.out.println("\nSource shipping area:");
-                    locationController.getAllSourceShippingArea();
-                    System.out.println("\nInsert Sources Shipping Area:");
-                    int sourcesArea = scanner.nextInt();
-                    System.out.println("\nDestination shipping area:");
-                    locationController.getAllDestinationShippingArea();
-                    System.out.println("\nInsert Destinations Shipping Area:");
-                    int destinationArea = scanner.nextInt();
-                    deliveryController.getDeliveryInArea(sourcesArea, destinationArea);
                     List<Delivery_Document> deliveryDocs;
                     deliveryDocs = new ArrayList<Delivery_Document>();
-                    int addMore = 1;
-                    while (addMore != 0) {
-                        System.out.println("Insert delivery document ID: \n(Press 0 to return to the Main Menu)\n");
-                        int deliveryID = scanner.nextInt();
-                        scanner.nextLine();
-                        if (deliveryID == 0) {
+                    int searchMore = 1;
+                    while (searchMore != 0) {
+                        if (searchMore != 1) {
                             break;
                         }
-                        if (deliveryController.getDelivery_Document(deliveryID) == null) {
-                            System.out.println("Delivery Document does not exist.\n");
-                            continue;
+                        System.out.println("\nSource shipping area:");
+                        locationController.getAllSourceShippingArea();
+                        System.out.println("\nInsert Sources Shipping Area:");
+                        int sourcesArea = scanner.nextInt();
+                        System.out.println("\nDestination shipping area:");
+                        deliveryController.getShippingAreaForDest(sourcesArea);
+                        System.out.println("\nInsert Destinations Shipping Area:");
+                        int destinationArea = scanner.nextInt();
+                        deliveryController.getDeliveryInArea(sourcesArea, destinationArea);
+                        int addMore = 1;
+                        while (addMore != 0) {
+                            if (addMore != 1) {
+                                break;
+                            }
+                            System.out.println("Insert delivery document ID: \n(Press 0 to return to the Main Menu)\n");
+                            int deliveryID = scanner.nextInt();
+                            scanner.nextLine();
+                            if (deliveryID == 0) {
+                                break;
+                            }
+                            if (deliveryController.getDelivery_Document(deliveryID) == null) {
+                                System.out.println("Delivery Document does not exist.\n");
+                                continue;
+                            }
+                            if (deliveryController.getDelivery_Document(deliveryID).getDelivery_Status().equals(Delivery_DocumentStatus.finished) ||
+                                    deliveryController.getDelivery_Document(deliveryID).getDelivery_Status().equals(Delivery_DocumentStatus.in_Progress)) {
+                                System.out.println("Delivery has already been initiated.\n");
+                                continue;
+                            }
+                            if (deliveryController.getDelivery_Document(deliveryID).getItemsStatus() == Delivery_ItemsStatus.in_Progress) {
+                                deliveryController.getDelivery_Document(deliveryID).setItemsStatus(Delivery_ItemsStatus.complete);
+                            }
+                            deliveryDocs.add(deliveryController.getDelivery_Document(deliveryID));
+                            System.out.println("Add more delivery document ID from this shipping area? (No = 0, Yes = 1)");
+                            addMore = scanner.nextInt();
+                            System.out.println("Add more delivery document ID from other shipping area? (No = 0, Yes = 1)");
+                            searchMore = scanner.nextInt();
                         }
-                        if (deliveryController.getDelivery_Document(deliveryID).getDelivery_Status().equals(Delivery_DocumentStatus.finished) ||
-                        deliveryController.getDelivery_Document(deliveryID).getDelivery_Status().equals(Delivery_DocumentStatus.in_Progress)){
-                            System.out.println("Delivery has already been initiated.\n");
-                            continue;
-                        }
-                        if (deliveryController.getDelivery_Document(deliveryID).getItemsStatus() == Delivery_ItemsStatus.in_Progress) {
-                            deliveryController.getDelivery_Document(deliveryID).setItemsStatus(Delivery_ItemsStatus.complete);
-                        }
-                        deliveryDocs.add(deliveryController.getDelivery_Document(deliveryID));
-                        System.out.println("Add more delivery document ID? (No = 0, Yes = 1)");
-                        addMore = scanner.nextInt();
                     }
                     //Create transport and add it to TransportData
                     Transport newTransport = new Transport(transportID, truck, driver, deliveryDocs, "");
@@ -901,7 +912,7 @@ public class Main_Menu {
 
                             //Change truck
                             case 1:
-                                truckController.printAllAvailableTrucks();
+                                truckController.printAllAvailableTrucks(newTransport.calc_transportWeight());
 
                                     System.out.println("Insert new truck ID:\n(Press 0 to return to the Main Menu)\n");
                                     int newTruckID = scanner.nextInt();

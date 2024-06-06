@@ -4,7 +4,9 @@ import Data.Delivery_DocumentsData;
 import Data.ItemsData;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Delivery_DocumentsController {
     Delivery_DocumentsData documentsData;
@@ -32,17 +34,20 @@ public class Delivery_DocumentsController {
         return documentsData.getDelivery_Documents().getOrDefault(delivery_id, null);
     }
 
-    public void getDeliverySourceInArea(int SourceArea){
-        System.out.println("Delivery documents with source in Shipping Area: " + SourceArea + ":");
+    public void getShippingAreaForDest(int SourceArea){
         int flag = 0;
+        Set<Integer> setArea = new HashSet<>();
         for (Delivery_Document delivery : documentsData.getDelivery_Documents().values()){
             if (delivery.getSource().getShippingArea() == SourceArea && delivery.getDelivery_Status().equals(Delivery_DocumentStatus.waiting)) {
-                System.out.println(delivery);
+                setArea.add(delivery.getDestination().getShippingArea());
                 flag = 1;
             }
         }
         if (flag == 0){
-            System.out.println("No source in this shipping area");
+            System.out.println("There are no delivery documents whose source address is " + SourceArea);
+        }
+        else {
+            System.out.println(setArea);
         }
     }
 
@@ -64,7 +69,8 @@ public class Delivery_DocumentsController {
         System.out.println("Delivery in Shipping Area: Source= " + sourceArea + ", Destination= " + destinationArea + ":");
         int flag = 0;
         for (Delivery_Document delivery : documentsData.getDelivery_Documents().values()){
-            if (delivery.getSource().getShippingArea()==sourceArea && delivery.getDestination().getShippingArea()==destinationArea){
+            if (delivery.getSource().getShippingArea()==sourceArea && delivery.getDestination().getShippingArea()==destinationArea
+                    && delivery.getDelivery_Status().equals(Delivery_DocumentStatus.waiting)){
                 System.out.println(delivery);
                 flag = 1;
             }
@@ -73,6 +79,8 @@ public class Delivery_DocumentsController {
             System.out.println("No delivery in this shipping area");
         }
     }
+
+
 
 
     public Delivery_DocumentsData getDocumentsData() {
