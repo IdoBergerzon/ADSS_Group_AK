@@ -877,7 +877,7 @@ public class Main_Menu {
                         int destinationArea = scanner.nextInt();
                         deliveryController.getDeliveryInArea(sourcesArea, destinationArea);
 
-                            System.out.println("Insert delivery document ID: \n(Press 0 to return to the Main Menu)\n");
+                            System.out.println("Insert delivery document ID:\n(You can also select a transport document that has not been displayed) \n(Press 0 to return to the Main Menu)\n");
                             int deliveryID = scanner.nextInt();
                             scanner.nextLine();
                             if (deliveryID == 0) {

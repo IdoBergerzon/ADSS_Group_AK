@@ -244,6 +244,22 @@ public class Transport {
         }
     }
 
+    public String strAllSources() {
+        StringBuilder s = new StringBuilder();
+        for (Store store : source) {
+            s.append(store).append("\n");
+        }
+        return s.toString();
+    }
+
+    public String strAllDestinations() {
+        StringBuilder s = new StringBuilder();
+        for (Supplier supplier : destinations) {
+            s.append(supplier).append("\n");
+        }
+        return s.toString();
+    }
+
     @Override
     public String toString() {
         return "Transport{" +
@@ -252,8 +268,8 @@ public class Transport {
                 "\n timeOfDepurture=" + timeOfDepurture +
                 "\n truck=" + truck +
                 "\n driver=" + driver +
-                "\n source=" + source +
-                "\n destinations=" + destinations +
+                "\n source=" + strAllSources() +
+                "\n destinations=" + strAllDestinations() +
                 "\n totalWeight=" + totalWeights.get(totalWeights.size()-1) +
                 "\n comments='" + comments + '\'' +
                 '}';
