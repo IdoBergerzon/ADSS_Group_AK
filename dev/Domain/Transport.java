@@ -90,29 +90,28 @@ public class Transport {
     }
 
     public boolean setTruck(Truck truck) {
-        if (truck.isAvailable()) {
-            double newWeight = totalWeights.get(totalWeights.size() - 1) - this.truck.getTruckWeight() + truck.getTruckWeight();
-            if (truck.getMaxWeight() + truck.getTruckWeight() >= newWeight) {
-                if (this.getDriver().getLicenseMaxWeight() >= newWeight) {
-                        if (this.getTruck() != null)
-                            this.getTruck().setAvailable(true);
-                        truck.setAvailable(false);
-                        this.truck = truck;
-                        this.calc_transportWeight();
-                        return true;
-                    }
-                    else {
-                        System.out.println("The driver's license is less than the weight of the transport.\n");
-                    }
+        double newWeight = totalWeights.get(totalWeights.size() - 1) - this.truck.getTruckWeight() + truck.getTruckWeight();
+        if (truck.getMaxWeight() + truck.getTruckWeight() >= newWeight) {
+            if (this.getDriver().getLicenseMaxWeight() >= newWeight) {
+                if (truck.isAvailable()) {
+                    if (this.getTruck() != null)
+                        this.getTruck().setAvailable(true);
+                    truck.setAvailable(false);
+                    this.truck = truck;
+                    this.calc_transportWeight();
+                    return true;
                 }
-                else
-                    System.out.println("The weight that truck number" + truck.getTruckID() + "can carry is less than the weight of the transport\n");
+                else {
+                    System.out.println("Truck does not available.\n");
+                }
             }
-            else {
-                System.out.println("Truck does not available.\n");
-            }
-            return false;
+            else System.out.println("The driver's license is less than the weight of the transport.\n");
         }
+        else {
+            System.out.println("The weight that truck number" + truck.getTruckID() + "can carry is less than the weight of the transport\n");
+        }
+        return false;
+    }
 
 
     public void setFinished(boolean finished) {

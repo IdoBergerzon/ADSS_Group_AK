@@ -843,7 +843,12 @@ public class Main_Menu {
                         System.out.println("Truck does not exist.\n");
                         break;
                     }
+                    if (!truckController.getTruck(truckID).isAvailable()) {
+                        System.out.println("Truck is not available.\n");
+                        break;
+                    }
                     Truck truck = truckController.getTruck(truckID);
+
 
                     driverController.printAllAvailableDrivers(0);
                     System.out.println("Insert driver ID:");
@@ -853,7 +858,12 @@ public class Main_Menu {
                         System.out.println("Driver does not exist.\n");
                         break;
                     }
+                    if (!driverController.getDriver(driverID).isAvailable()) {
+                        System.out.println("Driver is not available.\n");
+                        break;
+                    }
                     Driver driver = driverController.getDriver(driverID);
+
 
                     List<Delivery_Document> deliveryDocs;
                     deliveryDocs = new ArrayList<Delivery_Document>();
