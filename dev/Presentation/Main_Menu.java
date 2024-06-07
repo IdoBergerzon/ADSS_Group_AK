@@ -1,7 +1,8 @@
 package Presentation;
 
 import Domain.*;
-
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 import java.io.BufferedReader;
@@ -16,6 +17,8 @@ public class Main_Menu {
         LocationController locationController = new LocationController();
         TransportController transportController = new TransportController();
         TruckController truckController = new TruckController();
+        LocalTime localTime = LocalTime.now();
+        LocalDate localDate = LocalDate.now();
 
         Scanner scanner = new Scanner(System.in);
         int choice;
@@ -185,6 +188,14 @@ public class Main_Menu {
             System.out.println("5. Finish Transport");
             System.out.println("6. Exit");
 
+            if (localTime.equals(LocalTime.MIDNIGHT)) {
+                for (Transport trans : transportController.getTransportsData().getTransports().values()) {
+                    if (!trans.isFinished()) {
+                        trans.setFinished(true);
+                    }
+                }
+            }
+
             choice = scanner.nextInt();
 
             switch (choice) {
@@ -289,6 +300,7 @@ public class Main_Menu {
                             }
                             break;
 
+                        //Add Delivery document
                         case 4:
                             System.out.print("Enter Delivery Document ID:\n");
                             int deliveryDocumentID = scanner.nextInt();
@@ -301,7 +313,7 @@ public class Main_Menu {
                                 scanner.nextLine();
                                 if (locationController.getLocation(sourceID) == null) {
                                     System.out.println("Invalid source ID\n");
-                                } else if (locationController.getLocation(sourceID).getL_type() == "Supplier") {
+                                } else if (locationController.getLocation(sourceID).getL_type().equals("Supplier")) {
                                     System.out.print("The location is Supplier (destination)\n");
                                 } else {
                                     System.out.print("Enter Destination ID:\n");
@@ -309,7 +321,7 @@ public class Main_Menu {
                                     scanner.nextLine();
                                     if (locationController.getLocation(destinationID) == null) {
                                         System.out.println("Invalid destination ID\n");
-                                    } else if (locationController.getLocation(destinationID).getL_type() == "Store") {
+                                    } else if (locationController.getLocation(destinationID).getL_type().equals("Store")) {
                                         System.out.print("The location is Store\n");
                                     } else {
                                         Store store = (Store) locationController.getLocation(sourceID);
@@ -341,6 +353,7 @@ public class Main_Menu {
                             }
                             break;
 
+                        //Add item
                         case 5:
                             System.out.print("Enter Item ID:\n");
                             int itemID = scanner.nextInt();
@@ -532,7 +545,8 @@ public class Main_Menu {
                                         break;
                                     }
                                     Delivery_Document newDelivery = deliveryController.getDelivery_Document(newDeliveryID);
-                                    if (newDelivery.getDelivery_Status().equals(Delivery_DocumentStatus.in_Progress) || newDelivery.getDelivery_Status().equals(Delivery_DocumentStatus.finished)) {
+                                    if (newDelivery.getDelivery_Status().equals(Delivery_DocumentStatus.in_Progress)
+                                            || newDelivery.getDelivery_Status().equals(Delivery_DocumentStatus.finished)) {
                                         System.out.println("Delivery has already been initiated.\n");
                                         break;
                                     }
@@ -572,6 +586,9 @@ public class Main_Menu {
                             int deliveryID = scanner.nextInt();
                             scanner.nextLine();
                             if (deliveryController.getDelivery_Document(deliveryID) == null) {
+                                break;
+                            } else if (!deliveryController.getDelivery_Document(deliveryID).getDelivery_Status().equals(Delivery_DocumentStatus.waiting)) {
+                                System.out.println("Delivery in progress or already finished .\n");
                                 break;
                             }
 

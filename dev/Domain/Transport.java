@@ -114,6 +114,8 @@ public class Transport {
         for (Delivery_Document delivery_document : delivery_documents) {
             delivery_document.setDelivery_status(Delivery_DocumentStatus.finished);
         }
+        this.getDriver().setAvailable(true);
+        this.getTruck().setAvailable(true);
         this.finished = finished;
     }
 
