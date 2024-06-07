@@ -1,10 +1,7 @@
 package Presentation;
-
 import Domain.*;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -18,7 +15,6 @@ public class Main_Menu {
         TransportController transportController = new TransportController();
         TruckController truckController = new TruckController();
         LocalTime localTime = LocalTime.now();
-        LocalDate localDate = LocalDate.now();
 
         Scanner scanner = new Scanner(System.in);
         int choice;
@@ -31,7 +27,6 @@ public class Main_Menu {
             switch (choice) {
 
                 case 1:
-
                     HashSet<Driver> driverHashSet = readDriversFromCSV("dev/DataTable/drivers.csv");
                     driverController.getDriversData().setDrivers(driverHashSet);
 
