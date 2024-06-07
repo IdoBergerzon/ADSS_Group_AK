@@ -72,7 +72,7 @@ public class Delivery_Document {
     public String strItems() {
         StringBuilder strItems = new StringBuilder();
         for (Item item : items.keySet()) {
-            strItems.append(item).append("\n");
+            strItems.append("   ").append(item).append("\n");
         }
         return strItems.toString();
     }
