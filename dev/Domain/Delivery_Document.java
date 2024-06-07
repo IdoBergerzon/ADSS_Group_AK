@@ -69,6 +69,14 @@ public class Delivery_Document {
         }
     }
 
+    public String strItems() {
+        StringBuilder strItems = new StringBuilder();
+        for (Item item : items.keySet()) {
+            strItems.append(item).append("\n");
+        }
+        return strItems.toString();
+    }
+
     @Override
     public String toString() {
         //להוסיף את הפרטים החסרים מהובלה
@@ -76,7 +84,7 @@ public class Delivery_Document {
                 "\n     documentID=" + documentID +
                 "\n     source=" + source.toString() +
                 "\n     destination=" + destination.toString() +
-                "\n     items=" + items +
+                "\n     items=" + strItems() +
                 "\n     status=" + delivery_status.toString() +
                 '}';
     }
