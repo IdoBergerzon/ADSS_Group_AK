@@ -876,11 +876,7 @@ public class Main_Menu {
                         System.out.println("\nInsert Destinations Shipping Area:");
                         int destinationArea = scanner.nextInt();
                         deliveryController.getDeliveryInArea(sourcesArea, destinationArea);
-                        int addMore = 1;
-                        while (addMore != 0) {
-                            if (addMore != 1) {
-                                break;
-                            }
+
                             System.out.println("Insert delivery document ID: \n(Press 0 to return to the Main Menu)\n");
                             int deliveryID = scanner.nextInt();
                             scanner.nextLine();
@@ -900,11 +896,10 @@ public class Main_Menu {
                                 deliveryController.getDelivery_Document(deliveryID).setItemsStatus(Delivery_ItemsStatus.complete);
                             }
                             deliveryDocs.add(deliveryController.getDelivery_Document(deliveryID));
-                            System.out.println("Add more delivery document ID from this shipping area? (No = 0, Yes = 1)");
-                            addMore = scanner.nextInt();
-                            System.out.println("Add more delivery document ID from other shipping area? (No = 0, Yes = 1)");
+
+                            System.out.println("Add more delivery document ID? (No = 0, Yes = 1)");
                             searchMore = scanner.nextInt();
-                        }
+
                     }
                     //Create transport and add it to TransportData
                     Transport newTransport = new Transport(transportID, truck, driver, deliveryDocs, "");
