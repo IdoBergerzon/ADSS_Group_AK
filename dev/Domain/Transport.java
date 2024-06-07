@@ -247,7 +247,7 @@ public class Transport {
     public String strAllSources() {
         StringBuilder s = new StringBuilder();
         for (Store store : source) {
-            s.append("  ").append(store).append("\n");
+            s.append("\n  ").append(store);
         }
         return s.toString();
     }
@@ -255,7 +255,7 @@ public class Transport {
     public String strAllDestinations() {
         StringBuilder s = new StringBuilder();
         for (Supplier supplier : destinations) {
-            s.append("  ").append(supplier).append("\n");
+            s.append("\n  ").append(supplier);
         }
         return s.toString();
     }
