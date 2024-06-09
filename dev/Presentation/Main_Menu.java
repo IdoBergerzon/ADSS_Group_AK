@@ -63,7 +63,7 @@ public class Main_Menu {
             System.out.println("1. Add");
             System.out.println("2. Update");
             System.out.println("3. Display");
-            System.out.println("4. Create New Transport");
+            System.out.println("4. Create new Transport");
             System.out.println("5. Finish Transport");
             System.out.println("6. Exit");
 
