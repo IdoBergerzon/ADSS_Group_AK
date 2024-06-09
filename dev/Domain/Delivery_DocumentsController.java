@@ -1,0 +1,89 @@
+package Domain;
+
+import Data.Delivery_DocumentsData;
+import Data.ItemsData;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public class Delivery_DocumentsController {
+    Delivery_DocumentsData documentsData;
+    ItemsData itemsData;
+    public Delivery_DocumentsController(){
+        documentsData = new Delivery_DocumentsData();
+        itemsData = new ItemsData();
+    }
+
+    public ItemsData getItemsData(){
+        return itemsData;
+    }
+
+    public void addDelivery_Document(int delivery_id, Store source, Supplier destination, HashMap<Item,Integer> items){
+        if (documentsData.getDelivery_Documents().containsKey(delivery_id)){
+            System.out.println("delivery " + delivery_id + " already exists");
+        }
+        else {
+            Delivery_Document newDelivery = new Delivery_Document(source, delivery_id, destination, items);
+            documentsData.getDelivery_Documents().put(delivery_id, newDelivery);
+        }
+    }
+
+    public Delivery_Document getDelivery_Document(int delivery_id){
+        return documentsData.getDelivery_Documents().getOrDefault(delivery_id, null);
+    }
+
+    public void getShippingAreaForDest(int SourceArea){
+        int flag = 0;
+        Set<Integer> setArea = new HashSet<>();
+        for (Delivery_Document delivery : documentsData.getDelivery_Documents().values()){
+            if (delivery.getSource().getShippingArea() == SourceArea && delivery.getDelivery_Status().equals(Delivery_DocumentStatus.waiting)) {
+                setArea.add(delivery.getDestination().getShippingArea());
+                flag = 1;
+            }
+        }
+        if (flag == 0){
+            System.out.println("There are no delivery documents whose source address is " + SourceArea);
+        }
+        else {
+            System.out.println(setArea);
+        }
+    }
+
+    public void getDeliveryDestinationInArea(int DestinationArea){
+        System.out.println("Delivery documents with Destinations in Shipping Area: " + DestinationArea + ":");
+        int flag = 0;
+        for (Delivery_Document delivery : documentsData.getDelivery_Documents().values()){
+            if (delivery.getDestination().getShippingArea() == DestinationArea && delivery.getDelivery_Status().equals(Delivery_DocumentStatus.waiting)) {
+                System.out.println(delivery);
+                flag = 1;
+            }
+        }
+        if (flag == 0){
+            System.out.println("No destination in this shipping area");
+        }
+    }
+
+    public void getDeliveryInArea(int sourceArea ,int destinationArea){
+        System.out.println("Delivery in Shipping Area: Source= " + sourceArea + ", Destination= " + destinationArea + ":");
+        int flag = 0;
+        for (Delivery_Document delivery : documentsData.getDelivery_Documents().values()){
+            if (delivery.getSource().getShippingArea()==sourceArea && delivery.getDestination().getShippingArea()==destinationArea
+                    && delivery.getDelivery_Status().equals(Delivery_DocumentStatus.waiting)){
+                System.out.println(delivery);
+                flag = 1;
+            }
+        }
+        if (flag == 0){
+            System.out.println("No delivery in this shipping area");
+        }
+    }
+
+
+
+
+    public Delivery_DocumentsData getDocumentsData() {
+        return documentsData;
+    }
+}

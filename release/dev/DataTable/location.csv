@@ -1,0 +1,11 @@
+l_type,phone,contact,address(full_address,address_code,shipping_area),locationID
+Supplier,123456789,John Doe,Hameri 24,551145,03,1
+Store,987654321,Jane Smith,Hazal 4,245671,08,2
+Supplier,555555555,Bob Johnson,Arlozrov 8,467894,04,3
+Store,444444444,Alice Brown,Herzel ,678906,08,4
+Supplier,333333333,Charlie Davis,Bialik 22,678920,02,5
+Store,222222222,Emily White,Random St, 53217,03,6
+Supplier,111111111,Frank Harris,Main St,738854,04,7
+Store,666666666,Grace Clark,Oak St,111111,02,8
+Supplier,777777777,Henry Wilson,Pine St,444555,01,9
+Store,888888888,Irene Evans,Cedar St,949498,08,10
