@@ -112,7 +112,7 @@ public class Main_Menu {
                                 double truckWeight = scanner.nextDouble();
                                 System.out.println("Insert truck Max Weight:");
                                 double MaxWeight = scanner.nextDouble();
-                                truckController.addNewTruck(truckID, truckType, MaxWeight, truckWeight);
+                                truckController.addNewTruck(truckID, truckType, truckWeight, MaxWeight);
                                 System.out.println("Truck added successfully");
                             }
                             break;
@@ -430,6 +430,11 @@ public class Main_Menu {
                                         break;
                                     }
                                     transport.addDeliveryDocument(newDelivery);
+                                    if (!transport.checkTransport()) {
+                                        transport.removeDeliveryDocument(newDelivery);
+                                        System.out.println("Overweight.\n");
+                                        break;
+                                    }
                                     System.out.println("Delivery's document was changed\n" + transport);
                                     break;
 
