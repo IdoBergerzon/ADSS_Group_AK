@@ -1,7 +1,4 @@
-package Data;
-
-import Domain.Roster;
-import Domain.Shift;
+package Domain;
 
 
 import java.util.ArrayList;

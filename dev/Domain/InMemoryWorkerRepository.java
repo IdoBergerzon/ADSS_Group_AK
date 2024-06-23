@@ -1,8 +1,5 @@
-package Data;
+package Domain;
 
-import Domain.Branch;
-import Domain.Role;
-import Domain.Worker;
 import java.util.*;
 
 

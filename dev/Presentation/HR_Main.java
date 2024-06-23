@@ -13,31 +13,30 @@ public class HR_Main {
     }
 
     public void addNewWorker(){
-        Map<String,String> myMap = new HashMap<String,String>();
         Scanner sc = new Scanner(System.in);
-        String newWorker = "";
+        String newWorkerDetails = "";
         //enter all worker details by order id, name, ...
         System.out.println("Enter worker id:");
-        newWorker += sc.nextLine()+ ",";
+        newWorkerDetails += sc.nextLine()+ ",";
         System.out.println("Enter worker name:");
-        newWorker += sc.nextLine()+ ",";
+        newWorkerDetails += sc.nextLine()+ ",";
         System.out.println("Enter worker hourly wage:");
-        newWorker += sc.nextLine()+ ",";
+        newWorkerDetails += sc.nextLine()+ ",";
         System.out.println("Enter worker monthly wage:");
-        newWorker += sc.nextLine()+ ",";
+        newWorkerDetails += sc.nextLine()+ ",";
         System.out.println("Enter worker role ID:");
-        newWorker += sc.nextLine()+ ",";
+        newWorkerDetails += sc.nextLine()+ ",";
         System.out.println("Enter worker branch:");
-        newWorker += sc.nextLine() + ",";
+        newWorkerDetails += sc.nextLine() + ",";
         System.out.println("Enter worker department:");
-        newWorker += sc.nextLine() + ",";
+        newWorkerDetails += sc.nextLine() + ",";
         System.out.println("Enter managerID:");
-        newWorker += sc.nextLine() + ",";
+        newWorkerDetails += sc.nextLine() + ",";
         System.out.println("Enter Bank details:(format: BANK_NAME:ACCOUNT_NUMBER) ");
-        newWorker += sc.nextLine() + ",";
+        newWorkerDetails += sc.nextLine() + ",";
 
 
-        hr_controller.Add_New_Worker(newWorker);
+        hr_controller.Add_New_Worker(newWorkerDetails);
 
 
     }

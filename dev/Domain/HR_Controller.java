@@ -4,10 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-import Data.InMemoryWorkerRepository;
-import Data.InMemoryRequestRepository;
-import Data.InMemoryShiftRepository;
-
 public class HR_Controller {
 
     private final InMemoryWorkerRepository workers_memory=InMemoryWorkerRepository.getInstance();

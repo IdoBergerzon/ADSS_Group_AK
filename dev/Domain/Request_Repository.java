@@ -1,6 +1,4 @@
-package Data;
-
-import Domain.Request;
+package Domain;
 
 public interface Request_Repository {
 

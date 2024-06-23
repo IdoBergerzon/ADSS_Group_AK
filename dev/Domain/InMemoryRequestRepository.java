@@ -1,7 +1,4 @@
-package Data;
-
-import Domain.Request;
-import Domain.Week;
+package Domain;
 
 
 import java.util.HashMap;
