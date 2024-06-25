@@ -818,8 +818,15 @@ public class Main_Menu {
 
                             //Change truck
                             case 1:
-                                truckController.printAllAvailableTrucks(newTransport.calc_transportWeight());
-
+                                System.out.println("Possible Trucks:\n");
+                                int count = 0;
+                                for (Truck truck1: truckController.getTrucksData().getTrucks().values()){
+                                    if (truck1.getMaxWeight()>=newTransport.getWeight() && truck1.isAvailable()){
+                                        System.out.println(truck1);
+                                        count++;
+                                    }
+                                }
+                                if (count != 0) {
                                     System.out.println("Insert new truck ID:\n(Press 0 to return to the Main Menu)\n");
                                     int newTruckID = scanner.nextInt();
                                     scanner.nextLine();
@@ -838,6 +845,9 @@ public class Main_Menu {
                                             break;
                                         }
                                     }
+                                }
+                                else
+                                    System.out.println("No Trucks Available.\n");
                                 break;
 
                             //Remove source
@@ -907,27 +917,36 @@ public class Main_Menu {
                                 if (!newTransport.getDelivery_documents().contains(deliveryController.getDelivery_Document(deliveryId))) {
                                     System.out.println("Delivery Document does not exist in this transport.\n");
                                 } else {
-                                    Delivery_Document deliveryDoc = newTransport.getDelivery_documents().get(deliveryId);
-                                    System.out.println("Items in this delivery documents:\n");
-                                    deliveryDoc.printAllItems();
-                                    System.out.println("Insert item ID to remove:");
-                                    int itemID = scanner.nextInt();
-                                    scanner.nextLine();
-                                    if (deliveryController.getItemsData().getItems().get(itemID) == null) {
-                                        System.out.println("Item does not exist.\n");
+                                    Delivery_Document deliveryDoc = null;
+                                    for (Delivery_Document delivery : newTransport.getDelivery_documents()) {
+                                        if (delivery.getDocumentID() == deliveryId) {
+                                            deliveryDoc = delivery;
+                                        }
+                                    }
+                                    if (deliveryDoc != null) {
+                                        System.out.println("Items in this delivery documents:\n");
+                                        deliveryDoc.printAllItems();
+                                        System.out.println("Insert item ID to remove:");
+                                        int itemID = scanner.nextInt();
+                                        scanner.nextLine();
+                                        if (deliveryController.getItemsData().getItems().get(itemID) == null) {
+                                            System.out.println("Item does not exist.\n");
+                                        } else {
+                                            Item removedItem = deliveryController.getItemsData().getItems().get(itemID);
+                                            if (deliveryDoc.removeItem(removedItem)) {
+                                                System.out.println("Item" + removedItem + "removed successfully.\n");
+                                                newTransport.calc_transportWeight();
+                                                if (newTransport.checkTransport()) {
+                                                    System.out.println("Transport OK, item" + itemID + "was removed from the delivery document in this transport.\n");
+                                                    reChoice = 0;
+                                                    break;
+                                                } else
+                                                    System.out.println("The weight is still exceeded.\n");
+                                            }
+                                        }
                                     }
                                     else {
-                                        Item removedItem = deliveryController.getItemsData().getItems().get(itemID);
-                                        if (deliveryDoc.removeItem(removedItem)) {
-                                            System.out.println("Item" + removedItem + "removed successfully.\n");
-                                            if (newTransport.checkTransport()) {
-                                                System.out.println("Transport OK, item" + itemID + "was removed from the delivery document in this transport.\n");
-                                                reChoice = 0;
-                                                break;
-                                            }
-                                            else
-                                                System.out.println("The weight is still exceeded.\n");
-                                        }
+                                        System.out.println("Delivery does not exist in this transport.\n");
                                     }
                                 }
                                 break;

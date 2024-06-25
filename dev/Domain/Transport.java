@@ -52,6 +52,10 @@ public class Transport {
         return truck;
     }
 
+    public double getWeight() {
+        return this.totalWeights.get(this.totalWeights.size() - 1);
+    }
+
     public Driver getDriver() {
         return driver;
     }
