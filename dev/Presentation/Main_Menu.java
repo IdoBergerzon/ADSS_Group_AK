@@ -97,159 +97,30 @@ public class Main_Menu {
                             System.out.println("Returning to the main menu.\n");
                             break;
 
-
+                        // Add Truck
                         case 1:
-                            // Add Truck
-                            System.out.println("Insert truck ID:");
-                            int truckID = scanner.nextInt();
-                            scanner.nextLine();
-                            if (truckController.getTruck(truckID) != null) {
-                                System.out.print("The truck already exists in the system\n");
-                            } else {
-                                System.out.print("Insert truck Type:\n");
-                                String truckType = scanner.nextLine();
-                                System.out.println("Insert truck Weight:");
-                                double truckWeight = scanner.nextDouble();
-                                System.out.println("Insert truck Max Weight:");
-                                double MaxWeight = scanner.nextDouble();
-                                truckController.addNewTruck(truckID, truckType, truckWeight, MaxWeight);
-                                System.out.println("Truck added successfully");
-                            }
+                            truckController.createTruck();
                             break;
 
-
+                        // Add Driver
                         case 2:
-                            // Add Driver
-                            System.out.print("Enter Driver ID:\n");
-                            int driverID = scanner.nextInt();
-                            scanner.nextLine();
-                            if (driverController.getDriver(driverID) != null) {
-                                System.out.print("The Driver already exists in the system\n");
-                            } else {
-                                System.out.print("Enter Driver Name:\n");
-                                String driverName = scanner.nextLine();
-                                System.out.print("Enter max weight license:\n");
-                                int licenseNumber = scanner.nextInt();
-                                driverController.addDriver(driverID, driverName, licenseNumber);
-                            }
+                            driverController.createDriver();
                             break;
 
                         //Add supplier or Store
                         case 3:
-                            int locationChoice;
-                            System.out.println("1. Add Supplier");
-                            System.out.println("2. Add Store");
-                            System.out.print("Enter your choice:\n");
-                            locationChoice = scanner.nextInt();
-                            scanner.nextLine(); // Consume newline
-
-                            if (locationChoice == 1 || locationChoice == 2) {
-                                System.out.print("Enter Location ID:\n");
-                                int locationID = scanner.nextInt();
-                                scanner.nextLine(); // Consume newline
-                                if (locationController.getLocation(locationID) != null) {
-                                    System.out.print("The location already exists in the system\n");
-                                } else {
-                                    System.out.print("Enter Address details:\n");
-                                    String full_address = scanner.nextLine();
-
-                                    System.out.print("Enter address_code:\n");
-                                    int address_code = scanner.nextInt();
-                                    scanner.nextLine(); // Consume newline
-
-                                    System.out.print("Enter Shipping area:\n");
-                                    int shipping_area = scanner.nextInt();
-
-
-                                    Address address = new Address(full_address, address_code, shipping_area);
-
-                                    System.out.print("Enter contact:\n");
-                                    String contact = scanner.nextLine();
-                                    scanner.nextLine();
-
-                                    System.out.print("Enter phone:\n");
-                                    String phone = scanner.nextLine();
-
-                                    String l_type = (locationChoice == 1) ? "Supplier" : "Store";
-                                    locationController.addLocation(locationID, address, contact, phone, l_type);
-                                    System.out.println(l_type + " added successfully.");
-                                }
-                            } else {
-                                System.out.println("Invalid choice for the given location type.\n");
-                            }
+                            locationController.createLocation();
                             break;
 
                         //Add Delivery document
                         case 4:
-                            System.out.print("Enter Delivery Document ID:\n");
-                            int deliveryDocumentID = scanner.nextInt();
-                            scanner.nextLine();
-                            if (deliveryController.getDelivery_Document(deliveryDocumentID) != null) {
-                                System.out.print("The Delivery Document already exists in the system\n");
-                            } else {
-                                System.out.println("Enter Source ID:");
-                                int sourceID = scanner.nextInt();
-                                scanner.nextLine();
-                                if (locationController.getLocation(sourceID) == null) {
-                                    System.out.println("Invalid source ID\n");
-                                } else if (locationController.getLocation(sourceID).getL_type().equals("Supplier")) {
-                                    System.out.print("The location is Supplier (destination)\n");
-                                } else {
-                                    System.out.print("Enter Destination ID:\n");
-                                    int destinationID = scanner.nextInt();
-                                    scanner.nextLine();
-                                    if (locationController.getLocation(destinationID) == null) {
-                                        System.out.println("Invalid destination ID\n");
-                                    } else if (locationController.getLocation(destinationID).getL_type().equals("Store")) {
-                                        System.out.print("The location is Store\n");
-                                    } else {
-                                        Store store = (Store) locationController.getLocation(sourceID);
-                                        Supplier supplier = (Supplier) locationController.getLocation(destinationID);
-                                        HashMap<Item, Integer> newItems = new HashMap<>();
-                                        int moreItem = 1;
-                                        while (moreItem != 0) {
-                                            System.out.print("Enter Item ID:");
-                                            int itemID = scanner.nextInt();
-                                            scanner.nextLine();
-                                            if (deliveryController.getItemsData().getItem(itemID) == null) {
-                                                System.out.println("Item does not exist in the system\n");
-                                                break;
-                                            } else {
-                                                Item item = deliveryController.getItemsData().getItem(itemID);
-                                                System.out.print("Enter Quantity:");
-                                                int quantity = scanner.nextInt();
-                                                if (newItems.containsKey(item)) {
-                                                    quantity = newItems.get(item) + quantity;
-                                                }
-                                                newItems.put(item, quantity);
-                                                System.out.print("Add more item? (0 = No, 1 = Yes)");
-                                                moreItem = scanner.nextInt();
-                                            }
-                                        }
-                                        deliveryController.addDelivery_Document(deliveryDocumentID, store, supplier, newItems);
-                                    }
-                                }
-                            }
+                            deliveryController.createDelivery_Document(locationController);
                             break;
 
                         //Add item
                         case 5:
-                            System.out.print("Enter Item ID:\n");
-                            int itemID = scanner.nextInt();
-                            scanner.nextLine();
-                            if (deliveryController.getItemsData().getItem(itemID) != null) {
-                                System.out.println("Item already exists in the system\n");
-                            } else {
-                                System.out.println("Enter item name:");
-                                String name = scanner.nextLine();
-                                System.out.print("Enter item weight:\n");
-                                double weight = scanner.nextDouble();
-                                Item item = new Item(itemID, name, weight);
-                                deliveryController.getItemsData().addItem(item);
-                                System.out.println("Item added successfully.\n");
-                            }
+                            deliveryController.createNewItem();
                             break;
-
 
                         default:
                             System.out.println("Invalid choice. Please try again.\n");
@@ -299,10 +170,7 @@ public class Main_Menu {
 
                                 //Update driver license
                                 case 1:
-                                    System.out.println("Insert new max weight license (int):");
-                                    int license = scanner.nextInt();
-                                    driverController.getDriver(driverID).setLicenseMaxWeight(license);
-                                    System.out.println("Driver's license were updated.\n" + driverController.getDriver(driverID) + "\n");
+                                    driverController.updateDriverLicense(driverID);
                                     break;
 
                                 default:
@@ -334,26 +202,17 @@ public class Main_Menu {
 
                                 //Update shipping area
                                 case 1:
-                                    System.out.println("Insert number of shipping area:");
-                                    int shippingArea = scanner.nextInt();
-                                    locationController.setShipping_area(locationID, shippingArea);
-                                    System.out.println("Shipping area updated successfully.\n");
+                                    locationController.updateShipping_area(locationID);
                                     break;
 
                                 //Update contact
                                 case 2:
-                                    System.out.println("Insert new contact:");
-                                    String contact = scanner.next();
-                                    locationController.updateContact(locationID, contact);
-                                    System.out.println("Contact updated successfully.\n");
+                                    locationController.updateContact(locationID);
                                     break;
 
                                 //Update phone number
                                 case 3:
-                                    System.out.println("Insert new phone number:");
-                                    String phoneNumber = scanner.next();
-                                    locationController.updatePhone(locationID, phoneNumber);
-                                    System.out.println("Phone number updated successfully.\n");
+                                    locationController.updatePhone(locationID);
                                     break;
 
 
@@ -365,232 +224,12 @@ public class Main_Menu {
 
                         //Update transport
                         case 3:
-                            System.out.println("Insert transport ID:");
-                            int transportID = scanner.nextInt();
-                            scanner.nextLine();
-                            if (transportController.getTransport(transportID) == null) {
-                                System.out.println("Transport does not exist.\n");
-                                break;
-                            }
-                            Transport transport = transportController.getTransport(transportID);
-                            System.out.println("Transport update menu:");
-                            System.out.println("1. Change truck");
-                            System.out.println("2. Change driver");
-                            System.out.println("3. Add delivery document to transport");
-                            System.out.println("4. Remove delivery document from transport");
-                            System.out.println("5. Transport weighting");
-                            System.out.println("0. Back to Main Menu");
-
-                            update = scanner.nextInt();
-                            switch (update) {
-                                case 0:
-                                    System.out.println("Returning to the main menu.\n");
-                                    break;
-
-                                //Change truck
-                                case 1:
-                                    truckController.printAllAvailableTrucks(transport.calc_transportWeight());
-                                    System.out.println("Insert new truck ID:");
-                                    int newTruckID = scanner.nextInt();
-                                    scanner.nextLine();
-                                    if (truckController.getTruck(newTruckID) == null) {
-                                        break;
-                                    }
-                                    Truck newTruck = truckController.getTruck(newTruckID);
-                                    transport.setTruck(newTruck);
-                                    System.out.println("Transport's truck was changed\n" + transport + "\n");
-                                    break;
-
-                                //Change driver
-                                case 2:
-                                    driverController.printAllAvailableDrivers(transport.calc_transportWeight());
-                                    System.out.println("Insert new driver ID:");
-                                    int newDriverID = scanner.nextInt();
-                                    scanner.nextLine();
-                                    if (driverController.getDriver(newDriverID) == null) {
-                                        break;
-                                    }
-                                    Driver newDriver = driverController.getDriver(newDriverID);
-                                    transport.setDriver(newDriver);
-                                    System.out.println("Driver's driver was changed\n" + transport + "\n");
-                                    break;
-
-                                //Add delivery
-                                case 3:
-                                    System.out.println("Insert new delivery ID:");
-                                    int newDeliveryID = scanner.nextInt();
-                                    scanner.nextLine();
-                                    if (deliveryController.getDelivery_Document(newDeliveryID) == null) {
-                                        break;
-                                    }
-                                    Delivery_Document newDelivery = deliveryController.getDelivery_Document(newDeliveryID);
-                                    if (newDelivery.getDelivery_Status().equals(Delivery_DocumentStatus.in_Progress)
-                                            || newDelivery.getDelivery_Status().equals(Delivery_DocumentStatus.finished)) {
-                                        System.out.println("Delivery has already been initiated.\n");
-                                        break;
-                                    }
-                                    transport.addDeliveryDocument(newDelivery);
-                                    if (!transport.checkTransport()) {
-                                        transport.removeDeliveryDocument(newDelivery);
-                                        System.out.println("Overweight.\n");
-                                        break;
-                                    }
-                                    System.out.println("Delivery's document was changed\n" + transport);
-                                    break;
-
-                                //Remove delivery
-                                case 4:
-                                    transport.printAllDeliveryDocuments();
-                                        System.out.println("Insert delivery ID to remove:\n");
-                                        int removeID = scanner.nextInt();
-                                        scanner.nextLine();
-                                        if (deliveryController.getDelivery_Document(removeID) == null) {
-                                            System.out.println("Delivery Document does not exist.\n");
-                                        }
-                                        else {
-                                            Delivery_Document removeDeliveryDocument = deliveryController.getDelivery_Document(removeID);
-                                            transport.removeDeliveryDocument(removeDeliveryDocument);
-                                            System.out.println("Delivery's document was changed\n" + transport);
-                                        }
-                                    break;
-
-                                case 5:
-                                    transport.calc_transportWeight();
-                                    break;
-
-                                default:
-                                    System.out.println("Invalid choice. Please try again.\n");
-                                    break;
-                            }
+                            transportController.updateTransport(truckController,driverController,deliveryController);
                             break;
 
                         //Update delivery document
                         case 4:
-                            System.out.println("Insert delivery ID:");
-                            int deliveryID = scanner.nextInt();
-                            scanner.nextLine();
-                            if (deliveryController.getDelivery_Document(deliveryID) == null) {
-                                break;
-                            } else if (!deliveryController.getDelivery_Document(deliveryID).getDelivery_Status().equals(Delivery_DocumentStatus.waiting)) {
-                                System.out.println("Delivery in progress or already finished .\n");
-                                break;
-                            }
-
-                            Delivery_Document deliveryDocument = deliveryController.getDelivery_Document(deliveryID);
-                            System.out.println("Delivery document menu:");
-                            System.out.println("1. Change source");
-                            System.out.println("2. Change destination");
-                            System.out.println("3. Change delivery status");
-                            System.out.println("4. Add item");
-                            System.out.println("5. Remove item");
-                            System.out.println("0. Back to Main Menu");
-
-                            update = scanner.nextInt();
-                            switch (update) {
-                                //Back to the main menu
-                                case 0:
-                                    System.out.println("Returning to the main menu.\n");
-                                    break;
-
-                                //Change source
-                                case 1:
-                                    System.out.println("Insert new source ID:");
-                                    int newSourceID = scanner.nextInt();
-                                    scanner.nextLine();
-                                    if (locationController.getLocation(newSourceID) == null) {
-                                        System.out.println("Location does not exist.\n");
-                                        break;
-                                    }
-                                    if (locationController.getLocation(newSourceID).getL_type() == "Supplier") {
-                                        System.out.println("The ID is that of a supplier\n");
-                                        break;
-                                    }
-                                    Store newSource = (Store) locationController.getLocation(newSourceID);
-                                    deliveryDocument.setSource(newSource);
-                                    System.out.println("Source's document was changed\n" + deliveryDocument);
-                                    break;
-
-                                //Change destination
-                                case 2:
-                                    System.out.println("Insert new destination ID:");
-                                    int newDestinationID = scanner.nextInt();
-                                    scanner.nextLine();
-                                    if (locationController.getLocation(newDestinationID) == null) {
-                                        break;
-                                    }
-                                    if (locationController.getLocation(newDestinationID).getL_type() == "Store") {
-                                        System.out.println("The ID is that of a store\n");
-                                        break;
-                                    }
-                                    Supplier newDestination = (Supplier) locationController.getLocation(newDestinationID);
-                                    deliveryDocument.setDestination(newDestination);
-                                    System.out.println("Destination's document was changed\n" + deliveryDocument + "\n");
-                                    break;
-
-                                //Change delivery status
-                                case 3:
-                                    System.out.println("Insert new delivery status (in_Progress, finished, waiting):\n");
-                                    String deliveryStatus = scanner.next();
-                                    scanner.nextLine();
-                                    if (deliveryStatus.equals("in_Progress")) {
-                                        deliveryDocument.setDelivery_status(Delivery_DocumentStatus.in_Progress);
-                                    } else if (deliveryStatus.equals("finished")) {
-                                        deliveryDocument.setDelivery_status(Delivery_DocumentStatus.finished);
-                                    } else if (deliveryStatus.equals("waiting")) {
-                                        deliveryDocument.setDelivery_status(Delivery_DocumentStatus.waiting);
-                                    } else {
-                                        System.out.println("Delivery document status is not in in_Progress or finished\n");
-                                        break;
-                                    }
-                                    System.out.println("Delivery document" + deliveryID + ",status was changed to" + deliveryDocument.getDelivery_Status() + "\n");
-                                    break;
-
-                                //Add item
-                                case 4:
-                                    System.out.println("Insert item ID to add:");
-                                    int newitemID = scanner.nextInt();
-                                    scanner.nextLine();
-                                    if (deliveryController.getItemsData().getItem(newitemID) == null) {
-                                        System.out.println("Item " + newitemID + " does not exist\n");
-                                    } else {
-                                        System.out.println("Insert amount:");
-                                        int itemAmount = scanner.nextInt();
-                                        Item item = deliveryController.getItemsData().getItem(newitemID);
-                                        if (deliveryDocument.getItems().containsKey(item)) {
-                                            deliveryDocument.getItems().put(item, itemAmount + deliveryDocument.getItems().get(item));
-                                        } else
-                                            deliveryDocument.getItems().put(item, itemAmount);
-                                        System.out.println("item" + item + "was added to the delivery document\n");
-                                        System.out.println("The weight is " + deliveryDocument.getTotalWeight() + "\n");
-                                    }
-                                    break;
-
-                                //Remove item
-                                case 5:
-                                    System.out.println("All items in this delivery document:\n");
-                                    deliveryDocument.printAllItems();
-                                    System.out.println("Insert item ID to remove:");
-                                    int itemID = scanner.nextInt();
-                                    scanner.nextLine();
-                                    if (deliveryController.getItemsData().getItem(itemID) == null) {
-                                        System.out.println("Item " + itemID + " does not exist\n");
-                                    } else {
-                                        Item item = deliveryController.getItemsData().getItem(itemID);
-                                        Set<Item> itemSet = deliveryDocument.getItems().keySet();
-                                        if (itemSet.contains(item)) {
-                                            deliveryDocument.getItems().remove(item);
-                                            System.out.println("item " + itemID + " was removed from the delivery document\n");
-                                            System.out.println("The weight is " + deliveryDocument.getTotalWeight() + "\n");
-                                        } else {
-                                            System.out.println("item does not exist in the delivery document\n");
-                                        }
-                                    }
-                                    break;
-
-                                default:
-                                    System.out.println("Invalid choice. Please try again.\n");
-                                    break;
-                            }
+                            deliveryController.updateDeliveryDocument(deliveryController,locationController);
                             break;
 
                         default:
@@ -623,82 +262,42 @@ public class Main_Menu {
                             break;
 
                         case 1: // Display truck details
-                            System.out.println("Insert truck ID:");
-                            int truckID = scanner.nextInt();
-                            scanner.nextLine();
-                            if (truckController.getTruck(truckID) == null) {
-                                System.out.println("Truck does not exist.\n");
-                            } else
-                                System.out.println(truckController.getTruck(truckID));
+                            truckController.displayTruck();
                             break;
 
                         //Display driver details
                         case 2:
-                            System.out.println("Insert driver ID:");
-                            int driverID = scanner.nextInt();
-                            scanner.nextLine();
-                            if (driverController.getDriver(driverID) == null) {
-                                System.out.println("Driver does not exist.\n");
-                            } else
-                                System.out.println(driverController.getDriver(driverID));
+                            driverController.displayDriver();
                             break;
 
                         //Display transport
                         case 3:
-                            System.out.println("Insert transport ID:");
-                            int transportID = scanner.nextInt();
-                            scanner.nextLine();
-                            if (transportController.getTransport(transportID) == null) {
-                                System.out.println("Transport does not exist.\n");
-                            } else
-                                System.out.println(transportController.getTransport(transportID));
+                            transportController.displayTransport();
                             break;
 
                         //Display delivery documents
                         case 4:
-                            System.out.println("Insert delivery documents ID:");
-                            int deliveryDocumentsID = scanner.nextInt();
-                            scanner.nextLine();
-                            if (deliveryController.getDelivery_Document(deliveryDocumentsID) == null)
-                                System.out.println("Delivery Document does not exist.\n");
-                            else
-                                System.out.println(deliveryController.getDelivery_Document(deliveryDocumentsID) + "\n");
+                            deliveryController.displayDelivery_Document();
                             break;
 
                         //Display location details
                         case 5:
-                            System.out.println("Insert location documents ID:");
-                            int locationDocumentsID = scanner.nextInt();
-                            scanner.nextLine();
-                            if (locationController.getLocation(locationDocumentsID) == null)
-                                System.out.println("Location Document does not exist.\n");
-                            else
-                                System.out.println(locationController.getLocation(locationDocumentsID) + "\n");
+                            locationController.displayLocation();
                             break;
 
                         //Display all transports
                         case 6:
-                            if (transportController.getTransportsData().getTransports().isEmpty())
-                                System.out.println("There are no transports in the system.\n");
-                            else {
-                                System.out.println(transportController.getTransportsData().toString() + "\n");
-                            }
+                            transportController.displayAllTransports();
                             break;
 
                         //Display all trucks
                         case 7:
-                            if (truckController.getTrucksData().getTrucks().isEmpty())
-                                System.out.println("There are no trucks in the system.\n");
-                            else
-                                System.out.println(truckController.getTrucksData().toString() + "\n");
+                            truckController.displayAllTrucks();
                             break;
 
                         //Display all drivers
                         case 8:
-                            if (driverController.getDriversData().getDrivers().isEmpty())
-                                System.out.println("There are no drivers in the system.\n");
-                            else
-                                System.out.println(driverController.getDriversData().toString() + "\n");
+                            driverController.displayAllDrivers();
                             break;
 
 

@@ -3,6 +3,7 @@ package Domain;
 import Data.LocationsData;
 
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 
 public class LocationController {
@@ -13,9 +14,6 @@ public class LocationController {
 
     public LocationsData getLocationsData() {
         return locationsData;
-    }
-    public void setLocationsData(LocationsData locationsData) {
-        this.locationsData = locationsData;
     }
 
     public void addLocation(int locationID, Address address, String contact, String phone, String l_type) {
@@ -39,7 +37,18 @@ public class LocationController {
                 return locationsData.getLocations().get(locationID);
             }
             return null;
-        }
+    }
+
+    public void displayLocation() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Insert location documents ID:");
+        int locationDocumentsID = scanner.nextInt();
+        scanner.nextLine();
+        if (this.getLocation(locationDocumentsID) == null)
+            System.out.println("Location Document does not exist.\n");
+        else
+            System.out.println(this.getLocation(locationDocumentsID) + "\n");
+    }
 
     public void getAllSourceShippingArea() {
         Set <Integer> ssa = new HashSet();
@@ -51,51 +60,75 @@ public class LocationController {
         System.out.println(ssa);
     }
 
-    public void getAllDestinationShippingArea() {
-        Set <Integer> dsa = new HashSet();
-        for (ALocation location : locationsData.getLocations().values()) {
-            if (location.getL_type().equals("Supplier")) {
-                dsa.add(location.getShippingArea());
+    public void createLocation() {
+        Scanner scanner = new Scanner(System.in);
+        int locationChoice;
+        System.out.println("1. Add Supplier");
+        System.out.println("2. Add Store");
+        System.out.print("Enter your choice:\n");
+        locationChoice = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        if (locationChoice == 1 || locationChoice == 2) {
+            System.out.print("Enter Location ID:\n");
+            int locationID = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            if (this.getLocation(locationID) != null) {
+                System.out.print("The location already exists in the system\n");
+            } else {
+                System.out.print("Enter Address details:\n");
+                String full_address = scanner.nextLine();
+
+                System.out.print("Enter address_code:\n");
+                int address_code = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+
+                System.out.print("Enter Shipping area:\n");
+                int shipping_area = scanner.nextInt();
+
+
+                Address address = new Address(full_address, address_code, shipping_area);
+
+                System.out.print("Enter contact:\n");
+                String contact = scanner.nextLine();
+                scanner.nextLine();
+
+                System.out.print("Enter phone:\n");
+                String phone = scanner.nextLine();
+
+                String l_type = (locationChoice == 1) ? "Supplier" : "Store";
+                this.addLocation(locationID, address, contact, phone, l_type);
+                System.out.println(l_type + " added successfully.");
             }
-        }
-        System.out.println(dsa);
-    }
-
-
-    public void updateContact(int locationID, String contact) {
-        if (!locationsData.getLocations().containsKey(locationID)) {
-            System.out.println("location does not exist");
-        }
-        else {
-            ALocation location = locationsData.getLocations().get(locationID);
-            location.setContact(contact);
+        } else {
+            System.out.println("Invalid choice for the given location type.\n");
         }
     }
 
-    public void updatePhone(int locationID, String phone) {
-        if (!locationsData.getLocations().containsKey(locationID)) {
-            System.out.println("location does not exist");
-        }
-        else   {
-            ALocation location = locationsData.getLocations().get(locationID);
-            location.setPhone(phone);
-        }
+    public void updateShipping_area(int locationID) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Insert number of shipping area:");
+        int shippingArea = scanner.nextInt();
+        ALocation location = locationsData.getLocations().get(locationID);
+        location.getAddress().setShipping_area(shippingArea);
+        System.out.println("Shipping area set successfully: " + location+"\n");
     }
 
-    /**
-     * Division into shipping areas
-     * @param locationID
-     * @param shipping_area
-     */
-    public void setShipping_area(int locationID, int shipping_area) {
-        if (!locationsData.getLocations().containsKey(locationID)) {
-            System.out.println("location does not exist");
-        }
-        else {
-            ALocation location = locationsData.getLocations().get(locationID);
-            location.getAddress().setShipping_area(shipping_area);
-            System.out.println("Shipping area set successfully: " + location);
-        }
+    public void updateContact(int locationID) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Insert new contact:");
+        String contact = scanner.next();
+        ALocation location = locationsData.getLocations().get(locationID);
+        location.setContact(contact);
+        System.out.println("Contact updated successfully.\n");
     }
 
+    public void updatePhone(int locationID) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Insert new phone number:");
+        String phoneNumber = scanner.next();
+        ALocation location = locationsData.getLocations().get(locationID);
+        location.setPhone(phoneNumber);
+        System.out.println("Phone number updated successfully.\n");
+    }
 }
