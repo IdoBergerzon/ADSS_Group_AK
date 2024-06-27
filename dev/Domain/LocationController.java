@@ -17,14 +17,6 @@ public class LocationController {
         return locationsData;
     }
 
-    public void addLocation(ALocation location) {
-        if (locationsData.getLocations().containsKey(location)){
-            System.out.println("Location already exists");
-        }
-        else
-            locationsData.addLocation(location);
-    }
-
     public void addLocation(int locationID, Address address, String contact, String phone, String l_type) {
         if (!locationsData.getLocations().containsKey(locationID)) {
             if (l_type == "Supplier"){
