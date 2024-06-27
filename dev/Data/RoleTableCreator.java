@@ -1,3 +1,4 @@
+/*
 package Data;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -32,9 +33,7 @@ public class RoleTableCreator {
             e.printStackTrace();
         }
     }
+*/
 
-    public static void main(String[] args) {
-        // Call the method to create the roles table
-        createRolesTable();
-    }
-}
+
+//}
