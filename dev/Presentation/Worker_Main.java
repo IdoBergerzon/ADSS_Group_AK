@@ -6,15 +6,17 @@ import java.util.Scanner;
 
 public class Worker_Main {
     private Worker_Controller controller;
+    private int worker_id;
 
-    public Worker_Main() {
-        this.controller = new Worker_Controller();
+    public Worker_Main(int id) {
+        this.controller = new Worker_Controller(id);
+        this.worker_id=id;
     }
-    public void displayMyDetails(int worker_id){
-        controller.displayMyDetails(worker_id);
+    public void displayMyDetails(){
+        controller.displayMyDetails();
     }
 
-    public void addRequest(int id){
+    public void addRequest(){
         Boolean flag=true;
         String morningRequest="";
         String eveningRequest="";
@@ -53,20 +55,20 @@ public class Worker_Main {
             }
         }
         try {
-            controller.addRequest(id, request);
+            controller.addRequest(request);
             System.out.println("Great you submitted a new request");
         }catch (Exception e){
             System.out.println("request for this week already exist");
         }
     }
-    public void EditRequest(int id){
+    public void EditRequest(){
         try {
-            controller.getrequestById(id);
+            controller.getrequestById();
         }catch (Exception e){
             System.out.println("request for this week does not exist, please add new request");
             return;
         }
-        System.out.println("this is the prior request: \n"+controller.getrequestById(id));
+        System.out.println("this is the prior request: \n"+controller.getrequestById());
         String morningRequest="";
         String eveningRequest="";
         Boolean flag=true;
@@ -106,27 +108,27 @@ public class Worker_Main {
         }
 
         try {
-            controller.EditRequest(id,request);
+            controller.EditRequest(request);
         }catch (Exception e){
             System.out.println("request does not exist");
         }
     }
-    public void ShowPastShifts(int worker_id){
-        System.out.println(controller.ShowPastShifts(worker_id));
+    public void ShowPastShifts(){
+        System.out.println(controller.ShowPastShifts());
     }
 
-    public void ShowCurrRoster(int worker_id){
+    public void ShowCurrRoster(){
         Scanner sc = new Scanner(System.in);
         System.out.println("Please enter your choice: \n" +
                 "1.Show current week Roster\n" +
                 "2.Show past Roster\n");
         int choice = sc.nextInt();
         if(choice == 1){
-            System.out.println(controller.ShowCurrRoster(worker_id));
+            System.out.println(controller.ShowCurrRoster());
         } else if(choice == 2){
             System.out.println("Please enter week for past Roster: \n");
             try {
-                controller.ShowPastRoster(worker_id, sc.nextInt());
+                controller.ShowPastRoster(sc.nextInt());
             } catch (Exception e){
                 System.out.println(e.getMessage());
             }
@@ -134,12 +136,12 @@ public class Worker_Main {
 
     }
 
-    public void RetireMassage(int worker_id){
+    public void RetireMassage(){
         Scanner sc = new Scanner(System.in);
         System.out.println("We are sorry to see you leave, are you sure you want to resign? (y/n)");
         String answer = sc.nextLine();
         if(answer.equals("y")){
-            controller.RetireMassage(worker_id);
+            controller.RetireMassage();
             System.out.println("Bye Bye!!");
         } else{
             System.out.println("You choose to stay, Awesome!!!");

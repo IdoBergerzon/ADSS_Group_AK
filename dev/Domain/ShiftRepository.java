@@ -6,26 +6,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InMemoryShiftRepository implements Shift_Respository{
+public class ShiftRepository implements IShiftRespository {
     private final Map<Pair, Roster> rosters;
 
 
 
-    private InMemoryShiftRepository() {
+    private ShiftRepository() {
         rosters = new HashMap<>();
 
     }
 
     private static class InShiftHolder {
-        private final static InMemoryShiftRepository INSTANCE = new InMemoryShiftRepository();
+        private final static ShiftRepository INSTANCE = new ShiftRepository();
     }
 
     /**
      * public static method that returns the single instance of the class
      */
 
-    public static InMemoryShiftRepository getInstance() {
-        return InMemoryShiftRepository.InShiftHolder.INSTANCE;
+    public static ShiftRepository getInstance() {
+        return ShiftRepository.InShiftHolder.INSTANCE;
     }
 
     public Roster getRoster(int branch_id, int week) {

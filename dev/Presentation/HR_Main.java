@@ -78,7 +78,7 @@ public class HR_Main {
             System.out.println("Enter new role name:");
             String role_name = sc.next();
             try{
-                hr_controller.cteateNewRole(role_id, role_name);
+                hr_controller.createNewRole(role_id, role_name);
                 System.out.println("New role created\n");
                 break;
             } catch (Exception e){
@@ -91,6 +91,7 @@ public class HR_Main {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Insert ID");
         int id_to_update=scanner.nextInt();
+
         System.out.println(hr_controller.Edit_Worker_Details(id_to_update));
     }
 
@@ -103,7 +104,7 @@ public class HR_Main {
         hr_controller.displayWorkersByShift(day,shift_type);
     }
 
-    public void createNewShift(int branch_id, int day, int shift_type) throws Exception {
+    private void createNewShift(int branch_id, int day, int shift_type) throws Exception {
         Scanner sc = new Scanner(System.in);
 
         String str_shift_type = (shift_type == 0) ? "morning" : "evening";

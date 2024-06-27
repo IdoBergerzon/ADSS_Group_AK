@@ -3,18 +3,15 @@ package Domain;
 import java.util.*;
 
 
-public class InMemoryWorkerRepository implements Worker_Repository {
+public class WorkerRepository implements IWorkerRepository {
     private final Map<Integer, Worker> workers;
     private final Map<Integer, Worker> noActiveWorkers;
-    private final Map<Integer, Role> roles;
-    private final Map<Integer, Branch> branches;
 
 
-    private InMemoryWorkerRepository() {
+
+    private WorkerRepository() {
         this.workers = new HashMap<>();
         this.noActiveWorkers = new HashMap<>();
-        this.roles = new HashMap<>();
-        this.branches = new HashMap<>();
     }
 
     /**
@@ -22,14 +19,14 @@ public class InMemoryWorkerRepository implements Worker_Repository {
      * or the first access to SingletonHolder.INSTANCE, not before.
      */
     private static class InMemoryHolder {
-        private final static InMemoryWorkerRepository INSTANCE = new InMemoryWorkerRepository();
+        private final static WorkerRepository INSTANCE = new WorkerRepository();
     }
 
     /**
      * public static method that returns the single instance of the class
      */
 
-    public static InMemoryWorkerRepository getInstance() {
+    public static WorkerRepository getInstance() {
         return InMemoryHolder.INSTANCE;
     }
 
@@ -74,48 +71,5 @@ public class InMemoryWorkerRepository implements Worker_Repository {
         } else{
             throw new IllegalArgumentException("Worker with id " + id + " does not exist, can't delete it");
         }
-    }
-
-    @Override
-    public void addRole(Role role) {
-        if (role == null) {
-            throw new IllegalArgumentException("Role cannot be null");
-        }
-        if(roles.containsKey(role.getRoleID())){
-            throw new IllegalArgumentException("Role with id " + role.getRoleID() + " already exists");
-        }
-        roles.put(role.getRoleID(), role);
-    }
-
-    @Override
-    public Role getRoleByID(int id) {
-        return roles.get(id);
-    }
-
-    @Override
-    public List<Role> getAllRoles() {
-        return new ArrayList<>(roles.values());
-    }
-
-    @Override
-    public void addBranch(Branch branch) {
-        if (branch == null) {
-            throw new IllegalArgumentException("Role cannot be null");
-        }
-        if(roles.containsKey(branch.getBranchID())){
-            throw new IllegalArgumentException("Role with id " + branch.getBranchID() + " already exists");
-        }
-        branches.put(branch.getBranchID(), branch);
-    }
-
-    @Override
-    public Branch getBranchByID(int id) {
-        return branches.get(id);
-    }
-
-
-    @Override
-    public List<Branch> getAllBranches() {
-        return new ArrayList<>(branches.values());
     }
 }

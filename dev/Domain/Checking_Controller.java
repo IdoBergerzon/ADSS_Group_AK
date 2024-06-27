@@ -5,23 +5,27 @@ import java.util.List;
 
 
 public class Checking_Controller {
-    private Worker_Repository WR;
-    private InMemoryShiftRepository SR;
+    private IWorkerRepository WR;
+    private ShiftRepository SR;
+    private RoleRepository RR;
+    private BranchRepository BR;
 
     /**
      * This function is Our initialize for the System
      */
     public Checking_Controller() {
-        this.WR = InMemoryWorkerRepository.getInstance();
-        this.SR = InMemoryShiftRepository.getInstance();
+        this.WR = WorkerRepository.getInstance();
+        this.SR = ShiftRepository.getInstance();
+        this.RR=RoleRepository.getInstance();
+        this.BR=BranchRepository.getInstance();
         Role hr = new Role(1, "hr");
         Branch br1 = new Branch(1, "branch1", "BeerSheva");
         Date dt1 = new Date(2024,1,1);
         Worker ido = new Worker(1,"Ido", 5000,0, dt1, null, hr, br1, "hr","Leumi:5555555");
 
         WR.addWorker(ido);
-        WR.addBranch(br1);
-        WR.addRole(hr);
+        BR.addBranch(br1);
+        RR.addRole(hr);
 
     }
 
@@ -36,7 +40,7 @@ public class Checking_Controller {
         Branch br2 = new Branch(2, "branch2", "Ashdod");
 
         Date dt2 = new Date(2024,2,1);
-        Branch br1=WR.getBranchByID(1);
+        Branch br1=BR.getBranchByID(1);
         Worker aviv = new Worker(2,"Aviv", 0,50, dt2, 1, shift_manager, br1, "managment","Hapoalim:1234567");
         Worker hezi = new Worker(3,"hezi", 0,50, dt2, 1, shift_manager, br2, "managment","Leumi:6392772");
         Worker lior = new Worker(4,"lior", 0,50, dt2, 3, storekeeper, br2, "managment","Beinleumi:1455659");
@@ -57,12 +61,12 @@ public class Checking_Controller {
         WR.addWorker(tamir);
         WR.addWorker(daniel);
 
-        WR.addBranch(br2);
+        BR.addBranch(br2);
 
-        WR.addRole(shift_manager);
-        WR.addRole(storekeeper);
-        WR.addRole(delivery);
-        WR.addRole(Cashier);
+        RR.addRole(shift_manager);
+        RR.addRole(storekeeper);
+        RR.addRole(delivery);
+        RR.addRole(Cashier);
 
         Shift[][] shifts1 = new Shift[7][2];
         Shift[][] shifts2 = new Shift[7][2];

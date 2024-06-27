@@ -3,29 +3,33 @@ package Domain;
 import java.util.List;
 
 public class Worker_Controller {
-    private final InMemoryWorkerRepository workers_memory=InMemoryWorkerRepository.getInstance();
-    private final InMemoryRequestRepository requests_repository=InMemoryRequestRepository.getInstance();
-    private final InMemoryShiftRepository shifts_repository=InMemoryShiftRepository.getInstance();
+    private int worker_id;
+    private final WorkerRepository workers_memory= WorkerRepository.getInstance();
+    private final RequestRepository requests_repository= RequestRepository.getInstance();
+    private final ShiftRepository shifts_repository= ShiftRepository.getInstance();
 
-    public void displayMyDetails(int id){
-        Worker result=workers_memory.getWorkerById(id);
+    public Worker_Controller(int worker_id) {
+        this.worker_id = worker_id;
+    }
+    public void displayMyDetails(){
+        Worker result=workers_memory.getWorkerById(worker_id);
         System.out.println(result);
     }
 
-    public void addRequest(int id, Boolean[][] requestArray)throws Exception{
-        Request newRequest = new Request(workers_memory.getWorkerById(id),requestArray); //לשנות את השבוע ולבנות בדיקות אם קיים כבר בקשה או אם המערך לא נכון או משהו
+    public void addRequest( Boolean[][] requestArray)throws Exception{
+        Request newRequest = new Request(workers_memory.getWorkerById(worker_id),requestArray); //לשנות את השבוע ולבנות בדיקות אם קיים כבר בקשה או אם המערך לא נכון או משהו
         try {
             requests_repository.addRequest(newRequest);
         } catch (Exception e) {
             throw new Exception("Request already exists");
         }
     }
-    public void EditRequest(int id, Boolean[][] requestArray) {
-        requests_repository.getRequestByWorker(id).setRequest(requestArray);
+    public void EditRequest(Boolean[][] requestArray) {
+        requests_repository.getRequestByWorker(worker_id).setRequest(requestArray);
     }
 
 
-    public String ShowCurrRoster(int worker_id){
+    public String ShowCurrRoster(){
         Worker worker=workers_memory.getWorkerById(worker_id);
         Roster roster= shifts_repository.getRoster(worker.getWork_branch().getBranchID(),Week.getWeek());
         if(roster==null){
@@ -34,7 +38,7 @@ public class Worker_Controller {
         return roster.toString();
     }
 
-    public String ShowPastRoster(int worker_id, int week) throws Exception {
+    public String ShowPastRoster(int week) throws Exception {
         Worker worker=workers_memory.getWorkerById(worker_id);
         Roster roster= shifts_repository.getRoster(worker.getWork_branch().getBranchID(),week);
         if(roster==null) {
@@ -43,18 +47,18 @@ public class Worker_Controller {
         return roster.toString();
     }
 
-    public void RetireMassage(int worker_id){
+    public void RetireMassage(){
         workers_memory.deleteWorker(worker_id);
     }
 
-    public String ShowPastShifts(int worker_id){
+    public String ShowPastShifts(){
         List<Roster> roters_list=shifts_repository.getAllRosters();
         String toreturn="";
         for(int i=0;i<roters_list.size();i++) {
             for (int j = 0; j < 7; j++) {
                 for (int k = 0; k < 2; k++) {
 
-                    if(ifworkinshift(worker_id,roters_list.get(i).getShift_arrangment()[j][k].getShift_workers())){
+                    if(ifworkinshift(roters_list.get(i).getShift_arrangment()[j][k].getShift_workers())){
                         toreturn+= roters_list.get(i).getShift_arrangment()[j][k].toString();
                     }
                 }
@@ -65,19 +69,19 @@ public class Worker_Controller {
         }
         return toreturn;
     }
-    public Boolean ifworkinshift(int workerID,Worker[] worker_list ){
+    public Boolean ifworkinshift(Worker[] worker_list ){
         for(int i=0;i<worker_list.length;i++){
-            if(worker_list[i].getId()==workerID){
+            if(worker_list[i].getId()==worker_id){
                 return true;
             }
         }
         return false;
     }
-    public String getrequestById(int id){
-        if(requests_repository.getRequestByWorker(id).getRequest()==null){
+    public String getrequestById(){
+        if(requests_repository.getRequestByWorker(worker_id).getRequest()==null){
             return null;
         }
 
-        return requests_repository.getRequestByWorker(id).toString();
+        return requests_repository.getRequestByWorker(worker_id).toString();
     }
 }

@@ -4,24 +4,24 @@ package Domain;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryRequestRepository implements Request_Repository{
+public class RequestRepository implements IRequestRepository {
     private final Map<Pair, Request> curr_requests;
     private final Map<Integer, Request[]> past_requests;///need to change here
 
-    private InMemoryRequestRepository() {
+    private RequestRepository() {
         curr_requests = new HashMap<>();
         past_requests = new HashMap<>();
     }
     private static class InRequestHolder {
-        private final static InMemoryRequestRepository INSTANCE = new InMemoryRequestRepository();
+        private final static RequestRepository INSTANCE = new RequestRepository();
     }
 
     /**
      * public static method that returns the single instance of the class
      */
 
-    public static InMemoryRequestRepository getInstance() {
-        return InMemoryRequestRepository.InRequestHolder.INSTANCE;
+    public static RequestRepository getInstance() {
+        return RequestRepository.InRequestHolder.INSTANCE;
     }
 
     public void addRequest(Request request) throws Exception {

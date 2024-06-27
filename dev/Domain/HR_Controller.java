@@ -6,9 +6,11 @@ import java.util.Scanner;
 
 public class HR_Controller {
 
-    private final InMemoryWorkerRepository workers_memory=InMemoryWorkerRepository.getInstance();
-    private final InMemoryRequestRepository requests_repository=InMemoryRequestRepository.getInstance();
-    private final InMemoryShiftRepository shifts_repository=InMemoryShiftRepository.getInstance();
+    private final WorkerRepository workers_memory= WorkerRepository.getInstance();
+    private final RequestRepository requests_repository= RequestRepository.getInstance();
+    private final ShiftRepository shifts_repository= ShiftRepository.getInstance();
+    private final RoleRepository roles_repository= RoleRepository.getInstance();
+    private final BranchRepository branchs_repository= BranchRepository.getInstance();
 
     public HR_Controller(){
         new Week();
@@ -33,11 +35,17 @@ public class HR_Controller {
         //check if the role is exist
 
         Role role;
-        if (workers_memory.getRoleByID(role_ID) == null) {
+        if (roles_repository.getRoleByID(role_ID) == null) {
             System.out.println("role doesn't exist\n");
+            List<Role> list=roles_repository.getAllRoles();
+            System.out.println("The possible roles are: ");
+            for (Role role1 : list) {
+                System.out.print(role1+"\n");
+            }
+            System.out.println("\n");
             return -1;
         } else {
-            role = workers_memory.getRoleByID(role_ID);
+            role = roles_repository.getRoleByID(role_ID);
         }
         ;
 
@@ -45,11 +53,11 @@ public class HR_Controller {
 
         int branch_ID = Integer.parseInt(string_details[5]);
         Branch new_branch;
-        if (workers_memory.getBranchByID(branch_ID) == null) {
+        if (branchs_repository.getBranchByID(branch_ID) == null) {
             System.out.println("branch doesn't exist\n");
             return -1;
         } else {
-            new_branch = workers_memory.getBranchByID(branch_ID);
+            new_branch = branchs_repository.getBranchByID(branch_ID);
 
         }
         String department = string_details[6];
@@ -108,9 +116,6 @@ public class HR_Controller {
                     to_update.setName(new_name);
                     return "update name success \n";
 
-
-
-
             case 2:
                 int new_monthly_wage = 0;
                 while(true) {
@@ -163,16 +168,16 @@ public class HR_Controller {
     public void addNewRoleForWorker(int workerID, int roleID){
         if (workers_memory.getWorkerById(workerID) == null) {
             throw new IllegalArgumentException("Worker with ID " + workerID + " does not exist");
-        } if (workers_memory.getRoleByID(roleID) == null) {
+        } if (roles_repository.getRoleByID(roleID) == null) {
             throw new IllegalArgumentException("Role with ID " + roleID + " does not exist");
         }
 
-        workers_memory.getWorkerById(workerID).addNewRole(workers_memory.getRoleByID(roleID));
+        workers_memory.getWorkerById(workerID).addNewRole(roles_repository.getRoleByID(roleID));
     }
 
-    public void cteateNewRole(int roleId, String roleName){
+    public void createNewRole(int roleId, String roleName){
         Role newRole= new Role(roleId,roleName);
-        workers_memory.addRole(newRole);
+        roles_repository.addRole(newRole);
 
     }
     public void displayWorkersByShift(int day,int shift_type){
@@ -193,14 +198,14 @@ public class HR_Controller {
         System.out.println(result_workers);
     }
 
-    public String getAllRoles(){
+/*    public String getAllRoles(){
         List<Role> roles= workers_memory.getAllRoles();
         String roles_str=roles.get(0).getName();
         for(int i=0;i<roles.size();i++){
             roles_str+="," + roles.get(i).getName();
         }
         return roles_str;
-    }
+    }*/
     public void createNewShift(int branch_id,int day,int shift_type,int[] shiftWorkers,List<Integer> roles_for_shift) throws Exception {
         /// Declaration part
         Worker new_worker;
@@ -209,7 +214,7 @@ public class HR_Controller {
         List<Role> roleList = new ArrayList<>();
 
         for (int i=0;i<shiftWorkers.length;i++){
-            new_role = workers_memory.getRoleByID(roles_for_shift.get(i));
+            new_role = roles_repository.getRoleByID(roles_for_shift.get(i));
 
             new_worker = workers_memory.getWorkerById(shiftWorkers[i]);
             //Test to make sure adding this worker is not against the rules
@@ -242,14 +247,14 @@ public class HR_Controller {
     }
 
     public Boolean isBranch(int branch_id){
-        if(workers_memory.getBranchByID(branch_id) == null) {
+        if(branchs_repository.getBranchByID(branch_id) == null) {
             return false;
         }
         return true;
     }
 
     public void createNewRoster(int branch_id){
-        Branch branch=workers_memory.getBranchByID(branch_id);
+        Branch branch=branchs_repository.getBranchByID(branch_id);
         Roster new_roster =new Roster(branch);
 
         shifts_repository.addRoster(new_roster);

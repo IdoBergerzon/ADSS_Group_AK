@@ -2,7 +2,7 @@ package Domain;
 
 import java.util.List;
 
-public interface Shift_Respository {
+public interface IShiftRespository {
 
     Roster getRoster(int branch_id, int week);
     void addRoster(Roster roster);

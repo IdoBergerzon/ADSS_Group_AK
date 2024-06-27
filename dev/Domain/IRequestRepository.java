@@ -1,6 +1,6 @@
 package Domain;
 
-public interface Request_Repository {
+public interface IRequestRepository {
 
     void addRequest(Request request) throws Exception;
     void editRequest(Request request) throws Exception;

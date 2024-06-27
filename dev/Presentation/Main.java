@@ -127,7 +127,7 @@ public class Main {
 
     public static void worker_menu(int worker_id){
         Scanner scanner = new Scanner(System.in);
-        Worker_Main main2=new Worker_Main();
+        Worker_Main main2=new Worker_Main(worker_id);
         while (true) {
             System.out.println("1.display details\n" +
                     "2.add request\n" +
@@ -141,22 +141,22 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    main2.displayMyDetails(worker_id);//done
+                    main2.displayMyDetails();//done
                     break;
                 case 2:
-                    main2.addRequest(worker_id);//done
+                    main2.addRequest();//done
                     break;
                 case 3:
-                    main2.EditRequest(worker_id);//done
+                    main2.EditRequest();//done
                     break;
                 case 4:
-                    main2.ShowPastShifts(worker_id);//done
+                    main2.ShowPastShifts();//done
                     break;
                 case 5:
-                    main2.ShowCurrRoster(worker_id);//done
+                    main2.ShowCurrRoster();//done
                     break;
                 case 6:
-                    main2.RetireMassage(worker_id);
+                    main2.RetireMassage();
                     return;
                 case 7:
                     return;
