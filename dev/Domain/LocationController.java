@@ -2,6 +2,7 @@ package Domain;
 
 import Data.LocationsData;
 
+import javax.xml.stream.Location;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -14,6 +15,14 @@ public class LocationController {
 
     public LocationsData getLocationsData() {
         return locationsData;
+    }
+
+    public void addLocation(ALocation location) {
+        if (locationsData.getLocations().containsKey(location)){
+            System.out.println("Location already exists");
+        }
+        else
+            locationsData.addLocation(location);
     }
 
     public void addLocation(int locationID, Address address, String contact, String phone, String l_type) {

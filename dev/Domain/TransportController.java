@@ -13,6 +13,10 @@ public class TransportController {
         transportsData = new TransportsData();
     }
 
+    public void addTransport(Transport transport) {
+        transportsData.addTransport(transport);
+    }
+
     public TransportsData getTransportsData() {
         return transportsData;
     }
@@ -33,6 +37,11 @@ public class TransportController {
             System.out.println("Transport does not exist.\n");
         } else
             System.out.println(this.getTransport(transportID));
+    }
+
+    public boolean calcWeight(Transport transport) {
+        double tWeight = transport.calc_transportWeight();
+        return tWeight <= transport.getDriver().getLicenseMaxWeight() && tWeight <= transport.getTruck().getMaxWeight() + transport.getTruck().getTruckWeight();
     }
 
     public void displayAllTransports() {
@@ -248,9 +257,9 @@ public class TransportController {
         }
         //Create transport and add it to TransportData
         Transport newTransport = new Transport(transportID, truck, driver, deliveryDocs, "");
-        this.getTransportsData().addTransport(newTransport);
+        this.addTransport(newTransport);
         //Check if transport is valid
-        if (newTransport.calc_transportWeight() <= driver.getLicenseMaxWeight() && newTransport.calc_transportWeight() <= truck.getMaxWeight() + truck.getTruckWeight()) {
+        if (calcWeight(newTransport)) {
             System.out.println("Proper Transport " + newTransport + "\n");
             return true;
         }
@@ -274,7 +283,7 @@ public class TransportController {
 
                 //Change truck
                 case 1:
-                    boolean a = changeTruck(newTransport,truckController,transportID);
+                    boolean a = changeTruck(newTransport,truckController);
                     if (!a) {
                         reChoice = 0;
                     }
@@ -308,7 +317,7 @@ public class TransportController {
         return true;
     }
 
-    public boolean changeTruck(Transport newTransport, TruckController truckController, int transportID){
+    public boolean changeTruck(Transport newTransport, TruckController truckController){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Possible Trucks:\n");
         int count = 0;
@@ -323,7 +332,7 @@ public class TransportController {
             int newTruckID = scanner.nextInt();
             scanner.nextLine();
             if (newTruckID == 0) {
-                this.getTransportsData().removeTransportById(transportID);
+                this.getTransportsData().removeTransportById(newTransport.getTransportID());
                 return false;
             }
             if (truckController.getTruck(newTruckID) == null) {
@@ -332,7 +341,7 @@ public class TransportController {
                 Truck newTruck = truckController.getTruck(newTruckID);
                 if (newTransport.setTruck(newTruck)) {
                     System.out.println("Transport OK, truck was changed successfully.\n");
-                    return false;
+                    return true;
                 }
             }
         } else
