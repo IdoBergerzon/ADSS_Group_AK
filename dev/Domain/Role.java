@@ -11,6 +11,10 @@ public class Role {
         this.name = name;
     }
 
+    public Role(){
+
+    }
+
     public void setName(String name) {
         this.name = name;
     }

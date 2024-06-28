@@ -11,77 +11,97 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoleDAOImpl implements IDao<Role,Integer> {
-    //private static final String URL = "jdbc:sqlite:C:\\Users\\97252\\Desktop\\סמסטר ד\\נושאים מתקדמים בתכנות\\ADSS_Group_AK\\mydatabase.db"; // Path to the SQLite database file
+public class RoleDAOImpl implements IDao<JsonNode,Integer> {
+    private ObjectMapper objectMapper = new ObjectMapper();
 
-    public List<Role> getAllRoles() {
-        List<Role> roles = new ArrayList<>();
+    public List<JsonNode> getAllRoles() {
+        List<JsonNode> rolesList = new ArrayList<>();
         String sql = "SELECT Role_ID, name FROM roles";
         try (Connection connection = Database.connect();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
-            while (resultSet.next()) {
-                roles.add(new Role(resultSet.getInt("Role_ID"), resultSet.getString("name")));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return roles;
-    }
-
-    public void updateRole(Role role) {
-        String sql = "UPDATE roles SET name = ? WHERE Role_ID = ?";
-        try (Connection connection = Database.connect();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, role.getName());
-            statement.setInt(2, role.getRoleID());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
-
-    @Override
-    public Role search(Integer unique) {
-        String sql = "SELECT Role_ID, name FROM roles WHERE Role_ID = ?";
-        try (Connection connection = Database.connect();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, unique);
             try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    return new Role(resultSet.getInt("Role_ID"), resultSet.getString("name"));
+                while (resultSet.next()) {
+                    int roleId = resultSet.getInt("Role_ID");
+                    String roleName = resultSet.getString("name");
+
+                    // Construct JsonNode for each role
+                    JsonNode jsonNode = objectMapper.createObjectNode()
+                            .put("roleID", roleId)
+                            .put("name", roleName);
+
+                    rolesList.add(jsonNode);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return rolesList;
+    }
+
+    public void updateRole(JsonNode role) {
+        try {
+            int roleId = role.get("roleID").asInt();
+            String roleName = role.get("name").asText();
+
+            String sql = "UPDATE roles SET name = ? WHERE Role_ID = ?";
+            try (Connection connection = Database.connect();
+                 PreparedStatement statement = connection.prepareStatement(sql)) {
+
+                statement.setString(1, roleName);
+                statement.setInt(2, roleId);
+                int rowsUpdated = statement.executeUpdate();
+
+                if (rowsUpdated > 0) {
+                    System.out.println("Updated Role with ID: " + roleId);
+                } else {
+                    throw new IllegalArgumentException("Role with ID " + roleId + " does not exist, update failed.");
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (NullPointerException e) {
+            throw new IllegalArgumentException("Invalid JSON structure", e);
+        }
+    }
+
+    @Override
+    public JsonNode search(Integer roleId) {
+        String sql = "SELECT Role_ID, name FROM roles WHERE Role_ID = ?";
+        try (Connection connection = Database.connect();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setInt(1, roleId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    int foundRoleId = resultSet.getInt("Role_ID");
+                    String foundRoleName = resultSet.getString("name");
+
+                    // Construct JsonNode
+                    JsonNode jsonNode = objectMapper.createObjectNode()
+                            .put("roleID", foundRoleId)
+                            .put("name", foundRoleName);
+
+                    return jsonNode;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Return null if no data found
         return null;
     }
 
     @Override
-    public void insert(Role role) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonString = null;
+    public void insert(JsonNode role) {
         try {
-            jsonString = objectMapper.writeValueAsString(role);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println(jsonString);
-        // Deserialize JSON string into JsonNode
-        try {
-            // Deserialize JSON string into JsonNode
-            JsonNode jsonNode = objectMapper.readTree(jsonString);
+            int roleId = role.get("roleID").asInt();
+            String roleName = role.get("name").asText();
 
-            // Extract values from JsonNode
-            int roleId = jsonNode.get("roleID").asInt();
-            String roleName = jsonNode.get("name").asText();
-
-            // SQL statement to insert into roles table
             String sql = "INSERT INTO roles (Role_ID, name) VALUES (?, ?)";
-
-            // Attempt to insert into database
             try (Connection connection = Database.connect();
                  PreparedStatement statement = connection.prepareStatement(sql)) {
 
@@ -94,11 +114,8 @@ public class RoleDAOImpl implements IDao<Role,Integer> {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException("Error parsing JSON", e);
+        } catch (NullPointerException e) {
+            throw new IllegalArgumentException("Invalid JSON structure", e);
         }
     }
 
@@ -123,10 +140,14 @@ public class RoleDAOImpl implements IDao<Role,Integer> {
         RoleDAOImpl roleDAO = new RoleDAOImpl();
 
         // Create a new role
-        Role newRole = new Role(14, "moshe");
+        Role newRole = new Role(17, "aviv");
         // Add the new role to the database
         //System.out.println(roleDAO.search(14));
-        roleDAO.insert(newRole);
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        // Convert Role object to JsonNode
+        JsonNode jsonNode = objectMapper.valueToTree(newRole);
+        roleDAO.insert(jsonNode);
 
         // Retrieve and print the role from the database
         //System.out.println(roleDAO.getAllRoles());
