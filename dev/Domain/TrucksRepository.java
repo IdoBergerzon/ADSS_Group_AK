@@ -43,7 +43,9 @@ public class TrucksRepository implements IRepository {
     @Override
     public void update(Object o) {
         if (o instanceof Truck) {
+            Truck truck = (Truck) o;
             if (trucks.containsKey(((Truck) o).getTruckID())) {
+                trucks.remove(truck.getTruckID());
                 trucks.put(((Truck) o).getTruckID(), (Truck) o);
             }
         }

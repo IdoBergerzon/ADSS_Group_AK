@@ -2,7 +2,7 @@ package Domain;
 
 import java.util.HashMap;
 
-public class ItemsRepository {
+public class ItemsRepository implements IRepository{
     private HashMap<Integer, Item> items;
 
     public ItemsRepository() { this.items = new HashMap<>(); }
@@ -10,9 +10,6 @@ public class ItemsRepository {
     public void setItems(HashMap<Integer, Item> items) { this.items = items; }
     public void addItem(Item item) {
         items.put(item.getItemID(),item);
-    }
-    public void removeItem(Item item) {
-        items.remove(item.getItemID());
     }
     public Item getItem(int itemID) {
         return items.get(itemID);
@@ -26,5 +23,40 @@ public class ItemsRepository {
             itemsStr.append(item + "\n");
         }
         return itemsStr.toString();
+    }
+
+    @Override
+    public void add(Object o) {
+        if (o instanceof Item) {
+            Item item = (Item) o;
+            items.put(item.getItemID(),item);
+        }
+    }
+
+    @Override
+    public void remove(Object o) {
+        if (o instanceof Item) {
+            Item item = (Item) o;
+            items.remove(item.getItemID());
+        }
+    }
+
+    @Override
+    public void update(Object o) {
+        if (o instanceof Item) {
+            Item item = (Item) o;
+            if(items.containsKey(item.getItemID())) {
+                items.remove(item.getItemID());
+                items.put(item.getItemID(),item);
+            }
+        }
+    }
+
+    @Override
+    public Object get(int id) {
+        if(items.containsKey(id)) {
+            return items.get(id);
+        }
+        return null;
     }
 }
