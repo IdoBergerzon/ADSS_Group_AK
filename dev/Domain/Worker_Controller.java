@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Worker_Controller {
     private int worker_id;
-    private final WorkerRepository workers_memory= WorkerRepository.getInstance();
+    private final Repository workers_memory= Repository.getInstance();
     private final RequestRepository requests_repository= RequestRepository.getInstance();
     private final ShiftRepository shifts_repository= ShiftRepository.getInstance();
 

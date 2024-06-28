@@ -3,13 +3,13 @@ package Domain;
 import java.util.*;
 
 
-public class WorkerRepository implements IWorkerRepository {
+public class Repository implements IRepository {
     private final Map<Integer, Worker> workers;
     private final Map<Integer, Worker> noActiveWorkers;
 
 
 
-    private WorkerRepository() {
+    private Repository() {
         this.workers = new HashMap<>();
         this.noActiveWorkers = new HashMap<>();
     }
@@ -19,14 +19,14 @@ public class WorkerRepository implements IWorkerRepository {
      * or the first access to SingletonHolder.INSTANCE, not before.
      */
     private static class InMemoryHolder {
-        private final static WorkerRepository INSTANCE = new WorkerRepository();
+        private final static Repository INSTANCE = new Repository();
     }
 
     /**
      * public static method that returns the single instance of the class
      */
 
-    public static WorkerRepository getInstance() {
+    public static Repository getInstance() {
         return InMemoryHolder.INSTANCE;
     }
 

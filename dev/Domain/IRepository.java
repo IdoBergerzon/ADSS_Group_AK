@@ -3,7 +3,7 @@ package Domain;
 import java.util.List;
 
 
-public interface IWorkerRepository {
+public interface IRepository {
 
     void addWorker(Worker worker);
     Worker getWorkerById(int id);

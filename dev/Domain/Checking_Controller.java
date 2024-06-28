@@ -5,7 +5,7 @@ import java.util.List;
 
 
 public class Checking_Controller {
-    private IWorkerRepository WR;
+    private IRepository WR;
     private ShiftRepository SR;
     private RoleRepository RR;
     private BranchRepository BR;
@@ -14,7 +14,7 @@ public class Checking_Controller {
      * This function is Our initialize for the System
      */
     public Checking_Controller() {
-        this.WR = WorkerRepository.getInstance();
+        this.WR = Repository.getInstance();
         this.SR = ShiftRepository.getInstance();
         this.RR=RoleRepository.getInstance();
         this.BR=BranchRepository.getInstance();

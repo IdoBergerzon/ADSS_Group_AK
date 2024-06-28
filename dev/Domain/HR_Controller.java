@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class HR_Controller {
 
-    private final WorkerRepository workers_memory= WorkerRepository.getInstance();
+    private final Repository workers_memory= Repository.getInstance();
     private final RequestRepository requests_repository= RequestRepository.getInstance();
     private final ShiftRepository shifts_repository= ShiftRepository.getInstance();
     private final RoleRepository roles_repository= RoleRepository.getInstance();
