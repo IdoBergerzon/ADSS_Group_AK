@@ -445,111 +445,111 @@ public class Main_Menu {
 
     public static Delivery_DocumentsController createDeliveryDocsData(Delivery_DocumentsController deliveryController, LocationController locationController) {
         HashMap<Item, Integer> itemIntegerHashMap1 = new HashMap<>();
-        itemIntegerHashMap1.put(deliveryController.getItemsData().get(1), 10);
-        itemIntegerHashMap1.put(deliveryController.getItemsData().get(2), 20);
-        itemIntegerHashMap1.put(deliveryController.getItemsData().get(3), 30);
+        itemIntegerHashMap1.put((Item) deliveryController.getItemsData().get(1), 10);
+        itemIntegerHashMap1.put((Item) deliveryController.getItemsData().get(2), 20);
+        itemIntegerHashMap1.put((Item) deliveryController.getItemsData().get(3), 30);
         Delivery_Document document1 = new Delivery_Document((Store) locationController.getLocation(2), 1, (Supplier) locationController.getLocation(1), itemIntegerHashMap1);
         deliveryController.getDocumentsData().add(document1);
 
         HashMap<Item, Integer> itemIntegerHashMap2 = new HashMap<>();
-        itemIntegerHashMap2.put(deliveryController.getItemsData().get(28), 10);
-        itemIntegerHashMap2.put(deliveryController.getItemsData().get(5), 25);
-        itemIntegerHashMap2.put(deliveryController.getItemsData().get(15), 15);
+        itemIntegerHashMap2.put((Item) deliveryController.getItemsData().get(28), 10);
+        itemIntegerHashMap2.put((Item) deliveryController.getItemsData().get(5), 25);
+        itemIntegerHashMap2.put((Item) deliveryController.getItemsData().get(15), 15);
         Delivery_Document document2 = new Delivery_Document((Store) locationController.getLocation(4), 2, (Supplier) locationController.getLocation(1), itemIntegerHashMap2);
         deliveryController.getDocumentsData().add(document2);
 
         HashMap<Item, Integer> itemIntegerHashMap3 = new HashMap<>();
-        itemIntegerHashMap3.put(deliveryController.getItemsData().get(20), 50);
-        itemIntegerHashMap3.put(deliveryController.getItemsData().get(17), 25);
-        itemIntegerHashMap3.put(deliveryController.getItemsData().get(12), 10);
+        itemIntegerHashMap3.put((Item) deliveryController.getItemsData().get(20), 50);
+        itemIntegerHashMap3.put((Item) deliveryController.getItemsData().get(17), 25);
+        itemIntegerHashMap3.put((Item) deliveryController.getItemsData().get(12), 10);
         Delivery_Document document3 = new Delivery_Document((Store) locationController.getLocation(2), 3, (Supplier) locationController.getLocation(3), itemIntegerHashMap3);
         deliveryController.getDocumentsData().add(document3);
 
         HashMap<Item, Integer> itemIntegerHashMap4 = new HashMap<>();
-        itemIntegerHashMap4.put(deliveryController.getItemsData().get(23), 20);
-        itemIntegerHashMap4.put(deliveryController.getItemsData().get(7), 5);
-        itemIntegerHashMap4.put(deliveryController.getItemsData().get(2), 10);
-        itemIntegerHashMap4.put(deliveryController.getItemsData().get(10), 16);
+        itemIntegerHashMap4.put((Item) deliveryController.getItemsData().get(23), 20);
+        itemIntegerHashMap4.put((Item) deliveryController.getItemsData().get(7), 5);
+        itemIntegerHashMap4.put((Item) deliveryController.getItemsData().get(2), 10);
+        itemIntegerHashMap4.put((Item) deliveryController.getItemsData().get(10), 16);
         Delivery_Document document4 = new Delivery_Document((Store) locationController.getLocation(4), 4, (Supplier) locationController.getLocation(7), itemIntegerHashMap4);
         deliveryController.getDocumentsData().add(document4);
 
         HashMap<Item, Integer> itemIntegerHashMap5 = new HashMap<>();
-        itemIntegerHashMap5.put(deliveryController.getItemsData().get(17), 10);
-        itemIntegerHashMap5.put(deliveryController.getItemsData().get(18), 50);
-        itemIntegerHashMap5.put(deliveryController.getItemsData().get(19), 20);
-        itemIntegerHashMap5.put(deliveryController.getItemsData().get(20), 35);
+        itemIntegerHashMap5.put((Item) deliveryController.getItemsData().get(17), 10);
+        itemIntegerHashMap5.put((Item) deliveryController.getItemsData().get(18), 50);
+        itemIntegerHashMap5.put((Item) deliveryController.getItemsData().get(19), 20);
+        itemIntegerHashMap5.put((Item) deliveryController.getItemsData().get(20), 35);
         Delivery_Document document5 = new Delivery_Document((Store) locationController.getLocation(2), 5, (Supplier) locationController.getLocation(9), itemIntegerHashMap5);
         deliveryController.getDocumentsData().add(document5);
 
         HashMap<Item, Integer> itemIntegerHashMap6 = new HashMap<>();
-        itemIntegerHashMap6.put(deliveryController.getItemsData().get(21), 15);
-        itemIntegerHashMap6.put(deliveryController.getItemsData().get(22), 25);
-        itemIntegerHashMap6.put(deliveryController.getItemsData().get(23), 35);
-        itemIntegerHashMap6.put(deliveryController.getItemsData().get(24), 45);
+        itemIntegerHashMap6.put((Item) deliveryController.getItemsData().get(21), 15);
+        itemIntegerHashMap6.put((Item) deliveryController.getItemsData().get(22), 25);
+        itemIntegerHashMap6.put((Item) deliveryController.getItemsData().get(23), 35);
+        itemIntegerHashMap6.put((Item) deliveryController.getItemsData().get(24), 45);
         Delivery_Document document6 = new Delivery_Document((Store) locationController.getLocation(6), 6, (Supplier) locationController.getLocation(5), itemIntegerHashMap6);
         deliveryController.getDocumentsData().add(document6);
 
         HashMap<Item, Integer> itemIntegerHashMap7 = new HashMap<>();
-        itemIntegerHashMap7.put(deliveryController.getItemsData().get(25), 50);
-        itemIntegerHashMap7.put(deliveryController.getItemsData().get(26), 40);
-        itemIntegerHashMap7.put(deliveryController.getItemsData().get(27), 30);
-        itemIntegerHashMap7.put(deliveryController.getItemsData().get(28), 20);
+        itemIntegerHashMap7.put((Item) deliveryController.getItemsData().get(25), 50);
+        itemIntegerHashMap7.put((Item) deliveryController.getItemsData().get(26), 40);
+        itemIntegerHashMap7.put((Item) deliveryController.getItemsData().get(27), 30);
+        itemIntegerHashMap7.put((Item) deliveryController.getItemsData().get(28), 20);
         Delivery_Document document7 = new Delivery_Document((Store) locationController.getLocation(8), 7, (Supplier) locationController.getLocation(1), itemIntegerHashMap7);
         deliveryController.getDocumentsData().add(document7);
 
         HashMap<Item, Integer> itemIntegerHashMap8 = new HashMap<>();
-        itemIntegerHashMap8.put(deliveryController.getItemsData().get(29), 10);
-        itemIntegerHashMap8.put(deliveryController.getItemsData().get(30), 50);
-        itemIntegerHashMap8.put(deliveryController.getItemsData().get(1), 20);
-        itemIntegerHashMap8.put(deliveryController.getItemsData().get(2), 35);
+        itemIntegerHashMap8.put((Item) deliveryController.getItemsData().get(29), 10);
+        itemIntegerHashMap8.put((Item) deliveryController.getItemsData().get(30), 50);
+        itemIntegerHashMap8.put((Item) deliveryController.getItemsData().get(1), 20);
+        itemIntegerHashMap8.put((Item) deliveryController.getItemsData().get(2), 35);
         Delivery_Document document8 = new Delivery_Document((Store) locationController.getLocation(8), 8, (Supplier) locationController.getLocation(3), itemIntegerHashMap8);
         deliveryController.getDocumentsData().add(document8);
 
         HashMap<Item, Integer> itemIntegerHashMap9 = new HashMap<>();
-        itemIntegerHashMap9.put(deliveryController.getItemsData().get(3), 15);
-        itemIntegerHashMap9.put(deliveryController.getItemsData().get(4), 25);
-        itemIntegerHashMap9.put(deliveryController.getItemsData().get(5), 35);
-        itemIntegerHashMap9.put(deliveryController.getItemsData().get(6), 45);
+        itemIntegerHashMap9.put((Item) deliveryController.getItemsData().get(3), 15);
+        itemIntegerHashMap9.put((Item) deliveryController.getItemsData().get(4), 25);
+        itemIntegerHashMap9.put((Item) deliveryController.getItemsData().get(5), 35);
+        itemIntegerHashMap9.put((Item) deliveryController.getItemsData().get(6), 45);
         Delivery_Document document9 = new Delivery_Document((Store) locationController.getLocation(2), 9, (Supplier) locationController.getLocation(7), itemIntegerHashMap9);
         deliveryController.getDocumentsData().add(document9);
 
         HashMap<Item, Integer> itemIntegerHashMap10 = new HashMap<>();
-        itemIntegerHashMap10.put(deliveryController.getItemsData().get(1), 30);
-        itemIntegerHashMap10.put(deliveryController.getItemsData().get(2), 25);
-        itemIntegerHashMap10.put(deliveryController.getItemsData().get(3), 20);
-        itemIntegerHashMap10.put(deliveryController.getItemsData().get(4), 15);
+        itemIntegerHashMap10.put((Item) deliveryController.getItemsData().get(1), 30);
+        itemIntegerHashMap10.put((Item) deliveryController.getItemsData().get(2), 25);
+        itemIntegerHashMap10.put((Item) deliveryController.getItemsData().get(3), 20);
+        itemIntegerHashMap10.put((Item) deliveryController.getItemsData().get(4), 15);
         Delivery_Document document10 = new Delivery_Document((Store) locationController.getLocation(4), 10, (Supplier) locationController.getLocation(5), itemIntegerHashMap10);
         deliveryController.getDocumentsData().add(document10);
 
         HashMap<Item, Integer> itemIntegerHashMap11 = new HashMap<>();
-        itemIntegerHashMap11.put(deliveryController.getItemsData().get(13), 20);
-        itemIntegerHashMap11.put(deliveryController.getItemsData().get(14), 5);
-        itemIntegerHashMap11.put(deliveryController.getItemsData().get(15), 40);
-        itemIntegerHashMap11.put(deliveryController.getItemsData().get(16), 16);
+        itemIntegerHashMap11.put((Item) deliveryController.getItemsData().get(13), 20);
+        itemIntegerHashMap11.put((Item) deliveryController.getItemsData().get(14), 5);
+        itemIntegerHashMap11.put((Item) deliveryController.getItemsData().get(15), 40);
+        itemIntegerHashMap11.put((Item) deliveryController.getItemsData().get(16), 16);
         Delivery_Document document11 = new Delivery_Document((Store) locationController.getLocation(4), 11, (Supplier) locationController.getLocation(7), itemIntegerHashMap11);
         deliveryController.getDocumentsData().add(document11);
 
         HashMap<Item, Integer> itemIntegerHashMap12 = new HashMap<>();
-        itemIntegerHashMap12.put(deliveryController.getItemsData().get(5), 35);
-        itemIntegerHashMap12.put(deliveryController.getItemsData().get(6), 10);
-        itemIntegerHashMap12.put(deliveryController.getItemsData().get(7), 50);
-        itemIntegerHashMap12.put(deliveryController.getItemsData().get(8), 20);
+        itemIntegerHashMap12.put((Item) deliveryController.getItemsData().get(5), 35);
+        itemIntegerHashMap12.put((Item) deliveryController.getItemsData().get(6), 10);
+        itemIntegerHashMap12.put((Item) deliveryController.getItemsData().get(7), 50);
+        itemIntegerHashMap12.put((Item) deliveryController.getItemsData().get(8), 20);
         Delivery_Document document12 = new Delivery_Document((Store) locationController.getLocation(2), 12, (Supplier) locationController.getLocation(9), itemIntegerHashMap12);
         deliveryController.getDocumentsData().add(document12);
 
         HashMap<Item, Integer> itemIntegerHashMap13 = new HashMap<>();
-        itemIntegerHashMap13.put(deliveryController.getItemsData().get(9), 15);
-        itemIntegerHashMap13.put(deliveryController.getItemsData().get(10), 30);
-        itemIntegerHashMap13.put(deliveryController.getItemsData().get(11), 25);
-        itemIntegerHashMap13.put(deliveryController.getItemsData().get(12), 10);
+        itemIntegerHashMap13.put((Item) deliveryController.getItemsData().get(9), 15);
+        itemIntegerHashMap13.put((Item) deliveryController.getItemsData().get(10), 30);
+        itemIntegerHashMap13.put((Item) deliveryController.getItemsData().get(11), 25);
+        itemIntegerHashMap13.put((Item) deliveryController.getItemsData().get(12), 10);
         Delivery_Document document13 = new Delivery_Document((Store) locationController.getLocation(6), 13, (Supplier) locationController.getLocation(9), itemIntegerHashMap13);
         deliveryController.getDocumentsData().add(document13);
 
         HashMap<Item, Integer> itemIntegerHashMap14 = new HashMap<>();
-        itemIntegerHashMap14.put(deliveryController.getItemsData().get(13), 20);
-        itemIntegerHashMap14.put(deliveryController.getItemsData().get(14), 5);
-        itemIntegerHashMap14.put(deliveryController.getItemsData().get(15), 40);
-        itemIntegerHashMap14.put(deliveryController.getItemsData().get(16), 16);
+        itemIntegerHashMap14.put((Item) deliveryController.getItemsData().get(13), 20);
+        itemIntegerHashMap14.put((Item) deliveryController.getItemsData().get(14), 5);
+        itemIntegerHashMap14.put((Item) deliveryController.getItemsData().get(15), 40);
+        itemIntegerHashMap14.put((Item) deliveryController.getItemsData().get(16), 16);
         Delivery_Document document14 = new Delivery_Document((Store) locationController.getLocation(4), 14, (Supplier) locationController.getLocation(7), itemIntegerHashMap14);
         deliveryController.getDocumentsData().add(document14);
         return deliveryController;

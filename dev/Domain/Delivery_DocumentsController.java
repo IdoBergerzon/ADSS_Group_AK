@@ -113,7 +113,7 @@ public class Delivery_DocumentsController {
                             System.out.println("Item does not exist in the system\n");
                             break;
                         } else {
-                            Item item = this.getItemsData().get(itemID);
+                            Item item = (Item) this.getItemsData().get(itemID);
                             System.out.print("Enter Quantity:");
                             int quantity = scanner.nextInt();
                             if (newItems.containsKey(item)) {
