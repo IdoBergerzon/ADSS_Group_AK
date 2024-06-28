@@ -1,14 +1,11 @@
-package Data;
-
-import Domain.Driver;
-import Domain.Truck;
+package Domain;
 
 import java.util.HashSet;
 
-public class DriversData {
+public class DriversRepository {
     private HashSet<Driver> drivers;
 
-    public DriversData() {
+    public DriversRepository() {
         this.drivers = new HashSet<>();
     }
 

@@ -1,30 +1,27 @@
 package Domain;
 
-import Data.LocationsData;
-
-import javax.xml.stream.Location;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
 public class LocationController {
-    private LocationsData locationsData;
+    private LocationsRepository locationsRepository;
     public LocationController() {
-        locationsData = new LocationsData();
+        locationsRepository = new LocationsRepository();
     }
 
-    public LocationsData getLocationsData() {
-        return locationsData;
+    public LocationsRepository getLocationsData() {
+        return locationsRepository;
     }
 
     public void addLocation(int locationID, Address address, String contact, String phone, String l_type) {
-        if (!locationsData.getLocations().containsKey(locationID)) {
+        if (!locationsRepository.getLocations().containsKey(locationID)) {
             if (l_type == "Supplier"){
                 Supplier supplier = new Supplier(locationID, address, contact, phone);
-                locationsData.addLocation(supplier);
+                locationsRepository.addLocation(supplier);
             } else if (l_type == "Store") {
                 Store store = new Store(locationID, address, contact, phone);
-                locationsData.addLocation(store);
+                locationsRepository.addLocation(store);
             }
             else {
                 System.out.println(l_type + "is not a l_type\n");
@@ -34,8 +31,8 @@ public class LocationController {
         }
     }
     public ALocation getLocation(int locationID) {
-            if (locationsData.getLocations().get(locationID) != null) {
-                return locationsData.getLocations().get(locationID);
+            if (locationsRepository.getLocations().get(locationID) != null) {
+                return locationsRepository.getLocations().get(locationID);
             }
             return null;
     }
@@ -53,7 +50,7 @@ public class LocationController {
 
     public void getAllSourceShippingArea() {
         Set <Integer> ssa = new HashSet();
-        for (ALocation location : locationsData.getLocations().values()) {
+        for (ALocation location : locationsRepository.getLocations().values()) {
             if (location.getL_type().equals("Store")) {
                 ssa.add(location.getShippingArea());
             }
@@ -110,7 +107,7 @@ public class LocationController {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Insert number of shipping area:");
         int shippingArea = scanner.nextInt();
-        ALocation location = locationsData.getLocations().get(locationID);
+        ALocation location = locationsRepository.getLocations().get(locationID);
         location.getAddress().setShipping_area(shippingArea);
         System.out.println("Shipping area set successfully: " + location+"\n");
     }
@@ -119,7 +116,7 @@ public class LocationController {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Insert new contact:");
         String contact = scanner.next();
-        ALocation location = locationsData.getLocations().get(locationID);
+        ALocation location = locationsRepository.getLocations().get(locationID);
         location.setContact(contact);
         System.out.println("Contact updated successfully.\n");
     }
@@ -128,7 +125,7 @@ public class LocationController {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Insert new phone number:");
         String phoneNumber = scanner.next();
-        ALocation location = locationsData.getLocations().get(locationID);
+        ALocation location = locationsRepository.getLocations().get(locationID);
         location.setPhone(phoneNumber);
         System.out.println("Phone number updated successfully.\n");
     }

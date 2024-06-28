@@ -1,31 +1,29 @@
 package Domain;
 
-import Data.TransportsData;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class TransportController {
-    private TransportsData transportsData;
+    private TransportsRepository transportsRepository;
 
     public TransportController() {
-        transportsData = new TransportsData();
+        transportsRepository = new TransportsRepository();
     }
 
     public void addTransport(Transport transport) {
-        transportsData.addTransport(transport);
+        transportsRepository.addTransport(transport);
     }
 
-    public TransportsData getTransportsData() {
-        return transportsData;
+    public TransportsRepository getTransportsData() {
+        return transportsRepository;
     }
 
     public Transport getTransport(int transportID) {
-        if (!transportsData.getTransports().containsKey(transportID)) {
+        if (!transportsRepository.getTransports().containsKey(transportID)) {
             return null;
         }
-        return transportsData.getTransports().get(transportID);
+        return transportsRepository.getTransports().get(transportID);
     }
 
     public void displayTransport() {

@@ -1,24 +1,22 @@
 package Domain;
 
-import Data.DriversData;
-
 import java.util.Scanner;
 
 public class DriverController {
-    private DriversData driversData;
+    private DriversRepository driversRepository;
 
     public DriverController() {
-        this.driversData = new DriversData();
+        this.driversRepository = new DriversRepository();
     }
 
-    public DriversData getDriversData() {
-        return driversData;
+    public DriversRepository getDriversData() {
+        return driversRepository;
     }
 
     public void addDriver(int driverID, String driverName, int license) {
         Driver newDriver = new Driver(driverID, driverName, license);
-        if (!driversData.getDrivers().contains(newDriver)) {
-            driversData.addDriver(newDriver);
+        if (!driversRepository.getDrivers().contains(newDriver)) {
+            driversRepository.addDriver(newDriver);
             System.out.println("Driver added successfully: " + newDriver);
         } else {
             System.out.println("Driver with ID " + driverID + " already exists.");
@@ -52,7 +50,7 @@ public class DriverController {
     }
 
     public Driver getDriver(int driverID) {
-        for (Driver driver : driversData.getDrivers()) {
+        for (Driver driver : driversRepository.getDrivers()) {
             if (driver.getDriverID() == driverID) {
                 return driver;
             }
@@ -62,7 +60,7 @@ public class DriverController {
 
     public void printAllAvailableDrivers(double weight) {
         System.out.println("All Available Drivers:");
-        for (Driver driver : driversData.getDrivers()) {
+        for (Driver driver : driversRepository.getDrivers()) {
             if (driver.isAvailable() && driver.getLicenseMaxWeight() >= weight) {
                 System.out.println(driver);
             }

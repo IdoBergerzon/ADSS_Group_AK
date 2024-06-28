@@ -1,13 +1,11 @@
-package Data;
+package Domain;
 
 import java.util.HashMap;
-import Domain.Item;
-import Domain.Truck;
 
-public class ItemsData {
+public class ItemsRepository {
     private HashMap<Integer, Item> items;
 
-    public ItemsData() { this.items = new HashMap<>(); }
+    public ItemsRepository() { this.items = new HashMap<>(); }
     public HashMap<Integer, Item> getItems() { return items; }
     public void setItems(HashMap<Integer, Item> items) { this.items = items; }
     public void addItem(Item item) {

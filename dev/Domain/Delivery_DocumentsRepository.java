@@ -1,13 +1,11 @@
-package Data;
-
-import Domain.Delivery_Document;
+package Domain;
 
 import java.util.HashMap;
 
-public class Delivery_DocumentsData {
+public class Delivery_DocumentsRepository {
     private HashMap<Integer, Delivery_Document> delivery_Documents;
 
-    public Delivery_DocumentsData() {
+    public Delivery_DocumentsRepository() {
         delivery_Documents = new HashMap<>();
     }
 

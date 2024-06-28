@@ -1,20 +1,17 @@
 package Domain;
 
-import Data.Delivery_DocumentsData;
-import Data.ItemsData;
-
 import java.util.*;
 
 public class Delivery_DocumentsController {
-    Delivery_DocumentsData documentsData;
-    ItemsData itemsData;
+    Delivery_DocumentsRepository documentsData;
+    ItemsRepository itemsRepository;
     public Delivery_DocumentsController(){
-        documentsData = new Delivery_DocumentsData();
-        itemsData = new ItemsData();
+        documentsData = new Delivery_DocumentsRepository();
+        itemsRepository = new ItemsRepository();
     }
 
-    public ItemsData getItemsData(){
-        return itemsData;
+    public ItemsRepository getItemsData(){
+        return itemsRepository;
     }
 
     public void addDelivery_Document(int delivery_id, Store source, Supplier destination, HashMap<Item,Integer> items){
@@ -281,7 +278,7 @@ public class Delivery_DocumentsController {
     }
 
 
-    public Delivery_DocumentsData getDocumentsData() {
+    public Delivery_DocumentsRepository getDocumentsData() {
         return documentsData;
     }
 }

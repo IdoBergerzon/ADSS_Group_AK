@@ -1,23 +1,21 @@
 package Domain;
 
 
-import Data.TrucksData;
-
 import java.util.Scanner;
 
 public class TruckController {
-    private TrucksData trucksData;
+    private TrucksRepository trucksRepository;
     public TruckController() {
-        this.trucksData = new TrucksData();
+        this.trucksRepository = new TrucksRepository();
     }
 
-    public TrucksData getTrucksData() {
-        return trucksData;
+    public TrucksRepository getTrucksData() {
+        return trucksRepository;
     }
 
     public void printAllAvailableTrucks(double weight) {
         System.out.println("Available Trucks:");
-        for (Truck truck : trucksData.getTrucks().values()) {
+        for (Truck truck : trucksRepository.getTrucks().values()) {
             if (truck.isAvailable() && truck.getTruckWeight()+truck.getMaxWeight() >= weight) {
                 System.out.println(truck);
             }
@@ -25,12 +23,12 @@ public class TruckController {
     }
 
     public void addNewTruck(int truckID, String truckType, double truckWeight, double MaxWeight) {
-        if (trucksData.getTrucks().containsKey(truckID)) {
+        if (trucksRepository.getTrucks().containsKey(truckID)) {
             System.out.println("Truck already exists");
         }
         else {
             Truck newtruck = new Truck(truckID, truckType, truckWeight, MaxWeight);
-            this.trucksData.addTruck(newtruck);
+            this.trucksRepository.addTruck(newtruck);
         }
     }
 
@@ -56,8 +54,8 @@ public class TruckController {
     }
 
     public Truck getTruck(int truckID) {
-        if (trucksData.getTrucks().get(truckID) != null)
-            return trucksData.getTrucks().get(truckID);
+        if (trucksRepository.getTrucks().get(truckID) != null)
+            return trucksRepository.getTrucks().get(truckID);
         else return null;
     }
 

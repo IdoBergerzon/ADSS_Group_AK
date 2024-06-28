@@ -1,13 +1,11 @@
-package Data;
-
-import Domain.ALocation;
+package Domain;
 
 import java.util.HashMap;
 
-public class LocationsData {
+public class LocationsRepository {
     private HashMap<Integer, ALocation> locations;
 
-    public LocationsData() {
+    public LocationsRepository() {
         this.locations = new HashMap<>();
     }
 

@@ -1,14 +1,12 @@
-package Data;
-
-import Domain.Transport;
+package Domain;
 
 import java.util.HashMap;
 
-public class TransportsData {
+public class TransportsRepository {
     private HashMap<Integer, Transport> transports;
 
 
-    public TransportsData() {
+    public TransportsRepository() {
         this.transports = new HashMap<>();
     }
 
