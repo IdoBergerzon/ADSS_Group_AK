@@ -28,7 +28,7 @@ public class TruckController {
         }
         else {
             Truck newtruck = new Truck(truckID, truckType, truckWeight, MaxWeight);
-            this.trucksRepository.addTruck(newtruck);
+            this.trucksRepository.add(newtruck);
         }
     }
 

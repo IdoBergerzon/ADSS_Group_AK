@@ -9,5 +9,4 @@ public interface IRepository {
     void remove(Object o);
     void update(Object o);
     Object get(int id);
-    Set<Object> getAll();
 }
