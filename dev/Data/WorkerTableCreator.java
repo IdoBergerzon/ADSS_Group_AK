@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class WorkerTableCreator {
-    private static final String URL = "jdbc:sqlite:mydatabase.db"; // Path to the SQLite database file
+    private static final String URL = "jdbc:sqlite:C:\\Users\\97252\\Desktop\\סמסטר ד\\נושאים מתקדמים בתכנות\\ADSS_Group_AK\\mydatabase.db"; // Path to the SQLite database file
 
     public static void createWorkersTable() {
         try {
@@ -13,7 +13,7 @@ public class WorkerTableCreator {
             Class.forName("org.sqlite.JDBC");
 
             // Establish connection to the SQLite database
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = Database.connect();
                  Statement statement = connection.createStatement()) {
                 // SQL statement to create the roles table
                 String sql = "CREATE TABLE IF NOT EXISTS workers ("
@@ -60,7 +60,7 @@ public class WorkerTableCreator {
         }
     }
     public static void main(String[] args) {
-        //createWorkersTable();
+        createWorkersTable();
         try {
             addColumnToWorkersTable();
         } catch (ClassNotFoundException e) {

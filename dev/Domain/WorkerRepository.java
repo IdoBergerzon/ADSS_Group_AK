@@ -1,6 +1,8 @@
 package Domain;
 
+import Data.RoleDAOImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.*;
@@ -9,12 +11,14 @@ import java.util.*;
 public class WorkerRepository implements IRepository<Worker,Integer> {
     private final Map<Integer, Worker> workers;
     private final Map<Integer, Worker> noActiveWorkers;
+    private RoleDAOImpl dao;
 
 
 
     private WorkerRepository() {
         this.workers = new HashMap<>();
         this.noActiveWorkers = new HashMap<>();
+        this.dao=new RoleDAOImpl();
     }
 
     /**
@@ -40,10 +44,12 @@ public class WorkerRepository implements IRepository<Worker,Integer> {
         if (worker == null) {
             throw new IllegalArgumentException("Worker cannot be null");
         }
-        if(workers.containsKey(worker.getId())) {
+        if(workers.containsKey(worker.getId()) || dao.search(worker.getId())!=null) {
             throw new IllegalArgumentException("Worker with id " + worker.getId() + " already exists");
+        }else{
+            workers.put(worker.getId(), worker);
+            dao.insert(toJsonNode(worker));
         }
-        workers.put(worker.getId(), worker);
     }
 
     @Override
@@ -74,5 +80,14 @@ public class WorkerRepository implements IRepository<Worker,Integer> {
         } else{
             throw new IllegalArgumentException("Worker with id " + id + " does not exist, can't delete it");
         }
+    }
+
+    private JsonNode toJsonNode(Worker worker){
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.convertValue(worker, JsonNode.class);
+    }
+    private Worker fromJsonNode(JsonNode worker){
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.convertValue(worker, Worker.class);
     }
 }
