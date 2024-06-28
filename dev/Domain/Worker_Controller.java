@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Worker_Controller {
     private int worker_id;
-    private final Repository workers_memory= Repository.getInstance();
+    private final WorkerRepository workers_memory= WorkerRepository.getInstance();
     private final RequestRepository requests_repository= RequestRepository.getInstance();
     private final ShiftRepository shifts_repository= ShiftRepository.getInstance();
 
@@ -12,12 +12,12 @@ public class Worker_Controller {
         this.worker_id = worker_id;
     }
     public void displayMyDetails(){
-        Worker result=workers_memory.getWorkerById(worker_id);
+        Worker result=workers_memory.get(worker_id);
         System.out.println(result);
     }
 
     public void addRequest( Boolean[][] requestArray)throws Exception{
-        Request newRequest = new Request(workers_memory.getWorkerById(worker_id),requestArray); //לשנות את השבוע ולבנות בדיקות אם קיים כבר בקשה או אם המערך לא נכון או משהו
+        Request newRequest = new Request(workers_memory.get(worker_id),requestArray); //לשנות את השבוע ולבנות בדיקות אם קיים כבר בקשה או אם המערך לא נכון או משהו
         try {
             requests_repository.addRequest(newRequest);
         } catch (Exception e) {
@@ -30,7 +30,7 @@ public class Worker_Controller {
 
 
     public String ShowCurrRoster(){
-        Worker worker=workers_memory.getWorkerById(worker_id);
+        Worker worker=workers_memory.get(worker_id);
         Roster roster= shifts_repository.getRoster(worker.getWork_branch(),Week.getWeek());
         if(roster==null){
             roster= shifts_repository.getRoster(worker.getWork_branch(),Week.getWeek()-1);
@@ -39,7 +39,7 @@ public class Worker_Controller {
     }
 
     public String ShowPastRoster(int week) throws Exception {
-        Worker worker=workers_memory.getWorkerById(worker_id);
+        Worker worker=workers_memory.get(worker_id);
         Roster roster= shifts_repository.getRoster(worker.getWork_branch(),week);
         if(roster==null) {
             throw new Exception("Your branch doesn't have roster for this week");
@@ -48,7 +48,7 @@ public class Worker_Controller {
     }
 
     public void RetireMassage(){
-        workers_memory.deleteWorker(worker_id);
+        workers_memory.remove(worker_id);
     }
 
     public String ShowPastShifts(){

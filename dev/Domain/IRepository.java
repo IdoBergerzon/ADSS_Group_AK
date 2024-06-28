@@ -1,15 +1,8 @@
 package Domain;
 
-import java.util.List;
+public interface IRepository<T,Y> {
 
-
-public interface IRepository {
-
-    void addWorker(Worker worker);
-    Worker getWorkerById(int id);
-    List<Worker> getAllWorkers();
-    void updateWorker(Worker worker);
-    void deleteWorker(int id);
-
-
+    T get(Y unique);
+    void add(T unique);
+    void remove(Y unique);
 }

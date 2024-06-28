@@ -6,13 +6,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.*;
 
 
-public class Repository implements IRepository {
+public class WorkerRepository implements IRepository<Worker,Integer> {
     private final Map<Integer, Worker> workers;
     private final Map<Integer, Worker> noActiveWorkers;
 
 
 
-    private Repository() {
+    private WorkerRepository() {
         this.workers = new HashMap<>();
         this.noActiveWorkers = new HashMap<>();
     }
@@ -22,28 +22,21 @@ public class Repository implements IRepository {
      * or the first access to SingletonHolder.INSTANCE, not before.
      */
     private static class InMemoryHolder {
-        private final static Repository INSTANCE = new Repository();
+        private final static WorkerRepository INSTANCE = new WorkerRepository();
     }
 
     /**
      * public static method that returns the single instance of the class
      */
 
-    public static Repository getInstance() {
+    public static WorkerRepository getInstance() {
         return InMemoryHolder.INSTANCE;
     }
 
 
     @Override
-    public void addWorker(Worker worker) {
-        ObjectMapper obj = new ObjectMapper();
-        String jsonString = null;
-        try {
-            jsonString = obj.writeValueAsString(worker);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println(jsonString);
+    public void add(Worker worker) {
+
         if (worker == null) {
             throw new IllegalArgumentException("Worker cannot be null");
         }
@@ -54,16 +47,15 @@ public class Repository implements IRepository {
     }
 
     @Override
-    public Worker getWorkerById(int id) {
+    public Worker get(Integer id) {
         return workers.get(id);
     }
 
-    @Override
     public List<Worker> getAllWorkers() {
         return new ArrayList<>(workers.values());
     }
 
-    @Override
+
     public void updateWorker(Worker worker) {
         if (workers.containsKey(worker.getId())) {
             workers.put(worker.getId(), worker);
@@ -74,7 +66,7 @@ public class Repository implements IRepository {
     }
 
     @Override
-    public void deleteWorker(int id) {
+    public void remove(Integer id) {
 
         Worker worker = workers.remove(id);
         if (worker != null) {

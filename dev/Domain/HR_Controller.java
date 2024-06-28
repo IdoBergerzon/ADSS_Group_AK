@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class HR_Controller {
 
-    private final Repository workers_memory= Repository.getInstance();
+    private final WorkerRepository workers_memory= WorkerRepository.getInstance();
     private final RequestRepository requests_repository= RequestRepository.getInstance();
     private final ShiftRepository shifts_repository= ShiftRepository.getInstance();
     private final RoleRepository roles_repository= RoleRepository.getInstance();
@@ -21,7 +21,7 @@ public class HR_Controller {
 
         Date curr = new Date();
         int new_ID = Integer.parseInt(string_details[0]);
-        if (workers_memory.getWorkerById(new_ID) != null) {
+        if (workers_memory.get(new_ID) != null) {
             System.out.println("worker ID already exist\n");
             return -1;
         }
@@ -35,7 +35,7 @@ public class HR_Controller {
         //check if the role is exist
 
         Role role;
-        if (roles_repository.getRoleByID(role_ID) == null) {
+        if (roles_repository.get(role_ID) == null) {
             System.out.println("role doesn't exist\n");
             List<Role> list=roles_repository.getAllRoles();
             System.out.println("The possible roles are: ");
@@ -45,7 +45,7 @@ public class HR_Controller {
             System.out.println("\n");
             return -1;
         } else {
-            role = roles_repository.getRoleByID(role_ID);
+            role = roles_repository.get(role_ID);
         }
         ;
 
@@ -62,7 +62,7 @@ public class HR_Controller {
         }*/
         String department = string_details[6];
         int managerID=Integer.parseInt(string_details[7]);
-        if (workers_memory.getWorkerById(managerID) == null) {
+        if (workers_memory.get(managerID) == null) {
             System.out.println("manager ID doesn't exist\n");
             return -1;
         }
@@ -70,13 +70,13 @@ public class HR_Controller {
 
 
         Worker new_worker = new Worker(new_ID, new_name,new_monthly_wage, new_hourly_wage, curr,managerID, role, branch_ID, department,bank_details);
-        workers_memory.addWorker(new_worker);
+        workers_memory.add(new_worker);
         return 1;
     };
 
     public void Display_Worker_Details(int id){
 
-        Worker result=workers_memory.getWorkerById(id);
+        Worker result=workers_memory.get(id);
         if(result==null){
             throw new IllegalArgumentException("Worker with ID " + id + " does not exist");
         }
@@ -86,7 +86,7 @@ public class HR_Controller {
     }
 
     public String Edit_Worker_Details(int id){
-        Worker to_update=workers_memory.getWorkerById(id);
+        Worker to_update=workers_memory.get(id);
         if(to_update==null){
             return "Worker doesn't exist\n";
         }
@@ -166,18 +166,18 @@ public class HR_Controller {
 
 
     public void addNewRoleForWorker(int workerID, int roleID){
-        if (workers_memory.getWorkerById(workerID) == null) {
+        if (workers_memory.get(workerID) == null) {
             throw new IllegalArgumentException("Worker with ID " + workerID + " does not exist");
-        } if (roles_repository.getRoleByID(roleID) == null) {
+        } if (roles_repository.get(roleID) == null) {
             throw new IllegalArgumentException("Role with ID " + roleID + " does not exist");
         }
 
-        workers_memory.getWorkerById(workerID).addNewRole(roles_repository.getRoleByID(roleID));
+        workers_memory.get(workerID).addNewRole(roles_repository.get(roleID));
     }
 
     public void createNewRole(int roleId, String roleName){
         Role newRole= new Role(roleId,roleName);
-        roles_repository.addRole(newRole);
+        roles_repository.add(newRole);
 
     }
     public void displayWorkersByShift(int day,int shift_type){
@@ -214,9 +214,9 @@ public class HR_Controller {
         List<Role> roleList = new ArrayList<>();
 
         for (int i=0;i<shiftWorkers.length;i++){
-            new_role = roles_repository.getRoleByID(roles_for_shift.get(i));
+            new_role = roles_repository.get(roles_for_shift.get(i));
 
-            new_worker = workers_memory.getWorkerById(shiftWorkers[i]);
+            new_worker = workers_memory.get(shiftWorkers[i]);
             //Test to make sure adding this worker is not against the rules
             if (new_worker==null){
                 throw new Exception("Worker with ID-" + shiftWorkers[i]+ " does not exist");
@@ -271,7 +271,7 @@ public class HR_Controller {
 
     public void fireWorker(int worker_id){
        try {
-           workers_memory.deleteWorker(worker_id);
+           workers_memory.remove(worker_id);
        } catch (Exception e){
            throw e;
        }

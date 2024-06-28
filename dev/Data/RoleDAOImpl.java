@@ -1,12 +1,9 @@
 package Data;
 
 import Domain.Role;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +12,7 @@ public class RoleDAOImpl implements IDao<JsonNode,Integer> {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     public List<JsonNode> getAllRoles() {
-        List<JsonNode> rolesList = new ArrayList<>();
+        List<JsonNode> roles_list = new ArrayList<>();
         String sql = "SELECT Role_ID, name FROM roles";
         try (Connection connection = Database.connect();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -30,13 +27,13 @@ public class RoleDAOImpl implements IDao<JsonNode,Integer> {
                             .put("roleID", roleId)
                             .put("name", roleName);
 
-                    rolesList.add(jsonNode);
+                    roles_list.add(jsonNode);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return rolesList;
+        return roles_list;
     }
 
     public void updateRole(JsonNode role) {

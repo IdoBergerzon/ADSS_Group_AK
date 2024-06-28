@@ -2,6 +2,10 @@ package Data;
 
 import Domain.Role;
 import Domain.Worker;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,18 +15,25 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class WorkerDAOImpl implements IDao<Worker, Integer>{
+public class WorkerDAOImpl implements IDao<JsonNode, Integer>{
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public Worker search(Integer id) {
-        String sql = "SELECT * FROM Worker WHERE worker_id = ?";
+    public JsonNode search(Integer id) {
+        String sql = "SELECT * FROM workers WHERE ID = ?";
         try (Connection connection = Database.connect();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    return extractWorkerFromResultSet(resultSet);
+                    String jsonString = resultSet.getString("json");
+                    return objectMapper.readTree(jsonString);
+
                 }
+            } catch (JsonMappingException e) {
+                throw new RuntimeException(e);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -31,24 +42,34 @@ public class WorkerDAOImpl implements IDao<Worker, Integer>{
     }
 
     @Override
-    public void insert(Worker worker) {
-        String sql = "INSERT INTO Worker (worker_id, name, monthly_wage, hourly_wage, start_date, direct_manager_ID, roles, branchid, department, bank_details) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (Connection connection = Database.connect();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, worker.getId());
-            statement.setString(2, worker.getName());
-            statement.setInt(3, worker.getMonthly_wage());
-            statement.setInt(4, worker.getHourly_wage());
-            statement.setDate(5, new java.sql.Date(worker.getStart_Date().getTime()));
-            statement.setInt(6, worker.getDirect_manager());
-            statement.setString(7, convertRolesArrayToString(worker.getRoles()));
-            statement.setInt(8, worker.getWork_branch());
-            statement.setString(9, worker.getDepartement());
-            statement.setString(10, worker.getBank_details());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public void insert(JsonNode worker) {
+        int id = worker.get("id").asInt();
+        if(this.search(id) == null) {
+            String sql = "INSERT INTO workers (ID, json, active) " +
+                    "VALUES (?, ?,?)";
+            try (Connection connection = Database.connect();
+                 PreparedStatement statement = connection.prepareStatement(sql)) {
+
+
+                statement.setInt(1, id);
+                statement.setString(2, worker.toString());
+                statement.setInt(3, 1);
+
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            String sql = "UPDATE workers SET json = ?,active = 1 WHERE ID = ?";
+            try (Connection connection = Database.connect();
+                 PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, worker.toString());
+                statement.setInt(2, id);
+                statement.executeUpdate();
+            }  catch (SQLException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -65,80 +86,59 @@ public class WorkerDAOImpl implements IDao<Worker, Integer>{
     }
 
 
-    public List<Worker> GetAllWorkers() {
-        List<Worker> workers = new ArrayList<>();
-        String sql = "SELECT * FROM Worker";
-        try (Connection connection = Database.connect();
-             PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet resultSet = statement.executeQuery()) {
-            while (resultSet.next()) {
-                Worker worker = extractWorkerFromResultSet(resultSet);
-                workers.add(worker);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return workers;
-    }
-
-
-    public void updateWorker(Worker worker) {
-        String sql = "UPDATE Worker SET name = ?, monthly_wage = ?, hourly_wage = ?, " +
-                "start_date = ?, direct_manager_ID = ?, roles = ?, branchid = ?, " +
-                "department = ?, bank_details = ? WHERE worker_id = ?";
+    public List<JsonNode> GetAllWorkers() {
+        List<JsonNode> workers_list = new ArrayList<>();
+        String sql = "SELECT * FROM workers WHERE active = 1";
         try (Connection connection = Database.connect();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, worker.getName());
-            statement.setInt(2, worker.getMonthly_wage());
-            statement.setInt(3, worker.getHourly_wage());
-            statement.setDate(4, new java.sql.Date(worker.getStart_Date().getTime()));
-            statement.setInt(5, worker.getDirect_manager());
-            statement.setString(6, convertRolesArrayToString(worker.getRoles()));
-            statement.setInt(7, worker.getWork_branch());
-            statement.setString(8, worker.getDepartement());
-            statement.setString(9, worker.getBank_details());
-            statement.setInt(10, worker.getId());
-            statement.executeUpdate();
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("ID");
+                    String jsonString = resultSet.getString("json");
+                    workers_list.add( objectMapper.readTree(jsonString));
+                }
+            } catch (JsonMappingException e) {
+                throw new RuntimeException(e);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+        e.printStackTrace();
+    }
+        return workers_list;
+    }
+
+
+    public void updateWorker(JsonNode worker) {
+        String sql = "UPDATE workers SET json = ? WHERE ID = ?";
+        try (Connection connection = Database.connect();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            int id = worker.get("id").asInt();
+            String jsonString = worker.toString();
+            statement.setString(1, jsonString);
+            statement.setInt(2, id);
+
+            int rowsUpdated = statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void retireWorker(int id) {
+        String sql = "UPDATE workers SET active = 0 WHERE ID = ?";
+        try (Connection connection = Database.connect();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, id);
+
+            int rowsUpdated = statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
 
-    private Worker extractWorkerFromResultSet(ResultSet resultSet) throws SQLException {
-        int id = resultSet.getInt("worker_id");
-        String name = resultSet.getString("name");
-        int monthly_wage = resultSet.getInt("monthly_wage");
-        int hourly_wage = resultSet.getInt("hourly_wage");
-        Date start_date = resultSet.getDate("start_date");
-        int direct_manager_ID = resultSet.getInt("direct_manager_ID");
-        Role[] roles = convertRolesStringToArray(resultSet.getString("roles"));
-        int branchid = resultSet.getInt("branchid");
-        String department = resultSet.getString("department");
-        String bank_details = resultSet.getString("bank_details");
 
-        return new Worker(id, name, monthly_wage, hourly_wage, start_date, direct_manager_ID, roles[0], branchid, department, bank_details);
-    }
-
-    private String convertRolesArrayToString(Role[] roles) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < roles.length; i++) {
-            if (i > 0) {
-                sb.append(",");
-            }
-            sb.append(roles[i].getRoleID());
-        }
-        return sb.toString();
-    }
-    private Role[] convertRolesStringToArray(String rolesString) {
-        String[] roleIds = rolesString.split(",");
-        Role[] roles = new Role[roleIds.length];
-        for (int i = 0; i < roleIds.length; i++) {
-            int roleId = Integer.parseInt(roleIds[i]);
-            roles[i] = new Role(roleId, "Role"); // Assuming a default role name for now
-        }
-        return roles;
-    }
 
 
     public static void main(String[] args){
@@ -146,10 +146,17 @@ public class WorkerDAOImpl implements IDao<Worker, Integer>{
         Role cashier=new Role(3,"cashiers");
         Role store=new Role(4,"store");
         Worker ido=new Worker(20,"ido",5000,0,new Date(),1,cashier,2,"cashiers","leumi 5555555");
+        Worker aviv=new Worker(22,"aviv",5000,0,new Date(),1,cashier,2,"cashiers","leumi 5555555");
+        ObjectMapper objectMapper = new ObjectMapper();
+        // Convert Role object to JsonNode
+        JsonNode jsonNode1 = objectMapper.valueToTree(ido);
+        JsonNode jsonNode2 = objectMapper.valueToTree(aviv);
         //dao.remove(20);
         //ido.addNewRole(store);
-        //dao.insert(ido);
-        System.out.println(dao.search(20));
+        dao.insert(jsonNode1);
+        dao.insert(jsonNode2);
+        dao.retireWorker(ido.getId());
+        System.out.println(dao.GetAllWorkers());
     }
 
 }

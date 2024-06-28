@@ -14,28 +14,28 @@ public class Checking_Controller {
      * This function is Our initialize for the System
      */
     public Checking_Controller() {
-        this.WR = Repository.getInstance();
+        this.WR = WorkerRepository.getInstance();
         this.SR = ShiftRepository.getInstance();
         this.RR=RoleRepository.getInstance();
         this.BR=BranchRepository.getInstance();
-        Role hr = new Role(1, "hr");
+        Role hr = RR.get(1);
         Branch br1 = new Branch(1, "branch1", "BeerSheva");
         Date dt1 = new Date(2024,1,1);
         Worker ido = new Worker(1,"Ido", 5000,0, dt1, null, hr, br1.getBranchID(), "hr","Leumi:5555555");
 
-        WR.addWorker(ido);
+        WR.add(ido);
         BR.addBranch(br1);
-        RR.addRole(hr);
+//        RR.addRole(hr);
 
     }
 
     public void startWithObject(){
         ///Enitilize the system with some information
 
-        Role shift_manager = new Role(2, "shift_manager");
-        Role storekeeper = new Role(3, "storekeeper");
-        Role Cashier = new Role(4, "cashier");
-        Role delivery = new Role(5, "delivery");
+        Role shift_manager = RR.get(2);;
+        Role storekeeper = RR.get(3);
+        Role Cashier = RR.get(4);
+        Role delivery = RR.get(5);
 
         Branch br2 = new Branch(2, "branch2", "Ashdod");
 
@@ -52,21 +52,21 @@ public class Checking_Controller {
 
 
 
-        WR.addWorker(aviv);
-        WR.addWorker(noa);
-        WR.addWorker(hezi);
-        WR.addWorker(lior);
-        WR.addWorker(asaf);
-        WR.addWorker(rudi);
-        WR.addWorker(tamir);
-        WR.addWorker(daniel);
+        WR.add(aviv);
+        WR.add(noa);
+        WR.add(hezi);
+        WR.add(lior);
+        WR.add(asaf);
+        WR.add(rudi);
+        WR.add(tamir);
+        WR.add(daniel);
 
         BR.addBranch(br2);
 
-        RR.addRole(shift_manager);
-        RR.addRole(storekeeper);
-        RR.addRole(delivery);
-        RR.addRole(Cashier);
+//        RR.addRole(shift_manager);
+//        RR.addRole(storekeeper);
+//        RR.addRole(delivery);
+//        RR.addRole(Cashier);
 
         Shift[][] shifts1 = new Shift[7][2];
         Shift[][] shifts2 = new Shift[7][2];
@@ -88,7 +88,7 @@ public class Checking_Controller {
 
 
     public int checking_ID(int ID){
-        Worker result=WR.getWorkerById(ID);
+        Worker result= (Worker) WR.get(ID);
         if(result==null){
             return -1;
         }

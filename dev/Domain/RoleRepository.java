@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RoleRepository implements IRoleRepository {
+public class RoleRepository implements IRepository<Role, Integer> {
     private final Map<Integer, Role> roles;
     private RoleDAOImpl dao;
 
@@ -27,7 +27,7 @@ public class RoleRepository implements IRoleRepository {
     }
 
     @Override
-    public void addRole(Role role) {
+    public void add(Role role) {
         if (role == null) {
             throw new IllegalArgumentException("Role cannot be null");
         }
@@ -42,16 +42,12 @@ public class RoleRepository implements IRoleRepository {
     }
 
     @Override
-    public void deleteRole(Role role) {
-        if (role == null) {
-            throw new IllegalArgumentException("Role cannot be null");
-        }
-        roles.remove(role.getRoleID());
-        dao.remove(role.getRoleID());
+    public void remove(Integer role_id) {
+        roles.remove(role_id);
+        dao.remove(role_id);
 
     }
 
-    @Override
     public void updateRole(Role role) {
         if (role == null) {
             throw new IllegalArgumentException("Role cannot be null");
@@ -66,7 +62,7 @@ public class RoleRepository implements IRoleRepository {
     }
 
     @Override
-    public Role getRoleByID(int id) {
+    public Role get(Integer id) {
         if(roles.get(id)==null){
             Role role = fromJsonNode(dao.search(id));
             if(role!=null){
@@ -79,7 +75,7 @@ public class RoleRepository implements IRoleRepository {
         return roles.get(id);
     }
 
-    @Override
+
     public List<Role> getAllRoles() {
         List<JsonNode> jsonNodes = dao.getAllRoles();
         List<Role> list_roles = new ArrayList<>();
