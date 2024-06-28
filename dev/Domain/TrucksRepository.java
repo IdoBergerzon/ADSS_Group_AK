@@ -1,6 +1,6 @@
 package Domain;
 
-import java.util.HashMap;
+import java.util.*;
 
 public class TrucksRepository implements IRepository {
     private HashMap<Integer, Truck> trucks;
@@ -61,5 +61,14 @@ public class TrucksRepository implements IRepository {
             return trucks.get(id);
         }
         return null;
+    }
+
+    @Override
+    public Set<Object> getAll() {
+        Set<Object> truckSet = new HashSet<>();
+        for (Truck truck: trucks.values()) {
+            truckSet.add(truck.getTruckID());
+        }
+        return truckSet;
     }
 }
