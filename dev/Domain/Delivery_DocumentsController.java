@@ -238,7 +238,7 @@ public class Delivery_DocumentsController {
                 } else {
                     System.out.println("Insert amount:");
                     int itemAmount = scanner.nextInt();
-                    Item item = deliveryController.getItemsData().get(newitemID);
+                    Item item = (Item) deliveryController.getItemsData().get(newitemID);
                     if (deliveryDocument.getItems().containsKey(item)) {
                         deliveryDocument.getItems().put(item, itemAmount + deliveryDocument.getItems().get(item));
                     } else
@@ -258,7 +258,7 @@ public class Delivery_DocumentsController {
                 if (deliveryController.getItemsData().get(itemID) == null) {
                     System.out.println("Item " + itemID + " does not exist\n");
                 } else {
-                    Item item = deliveryController.getItemsData().get(itemID);
+                    Item item = (Item) deliveryController.getItemsData().get(itemID);
                     Set<Item> itemSet = deliveryDocument.getItems().keySet();
                     if (itemSet.contains(item)) {
                         deliveryDocument.getItems().remove(item);
