@@ -52,14 +52,14 @@ public class HR_Controller {
         //check if branch is exist
 
         int branch_ID = Integer.parseInt(string_details[5]);
-        Branch new_branch;
+/*        Branch new_branch;
         if (branchs_repository.getBranchByID(branch_ID) == null) {
             System.out.println("branch doesn't exist\n");
             return -1;
         } else {
             new_branch = branchs_repository.getBranchByID(branch_ID);
 
-        }
+        }*/
         String department = string_details[6];
         int managerID=Integer.parseInt(string_details[7]);
         if (workers_memory.getWorkerById(managerID) == null) {
@@ -69,7 +69,7 @@ public class HR_Controller {
         String bank_details=string_details[8];
 
 
-        Worker new_worker = new Worker(new_ID, new_name,new_monthly_wage, new_hourly_wage, curr,managerID, role, new_branch, department,bank_details);
+        Worker new_worker = new Worker(new_ID, new_name,new_monthly_wage, new_hourly_wage, curr,managerID, role, branch_ID, department,bank_details);
         workers_memory.addWorker(new_worker);
         return 1;
     };
@@ -220,7 +220,7 @@ public class HR_Controller {
             //Test to make sure adding this worker is not against the rules
             if (new_worker==null){
                 throw new Exception("Worker with ID-" + shiftWorkers[i]+ " does not exist");
-            } else if (new_worker.getWork_branch().getBranchID()!=branch_id) {
+            } else if (new_worker.getWork_branch()!=branch_id) {
                 throw new Exception("Worker  with ID-" + shiftWorkers[i]+ "does not works in this branch");
             } else{
                 /// Making sure the worker can work in this role

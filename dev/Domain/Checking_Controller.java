@@ -21,7 +21,7 @@ public class Checking_Controller {
         Role hr = new Role(1, "hr");
         Branch br1 = new Branch(1, "branch1", "BeerSheva");
         Date dt1 = new Date(2024,1,1);
-        Worker ido = new Worker(1,"Ido", 5000,0, dt1, null, hr, br1, "hr","Leumi:5555555");
+        Worker ido = new Worker(1,"Ido", 5000,0, dt1, null, hr, br1.getBranchID(), "hr","Leumi:5555555");
 
         WR.addWorker(ido);
         BR.addBranch(br1);
@@ -41,14 +41,14 @@ public class Checking_Controller {
 
         Date dt2 = new Date(2024,2,1);
         Branch br1=BR.getBranchByID(1);
-        Worker aviv = new Worker(2,"Aviv", 0,50, dt2, 1, shift_manager, br1, "managment","Hapoalim:1234567");
-        Worker hezi = new Worker(3,"hezi", 0,50, dt2, 1, shift_manager, br2, "managment","Leumi:6392772");
-        Worker lior = new Worker(4,"lior", 0,50, dt2, 3, storekeeper, br2, "managment","Beinleumi:1455659");
-        Worker asaf = new Worker(5,"asaf", 0,50, dt2, 3, Cashier, br2, "managment","Discont:6453745");
-        Worker rudi = new Worker(6,"rudi", 0,50, dt2, 3, storekeeper, br2, "managment","Yahav:1525358");
-        Worker tamir = new Worker(7,"tamir", 0,50, dt2, 3, Cashier, br2, "managment","Hapoalim:9753146");
-        Worker daniel = new Worker(8,"daniel", 0,50, dt2, 1, delivery, br2, "managment","Leumi:6612389");
-        Worker noa = new Worker(9,"noa", 0,50, dt2, 1, shift_manager, br2, "managment","Hapoalim:1234767");
+        Worker aviv = new Worker(2,"Aviv", 0,50, dt2, 1, shift_manager, br1.getBranchID(), "managment","Hapoalim:1234567");
+        Worker hezi = new Worker(3,"hezi", 0,50, dt2, 1, shift_manager, br2.getBranchID(), "managment","Leumi:6392772");
+        Worker lior = new Worker(4,"lior", 0,50, dt2, 3, storekeeper, br2.getBranchID(), "managment","Beinleumi:1455659");
+        Worker asaf = new Worker(5,"asaf", 0,50, dt2, 3, Cashier, br2.getBranchID(), "managment","Discont:6453745");
+        Worker rudi = new Worker(6,"rudi", 0,50, dt2, 3, storekeeper, br2.getBranchID(), "managment","Yahav:1525358");
+        Worker tamir = new Worker(7,"tamir", 0,50, dt2, 3, Cashier, br2.getBranchID(), "managment","Hapoalim:9753146");
+        Worker daniel = new Worker(8,"daniel", 0,50, dt2, 1, delivery, br2.getBranchID(), "managment","Leumi:6612389");
+        Worker noa = new Worker(9,"noa", 0,50, dt2, 1, shift_manager, br2.getBranchID(), "managment","Hapoalim:1234767");
 
 
 

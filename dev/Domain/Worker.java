@@ -10,7 +10,7 @@ public class Worker {
     private Date start_date;
     private Integer direct_manager_ID;
     private Role[] roles;
-    private Branch work_branch;
+    private int branchid;
     private Double days_off;
     private String departement;
     private String bank_details;
@@ -23,14 +23,14 @@ public class Worker {
         this.bank_details = bank_details;
     }
 
-    public Worker(int id, String name, int monthly_wage, int hourly_wage, Date start_date, Integer direct_manager_ID, Role role, Branch work_branch, String departement, String bank_details) {
+    public Worker(int id, String name, int monthly_wage, int hourly_wage, Date start_date, Integer direct_manager_ID, Role role, int branchid, String departement, String bank_details) {
         this.id = id;
         this.name = name;
         this.monthly_wage = monthly_wage;
         this.hourly_wage = hourly_wage;
         this.start_date = start_date;
         this.direct_manager_ID = direct_manager_ID;
-        this.work_branch = work_branch;
+        this.branchid = branchid;
         this.departement = departement;
         this.roles= new Role[1];
         this.roles[0] = role;
@@ -73,8 +73,8 @@ public class Worker {
         return roles;
     }
 
-    public Branch getWork_branch() {
-        return work_branch;
+    public int getWork_branch() {
+        return branchid;
     }
 
     public Double getDays_off() {
@@ -119,8 +119,8 @@ public class Worker {
         roles = newRoles;
     }
 
-    public void setWork_branch(Branch work_branch) {
-        this.work_branch = work_branch;
+    public void setWork_branch(int branchid) {
+        this.branchid = branchid;
     }
 
     public void setDays_off(Double days_off) {
@@ -141,7 +141,7 @@ public class Worker {
             result_str+= ", " + roles[i];
         }
         result_str+="\n";
-        result_str+=this.getWork_branch()+"\n";
+        result_str+="branch ID: "+this.getWork_branch()+"\n";
         result_str+="Department: "+this.getDepartement()+"\n";
         result_str+="Days off: "+this.getDays_off()+"Days \n";
         result_str+="Bank Details: "+this.getBank_details()+"\n";
