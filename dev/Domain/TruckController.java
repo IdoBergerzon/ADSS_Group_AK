@@ -54,8 +54,8 @@ public class TruckController {
     }
 
     public Truck getTruck(int truckID) {
-        if (trucksRepository.getTrucks().get(truckID) != null)
-            return trucksRepository.getTrucks().get(truckID);
+        if (trucksRepository.get(truckID) != null)
+            return (Truck) trucksRepository.get(truckID);
         else return null;
     }
 
