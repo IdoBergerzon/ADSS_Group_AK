@@ -35,7 +35,7 @@ public class RoleRepository implements IRepository<Role, Integer> {
             throw new IllegalArgumentException("Role with id " + role.getRoleID() + " already exists");
         } else {
             roles.put(role.getRoleID(), role);
-            dao.insert(toJsonNode(role));
+            dao.insert(JsonNodeConverter.toJsonNode(role));
         }
 
 
@@ -56,7 +56,7 @@ public class RoleRepository implements IRepository<Role, Integer> {
             throw new IllegalArgumentException("Role with id " + role.getRoleID() + " not exists in DB");
         } else {
             roles.put(role.getRoleID(), role);
-            dao.updateRole(toJsonNode(role));
+            dao.updateRole(JsonNodeConverter.toJsonNode(role));
         }
 
     }
@@ -64,9 +64,9 @@ public class RoleRepository implements IRepository<Role, Integer> {
     @Override
     public Role get(Integer id) {
         if(roles.get(id)==null){
-            Role role = fromJsonNode(dao.search(id));
-            if(role!=null){
-                return role;
+            JsonNode jn = dao.search(id);
+            if(jn != null){
+                return JsonNodeConverter.fromJsonNode(jn, Role.class);
             }
             else{
                 return null;
@@ -80,7 +80,7 @@ public class RoleRepository implements IRepository<Role, Integer> {
         List<JsonNode> jsonNodes = dao.getAllRoles();
         List<Role> list_roles = new ArrayList<>();
         for (JsonNode jsonNode : jsonNodes) {
-            Role role = fromJsonNode(jsonNode);
+            Role role = JsonNodeConverter.fromJsonNode(jsonNode, Role.class);
             if(!roles.containsKey(role.getRoleID())){
                 roles.put(role.getRoleID(), role);
             }
@@ -89,13 +89,5 @@ public class RoleRepository implements IRepository<Role, Integer> {
         return list_roles;
     }
 
-    private JsonNode toJsonNode(Role role){
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.convertValue(role, JsonNode.class);
-    }
-    private Role fromJsonNode(JsonNode role){
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.convertValue(role, Role.class);
-    }
 
 }

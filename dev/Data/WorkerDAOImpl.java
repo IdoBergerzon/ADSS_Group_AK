@@ -1,18 +1,18 @@
 package Data;
 
-import Domain.Role;
-import Domain.Worker;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 
 public class WorkerDAOImpl implements IDao<JsonNode, Integer>{
@@ -26,9 +26,14 @@ public class WorkerDAOImpl implements IDao<JsonNode, Integer>{
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
+                    int activeStatus = resultSet.getInt("active");
                     String jsonString = resultSet.getString("json");
-                    return objectMapper.readTree(jsonString);
+                    JsonNode jsonNode = objectMapper.readTree(jsonString);
 
+                    // Add the active status to the JsonNode
+                    ((ObjectNode) jsonNode).put("active", activeStatus);
+
+                    return jsonNode;
                 }
             } catch (JsonMappingException e) {
                 throw new RuntimeException(e);
@@ -75,11 +80,14 @@ public class WorkerDAOImpl implements IDao<JsonNode, Integer>{
 
     @Override
     public void remove(Integer id) {
-        String sql = "DELETE FROM Worker WHERE worker_id = ?";
+        String sql = "DELETE FROM workers WHERE ID = ?";
         try (Connection connection = Database.connect();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
-            statement.executeUpdate();
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new NullPointerException("Id does not exist");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -132,6 +140,9 @@ public class WorkerDAOImpl implements IDao<JsonNode, Integer>{
             statement.setInt(1, id);
 
             int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated == 0) {
+                throw new NullPointerException("Id does not exist");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -141,22 +152,22 @@ public class WorkerDAOImpl implements IDao<JsonNode, Integer>{
 
 
 
-    public static void main(String[] args){
-        WorkerDAOImpl dao = new WorkerDAOImpl();
-        Role cashier=new Role(3,"cashiers");
-        Role store=new Role(4,"store");
-        Worker ido=new Worker(20,"ido",5000,0,new Date(),1,cashier,2,"cashiers","leumi 5555555");
-        Worker aviv=new Worker(22,"aviv",5000,0,new Date(),1,cashier,2,"cashiers","leumi 5555555");
-        ObjectMapper objectMapper = new ObjectMapper();
-        // Convert Role object to JsonNode
-        JsonNode jsonNode1 = objectMapper.valueToTree(ido);
-        JsonNode jsonNode2 = objectMapper.valueToTree(aviv);
-        //dao.remove(20);
-        //ido.addNewRole(store);
-        dao.insert(jsonNode1);
-        dao.insert(jsonNode2);
-        dao.retireWorker(ido.getId());
-        System.out.println(dao.GetAllWorkers());
-    }
+//    public static void main(String[] args){
+//        WorkerDAOImpl dao = new WorkerDAOImpl();
+//        Role cashier=new Role(3,"cashiers");
+//        Role store=new Role(4,"store");
+//        Worker ido=new Worker(20,"ido",5000,0,new Date(),1,cashier,2,"cashiers","leumi 5555555");
+//        Worker aviv=new Worker(22,"aviv",5000,0,new Date(),1,cashier,2,"cashiers","leumi 5555555");
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        // Convert Role object to JsonNode
+//        JsonNode jsonNode1 = objectMapper.valueToTree(ido);
+//        JsonNode jsonNode2 = objectMapper.valueToTree(aviv);
+//        //dao.remove(20);
+//        //ido.addNewRole(store);
+//        dao.insert(jsonNode1);
+//        dao.insert(jsonNode2);
+//        dao.retireWorker(ido.getId());
+//        System.out.println(dao.GetAllWorkers());
+//    }
 
 }
