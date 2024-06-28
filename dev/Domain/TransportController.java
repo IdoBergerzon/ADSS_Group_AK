@@ -339,7 +339,7 @@ public class TransportController {
                 Truck newTruck = truckController.getTruck(newTruckID);
                 if (newTransport.setTruck(newTruck)) {
                     System.out.println("Transport OK, truck was changed successfully.\n");
-                    return true;
+                    return false;
                 }
             }
         } else

@@ -57,10 +57,4 @@ public class TrucksRepository implements IRepository {
         }
         return null;
     }
-
-    @Override
-    public Collection<Object> getAll() {
-
-        return List.of();
-    }
 }

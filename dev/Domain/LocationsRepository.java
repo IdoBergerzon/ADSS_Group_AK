@@ -53,9 +53,4 @@ public class LocationsRepository implements IRepository {
         }
         return null;
     }
-
-    @Override
-    public Collection getAll() {
-        return List.of();
-    }
 }

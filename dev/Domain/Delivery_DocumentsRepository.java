@@ -1,6 +1,8 @@
 package Domain;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 public class Delivery_DocumentsRepository implements IRepository {
     private HashMap<Integer, Delivery_Document> delivery_Documents;
