@@ -12,7 +12,7 @@ public class TransportController {
     }
 
     public void addTransport(Transport transport) {
-        transportsRepository.addTransport(transport);
+        transportsRepository.add(transport);
     }
 
     public TransportsRepository getTransportsData() {
@@ -275,7 +275,7 @@ public class TransportController {
 
             switch (reChoice) {
                 case 0:
-                    this.getTransportsData().removeTransportById(transportID);
+                    this.getTransportsData().remove(transportID);
                     System.out.println("Returning to the main menu.\n");
                     break;
 
@@ -330,7 +330,7 @@ public class TransportController {
             int newTruckID = scanner.nextInt();
             scanner.nextLine();
             if (newTruckID == 0) {
-                this.getTransportsData().removeTransportById(newTransport.getTransportID());
+                this.getTransportsData().remove(newTransport.getTransportID());
                 return false;
             }
             if (truckController.getTruck(newTruckID) == null) {

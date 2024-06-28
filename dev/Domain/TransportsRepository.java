@@ -2,7 +2,7 @@ package Domain;
 
 import java.util.HashMap;
 
-public class TransportsRepository {
+public class TransportsRepository implements IRepository {
     private HashMap<Integer, Transport> transports;
 
 
@@ -14,28 +14,6 @@ public class TransportsRepository {
         return transports;
     }
 
-    public void addTransport(Transport transport) {
-        this.transports.put(transport.getTransportID(), transport);
-    }
-
-    public void resetTransports() {
-        this.transports = new HashMap<>();
-    }
-
-    public Transport getTransportById(int transportID) {
-        if (this.transports.containsKey(transportID)) {
-            return this.transports.get(transportID);
-        }
-        else {
-            System.out.println("transport not found");
-            return null;
-        }
-    }
-
-    public void removeTransportById(int transportID) {
-        this.transports.remove(transportID);
-    }
-
     @Override
     public String toString() {
         StringBuilder tranStr = new StringBuilder();
@@ -44,6 +22,41 @@ public class TransportsRepository {
             tranStr.append(transport + "\n");
         }
         return tranStr.toString();
+    }
+
+    @Override
+    public void add(Object o) {
+        if (o instanceof Transport) {
+            Transport transport = (Transport) o;
+            this.transports.put(transport.getTransportID(), transport);
+        }
+    }
+
+    @Override
+    public void remove(Object o) {
+        if (o instanceof Transport) {
+            Transport transport = (Transport) o;
+            this.transports.remove(transport.getTransportID());
+        }
+    }
+
+    @Override
+    public void update(Object o) {
+        if (o instanceof Transport) {
+            Transport transport = (Transport) o;
+            if (this.transports.containsKey(transport.getTransportID())) {
+                this.transports.remove(transport.getTransportID());
+                this.transports.put(transport.getTransportID(), transport);
+            }
+        }
+    }
+
+    @Override
+    public Object get(int id) {
+        if (this.transports.containsKey(id)) {
+            return this.transports.get(id);
+        }
+        return null;
     }
 }
 

@@ -61,7 +61,7 @@ public class Delivery_DocumentsController {
         System.out.print("Enter Item ID:\n");
         int itemID = scanner.nextInt();
         scanner.nextLine();
-        if (this.getItemsData().getItem(itemID) != null) {
+        if (this.getItemsData().get(itemID) != null) {
             System.out.println("Item already exists in the system\n");
             return false;
         } else {
@@ -70,7 +70,7 @@ public class Delivery_DocumentsController {
             System.out.print("Enter item weight:\n");
             double weight = scanner.nextDouble();
             Item item = new Item(itemID, name, weight);
-            this.getItemsData().addItem(item);
+            this.getItemsData().add(item);
             System.out.println("Item added successfully.\n");
         }
         return true;
@@ -109,11 +109,11 @@ public class Delivery_DocumentsController {
                         System.out.print("Enter Item ID:");
                         int itemID = scanner.nextInt();
                         scanner.nextLine();
-                        if (this.getItemsData().getItem(itemID) == null) {
+                        if (this.getItemsData().get(itemID) == null) {
                             System.out.println("Item does not exist in the system\n");
                             break;
                         } else {
-                            Item item = this.getItemsData().getItem(itemID);
+                            Item item = this.getItemsData().get(itemID);
                             System.out.print("Enter Quantity:");
                             int quantity = scanner.nextInt();
                             if (newItems.containsKey(item)) {
@@ -233,12 +233,12 @@ public class Delivery_DocumentsController {
                 System.out.println("Insert item ID to add:");
                 int newitemID = scanner.nextInt();
                 scanner.nextLine();
-                if (deliveryController.getItemsData().getItem(newitemID) == null) {
+                if (deliveryController.getItemsData().get(newitemID) == null) {
                     System.out.println("Item " + newitemID + " does not exist\n");
                 } else {
                     System.out.println("Insert amount:");
                     int itemAmount = scanner.nextInt();
-                    Item item = deliveryController.getItemsData().getItem(newitemID);
+                    Item item = deliveryController.getItemsData().get(newitemID);
                     if (deliveryDocument.getItems().containsKey(item)) {
                         deliveryDocument.getItems().put(item, itemAmount + deliveryDocument.getItems().get(item));
                     } else
@@ -255,10 +255,10 @@ public class Delivery_DocumentsController {
                 System.out.println("Insert item ID to remove:");
                 int itemID = scanner.nextInt();
                 scanner.nextLine();
-                if (deliveryController.getItemsData().getItem(itemID) == null) {
+                if (deliveryController.getItemsData().get(itemID) == null) {
                     System.out.println("Item " + itemID + " does not exist\n");
                 } else {
-                    Item item = deliveryController.getItemsData().getItem(itemID);
+                    Item item = deliveryController.getItemsData().get(itemID);
                     Set<Item> itemSet = deliveryDocument.getItems().keySet();
                     if (itemSet.contains(item)) {
                         deliveryDocument.getItems().remove(item);

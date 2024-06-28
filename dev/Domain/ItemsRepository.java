@@ -8,12 +8,6 @@ public class ItemsRepository implements IRepository{
     public ItemsRepository() { this.items = new HashMap<>(); }
     public HashMap<Integer, Item> getItems() { return items; }
     public void setItems(HashMap<Integer, Item> items) { this.items = items; }
-    public void addItem(Item item) {
-        items.put(item.getItemID(),item);
-    }
-    public Item getItem(int itemID) {
-        return items.get(itemID);
-    }
 
     @Override
     public String toString() {

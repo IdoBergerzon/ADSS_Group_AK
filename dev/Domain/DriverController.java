@@ -15,8 +15,8 @@ public class DriverController {
 
     public void addDriver(int driverID, String driverName, int license) {
         Driver newDriver = new Driver(driverID, driverName, license);
-        if (!driversRepository.getDrivers().contains(newDriver)) {
-            driversRepository.addDriver(newDriver);
+        if (!driversRepository.getDrivers().containsKey(driverID)) {
+            driversRepository.add(newDriver);
             System.out.println("Driver added successfully: " + newDriver);
         } else {
             System.out.println("Driver with ID " + driverID + " already exists.");
@@ -50,7 +50,7 @@ public class DriverController {
     }
 
     public Driver getDriver(int driverID) {
-        for (Driver driver : driversRepository.getDrivers()) {
+        for (Driver driver : driversRepository.getDrivers().values()) {
             if (driver.getDriverID() == driverID) {
                 return driver;
             }
@@ -60,7 +60,7 @@ public class DriverController {
 
     public void printAllAvailableDrivers(double weight) {
         System.out.println("All Available Drivers:");
-        for (Driver driver : driversRepository.getDrivers()) {
+        for (Driver driver : driversRepository.getDrivers().values()) {
             if (driver.isAvailable() && driver.getLicenseMaxWeight() >= weight) {
                 System.out.println(driver);
             }

@@ -17,10 +17,6 @@ public class LocationsRepository implements IRepository {
         return locations;
     }
 
-    public void addLocation(ALocation location) {
-        locations.put(location.getLocationID(), location);
-    }
-
     @Override
     public void add(Object o) {
         if (o instanceof ALocation) {

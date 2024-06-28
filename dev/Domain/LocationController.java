@@ -18,10 +18,10 @@ public class LocationController {
         if (!locationsRepository.getLocations().containsKey(locationID)) {
             if (l_type == "Supplier"){
                 Supplier supplier = new Supplier(locationID, address, contact, phone);
-                locationsRepository.addLocation(supplier);
+                locationsRepository.add(supplier);
             } else if (l_type == "Store") {
                 Store store = new Store(locationID, address, contact, phone);
-                locationsRepository.addLocation(store);
+                locationsRepository.add(store);
             }
             else {
                 System.out.println(l_type + "is not a l_type\n");
