@@ -29,7 +29,6 @@ public class TrucksRepository implements IRepository {
             Truck truck = (Truck) o;
             trucks.put(truck.getTruckID(), truck);
         }
-
     }
 
     @Override
@@ -57,5 +56,11 @@ public class TrucksRepository implements IRepository {
             return trucks.get(id);
         }
         return null;
+    }
+
+    @Override
+    public Collection<Object> getAll() {
+
+        return List.of();
     }
 }

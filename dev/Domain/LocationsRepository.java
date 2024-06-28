@@ -1,6 +1,8 @@
 package Domain;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 public class LocationsRepository implements IRepository {
     private HashMap<Integer, ALocation> locations;
@@ -50,5 +52,10 @@ public class LocationsRepository implements IRepository {
             return locations.get(id);
         }
         return null;
+    }
+
+    @Override
+    public Collection getAll() {
+        return List.of();
     }
 }
