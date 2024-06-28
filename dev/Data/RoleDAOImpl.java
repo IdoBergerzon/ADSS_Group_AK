@@ -1,7 +1,12 @@
 package Data;
 
 import Domain.Role;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,16 +61,47 @@ public class RoleDAOImpl implements IDao<Role,Integer> {
 
     @Override
     public void insert(Role role) {
-        String sql = "INSERT INTO roles (Role_ID, name) VALUES (?, ?)";
-        try (Connection connection = Database.connect();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, role.getRoleID());
-            statement.setString(2, role.getName());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonString = null;
+        try {
+            jsonString = objectMapper.writeValueAsString(role);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(jsonString);
+        // Deserialize JSON string into JsonNode
+        try {
+            // Deserialize JSON string into JsonNode
+            JsonNode jsonNode = objectMapper.readTree(jsonString);
+
+            // Extract values from JsonNode
+            int roleId = jsonNode.get("roleID").asInt();
+            String roleName = jsonNode.get("name").asText();
+
+            // SQL statement to insert into roles table
+            String sql = "INSERT INTO roles (Role_ID, name) VALUES (?, ?)";
+
+            // Attempt to insert into database
+            try (Connection connection = Database.connect();
+                 PreparedStatement statement = connection.prepareStatement(sql)) {
+
+                statement.setInt(1, roleId);
+                statement.setString(2, roleName);
+                statement.executeUpdate();
+
+                System.out.println("Inserted Role with ID: " + roleId);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException("Error parsing JSON", e);
         }
     }
+
 
     @Override
     public void remove(Integer id) {
@@ -87,10 +123,10 @@ public class RoleDAOImpl implements IDao<Role,Integer> {
         RoleDAOImpl roleDAO = new RoleDAOImpl();
 
         // Create a new role
-        //Role newRole = new Role(14, "moshe");
+        Role newRole = new Role(14, "moshe");
         // Add the new role to the database
         //System.out.println(roleDAO.search(14));
-        //roleDAO.updateRole(newRole);
+        roleDAO.insert(newRole);
 
         // Retrieve and print the role from the database
         //System.out.println(roleDAO.getAllRoles());
