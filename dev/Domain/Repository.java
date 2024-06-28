@@ -1,5 +1,8 @@
 package Domain;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.*;
 
 
@@ -33,6 +36,14 @@ public class Repository implements IRepository {
 
     @Override
     public void addWorker(Worker worker) {
+        ObjectMapper obj = new ObjectMapper();
+        String jsonString = null;
+        try {
+            jsonString = obj.writeValueAsString(worker);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(jsonString);
         if (worker == null) {
             throw new IllegalArgumentException("Worker cannot be null");
         }

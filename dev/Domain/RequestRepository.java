@@ -1,6 +1,11 @@
 package Domain;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +31,11 @@ public class RequestRepository implements IRequestRepository {
 
     public void addRequest(Request request) throws Exception {
         Pair<Integer,Integer> requestKey = new Pair<>(request.getWorker().getId(), request.getWeek());
+//        System.out.println(request.getWorker().getId() + " " + request.getWeek());
+
+
+//        System.out.println(jsonString);
+
         if (curr_requests.containsKey(requestKey)) {
             throw new Exception("Request already exists");
         }
@@ -55,5 +65,8 @@ public class RequestRepository implements IRequestRepository {
     public Request[] getPastRequests(int week) {
         return past_requests.get(week);
     }
+
+
+
 
 }
