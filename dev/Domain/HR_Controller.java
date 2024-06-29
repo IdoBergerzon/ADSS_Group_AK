@@ -142,7 +142,7 @@ public class HR_Controller {
             case 4:
                 System.out.println("insert new manager ID: \n");
                 int new_manager_ID=scanner.nextInt();
-                to_update.setDirect_manager(new_manager_ID);
+                to_update.setDirect_manager_ID(new_manager_ID);
                 return "update manager ID success \n";
 
             case 5:
@@ -192,7 +192,7 @@ public class HR_Controller {
                         roles+="Role ID: "+request_list[i].getWorker().getRoles()[j].getRoleID()+","+"Role name: "+request_list[i].getWorker().getRoles()[j].getName()+"\n";
                     }
                 }
-                result_workers+="Worker ID: "+request_list[i].getWorker().getId()+"\n"+"Worker name: "+request_list[i].getWorker().getName()+"\n"+roles+request_list[i].getWorker().getWork_branch()+"\n\n";
+                result_workers+="Worker ID: "+request_list[i].getWorker().getId()+"\n"+"Worker name: "+request_list[i].getWorker().getName()+"\n"+roles+request_list[i].getWorker().getBranch_id()+"\n\n";
             }
         }
         System.out.println(result_workers);
@@ -220,7 +220,7 @@ public class HR_Controller {
             //Test to make sure adding this worker is not against the rules
             if (new_worker==null){
                 throw new Exception("Worker with ID-" + shiftWorkers[i]+ " does not exist");
-            } else if (new_worker.getWork_branch()!=branch_id) {
+            } else if (new_worker.getBranch_id()!=branch_id) {
                 throw new Exception("Worker  with ID-" + shiftWorkers[i]+ "does not works in this branch");
             } else{
                 /// Making sure the worker can work in this role

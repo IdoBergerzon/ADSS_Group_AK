@@ -18,24 +18,24 @@ public class Checking_Controller {
         this.SR = ShiftRepository.getInstance();
         this.RR=RoleRepository.getInstance();
         this.BR=BranchRepository.getInstance();
-        Role hr = RR.get(1);
+        Role hr = new Role(1,"hr");
         Branch br1 = new Branch(1, "branch1", "BeerSheva");
         Date dt1 = new Date(2024,1,1);
         Worker ido = new Worker(1,"Ido", 5000,0, dt1, null, hr, br1.getBranchID(), "hr","Leumi:5555555");
 
-        WR.add(ido);
+//        WR.add(ido);
         BR.addBranch(br1);
-//        RR.addRole(hr);
+//        RR.add(hr);
 
     }
 
     public void startWithObject(){
         ///Enitilize the system with some information
 
-        Role shift_manager = RR.get(2);;
-        Role storekeeper = RR.get(3);
-        Role Cashier = RR.get(4);
-        Role delivery = RR.get(5);
+        Role shift_manager = new Role(2,"shift_manager");;
+        Role storekeeper = new Role(3,"storekeeper");;
+//        Role Cashier = RR.get(4);
+//        Role delivery = RR.get(5);
 
         Branch br2 = new Branch(2, "branch2", "Ashdod");
 
@@ -44,27 +44,27 @@ public class Checking_Controller {
         Worker aviv = new Worker(2,"Aviv", 0,50, dt2, 1, shift_manager, br1.getBranchID(), "managment","Hapoalim:1234567");
         Worker hezi = new Worker(3,"hezi", 0,50, dt2, 1, shift_manager, br2.getBranchID(), "managment","Leumi:6392772");
         Worker lior = new Worker(4,"lior", 0,50, dt2, 3, storekeeper, br2.getBranchID(), "managment","Beinleumi:1455659");
-        Worker asaf = new Worker(5,"asaf", 0,50, dt2, 3, Cashier, br2.getBranchID(), "managment","Discont:6453745");
-        Worker rudi = new Worker(6,"rudi", 0,50, dt2, 3, storekeeper, br2.getBranchID(), "managment","Yahav:1525358");
-        Worker tamir = new Worker(7,"tamir", 0,50, dt2, 3, Cashier, br2.getBranchID(), "managment","Hapoalim:9753146");
-        Worker daniel = new Worker(8,"daniel", 0,50, dt2, 1, delivery, br2.getBranchID(), "managment","Leumi:6612389");
-        Worker noa = new Worker(9,"noa", 0,50, dt2, 1, shift_manager, br2.getBranchID(), "managment","Hapoalim:1234767");
+//        Worker asaf = new Worker(5,"asaf", 0,50, dt2, 3, Cashier, br2.getBranchID(), "managment","Discont:6453745");
+//        Worker rudi = new Worker(6,"rudi", 0,50, dt2, 3, storekeeper, br2.getBranchID(), "managment","Yahav:1525358");
+//        Worker tamir = new Worker(7,"tamir", 0,50, dt2, 3, Cashier, br2.getBranchID(), "managment","Hapoalim:9753146");
+//        Worker daniel = new Worker(8,"daniel", 0,50, dt2, 1, delivery, br2.getBranchID(), "managment","Leumi:6612389");
+//        Worker noa = new Worker(9,"noa", 0,50, dt2, 1, shift_manager, br2.getBranchID(), "managment","Hapoalim:1234767");
 
 
 
         WR.add(aviv);
-        WR.add(noa);
+//        WR.add(noa);
         WR.add(hezi);
         WR.add(lior);
-        WR.add(asaf);
-        WR.add(rudi);
-        WR.add(tamir);
-        WR.add(daniel);
+//        WR.add(asaf);
+//        WR.add(rudi);
+//        WR.add(tamir);
+//        WR.add(daniel);
 
         BR.addBranch(br2);
 
-//        RR.addRole(shift_manager);
-//        RR.addRole(storekeeper);
+//        RR.add(shift_manager);
+//        RR.add(storekeeper);
 //        RR.addRole(delivery);
 //        RR.addRole(Cashier);
 

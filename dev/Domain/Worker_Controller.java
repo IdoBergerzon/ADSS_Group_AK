@@ -31,16 +31,16 @@ public class Worker_Controller {
 
     public String ShowCurrRoster(){
         Worker worker=workers_memory.get(worker_id);
-        Roster roster= shifts_repository.getRoster(worker.getWork_branch(),Week.getWeek());
+        Roster roster= shifts_repository.getRoster(worker.getBranch_id(),Week.getWeek());
         if(roster==null){
-            roster= shifts_repository.getRoster(worker.getWork_branch(),Week.getWeek()-1);
+            roster= shifts_repository.getRoster(worker.getBranch_id(),Week.getWeek()-1);
         }
         return roster.toString();
     }
 
     public String ShowPastRoster(int week) throws Exception {
         Worker worker=workers_memory.get(worker_id);
-        Roster roster= shifts_repository.getRoster(worker.getWork_branch(),week);
+        Roster roster= shifts_repository.getRoster(worker.getBranch_id(),week);
         if(roster==null) {
             throw new Exception("Your branch doesn't have roster for this week");
         }
