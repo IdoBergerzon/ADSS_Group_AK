@@ -19,13 +19,18 @@ public class Worker_Controller {
     public void addRequest( Boolean[][] requestArray)throws Exception{
         Request newRequest = new Request(workers_memory.get(worker_id),requestArray); //לשנות את השבוע ולבנות בדיקות אם קיים כבר בקשה או אם המערך לא נכון או משהו
         try {
-            requests_repository.addRequest(newRequest);
+            requests_repository.add(newRequest);
         } catch (Exception e) {
             throw new Exception("Request already exists");
         }
     }
     public void EditRequest(Boolean[][] requestArray) {
-        requests_repository.getRequestByWorker(worker_id).setRequest(requestArray);
+        Request newRequest = new Request(workers_memory.get(worker_id),requestArray);
+        try{
+            requests_repository.editRequest(newRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -78,10 +83,7 @@ public class Worker_Controller {
         return false;
     }
     public String getrequestById(){
-        if(requests_repository.getRequestByWorker(worker_id).getRequest()==null){
-            return null;
-        }
+        return requests_repository.get(new Pair<>(worker_id,Week.getWeek())).toString();
 
-        return requests_repository.getRequestByWorker(worker_id).toString();
     }
 }

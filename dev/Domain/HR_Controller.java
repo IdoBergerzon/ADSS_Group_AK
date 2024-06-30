@@ -247,14 +247,14 @@ public class HR_Controller {
     }
 
     public Boolean isBranch(int branch_id){
-        if(branchs_repository.getBranchByID(branch_id) == null) {
+        if(branchs_repository.get(branch_id) == null) {
             return false;
         }
         return true;
     }
 
     public void createNewRoster(int branch_id){
-        Branch branch=branchs_repository.getBranchByID(branch_id);
+        Branch branch=branchs_repository.get(branch_id);
         Roster new_roster =new Roster(branch);
 
         shifts_repository.addRoster(new_roster);
@@ -278,7 +278,7 @@ public class HR_Controller {
     }
 
     public boolean isAvailable(int worker_id, int day, int shift_type){
-        Request request = requests_repository.getRequestByWorker(worker_id);
+        Request request = requests_repository.get(new Pair(worker_id, Week.getWeek()));
         if(request==null){
             return true;
         }

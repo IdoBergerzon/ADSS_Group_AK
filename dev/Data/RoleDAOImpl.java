@@ -1,6 +1,5 @@
 package Data;
 
-import Domain.Role;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -132,19 +131,19 @@ public class RoleDAOImpl implements IDao<JsonNode,Integer> {
 
 
 
-
-    public static void main(String[] args) {
-        RoleDAOImpl roleDAO = new RoleDAOImpl();
+//
+//    public static void main(String[] args) {
+//        RoleDAOImpl roleDAO = new RoleDAOImpl();
 
         // Create a new role
-        Role newRole = new Role(17, "aviv");
+//        Role newRole = new Role(17, "aviv");
         // Add the new role to the database
         //System.out.println(roleDAO.search(14));
-        ObjectMapper objectMapper = new ObjectMapper();
+//        ObjectMapper objectMapper = new ObjectMapper();
 
         // Convert Role object to JsonNode
-        JsonNode jsonNode = objectMapper.valueToTree(newRole);
-        roleDAO.insert(jsonNode);
+//        JsonNode jsonNode = objectMapper.valueToTree(newRole);
+//        roleDAO.insert(jsonNode);
 
         // Retrieve and print the role from the database
         //System.out.println(roleDAO.getAllRoles());
@@ -155,7 +154,7 @@ public class RoleDAOImpl implements IDao<JsonNode,Integer> {
         // Print all roles
         //roleDAO.getAllRoles().forEach(role -> System.out.println("Role ID: " + role.getRoleID() + ", Role Name: " + role.getName()));
 
-    }
+//    }
 
 
 }

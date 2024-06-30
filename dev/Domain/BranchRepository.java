@@ -1,15 +1,17 @@
 package Domain;
 
-import java.util.ArrayList;
+import Data.BranchDAOImpl;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class BranchRepository implements IBranchRepository {
+public class BranchRepository implements IRepository<Branch,Integer> {
     private final Map<Integer, Branch> branches;
+    private BranchDAOImpl dao;
 
     private BranchRepository(){
         this.branches = new HashMap<>();
+        this.dao = new BranchDAOImpl();
     }
 
     private static class InMemoryHolder {
@@ -21,24 +23,35 @@ public class BranchRepository implements IBranchRepository {
     }
 
     @Override
-    public void addBranch(Branch branch) {
+    public void add(Branch branch) {
         if (branch == null) {
-            throw new IllegalArgumentException("Role cannot be null");
+            throw new IllegalArgumentException("Branch cannot be null");
         }
-        if(branches.containsKey(branch.getBranchID())){
-            throw new IllegalArgumentException("Role with id " + branch.getBranchID() + " already exists");
+        if(dao.search(branch.getBranchID()) != null){
+            throw new IllegalArgumentException("Branch with id " + branch.getBranchID() + " already exists");
         }
         branches.put(branch.getBranchID(), branch);
+        dao.insert(JsonNodeConverter.toJsonNode(branch));
     }
 
     @Override
-    public Branch getBranchByID(int id) {
-        return branches.get(id);
+    public Branch get(Integer id) {
+        if(branches.containsKey(id))
+            return branches.get(id);
+        return JsonNodeConverter.fromJsonNode(dao.search(id), Branch.class);
     }
 
     @Override
-    public void deleteBranch(int id) {
-        branches.remove(id);
+    public void remove(Integer id) {
+        if(id != null){
+            try{
+                dao.remove(id);
+                branches.remove(id);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
 

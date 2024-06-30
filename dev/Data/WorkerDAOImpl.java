@@ -52,7 +52,6 @@ public class WorkerDAOImpl implements IDao<JsonNode, Integer>{
             try (Connection connection = Database.connect();
                  PreparedStatement statement = connection.prepareStatement(sql)) {
 
-
                 statement.setInt(1, id);
                 statement.setString(2, worker.toString());
                 statement.setInt(3, 1);
