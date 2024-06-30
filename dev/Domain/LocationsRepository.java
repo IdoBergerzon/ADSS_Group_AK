@@ -1,10 +1,11 @@
 package Domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-public class LocationsRepository implements IRepository {
+public class LocationsRepository<T> implements IRepository<T> {
     private HashMap<Integer, ALocation> locations;
 
     public LocationsRepository() {
@@ -20,37 +21,38 @@ public class LocationsRepository implements IRepository {
     }
 
     @Override
-    public void add(Object o) {
-        if (o instanceof ALocation) {
-            ALocation location = (ALocation) o;
+    public void add(T t) {
+        if (t instanceof ALocation) {
+            ALocation location = (ALocation) t;
             locations.put(location.getLocationID(), location);
         }
     }
 
     @Override
-    public void remove(Object o) {
-        if (o instanceof ALocation) {
-            ALocation location = (ALocation) o;
-            locations.remove(location.getLocationID());
+    public void remove(int locationID) {
+        locations.remove(locationID);
         }
-    }
 
     @Override
-    public void update(Object o) {
-        if (o instanceof ALocation) {
-            ALocation location = (ALocation) o;
+    public void update(T t) {
+        if (t instanceof ALocation) {
+            ALocation location = (ALocation) t;
             if (locations.containsKey(location.getLocationID())) {
-                locations.remove(location.getLocationID());
-                locations.put(location.getLocationID(), location);
+                locations.replace(location.getLocationID(), location);
             }
         }
     }
 
     @Override
-    public Object get(int id) {
+    public T get(int id) {
         if (locations.containsKey(id)) {
-            return locations.get(id);
+            return (T) locations.get(id);
         }
         return null;
+    }
+
+    @Override
+    public List<T> getAll() {
+        return new ArrayList(this.locations.values());
     }
 }

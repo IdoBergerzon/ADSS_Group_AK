@@ -1,10 +1,11 @@
 package Domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-public class ItemsRepository implements IRepository{
+public class ItemsRepository<T> implements IRepository<T>{
     private HashMap<Integer, Item> items;
 
     public ItemsRepository() { this.items = new HashMap<>(); }
@@ -22,37 +23,43 @@ public class ItemsRepository implements IRepository{
     }
 
     @Override
-    public void add(Object o) {
-        if (o instanceof Item) {
-            Item item = (Item) o;
+    public void add(T t) {
+        if (t instanceof Item) {
+            Item item = (Item) t;
             items.put(item.getItemID(),item);
         }
     }
 
     @Override
-    public void remove(Object o) {
-        if (o instanceof Item) {
-            Item item = (Item) o;
-            items.remove(item.getItemID());
+    public void remove(int itemID) {
+        items.remove(itemID);
         }
-    }
 
     @Override
-    public void update(Object o) {
-        if (o instanceof Item) {
-            Item item = (Item) o;
-            if(items.containsKey(item.getItemID())) {
-                items.remove(item.getItemID());
+    public void update(T t) {
+        if (t instanceof Item) {
+            Item item = (Item) t;
+            if (items.containsKey(item.getItemID())) {
+                items.replace(item.getItemID(),item);
                 items.put(item.getItemID(),item);
             }
         }
     }
 
     @Override
-    public Object get(int id) {
-        if(items.containsKey(id)) {
-            return items.get(id);
+    public T get(int id) {
+        if (items.containsKey(id)) {
+            return (T) items.get(id);
         }
         return null;
+    }
+
+    @Override
+    public List<T> getAll() {
+        List<T> allItems = new ArrayList<>();
+        for (Item item : items.values()) {
+            allItems.add((T) item);
+        }
+        return allItems;
     }
 }

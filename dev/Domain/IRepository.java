@@ -1,13 +1,11 @@
 package Domain;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-public interface IRepository {
-    void add(Object o);
-    void remove(Object o);
-    void update(Object o);
-    Object get(int id);
+public interface IRepository<T> {
+    void add(T t);
+    void remove(int id);
+    void update(T t);
+    T get(int id);
+    List<T> getAll();
 }

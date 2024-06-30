@@ -23,7 +23,7 @@ public class TransportController {
         if (!transportsRepository.getTransports().containsKey(transportID)) {
             return null;
         }
-        return transportsRepository.getTransports().get(transportID);
+        return (Transport) transportsRepository.get(transportID);
     }
 
     public void displayTransport() {
@@ -319,7 +319,9 @@ public class TransportController {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Possible Trucks:\n");
         int count = 0;
-        for (Truck truck1 : truckController.getTrucksData().getTrucks().values()) {
+        List<Truck> truckList = truckController.getTrucksData().getAll();
+        for (int i = 0; i < truckList.size(); i++) {
+            Truck truck1 = truckList.get(i);
             if (truck1.getMaxWeight() >= newTransport.getWeight() && truck1.isAvailable()) {
                 System.out.println(truck1);
                 count++;
@@ -429,7 +431,7 @@ public class TransportController {
                 if (deliveryController.getItemsData().getItems().get(itemID) == null) {
                     System.out.println("Item does not exist.\n");
                 } else {
-                    Item removedItem = deliveryController.getItemsData().getItems().get(itemID);
+                    Item removedItem = (Item) deliveryController.getItemsData().getItems().get(itemID);
                     if (deliveryDoc.removeItem(removedItem)) {
                         System.out.println("Item" + removedItem + "removed successfully.\n");
                         newTransport.calc_transportWeight();

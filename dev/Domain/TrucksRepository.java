@@ -2,7 +2,7 @@ package Domain;
 
 import java.util.*;
 
-public class TrucksRepository implements IRepository {
+public class TrucksRepository<T> implements IRepository<T> {
     private HashMap<Integer, Truck> trucks;
 
     public TrucksRepository() { this.trucks = new HashMap<>();}
@@ -24,37 +24,38 @@ public class TrucksRepository implements IRepository {
     }
 
     @Override
-    public void add(Object o) {
-        if (o instanceof Truck) {
-            Truck truck = (Truck) o;
+    public void add(T t) {
+        if (t instanceof Truck) {
+            Truck truck = (Truck) t;
             trucks.put(truck.getTruckID(), truck);
         }
     }
 
     @Override
-    public void remove(Object o) {
-        if (o instanceof Truck) {
-            Truck truck = (Truck) o;
-            trucks.remove(truck.getTruckID());
-        }
+    public void remove(int truckID) {
+        trucks.remove(truckID);
     }
 
     @Override
-    public void update(Object o) {
-        if (o instanceof Truck) {
-            Truck truck = (Truck) o;
-            if (trucks.containsKey(((Truck) o).getTruckID())) {
-                trucks.remove(truck.getTruckID());
-                trucks.put(((Truck) o).getTruckID(), (Truck) o);
+    public void update(T t) {
+        if (t instanceof Truck) {
+            Truck truck = (Truck) t;
+            if (trucks.containsKey(truck.getTruckID())) {
+                trucks.replace(truck.getTruckID(), truck);
             }
         }
     }
 
     @Override
-    public Object get(int id) {
+    public T get(int id) {
         if (trucks.containsKey(id)) {
-            return trucks.get(id);
+            return (T) trucks.get(id);
         }
         return null;
+    }
+
+    @Override
+    public List<T> getAll() {
+        return new ArrayList(this.trucks.values());
     }
 }

@@ -3,10 +3,10 @@ package Domain;
 import java.util.*;
 
 public class Delivery_DocumentsController {
-    Delivery_DocumentsRepository documentsData;
+    Delivery_DocumentsRepository documentsRepository;
     ItemsRepository itemsRepository;
     public Delivery_DocumentsController(){
-        documentsData = new Delivery_DocumentsRepository();
+        documentsRepository = new Delivery_DocumentsRepository();
         itemsRepository = new ItemsRepository();
     }
 
@@ -15,23 +15,25 @@ public class Delivery_DocumentsController {
     }
 
     public void addDelivery_Document(int delivery_id, Store source, Supplier destination, HashMap<Item,Integer> items){
-        if (documentsData.getDelivery_Documents().containsKey(delivery_id)){
+        if (documentsRepository.getDelivery_Documents().containsKey(delivery_id)){
             System.out.println("delivery " + delivery_id + " already exists");
         }
         else {
             Delivery_Document newDelivery = new Delivery_Document(source, delivery_id, destination, items);
-            documentsData.getDelivery_Documents().put(delivery_id, newDelivery);
+            documentsRepository.getDelivery_Documents().put(delivery_id, newDelivery);
         }
     }
 
     public Delivery_Document getDelivery_Document(int delivery_id){
-        return documentsData.getDelivery_Documents().getOrDefault(delivery_id, null);
+        return (Delivery_Document) documentsRepository.get(delivery_id);
     }
 
     public void getShippingAreaForDest(int SourceArea){
         int flag = 0;
         Set<Integer> setArea = new HashSet<>();
-        for (Delivery_Document delivery : documentsData.getDelivery_Documents().values()){
+        List<Delivery_Document> deliveryDocumentList = documentsRepository.getAll();
+        for (int i = 0; i < deliveryDocumentList.size(); i++){
+            Delivery_Document delivery = deliveryDocumentList.get(i);
             if (delivery.getSource().getShippingArea() == SourceArea && delivery.getDelivery_Status().equals(Delivery_DocumentStatus.waiting)) {
                 setArea.add(delivery.getDestination().getShippingArea());
                 flag = 1;
@@ -134,7 +136,9 @@ public class Delivery_DocumentsController {
     public void getDeliveryInArea(int sourceArea ,int destinationArea){
         System.out.println("Delivery in Shipping Area: Source= " + sourceArea + ", Destination= " + destinationArea + ":");
         int flag = 0;
-        for (Delivery_Document delivery : documentsData.getDelivery_Documents().values()){
+        List<Delivery_Document> deliveryDocumentList = documentsRepository.getAll();
+        for (int i = 0; i < deliveryDocumentList.size(); i++){
+            Delivery_Document delivery = deliveryDocumentList.get(i);
             if (delivery.getSource().getShippingArea()==sourceArea && delivery.getDestination().getShippingArea()==destinationArea
                     && delivery.getDelivery_Status().equals(Delivery_DocumentStatus.waiting)){
                 System.out.println(delivery);
@@ -278,7 +282,7 @@ public class Delivery_DocumentsController {
     }
 
 
-    public Delivery_DocumentsRepository getDocumentsData() {
-        return documentsData;
+    public Delivery_DocumentsRepository getDocumentsRepository() {
+        return documentsRepository;
     }
 }

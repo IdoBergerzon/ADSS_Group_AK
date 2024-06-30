@@ -1,6 +1,7 @@
 package Domain;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -32,7 +33,7 @@ public class LocationController {
     }
     public ALocation getLocation(int locationID) {
             if (locationsRepository.getLocations().get(locationID) != null) {
-                return locationsRepository.getLocations().get(locationID);
+                return (ALocation) locationsRepository.get(locationID);
             }
             return null;
     }
@@ -50,7 +51,9 @@ public class LocationController {
 
     public void getAllSourceShippingArea() {
         Set <Integer> ssa = new HashSet();
-        for (ALocation location : locationsRepository.getLocations().values()) {
+        List<ALocation> locationsNew = locationsRepository.getAll();
+        for (int i = 0; i < locationsNew.size(); i++) {
+            ALocation location = locationsNew.get(i);
             if (location.getL_type().equals("Store")) {
                 ssa.add(location.getShippingArea());
             }
@@ -107,7 +110,7 @@ public class LocationController {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Insert number of shipping area:");
         int shippingArea = scanner.nextInt();
-        ALocation location = locationsRepository.getLocations().get(locationID);
+        ALocation location = (ALocation) locationsRepository.get(locationID);
         location.getAddress().setShipping_area(shippingArea);
         System.out.println("Shipping area set successfully: " + location+"\n");
     }
@@ -116,7 +119,7 @@ public class LocationController {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Insert new contact:");
         String contact = scanner.next();
-        ALocation location = locationsRepository.getLocations().get(locationID);
+        ALocation location = (ALocation) locationsRepository.get(locationID);
         location.setContact(contact);
         System.out.println("Contact updated successfully.\n");
     }
@@ -125,7 +128,7 @@ public class LocationController {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Insert new phone number:");
         String phoneNumber = scanner.next();
-        ALocation location = locationsRepository.getLocations().get(locationID);
+        ALocation location = (ALocation) locationsRepository.get(locationID);
         location.setPhone(phoneNumber);
         System.out.println("Phone number updated successfully.\n");
     }

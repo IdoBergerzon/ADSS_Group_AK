@@ -1,10 +1,11 @@
 package Domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-public class TransportsRepository implements IRepository {
+public class TransportsRepository<T> implements IRepository<T> {
     private HashMap<Integer, Transport> transports;
 
 
@@ -27,38 +28,39 @@ public class TransportsRepository implements IRepository {
     }
 
     @Override
-    public void add(Object o) {
-        if (o instanceof Transport) {
-            Transport transport = (Transport) o;
+    public void add(T t) {
+        if (t instanceof Transport) {
+            Transport transport = (Transport) t;
             this.transports.put(transport.getTransportID(), transport);
         }
     }
 
     @Override
-    public void remove(Object o) {
-        if (o instanceof Transport) {
-            Transport transport = (Transport) o;
-            this.transports.remove(transport.getTransportID());
-        }
+    public void remove(int id) {
+        this.transports.remove(id);
     }
 
     @Override
-    public void update(Object o) {
-        if (o instanceof Transport) {
-            Transport transport = (Transport) o;
+    public void update(T t) {
+        if (t instanceof Transport) {
+            Transport transport = (Transport) t;
             if (this.transports.containsKey(transport.getTransportID())) {
-                this.transports.remove(transport.getTransportID());
-                this.transports.put(transport.getTransportID(), transport);
+                this.transports.replace(transport.getTransportID(), transport);
             }
         }
     }
 
     @Override
-    public Object get(int id) {
+    public T get(int id) {
         if (this.transports.containsKey(id)) {
-            return this.transports.get(id);
+            return (T) this.transports.get(id);
         }
         return null;
+    }
+
+    @Override
+    public List<T> getAll() {
+        return new ArrayList(this.transports.values());
     }
 }
 

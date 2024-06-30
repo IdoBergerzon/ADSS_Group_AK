@@ -1,6 +1,7 @@
 package Domain;
 
 
+import java.util.List;
 import java.util.Scanner;
 
 public class TruckController {
@@ -15,7 +16,9 @@ public class TruckController {
 
     public void printAllAvailableTrucks(double weight) {
         System.out.println("Available Trucks:");
-        for (Truck truck : trucksRepository.getTrucks().values()) {
+        List<Truck> trucksNew = trucksRepository.getAll();
+        for (int i = 0; i < trucksNew.size(); i++) {
+            Truck truck = trucksNew.get(i);
             if (truck.isAvailable() && truck.getTruckWeight()+truck.getMaxWeight() >= weight) {
                 System.out.println(truck);
             }
@@ -54,9 +57,7 @@ public class TruckController {
     }
 
     public Truck getTruck(int truckID) {
-        if (trucksRepository.get(truckID) != null)
-            return (Truck) trucksRepository.get(truckID);
-        else return null;
+        return (Truck) trucksRepository.get(truckID);
     }
 
     public void displayTruck() {

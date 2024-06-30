@@ -1,10 +1,10 @@
 package Domain;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class DriversRepository implements IRepository {
+public class DriversRepository<T> implements IRepository<T> {
     private HashMap<Integer,Driver> drivers;
 
     public DriversRepository() {
@@ -19,6 +19,10 @@ public class DriversRepository implements IRepository {
         return drivers;
     }
 
+    public List getAll() {
+        return new ArrayList(drivers.values());
+    }
+
     @Override
     public String toString() {
         StringBuilder driversStr = new StringBuilder();
@@ -30,36 +34,35 @@ public class DriversRepository implements IRepository {
     }
 
     @Override
-    public void add(Object o) {
-        if (o instanceof Driver) {
-            Driver driver = (Driver) o;
-            drivers.put(((Driver)o).getDriverID(),driver);
+    public void remove(int id) {
+        if (drivers.containsKey(id)) {
+            drivers.remove(id);
         }
     }
 
     @Override
-    public void remove(Object o) {
-        if (o instanceof Driver) {
-            Driver driver = (Driver) o;
-            drivers.remove(driver.getDriverID());
-        }
-    }
-
-    @Override
-    public void update(Object o) {
-        if (o instanceof Driver) {
-            Driver driver = (Driver) o;
-            if (drivers.containsKey(((Driver)o).getDriverID())) {
-                drivers.remove(((Driver)o).getDriverID());
-                drivers.put(((Driver)o).getDriverID(),driver);
+    public void update(T t) {
+        if (t instanceof Driver) {
+            Driver driver = (Driver) t;
+            if (drivers.containsKey(driver.getDriverID())) {
+                drivers.replace(driver.getDriverID(), driver);
             }
         }
     }
 
     @Override
-    public Object get(int id) {
+    public void add(T t) {
+        if (t instanceof Driver){
+            Driver driver = (Driver) t;
+            drivers.put(driver.getDriverID(),driver);
+        }
+    }
+
+
+    @Override
+    public T get(int id) {
         if (drivers.containsKey(id)) {
-            return drivers.get(id).getDriverID();
+            return (T) drivers.get(id);
         }
         return null;
     }

@@ -1,5 +1,6 @@
 package Domain;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class DriverController {
@@ -50,17 +51,14 @@ public class DriverController {
     }
 
     public Driver getDriver(int driverID) {
-        for (Driver driver : driversRepository.getDrivers().values()) {
-            if (driver.getDriverID() == driverID) {
-                return driver;
-            }
-        }
-        return null;
+        return (Driver) driversRepository.get(driverID);
     }
 
     public void printAllAvailableDrivers(double weight) {
         System.out.println("All Available Drivers:");
-        for (Driver driver : driversRepository.getDrivers().values()) {
+        List<Driver> availableDrivers = driversRepository.getAll();
+        for (int i = 0; i < availableDrivers.size(); i++) {
+            Driver driver = availableDrivers.get(i);
             if (driver.isAvailable() && driver.getLicenseMaxWeight() >= weight) {
                 System.out.println(driver);
             }
