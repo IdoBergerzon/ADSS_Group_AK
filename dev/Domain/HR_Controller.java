@@ -165,6 +165,7 @@ public class HR_Controller {
     public void createNewRole(int roleId, String roleName){
         Role newRole= new Role(roleId,roleName);
         roles_repository.add(newRole);
+        //System.out.println("Inserted Role with ID: " + roleId);
 
     }
     public void displayWorkersByShift(int day,int shift_type){

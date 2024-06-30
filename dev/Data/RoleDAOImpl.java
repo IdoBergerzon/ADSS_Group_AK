@@ -49,7 +49,7 @@ public class RoleDAOImpl implements IDao<JsonNode,Integer> {
                 int rowsUpdated = statement.executeUpdate();
 
                 if (rowsUpdated > 0) {
-                    System.out.println("Updated Role with ID: " + roleId);
+                    //System.out.println("Updated Role with ID: " + roleId);
                 } else {
                     throw new IllegalArgumentException("Role with ID " + roleId + " does not exist, update failed.");
                 }
@@ -105,7 +105,6 @@ public class RoleDAOImpl implements IDao<JsonNode,Integer> {
                 statement.setString(2, roleName);
                 statement.executeUpdate();
 
-                System.out.println("Inserted Role with ID: " + roleId);
 
             } catch (SQLException e) {
                 e.printStackTrace();

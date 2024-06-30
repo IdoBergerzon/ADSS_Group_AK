@@ -54,7 +54,7 @@ public class BranchDAOImpl implements IDao<JsonNode,Integer> {
                 int rowsUpdated = statement.executeUpdate();
 
                 if (rowsUpdated > 0) {
-                    System.out.println("Updated Branch with ID: " + branchId);
+                    //System.out.println("Updated Branch with ID: " + branchId);
                 } else {
                     throw new IllegalArgumentException("Branch with ID " + branchId + " does not exist, update failed.");
                 }
@@ -114,7 +114,6 @@ public class BranchDAOImpl implements IDao<JsonNode,Integer> {
                 statement.setString(3, branchAddress);
                 statement.executeUpdate();
 
-                System.out.println("Inserted Branch with ID: " + branchId);
 
             } catch (SQLException e) {
                 e.printStackTrace();
