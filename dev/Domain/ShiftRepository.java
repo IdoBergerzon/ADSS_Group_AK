@@ -1,18 +1,23 @@
 package Domain;
 
 
+import Data.RosterDAOImpl;
+import com.fasterxml.jackson.databind.JsonNode;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ShiftRepository implements IShiftRespository {
+public class ShiftRepository implements IRepository<Roster,Pair> {
     private final Map<Pair, Roster> rosters;
+    private RosterDAOImpl dao;
 
 
 
     private ShiftRepository() {
         rosters = new HashMap<>();
+        dao = new RosterDAOImpl();
 
     }
 
@@ -28,17 +33,40 @@ public class ShiftRepository implements IShiftRespository {
         return ShiftRepository.InShiftHolder.INSTANCE;
     }
 
-    public Roster getRoster(int branch_id, int week) {
-        return rosters.get(new Pair<>(branch_id,week));
+    @Override
+    public Roster get(Pair key) {
+        if(rosters.containsKey(key))
+            return rosters.get(key);
+        JsonNode jn = dao.search(key);
+        if (jn != null) {
+            return JsonNodeConverter.fromJsonNode(jn, Roster.class);
+        }
+        return null;
+
     }
 
-    public void addRoster(Roster roster) {
-        Pair key = new Pair<>(roster.getBranch().getBranchID(), roster.getWeek());
-        if (rosters.get(key) != null) {
-            throw new IllegalArgumentException("Roster already exists");
+    @Override
+    public void add(Roster roster) {
+        Pair<Integer,Integer> requestKey = new Pair<>(roster.getBranch().getBranchID(), roster.getWeek());
+        try {
+            dao.insert(JsonNodeConverter.toJsonNode(roster));
+            rosters.put(requestKey, roster);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Roster for week:" + roster.getWeek() + " for branch " + roster.getBranch().getBranchID() + " already exists");
         }
-        rosters.put(key, roster);
 
+    }
+
+    @Override
+    public void remove(Pair key) {
+        if(key != null){
+            try{
+                dao.remove(key);
+                rosters.remove(key);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void setShift(Shift shift) {
@@ -47,8 +75,19 @@ public class ShiftRepository implements IShiftRespository {
         roster.addShift(shift);
         rosters.put(key,roster);
     }
+
+
     public List<Roster> getAllRosters(){
-        return new ArrayList<Roster>(rosters.values());
+        List<JsonNode> jsonNodes = dao.getAllRosters();
+        List<Roster> list_rosters = new ArrayList<>();
+        for (JsonNode jsonNode : jsonNodes) {
+            Roster roster = JsonNodeConverter.fromJsonNode(jsonNode, Roster.class);
+            if(!rosters.containsKey(new Pair<>(roster.getBranch().getBranchID(),roster.getWeek()))){
+                rosters.put(new Pair<>(roster.getBranch().getBranchID(),roster.getWeek()), roster);
+            }
+            list_rosters.add(roster);
+        }
+        return list_rosters;
     }
 
 

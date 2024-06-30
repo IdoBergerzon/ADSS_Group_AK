@@ -84,7 +84,7 @@ public class BranchDAOImpl implements IDao<JsonNode,Integer> {
                     // Construct JsonNode
                     JsonNode jsonNode = objectMapper.createObjectNode()
                             .put("branchID", foundBranchId)
-                            .put("name", foundBranchName)
+                            .put("branchName", foundBranchName)
                             .put("address", foundAddress);
 
                     return jsonNode;
@@ -102,7 +102,7 @@ public class BranchDAOImpl implements IDao<JsonNode,Integer> {
     public void insert(JsonNode branch) {
         try {
             int branchId = branch.get("branchID").asInt();
-            String branchName = branch.get("branch_name").asText();
+            String branchName = branch.get("branchName").asText();
             String branchAddress = branch.get("address").asText();
 
             String sql = "INSERT INTO branches (Branch_ID, name, address) VALUES (?, ?, ?)";

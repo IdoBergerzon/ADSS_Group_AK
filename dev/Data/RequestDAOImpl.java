@@ -119,7 +119,7 @@ public class RequestDAOImpl implements IDao<JsonNode, Pair> {
         }
     }
 
-    public static void main(String[] args){
+//    public static void main(String[] args){
 //        RequestDAOImpl dao = new RequestDAOImpl();
 //        Role cashier=new Role(3,"cashiers");
 //        Worker aviv=new Worker(22,"aviv",5000,0,new Date(),1,cashier,2,"cashiers","leumi 5555555");
@@ -133,6 +133,6 @@ public class RequestDAOImpl implements IDao<JsonNode, Pair> {
 //        dao.update(jsonNode2);
 //       ;
 //        System.out.println( dao.search(new Pair<>(aviv.getId(), 0)).toString());
-    }
+//    }
 
 }

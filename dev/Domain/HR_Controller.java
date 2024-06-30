@@ -226,7 +226,7 @@ public class HR_Controller {
                 /// Making sure the worker can work in this role
                 boolean roleExists = false;
                 for (Role role : new_worker.getRoles()) {
-                    if (role == new_role) { // Assuming Role class has a getID() method
+                    if (role.equals( new_role)) { // Assuming Role class has a getID() method
                         roleExists = true;
                         break;
                     }
@@ -257,7 +257,7 @@ public class HR_Controller {
         Branch branch=branchs_repository.get(branch_id);
         Roster new_roster =new Roster(branch);
 
-        shifts_repository.addRoster(new_roster);
+        shifts_repository.add(new_roster);
         List<Worker> list=workers_memory.getAllWorkers();
         for (int i=0;i<list.size();i++){
             list.get(i).setDays_off(list.get(i).getDays_off()+0.25);
