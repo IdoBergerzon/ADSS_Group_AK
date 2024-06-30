@@ -92,7 +92,57 @@ public class HR_Main {
         System.out.println("Insert ID");
         int id_to_update=scanner.nextInt();
 
-        System.out.println(hr_controller.Edit_Worker_Details(id_to_update));
+        System.out.println("what you want to update for WorkerID: "+id_to_update+" ?\n"
+                +"1.name\n"+
+                "2.monthly wage\n"
+                +"3.hourly wage\n"
+                +"4.direct manager ID\n"
+                +"5.departement\n"
+                +"6.bank details\n");
+        int choice = scanner.nextInt();
+
+        switch (choice){
+            case 1:
+                String newName;
+                System.out.println("insert new name: ");
+                newName = scanner.next();
+                System.out.println(hr_controller.Edit_Worker_Details(id_to_update,choice,newName));
+                break;
+
+            case 2:
+                String new_monthly_wage;
+                System.out.println("insert new monthly wage: \n");
+                new_monthly_wage = scanner.next();
+                System.out.println(hr_controller.Edit_Worker_Details(id_to_update,choice,new_monthly_wage));
+                break;
+
+
+            case 3:
+                System.out.println("insert new hourly wage: \n");
+                String new_hourly_wage=scanner.next();
+                System.out.println(hr_controller.Edit_Worker_Details(id_to_update,choice,new_hourly_wage));
+                break;
+
+            case 4:
+                System.out.println("insert new manager ID: \n");
+                String new_manager_ID=scanner.next();
+                System.out.println(hr_controller.Edit_Worker_Details(id_to_update,choice,new_manager_ID));
+                break;
+            case 5:
+                System.out.println("insert new department: \n");
+                String new_department=scanner.next();
+                System.out.println(hr_controller.Edit_Worker_Details(id_to_update,choice,new_department));
+                break;
+            case 6:
+                System.out.println("insert new Bank details:(format: BANK_NAME:ACCOUNT_NUMBER) ");
+                String new_bank_details=scanner.next();
+                System.out.println(hr_controller.Edit_Worker_Details(id_to_update,choice,new_bank_details));
+                break;
+            default:
+                System.out.println("Invalid choice. Please enter a number between 1 and 5.");
+                break;
+        }
+
     }
 
     public void displayWorkersByShift(){

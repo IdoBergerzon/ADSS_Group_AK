@@ -1,6 +1,7 @@
 package Domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.util.Arrays;
 import java.util.Date;
 
 
@@ -169,6 +170,14 @@ public class Worker {
         this.bank_details = bank_details;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Worker worker = (Worker) o;
+        return id == worker.id && name.equals(worker.name) && Arrays.equals(roles,worker.roles)&& branch_id==worker.branch_id && direct_manager_ID.equals(worker.direct_manager_ID) && departement.equals(worker.departement)&&hourly_wage==worker.hourly_wage&&monthly_wage==worker.monthly_wage&&bank_details.equals(worker.bank_details);
+
+    }
 
 
 }

@@ -13,7 +13,7 @@ public class RequestTableCreator {
             Class.forName("org.sqlite.JDBC");
 
             // Establish connection to the SQLite database
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = Database.connect();
                  Statement statement = connection.createStatement()) {
                 // SQL statement to create the roles table
                 String sql = "CREATE TABLE IF NOT EXISTS requests ("

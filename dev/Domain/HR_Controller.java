@@ -85,75 +85,62 @@ public class HR_Controller {
 
     }
 
-    public String Edit_Worker_Details(int id){
+    public String Edit_Worker_Details(int id,int choice,String data){
         Worker to_update=workers_memory.get(id);
         if(to_update==null){
             return "Worker doesn't exist\n";
         }
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("what you want to update for WorkerID: "+to_update.getId()+" ?\n"
-        +"1.name\n"+
-        "2.monthly wage\n"
-        +"3.hourly wage\n"
-        +"4.direct manager ID\n"
-        +"5.departement\n"
-        +"6.bank details\n");
-        int choice = scanner.nextInt();
+
 
         switch (choice) {
             case 1:
-                String new_name;
-                while (true) {
-                    System.out.println("insert new name: ");
-                    try {
-                        new_name = scanner.next();
-                        break;
-                    } catch (Exception e) {
-                        System.out.println("insert valid monthly name \n");
-                    }
-                }
-
-                    to_update.setName(new_name);
-                    return "update name success \n";
+                to_update.setName(data);
+                return "update name success \n";
 
             case 2:
-                int new_monthly_wage = 0;
-                while(true) {
-                    System.out.println("insert new monthly wage: \n");
-                    try {
-                        new_monthly_wage = scanner.nextInt();
-                        break;
-                    } catch (Exception e) {
-                        System.out.println("insert valid monthly wage \n");
-                    }
+                int new_Mon_salary;
+                try {
+                    new_Mon_salary=Integer.parseInt(data);
+                }catch (Exception e){
+                    return "Update failed, please enter a number";
                 }
-
-                    to_update.setMonthly_wage(new_monthly_wage);
-                    return "update wage success \n";
-
-
+                if(new_Mon_salary<=0){
+                    return "update failed, please enter valid number";
+                }
+                to_update.setMonthly_wage(new_Mon_salary);
+                return "update wage success \n";
 
             case 3:
-                System.out.println("insert new hourly wage: \n");
-                int new_hourly_wage=scanner.nextInt();
-                to_update.setHourly_wage(new_hourly_wage);
+                int new_Hou_salary;
+                try {
+                    new_Hou_salary=Integer.parseInt(data);
+                }catch (Exception e){
+                    return "Update failed, please enter a number";
+                }
+                if(new_Hou_salary<=0){
+                    return "update failed, please enter valid number";
+                }
+                to_update.setHourly_wage(new_Hou_salary);
                 return "update wage success \n";
 
             case 4:
-                System.out.println("insert new manager ID: \n");
-                int new_manager_ID=scanner.nextInt();
-                to_update.setDirect_manager_ID(new_manager_ID);
-                return "update manager ID success \n";
+                int new_id;
+                try {
+                    new_id=Integer.parseInt(data);
+                }catch (Exception e){
+                    return "Update failed, please enter a number";
+                }
+                if(workers_memory.get(new_id)==null){
+                    return "direct nanager id doesn't exist";
+                }
+                to_update.setDirect_manager_ID(new_id);
+                return "update manager success \n";
 
             case 5:
-                System.out.println("insert new department: \n");
-                String new_department=scanner.next();
-                to_update.setDepartement(new_department);
+                to_update.setDepartement(data);
                 return "update department success \n";
             case 6:
-                System.out.println("insert new Bank details:(format: BANK_NAME:ACCOUNT_NUMBER) ");
-                String new_bank_details=scanner.next();
-                to_update.setBank_details(new_bank_details);
+                to_update.setBank_details(data);
                 return "update bank details success \n";
             default:
                 System.out.println("Invalid choice. Please enter a number between 1 and 5.");

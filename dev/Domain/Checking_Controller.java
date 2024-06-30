@@ -25,7 +25,7 @@ public class Checking_Controller {
 
 //        WR.add(ido);
 //        BR.add(br1);
-//        RR.add(hr);
+  //      RR.add(hr);
 
     }
 
