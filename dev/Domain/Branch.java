@@ -4,12 +4,12 @@ import java.util.Objects;
 
 public class Branch {
     private int branch_ID;
-    private String branch_name;
+    private String branchName;
     private String address;
 
     public Branch(int branchID, String branchName, String address) {
         this.branch_ID = branchID;
-        this.branch_name = branch_name;
+        this.branchName = branchName;
         this.address = address;
     }
 
@@ -25,12 +25,12 @@ public class Branch {
         this.branch_ID = branch_ID;
     }
 
-    public String getBranch_name() {
-        return branch_name;
+    public String getBranchName() {
+        return branchName;
     }
 
     public void setBranchName(String branch_name) {
-        this.branch_name = branch_name;
+        this.branchName = branch_name;
     }
 
     public String getAddress() {
@@ -48,7 +48,7 @@ public class Branch {
         if (o == null || getClass() != o.getClass()) return false;
         Branch branch = (Branch) o;
         return branch_ID == branch.branch_ID &&
-                Objects.equals(branch_name, branch.branch_name) &&
+                Objects.equals(branchName, branch.branchName) &&
                 Objects.equals(address, branch.address);
     }
 
@@ -60,7 +60,7 @@ public class Branch {
     public String toString(){
         String result_str="";
         result_str+="Branch ID: "+this.getBranchID()+", ";
-        result_str+="Branch name: "+this.getBranch_name()+", ";
+        result_str+="Branch name: "+this.getBranchName()+", ";
         result_str+="Address: "+this.getAddress();
         return result_str;
     }

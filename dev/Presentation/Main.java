@@ -11,6 +11,9 @@ public class Main {
         int choice;
         Scanner scanner = new Scanner(System.in);
         Checking_Controller check = new Checking_Controller();
+
+        counter++;
+
         while (true) {
             if(counter==0){
                 System.out.print("Please choose one of the following\n" +
@@ -24,7 +27,7 @@ public class Main {
                         counter++;
                         break;
                     case 2:
-                        check.startWithObject();
+                       // check.startWithObject();
                         counter++;
                         break;
                     case 3:
