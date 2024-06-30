@@ -1,4 +1,25 @@
 package DataAccessObject;
 
-public class TransportDAO {
+import java.sql.SQLException;
+
+public class TransportDAO <T> implements IDAO<T> {
+    @Override
+    public void add(T t) throws SQLException {
+
+    }
+
+    @Override
+    public void remove(T t) throws SQLException {
+
+    }
+
+    @Override
+    public void update(T t) throws SQLException {
+
+    }
+
+    @Override
+    public T get(int id) throws SQLException {
+        return null;
+    }
 }

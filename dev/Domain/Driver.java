@@ -1,5 +1,7 @@
 package Domain;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class Driver {
     private final int driverID;
     private String driverName;
@@ -30,6 +32,8 @@ public class Driver {
                 ", available=" + available +
                ", licenseMaxWeight=" + licenseMaxWeight +
                 '}';
+
     }
+
 
 }
