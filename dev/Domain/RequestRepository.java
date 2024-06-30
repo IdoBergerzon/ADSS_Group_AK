@@ -1,21 +1,20 @@
 package Domain;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.JsonProcessingException;
-
-
+import Data.RequestDAOImpl;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class RequestRepository implements IRequestRepository {
-    private final Map<Pair, Request> curr_requests;
-    private final Map<Integer, Request[]> past_requests;///need to change here
+public class RequestRepository implements IRepository<Request, Pair> {
+    private final Map<Pair, Request> requests;
+    private RequestDAOImpl dao;
 
     private RequestRepository() {
-        curr_requests = new HashMap<>();
-        past_requests = new HashMap<>();
+        requests = new HashMap<>();
+        dao = new RequestDAOImpl();
+
     }
     private static class InRequestHolder {
         private final static RequestRepository INSTANCE = new RequestRepository();
@@ -29,41 +28,56 @@ public class RequestRepository implements IRequestRepository {
         return RequestRepository.InRequestHolder.INSTANCE;
     }
 
-    public void addRequest(Request request) throws Exception {
+    @Override
+    public void add(Request request) {
         Pair<Integer,Integer> requestKey = new Pair<>(request.getWorker().getId(), request.getWeek());
-//        System.out.println(request.getWorker().getId() + " " + request.getWeek());
-
-
-//        System.out.println(jsonString);
-
-        if (curr_requests.containsKey(requestKey)) {
-            throw new Exception("Request already exists");
+        if (requests.containsKey(requestKey) || dao.search(requestKey) != null) {
+            throw new IllegalArgumentException("Request already exists");
         }
-        curr_requests.put(requestKey, request);
+        requests.put(requestKey, request);
+        dao.insert(JsonNodeConverter.toJsonNode(request));
 
     }
 
+
     public void editRequest(Request request) throws Exception {
-        Pair<Integer,Integer> requestKey = new Pair<>(request.getWorker().getId(), request.getWeek());
-        if (!curr_requests.containsKey(requestKey)){
-            throw new Exception("Request not exist, can't edit");
+        Pair requestKey = new Pair<>(request.getWorker().getId(), request.getWeek());
+        try {
+            dao.update(JsonNodeConverter.toJsonNode(request));
+        } catch (Exception e) {
+            throw new Exception("Failed to update request");
         }
-        curr_requests.put(requestKey, request);
+        requests.put(requestKey, request);
     }
 
     public Request[] getAllRequests() {
-        return curr_requests.values().toArray(new Request[0]);
-    }
-
-    public Request getRequestByWorker(int worker_id) {
-        Pair<Integer,Integer> requestKey = new Pair<>(worker_id, Week.getWeek());
-        return curr_requests.get(requestKey);
+        return requests.values().toArray(new Request[0]);
     }
 
 
 
-    public Request[] getPastRequests(int week) {
-        return past_requests.get(week);
+    @Override
+    public Request get(Pair key){
+        if(requests.containsKey(key))
+            return requests.get(key);
+        JsonNode jn = dao.search(key);
+        if (jn != null) {
+            return JsonNodeConverter.fromJsonNode(jn, Request.class);
+        }
+        return null;
+
+    }
+
+    @Override
+    public void remove(Pair key) {
+        if(key != null){
+            try{
+                dao.remove(key);
+                requests.remove(key);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

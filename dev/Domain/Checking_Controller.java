@@ -18,13 +18,13 @@ public class Checking_Controller {
         this.SR = ShiftRepository.getInstance();
         this.RR=RoleRepository.getInstance();
         this.BR=BranchRepository.getInstance();
-        Role hr = new Role(1,"hr");
-        Branch br1 = new Branch(1, "branch1", "BeerSheva");
-        Date dt1 = new Date(2024,1,1);
-        Worker ido = new Worker(1,"Ido", 5000,0, dt1, null, hr, br1.getBranchID(), "hr","Leumi:5555555");
+//        Role hr = new Role(1,"hr");
+//        Branch br1 = new Branch(1, "branch1", "BeerSheva");
+//        Date dt1 = new Date(2024,1,1);
+//        Worker ido = new Worker(1,"Ido", 5000,0, dt1, null, hr, br1.getBranchID(), "hr","Leumi:5555555");
 
 //        WR.add(ido);
-        BR.addBranch(br1);
+//        BR.add(br1);
 //        RR.add(hr);
 
     }
@@ -40,10 +40,10 @@ public class Checking_Controller {
         Branch br2 = new Branch(2, "branch2", "Ashdod");
 
         Date dt2 = new Date(2024,2,1);
-        Branch br1=BR.getBranchByID(1);
+        Branch br1=BR.get(1);
         Worker aviv = new Worker(2,"Aviv", 0,50, dt2, 1, shift_manager, br1.getBranchID(), "managment","Hapoalim:1234567");
         Worker hezi = new Worker(3,"hezi", 0,50, dt2, 1, shift_manager, br2.getBranchID(), "managment","Leumi:6392772");
-        Worker lior = new Worker(4,"lior", 0,50, dt2, 3, storekeeper, br2.getBranchID(), "managment","Beinleumi:1455659");
+         Worker lior = new Worker(4,"lior", 0,50, dt2, 3, storekeeper, br2.getBranchID(), "managment","Beinleumi:1455659");
 //        Worker asaf = new Worker(5,"asaf", 0,50, dt2, 3, Cashier, br2.getBranchID(), "managment","Discont:6453745");
 //        Worker rudi = new Worker(6,"rudi", 0,50, dt2, 3, storekeeper, br2.getBranchID(), "managment","Yahav:1525358");
 //        Worker tamir = new Worker(7,"tamir", 0,50, dt2, 3, Cashier, br2.getBranchID(), "managment","Hapoalim:9753146");
@@ -52,16 +52,16 @@ public class Checking_Controller {
 
 
 
-        WR.add(aviv);
+//        WR.add(aviv);
 //        WR.add(noa);
-        WR.add(hezi);
-        WR.add(lior);
+//        WR.add(hezi);
+//        WR.add(lior);
 //        WR.add(asaf);
 //        WR.add(rudi);
 //        WR.add(tamir);
 //        WR.add(daniel);
 
-        BR.addBranch(br2);
+        BR.add(br2);
 
 //        RR.add(shift_manager);
 //        RR.add(storekeeper);
