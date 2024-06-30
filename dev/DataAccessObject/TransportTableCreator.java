@@ -4,7 +4,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Transport {
+public class TransportTableCreator {
     private static final String URL = "jdbc:sqlite:mydatabase.db"; // Path to the SQLite database file
 
     public static void createTransportTable() {
