@@ -7,10 +7,14 @@ public class Branch {
     private String branch_name;
     private String address;
 
-    public Branch(int branch_ID, String branch_name, String address) {
-        this.branch_ID = branch_ID;
+    public Branch(int branchID, String branchName, String address) {
+        this.branch_ID = branchID;
         this.branch_name = branch_name;
         this.address = address;
+    }
+
+    public Branch(){
+
     }
 
     public int getBranchID() {

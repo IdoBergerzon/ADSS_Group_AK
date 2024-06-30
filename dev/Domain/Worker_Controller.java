@@ -36,16 +36,16 @@ public class Worker_Controller {
 
     public String ShowCurrRoster(){
         Worker worker=workers_memory.get(worker_id);
-        Roster roster= shifts_repository.getRoster(worker.getBranch_id(),Week.getWeek());
+        Roster roster= shifts_repository.get(new Pair(worker.getBranch_id(),Week.getWeek()));
         if(roster==null){
-            roster= shifts_repository.getRoster(worker.getBranch_id(),Week.getWeek()-1);
+            roster= shifts_repository.get(new Pair(worker.getBranch_id(),Week.getWeek()-1));
         }
         return roster.toString();
     }
 
     public String ShowPastRoster(int week) throws Exception {
         Worker worker=workers_memory.get(worker_id);
-        Roster roster= shifts_repository.getRoster(worker.getBranch_id(),week);
+        Roster roster= shifts_repository.get(new Pair(worker.getBranch_id(),Week.getWeek()));
         if(roster==null) {
             throw new Exception("Your branch doesn't have roster for this week");
         }
@@ -62,9 +62,11 @@ public class Worker_Controller {
         for(int i=0;i<roters_list.size();i++) {
             for (int j = 0; j < 7; j++) {
                 for (int k = 0; k < 2; k++) {
-
-                    if(ifworkinshift(roters_list.get(i).getShift_arrangment()[j][k].getShift_workers())){
-                        toreturn+= roters_list.get(i).getShift_arrangment()[j][k].toString();
+                    Shift shift = roters_list.get(i).getShift_arrangment()[j][k];
+                    if(shift != null) {
+                        if (ifworkinshift(shift.getShift_workers())){
+                            toreturn += roters_list.get(i).getShift_arrangment()[j][k].toString();
+                        }
                     }
                 }
             }

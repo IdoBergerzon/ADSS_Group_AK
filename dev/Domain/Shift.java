@@ -11,13 +11,6 @@ public class Shift {
     private Worker[] shift_workers;
     private List<Role> shift_Roles;
 
-    public Worker[] getShift_workers() {
-        return shift_workers;
-    }
-
-    public List<Role> getShift_Roles() {
-        return shift_Roles;
-    }
 
 
 
@@ -31,8 +24,38 @@ public class Shift {
         this.shift_Roles= shift_Roles;
     }
 
+    public Shift() {
+
+    }
+
+    public Worker[] getShift_workers() {
+        return shift_workers;
+    }
+
+    public List<Role> getShift_Roles() {
+        return shift_Roles;
+    }
 
 
+    public void setWeekNum(int weekNum) {
+        this.weekNum = weekNum;
+    }
+
+    public void setBranch_id(int branch_id) {
+        this.branch_id = branch_id;
+    }
+
+    public void setDay_of_week(int day_of_week) {
+        Day_of_week = day_of_week;
+    }
+
+    public void setShift_workers(Worker[] shift_workers) {
+        this.shift_workers = shift_workers;
+    }
+
+    public void setShift_Roles(List<Role> shift_Roles) {
+        this.shift_Roles = shift_Roles;
+    }
 
     public int getWeekNum() {
         return weekNum;

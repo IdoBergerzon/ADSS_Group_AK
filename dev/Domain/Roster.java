@@ -21,6 +21,10 @@ public class Roster {
 
     }
 
+    public Roster(){
+
+    }
+
 
     public Branch getBranch() {
         return branch;
