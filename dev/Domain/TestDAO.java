@@ -15,10 +15,9 @@ public class TestDAO {
         Driver driver3 = new Driver(3, "Tamir Cohen", 8000);
 
         try {
-            //driverDAO.add(driver1);
-            //driverDAO.add(driver2);
-            //driverDAO.add(driver3);
-
+            driverDAO.add(driver1);
+            driverDAO.add(driver2);
+            driverDAO.add(driver3);
             Driver driver = driverDAO.get(1);
             System.out.println(driver);
 

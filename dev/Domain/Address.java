@@ -14,6 +14,11 @@ public class Address {
         return shipping_area;
     }
 
+    public int getAddress_code() {return address_code;}
+
+    public String getFull_address() {return full_address;}
+
+
     public void setShipping_area(int shipping_area) {
         this.shipping_area = shipping_area;
     }

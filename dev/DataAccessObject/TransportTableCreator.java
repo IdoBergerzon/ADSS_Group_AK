@@ -119,6 +119,28 @@ public class TransportTableCreator {
         }
     }
 
+    public static void createLocationTable() {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            try (Connection connection = DriverManager.getConnection(URL);
+                 Statement statement = connection.createStatement()) {
+                String sql = "CREATE TABLE IF NOT EXISTS locations (" +
+                        "locationID INTEGER PRIMARY KEY, " +
+                        "address foreign key NOT NULL, " +
+                        "contact TEXT NOT NULL, " +
+                        "phone TEXT NOT NULL, " +
+                        "lType INTEGER NOT NULL);";
+
+                statement.execute(sql);
+                System.out.println("Location Table created or already exists.");
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
     public static void main(String[] args) {
         createDriversTable();
         createTrucksTable();

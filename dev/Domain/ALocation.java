@@ -27,6 +27,11 @@ public abstract class ALocation {
         return l_type;
     }
 
+    public  String getContact() {return Contact;}
+
+    public  String getPhone() {return phone;}
+
+    public  String getlType() {return l_type;}
 
     public void setContact(String contact) { this.Contact = contact; }
 
