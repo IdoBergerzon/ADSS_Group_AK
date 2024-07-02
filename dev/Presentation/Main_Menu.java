@@ -68,10 +68,11 @@ public class Main_Menu {
             System.out.println("6. Exit");
 
             if (localTime.equals(LocalTime.MIDNIGHT)) {
-                for (Object trans : transportController.getTransportsData().getTransports().values()) {
-                    Transport trans1 = (Transport) trans;
-                    if (!trans1.isFinished()) {
-                        trans1.setFinished(true);
+                List<Transport> transportsList= transportController.getTransportsData().getAll();
+                for (int i = 0; i < transportsList.size(); i++) {
+                    Transport trans =  transportsList.get(i);
+                    if (!trans.isFinished()) {
+                        trans.setFinished(true);
                     }
                 }
             }

@@ -1,11 +1,12 @@
 package DataAccessObject;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class TransportTableCreator {
-    private static final String URL = "jdbc:sqlite:mydatabase.db"; // Path to the SQLite database file
+    private static final String URL = "jdbc:sqlite:sample.db"; // Path to the SQLite database file
 
     public static void createDriversTable() {
         try {
@@ -59,5 +60,4 @@ public class TransportTableCreator {
     public static void main(String[] args) {
         createTransportTable();
     }
-
 }
