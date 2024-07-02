@@ -9,6 +9,7 @@ public class Worker_Controller {
     private final ShiftRepository shifts_repository= ShiftRepository.getInstance();
 
     public Worker_Controller(int worker_id) {
+        new Week(shifts_repository.getMaxWeek()+1);
         this.worker_id = worker_id;
     }
     public void displayMyDetails(){

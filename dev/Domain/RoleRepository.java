@@ -1,8 +1,7 @@
 package Domain;
 
-import Data.RoleDAOImpl;
+import DAL.RoleDAOImpl;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;

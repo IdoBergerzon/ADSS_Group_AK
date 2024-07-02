@@ -1,14 +1,12 @@
-
-package Data;
+package DAL;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class BranchTableCreator {
+public class RequestTableCreator {
     private static final String URL = "jdbc:sqlite:mydatabase.db"; // Path to the SQLite database file
 
-    public static void createBranchesTable() {
+    public static void createRequestsTable() {
         try {
             // Load SQLite JDBC driver class
             Class.forName("org.sqlite.JDBC");
@@ -17,15 +15,16 @@ public class BranchTableCreator {
             try (Connection connection = Database.connect();
                  Statement statement = connection.createStatement()) {
                 // SQL statement to create the roles table
-                String sql = "CREATE TABLE IF NOT EXISTS branches ("
-                        + "Branch_ID INTEGER PRIMARY KEY,"
-                        + "name TEXT NOT NULL,"
-                        + "address TEXT NOT NULL"
+                String sql = "CREATE TABLE IF NOT EXISTS requests ("
+                        + "worker_id INTEGER NOT NULL,"
+                        + "week INTEGER NOT NULL,"
+                        + "json TEXT NOT NULL,"
+                        + "PRIMARY KEY (worker_id, week)"
                         + ");";
 
                 // Execute the SQL statement to create the table
                 statement.execute(sql);
-                System.out.println("Roles table created or already exists.");
+                System.out.println("requests table created or already exists.");
 
                 // Print the absolute path of the database file
                 System.out.println("SQLite database location: " + connection.getMetaData().getURL());
@@ -35,9 +34,9 @@ public class BranchTableCreator {
         }
     }
 
+
     public static void main(String[] args) {
-        createBranchesTable();
+        createRequestsTable();
 
     }
-
 }

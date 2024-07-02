@@ -1,6 +1,6 @@
 package Tests;
 
-import Data.*;
+import DAL.*;
 import Domain.*;
 
 import com.fasterxml.jackson.databind.JsonNode;

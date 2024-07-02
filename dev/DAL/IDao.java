@@ -1,7 +1,5 @@
-package Data;
+package DAL;
 
-
-import Domain.Role;
 
 public interface IDao<T,Y> {
     T search(Y unique);

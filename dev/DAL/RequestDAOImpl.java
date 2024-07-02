@@ -1,4 +1,4 @@
-package Data;
+package DAL;
 
 import Domain.Pair;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class RequestDAOImpl implements IDao<JsonNode, Pair> {

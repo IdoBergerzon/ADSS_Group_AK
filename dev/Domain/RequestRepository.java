@@ -1,7 +1,7 @@
 package Domain;
 
 
-import Data.RequestDAOImpl;
+import DAL.RequestDAOImpl;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.HashMap;

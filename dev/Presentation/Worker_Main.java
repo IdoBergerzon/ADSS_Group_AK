@@ -117,24 +117,22 @@ public class Worker_Main {
         System.out.println(controller.ShowPastShifts());
     }
 
-    public void ShowCurrRoster(){
+    public void ShowCurrRoster() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Please enter your choice: \n" +
-                "1.Show current week Roster\n" +
-                "2.Show past Roster\n");
-        int choice = sc.nextInt();
-        if(choice == 1){
-            System.out.println(controller.ShowCurrRoster());
-        } else if(choice == 2){
-            System.out.println("Please enter week for past Roster: \n");
+        while (true) {
+            System.out.println("Please enter week for Roster you would like to see: \n");
             try {
                 System.out.println(controller.ShowPastRoster(sc.nextInt()));
-            } catch (Exception e){
+                break;
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         }
-
     }
+
+
+
+
 
     public void RetireMassage(){
         Scanner sc = new Scanner(System.in);

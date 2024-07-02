@@ -1,6 +1,6 @@
 package Domain;
 
-import Data.BranchDAOImpl;
+import DAL.BranchDAOImpl;
 
 import java.util.HashMap;
 import java.util.Map;
