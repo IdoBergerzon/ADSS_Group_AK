@@ -77,6 +77,7 @@ public class TransportTableCreator {
 
     public static void main(String[] args) {
         createDriversTable();
+        createTrucksTable();
         createTransportTable();
     }
 }

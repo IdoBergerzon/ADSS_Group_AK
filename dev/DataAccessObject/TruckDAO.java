@@ -1,6 +1,5 @@
 package DataAccessObject;
 
-import Domain.Driver;
 import Domain.Truck;
 
 import java.sql.*;
@@ -30,7 +29,7 @@ public class TruckDAO implements IDAO<Truck>{
 
     @Override
     public void remove(Truck truck) throws SQLException {
-        String sql = "DELETE FROM drivers WHERE driverID = ?";
+        String sql = "DELETE FROM trucks WHERE truckID = ?";
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, truck.getTruckID());
@@ -40,7 +39,7 @@ public class TruckDAO implements IDAO<Truck>{
 
     @Override
     public void update(Truck truck) throws SQLException {
-        String sql = "UPDATE drivers SET driverName = ?, available = ?, licenseMaxWeight = ? WHERE driverID = ?";
+        String sql = "UPDATE trucks SET truckType = ?, truckWeight = ?, maxWeight = ?, available = ? WHERE truckID = ?";
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, truck.getTruckID());
@@ -54,7 +53,7 @@ public class TruckDAO implements IDAO<Truck>{
 
     @Override
     public Truck get(int id) throws SQLException {
-        String sql = "SELECT * FROM drivers WHERE driverID = ?";
+        String sql = "SELECT * FROM trucks WHERE truckID = ?";
         Truck truck = null;
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -75,7 +74,7 @@ public class TruckDAO implements IDAO<Truck>{
 
     @Override
     public List<Truck> getAll() throws SQLException {
-        String sql = "SELECT * FROM drivers";
+        String sql = "SELECT * FROM trucks";
         List<Truck> trucks = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(URL);
              Statement stmt = connection.createStatement();

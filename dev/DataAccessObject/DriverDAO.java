@@ -15,7 +15,7 @@ public class DriverDAO implements IDAO<Driver>{
 
     @Override
     public void add(Driver driver) throws SQLException {
-        String sql = "INSERT INTO drivers(driverID, driverName, available, licenseMaxWeight) VALUES(?, ?, false, ?)";
+        String sql = "INSERT INTO drivers(driverID, driverName, available, licenseMaxWeight) VALUES(?, ?, ?, ?)";
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, driver.getDriverID());
