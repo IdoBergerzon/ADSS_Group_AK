@@ -2,6 +2,8 @@ package Domain;
 
 import DataAccessObject.DriverDAO;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class TestDAO {
@@ -26,7 +28,8 @@ public class TestDAO {
             Driver updatedDriver = driverDAO.get(1);
             System.out.println(updatedDriver);
 
-            List<Driver> drivers = driverDAO.getAll();
+            HashMap<Integer,Driver> driverHashMap = driverDAO.getAll();
+            List<Driver> drivers = new ArrayList<Driver>(driverHashMap.values());
             for (Driver d : drivers) {
                 System.out.println(d);
             }
