@@ -49,31 +49,31 @@ public class TransportTableCreator {
         }
     }
 
-    public static void createTransportTable() {
-        try {
-            Class.forName("org.sqlite.JDBC");
-
-            // Establish connection to the SQLite database
-            try (Connection connection = DriverManager.getConnection(URL);
-                 Statement statement = connection.createStatement()) {
-                // SQL statement to create the roles table
-                String sql = "CREATE TABLE IF NOT EXISTS branches ("
-                        + "Branch_ID INTEGER PRIMARY KEY,"
-                        + "name TEXT NOT NULL,"
-                        + "address TEXT NOT NULL"
-                        + ");";
-
-                // Execute the SQL statement to create the table
-                statement.execute(sql);
-                System.out.println("Roles table created or already exists.");
-
-                // Print the absolute path of the database file
-                System.out.println("SQLite database location: " + connection.getMetaData().getURL());
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
+//    public static void createTransportTable() {
+//        try {
+//            Class.forName("org.sqlite.JDBC");
+//
+//            // Establish connection to the SQLite database
+//            try (Connection connection = DriverManager.getConnection(URL);
+//                 Statement statement = connection.createStatement()) {
+//                // SQL statement to create the roles table
+//                String sql = "CREATE TABLE IF NOT EXISTS branches ("
+//                        + "Branch_ID INTEGER PRIMARY KEY,"
+//                        + "name TEXT NOT NULL,"
+//                        + "address TEXT NOT NULL"
+//                        + ");";
+//
+//                // Execute the SQL statement to create the table
+//                statement.execute(sql);
+//                System.out.println("Roles table created or already exists.");
+//
+//                // Print the absolute path of the database file
+//                System.out.println("SQLite database location: " + connection.getMetaData().getURL());
+//            }
+//        } catch (ClassNotFoundException | SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public static void createItemsTable() {
         try {
@@ -126,7 +126,9 @@ public class TransportTableCreator {
                  Statement statement = connection.createStatement()) {
                 String sql = "CREATE TABLE IF NOT EXISTS locations (" +
                         "locationID INTEGER PRIMARY KEY, " +
-                        "address foreign key NOT NULL, " +
+                        "full_address TEXT NOT NULL, " +
+                        "addressCode INTEGER NOT NULL, " +
+                        "shippingErea INTEGER NOT NULL, " +
                         "contact TEXT NOT NULL, " +
                         "phone TEXT NOT NULL, " +
                         "lType INTEGER NOT NULL);";
@@ -139,13 +141,35 @@ public class TransportTableCreator {
         }
     }
 
+    public static void createTransportTable() {
+        try {
+            Class.forName("org.sqlite.JDBC");
+
+            try (Connection connection = DriverManager.getConnection(URL);
+                 Statement statement = connection.createStatement()) {
+                String sql = "CREATE TABLE IF NOT EXISTS transport (" +
+                        "transportID INTEGER PRIMARY KEY, " +
+                        "truckID INTEGER NOT NULL, " +
+                        "driverID INTEGER NOT NULL, " +
+                        "comments TEXT, " +
+                        "FOREIGN KEY (truckID) REFERENCES trucks(truckID), " +
+                        "FOREIGN KEY (driverID) REFERENCES drivers(driverID));";
+
+                statement.execute(sql);
+                System.out.println("Transport table created or already exists.");
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public static void main(String[] args) {
         createDriversTable();
         createTrucksTable();
-        createTransportTable();
         createItemsTable();
+        createLocationTable();
         createDeliveryDocumentsTable();
+        createTransportTable();
     }
 }
