@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DriverDAO implements IDAO<Driver>{
-    private TransportTableCreator tableCreator;
     private final String URL = "jdbc:sqlite:sample.db";
 
     public DriverDAO() {
@@ -16,7 +15,7 @@ public class DriverDAO implements IDAO<Driver>{
 
     @Override
     public void add(Driver driver) throws SQLException {
-        String sql = "INSERT INTO drivers(driverID, driverName, available, licenseMaxWeight) VALUES(?, ?, ?, ?)";
+        String sql = "INSERT INTO drivers(driverID, driverName, available, licenseMaxWeight) VALUES(?, ?, false, ?)";
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, driver.getDriverID());

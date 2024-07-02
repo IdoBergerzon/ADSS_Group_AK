@@ -11,7 +11,6 @@ public class TransportTableCreator {
     public static void createDriversTable() {
         try {
             Class.forName("org.sqlite.JDBC");
-
             try (Connection connection = DriverManager.getConnection(URL);
                  Statement statement = connection.createStatement()) {
                 String sql = "CREATE TABLE IF NOT EXISTS drivers (" +
@@ -30,9 +29,28 @@ public class TransportTableCreator {
         }
     }
 
+    public static void createTrucksTable() {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            try (Connection connection = DriverManager.getConnection(URL);
+                 Statement statement = connection.createStatement()) {
+                String sql = "CREATE TABLE IF NOT EXISTS trucks (" +
+                        "truckID INTEGER PRIMARY KEY, " +
+                        "truckType TEXT NOT NULL, " +
+                        "truckWeight REAL NOT NULL, " +
+                        "maxWeight REAL NOT NULL, " +
+                        "available BOOLEAN NOT NULL);";
+
+                statement.execute(sql);
+                System.out.println("Trucks table created or already exists.");
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void createTransportTable() {
         try {
-            // Load SQLite JDBC driver class
             Class.forName("org.sqlite.JDBC");
 
             // Establish connection to the SQLite database
@@ -58,6 +76,7 @@ public class TransportTableCreator {
     }
 
     public static void main(String[] args) {
+        createDriversTable();
         createTransportTable();
     }
 }
