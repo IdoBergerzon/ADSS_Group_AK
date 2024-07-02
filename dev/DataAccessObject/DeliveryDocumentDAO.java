@@ -32,6 +32,7 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
                 for (Item item : deliveryDocument.getItems().keySet()) {
                     addItemsToDeliveryDocument(connection, deliveryDocument.getDocumentID(), item, deliveryDocument.getAmount(item));
                 }
+
             }
         }
         else
@@ -148,8 +149,6 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
                 while (rs.next()) {
                     int itemID = rs.getInt("itemID");
                     int quantity = rs.getInt("quantity");
-
-                    // Retrieve item from ItemDAO
                     Item item = itemDAO.get(itemID);
                     items.put(item, quantity);
                 }
@@ -170,8 +169,23 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 int documentID = rs.getInt("documentID");
-                Delivery_Document deliveryDocument = get(documentID);
-                deliveryDocuments.put(documentID, deliveryDocument);
+                int sourceID = rs.getInt("sourceID");
+                int destinationID = rs.getInt("destinationID");
+                double totalWeight = rs.getDouble("totalWeight");
+                String deliveryStatusStr = rs.getString("delivery_status");
+                String itemsStatusStr = rs.getString("itemsStatus");
+
+                Store source = (Store) locationDAO.get(sourceID);
+                Supplier destination = (Supplier) locationDAO.get(destinationID);
+                Delivery_DocumentStatus deliveryStatus = Delivery_DocumentStatus.valueOf(deliveryStatusStr);
+                Delivery_ItemsStatus itemsStatus = Delivery_ItemsStatus.valueOf(itemsStatusStr);
+
+                HashMap<Item, Integer> items = getItemsForDeliveryDocument(connection, documentID);
+
+                Delivery_Document deliveryDocument = new Delivery_Document(source, documentID, destination, items);
+                deliveryDocument.setDelivery_status(deliveryStatus);
+                deliveryDocument.setItemsStatus(itemsStatus);
+                deliveryDocument.setTotalWeight(totalWeight);
             }
         }
         return deliveryDocuments;
