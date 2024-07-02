@@ -13,7 +13,8 @@ public class HR_Controller {
     private final BranchRepository branchs_repository= BranchRepository.getInstance();
 
     public HR_Controller(){
-        new Week();
+
+        new Week(shifts_repository.getMaxWeek()+1);
     }
     public int Add_New_Worker(String details) {
         //ID,name,hourly wage, monthly wage,start date,role,branch,dayoff=0,department
@@ -95,6 +96,7 @@ public class HR_Controller {
         switch (choice) {
             case 1:
                 to_update.setName(data);
+                workers_memory.updateWorker(to_update);
                 return "update name success \n";
 
             case 2:
@@ -108,6 +110,7 @@ public class HR_Controller {
                     return "update failed, please enter valid number";
                 }
                 to_update.setMonthly_wage(new_Mon_salary);
+                workers_memory.updateWorker(to_update);
                 return "update wage success \n";
 
             case 3:
@@ -121,6 +124,7 @@ public class HR_Controller {
                     return "update failed, please enter valid number";
                 }
                 to_update.setHourly_wage(new_Hou_salary);
+                workers_memory.updateWorker(to_update);
                 return "update wage success \n";
 
             case 4:
@@ -134,13 +138,17 @@ public class HR_Controller {
                     return "direct nanager id doesn't exist";
                 }
                 to_update.setDirect_manager_ID(new_id);
+                workers_memory.updateWorker(to_update);
+
                 return "update manager success \n";
 
             case 5:
                 to_update.setDepartement(data);
+                workers_memory.updateWorker(to_update);
                 return "update department success \n";
             case 6:
                 to_update.setBank_details(data);
+                workers_memory.updateWorker(to_update);
                 return "update bank details success \n";
             default:
                 System.out.println("Invalid choice. Please enter a number between 1 and 5.");
@@ -153,13 +161,22 @@ public class HR_Controller {
 
 
     public void addNewRoleForWorker(int workerID, int roleID){
-        if (workers_memory.get(workerID) == null) {
+        Worker worker=workers_memory.get(workerID);
+        if (worker == null) {
             throw new IllegalArgumentException("Worker with ID " + workerID + " does not exist");
         } if (roles_repository.get(roleID) == null) {
             throw new IllegalArgumentException("Role with ID " + roleID + " does not exist");
         }
+        Role[] worker_roles = worker.getRoles();
+        for (Role role : worker_roles) {
+            if (role.getRoleID() == roleID) {
+                throw new IllegalArgumentException("Role with ID " + roleID + " already exists for worker with ID " + workerID);
+            }
+        }
 
-        workers_memory.get(workerID).addNewRole(roles_repository.get(roleID));
+
+        worker.addNewRole(roles_repository.get(roleID));
+        workers_memory.updateWorker(worker);
     }
 
     public void createNewRole(int roleId, String roleName){
@@ -243,7 +260,6 @@ public class HR_Controller {
     public void createNewRoster(int branch_id){
         Branch branch=branchs_repository.get(branch_id);
         Roster new_roster =new Roster(branch);
-
         shifts_repository.add(new_roster);
         List<Worker> list=workers_memory.getAllWorkers();
         for (int i=0;i<list.size();i++){

@@ -28,7 +28,7 @@ public class RosterDAOImpl implements IDao<JsonNode, Pair> {
 
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
 
@@ -95,6 +95,20 @@ public class RosterDAOImpl implements IDao<JsonNode, Pair> {
         }
         return rosters_list;
 
+    }
+
+    public int getMaxWeek() {
+        String sql = "SELECT MAX(week) AS max_week FROM rosters";
+        try (Connection connection = Database.connect();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getInt("max_week");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 //    public static void main(String[] args){

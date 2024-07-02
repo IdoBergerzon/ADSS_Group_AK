@@ -248,12 +248,14 @@ public class HR_Main {
     public void createNewRoster() throws Exception {
         Scanner sc = new Scanner(System.in);
         System.out.println("insert branch id\n");
-        int branch_id=sc.nextInt();
-        if(!hr_controller.isBranch(branch_id)){
-            System.out.println("branch doesn't exist\n");
-            return;
-        }
+        int branch_id;
         while (true) {
+
+            branch_id=sc.nextInt();
+            if(!hr_controller.isBranch(branch_id)){
+                System.out.println("branch doesn't exist\n");
+                return;
+            }
             try {
                 hr_controller.createNewRoster(branch_id);
                 break;
@@ -261,9 +263,10 @@ public class HR_Main {
                System.out.println("branch already has a roster for this week\n" +
                        "Would you like to create a new roster for another branch? (y/n)");
                String choice = sc.nextLine();
-               if(choice.equals("n")){
+               if(choice.equals("n"))
                    return;
-               }
+                else
+                    System.out.println("Please enter a valid branch id:");
             }
         }
         for(int day=0; day < 7; day++){

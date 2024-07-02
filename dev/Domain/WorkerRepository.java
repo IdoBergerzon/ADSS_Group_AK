@@ -83,8 +83,9 @@ public class WorkerRepository implements IRepository<Worker,Integer> {
 
 
     public void updateWorker(Worker worker) {
-        if (workers.containsKey(worker.getId())) {
+        if (!workers.containsKey(worker.getId())) {
             workers.put(worker.getId(), worker);
+//            dao.updateWorker(JsonNodeConverter.toJsonNode(worker));
         }
         if (dao.search(worker.getId()) != null) {
             dao.updateWorker(JsonNodeConverter.toJsonNode(worker));

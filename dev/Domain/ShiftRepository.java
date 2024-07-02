@@ -90,6 +90,10 @@ public class ShiftRepository implements IRepository<Roster,Pair> {
         return list_rosters;
     }
 
+    public int getMaxWeek() {
+        return dao.getMaxWeek();
+    }
+
 
 
 
