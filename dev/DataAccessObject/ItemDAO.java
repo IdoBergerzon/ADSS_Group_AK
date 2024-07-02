@@ -41,15 +41,19 @@ public class ItemDAO implements IDAO<Item> {
     }
     @Override
     public void update(Item item) throws SQLException {
-        String sql = "UPDATE items SET itemName = ?, weight = ? WHERE itemID = ?";
-        try (Connection connection = DriverManager.getConnection(URL);
-             PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, item.getItemName());
-            pstmt.setDouble(2, item.getWeight());
-            pstmt.setInt(3, item.getItemID());
-            pstmt.executeUpdate();
-        }
-    }
+        if (this.getAll().containsKey(item.getItemID())) {
+            String sql = "UPDATE items SET itemName = ?, weight = ? WHERE itemID = ?";
+            try (Connection connection = DriverManager.getConnection(URL);
+                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                pstmt.setString(1, item.getItemName());
+                pstmt.setDouble(2, item.getWeight());
+                pstmt.setInt(3, item.getItemID());
+                pstmt.executeUpdate();
+            }
+        } else
+                System.out.println("item does not exist");
+            }
+
 
     @Override
     public Item get(int id) throws SQLException {
