@@ -38,14 +38,15 @@ public class Worker_Controller {
         Worker worker=workers_memory.get(worker_id);
         Roster roster= shifts_repository.get(new Pair(worker.getBranch_id(),Week.getWeek()));
         if(roster==null){
-            roster= shifts_repository.get(new Pair(worker.getBranch_id(),Week.getWeek()-1));
+            //roster= shifts_repository.get(new Pair(worker.getBranch_id(),Week.getWeek()-1));
+            return "There is no roster for the week: "+Week.getWeek();
         }
         return roster.toString();
     }
 
     public String ShowPastRoster(int week) throws Exception {
         Worker worker=workers_memory.get(worker_id);
-        Roster roster= shifts_repository.get(new Pair(worker.getBranch_id(),Week.getWeek()));
+        Roster roster= shifts_repository.get(new Pair(worker.getBranch_id(),week));
         if(roster==null) {
             throw new Exception("Your branch doesn't have roster for this week");
         }

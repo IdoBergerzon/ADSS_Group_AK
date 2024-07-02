@@ -342,7 +342,6 @@ public class Test {
         }
         else System.out.println("worker doesn't exist");
 
-        //workerRepository.remove(1000);
     }
 
 

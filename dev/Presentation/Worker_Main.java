@@ -128,7 +128,7 @@ public class Worker_Main {
         } else if(choice == 2){
             System.out.println("Please enter week for past Roster: \n");
             try {
-                controller.ShowPastRoster(sc.nextInt());
+                System.out.println(controller.ShowPastRoster(sc.nextInt()));
             } catch (Exception e){
                 System.out.println(e.getMessage());
             }

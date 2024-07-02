@@ -7,6 +7,10 @@ public class Request {
     private Boolean[][] weeklyRequest;
     private int week;
 
+    public Request(){
+
+    }
+
 
     public Request(Worker worker, Boolean[][] weeklyRequest) {
         this.worker = worker;
