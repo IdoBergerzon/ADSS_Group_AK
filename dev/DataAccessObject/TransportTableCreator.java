@@ -94,18 +94,17 @@ public class TransportTableCreator {
         try {
             createDeliveryDocumentItemsTable();
             Class.forName("org.sqlite.JDBC");
-
             try (Connection connection = DriverManager.getConnection(URL);
                  Statement statement = connection.createStatement()) {
                 String sql = "CREATE TABLE IF NOT EXISTS delivery_documents (" +
                         "documentID INTEGER PRIMARY KEY, " +
-                        "source INTEGER NOT NULL, " +
-                        "destination INTEGER NOT NULL, " +
+                        "sourceID INTEGER NOT NULL, " +
+                        "destinationID INTEGER NOT NULL, " +
                         "totalWeight REAL NOT NULL, " +
                         "delivery_status TEXT NOT NULL, " +
                         "itemsStatus TEXT NOT NULL, " +
-                        "FOREIGN KEY (source) REFERENCES locations(locationID), " +
-                        "FOREIGN KEY (destination) REFERENCES suppliers(supplierID));";
+                        "FOREIGN KEY (sourceID) REFERENCES locations(locationID), " +
+                        "FOREIGN KEY (destinationID) REFERENCES suppliers(locationID));";
 
                 statement.execute(sql);
                 System.out.println("Delivery Documents table created or already exists.");
@@ -115,21 +114,21 @@ public class TransportTableCreator {
         }
     }
 
+
     public static void createLocationTable() {
         try {
             Class.forName("org.sqlite.JDBC");
             try (Connection connection = DriverManager.getConnection(URL);
                  Statement statement = connection.createStatement()) {
-                String sql = "CREATE TABLE IF NOT EXISTS locations (" +
+                String createTableSql = "CREATE TABLE IF NOT EXISTS locations (" +
                         "locationID INTEGER PRIMARY KEY, " +
-                        "full_address TEXT NOT NULL, " +
-                        "addressCode INTEGER NOT NULL, " +
-                        "shippingErea INTEGER NOT NULL, " +
                         "contact TEXT NOT NULL, " +
                         "phone TEXT NOT NULL, " +
-                        "lType INTEGER NOT NULL);";
-
-                statement.execute(sql);
+                        "lType INTEGER NOT NULL, " +
+                        "full_address TEXT NOT NULL, " +
+                        "address_code INTEGER NOT NULL, " +
+                        "shipping_area INTEGER NOT NULL)";
+                statement.execute(createTableSql);
                 System.out.println("Location Table created or already exists.");
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -157,6 +156,8 @@ public class TransportTableCreator {
             e.printStackTrace();
         }
     }
+
+
 
 
     public static void createTransportTable() {

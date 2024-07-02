@@ -14,6 +14,9 @@ public class Item {
     public String getItemName() { return itemName; }
     public double getWeight() { return weight; }
 
+    public void setWeight(double weight) { this.weight = weight; }
+    public void setItemName(String itemName) { this.itemName = itemName; }
+
     @Override
     public String toString() {
         return "Item{" +

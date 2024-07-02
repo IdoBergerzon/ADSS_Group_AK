@@ -15,10 +15,8 @@ public class ALocationDAO implements IDAO<ALocation> {
 
     @Override
     public void add(ALocation aLocation) throws SQLException {
-        if (this.getAll().containsKey(aLocation.getLocationID())) {
-            System.out.println("location already exist");
-        } else {
-            String sql = "INSERT INTO ALocation(locationID, contact, phone, ltype, full_address, address_code, shipping_area) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        if (!this.getAll().containsKey(aLocation.getLocationID())) {
+            String sql = "INSERT INTO locations(locationID, contact, phone, lType, full_address, address_code, shipping_area) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
             // Establish database connection
             try (Connection connection = DriverManager.getConnection(URL);
@@ -34,15 +32,19 @@ public class ALocationDAO implements IDAO<ALocation> {
 
                 // Execute the insert statement
                 pstmt.executeUpdate();
+                System.out.println("Location added: " + aLocation);
             }
+        } else {
+            System.out.println("Location with ID " + aLocation.getLocationID() + " already exists.");
         }
     }
+
 
 
     @Override
     public void remove(ALocation aLocation) throws SQLException {
         if (this.getAll().containsKey(aLocation.getLocationID())) {
-            String sql = "DELETE FROM trucks WHERE locationID = ?";
+            String sql = "DELETE FROM locations WHERE locationID = ?";
             try (Connection connection = DriverManager.getConnection(URL);
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setInt(1, aLocation.getLocationID());

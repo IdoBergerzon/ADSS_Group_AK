@@ -15,7 +15,7 @@ public class TruckDAO implements IDAO<Truck> {
     @Override
     public void add(Truck truck) throws SQLException {
         if (!this.getAll().containsKey(truck.getTruckID())) {
-            String sql = "INSERT INTO trucks(truckID, truckType, truckWeight, maxWeight, available) VALUES(?, ?, ?, ?, true)";
+            String sql = "INSERT INTO trucks(truckID, truckType, truckWeight, maxWeight, available) VALUES(?, ?, ?, ?, ?)";
             try (Connection connection = DriverManager.getConnection(URL);
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setInt(1, truck.getTruckID());

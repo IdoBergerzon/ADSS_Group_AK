@@ -140,7 +140,6 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
     }
 
     private HashMap<Item, Integer> getItemsForDeliveryDocument(Connection connection, int documentID) throws SQLException {
-        if (this.getAll().containsKey(documentID)) {
             String sql = "SELECT * FROM delivery_document_items WHERE documentID = ?";
             HashMap<Item, Integer> items = new HashMap<>();
             try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -154,10 +153,6 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
                 }
             }
             return items;
-        }
-        else
-            System.out.println("delivery Document Not Exists");
-        return null;
     }
 
     @Override
