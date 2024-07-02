@@ -18,7 +18,6 @@ public class TransportDAO implements IDAO<Transport> {
 
     public TransportDAO() {
         TransportTableCreator.createTransportTable();
-        TransportTableCreator.createTransportDeliveryDocumentsTable();
     }
 
     @Override

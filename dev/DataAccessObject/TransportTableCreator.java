@@ -49,32 +49,27 @@ public class TransportTableCreator {
         }
     }
 
-//    public static void createTransportTable() {
-//        try {
-//            Class.forName("org.sqlite.JDBC");
-//
-//            // Establish connection to the SQLite database
-//            try (Connection connection = DriverManager.getConnection(URL);
-//                 Statement statement = connection.createStatement()) {
-//                // SQL statement to create the roles table
-//                String sql = "CREATE TABLE IF NOT EXISTS branches ("
-//                        + "Branch_ID INTEGER PRIMARY KEY,"
-//                        + "name TEXT NOT NULL,"
-//                        + "address TEXT NOT NULL"
-//                        + ");";
-//
-//                // Execute the SQL statement to create the table
-//                statement.execute(sql);
-//                System.out.println("Roles table created or already exists.");
-//
-//                // Print the absolute path of the database file
-//                System.out.println("SQLite database location: " + connection.getMetaData().getURL());
-//            }
-//        } catch (ClassNotFoundException | SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private static void createDeliveryDocumentItemsTable() {
+        try {
+            Class.forName("org.sqlite.JDBC");
 
+            try (Connection connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
+                 Statement statement = connection.createStatement()) {
+                String sql = "CREATE TABLE IF NOT EXISTS delivery_document_items (" +
+                        "documentID INTEGER NOT NULL, " +
+                        "itemID INTEGER NOT NULL, " +
+                        "quantity INTEGER NOT NULL, " +
+                        "PRIMARY KEY (documentID, itemID), " +
+                        "FOREIGN KEY (documentID) REFERENCES delivery_documents(documentID), " +
+                        "FOREIGN KEY (itemID) REFERENCES items(itemID));";
+
+                statement.execute(sql);
+                System.out.println("Delivery document items table created or already exists.");
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public static void createItemsTable() {
         try {
             Class.forName("org.sqlite.JDBC");
@@ -97,6 +92,7 @@ public class TransportTableCreator {
 
     public static void createDeliveryDocumentsTable() {
         try {
+            createDeliveryDocumentItemsTable();
             Class.forName("org.sqlite.JDBC");
 
             try (Connection connection = DriverManager.getConnection(URL);
@@ -166,7 +162,7 @@ public class TransportTableCreator {
     public static void createTransportTable() {
         try {
             Class.forName("org.sqlite.JDBC");
-
+            createTransportDeliveryDocumentsTable();
             try (Connection connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
                  Statement statement = connection.createStatement()) {
                 String sql = "CREATE TABLE IF NOT EXISTS transport (" +
