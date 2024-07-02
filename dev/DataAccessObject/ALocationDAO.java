@@ -55,24 +55,26 @@ public class ALocationDAO implements IDAO<ALocation> {
 
     @Override
     public void update(ALocation aLocation) throws SQLException {
-        // Define the SQL update statement
-        String sql = "UPDATE locations SET contact = ?, phone = ?, lType = ?, full_address = ?, address_code = ?, shipping_area = ? WHERE locationID = ?";
+        if (this.getAll().containsKey(aLocation.getLocationID())) {
+            String sql = "UPDATE locations SET contact = ?, phone = ?, lType = ?, full_address = ?, address_code = ?, shipping_area = ? WHERE locationID = ?";
 
-        // Establish the database connection
-        try (Connection connection = DriverManager.getConnection(URL);
-             PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            // Set the parameters for the PreparedStatement
-            pstmt.setString(1, aLocation.getContact());
-            pstmt.setString(2, aLocation.getPhone());
-            pstmt.setString(3, aLocation.getlType());
-            pstmt.setString(4, aLocation.getAddress().getFull_address());
-            pstmt.setInt(5, aLocation.getAddress().getAddress_code());
-            pstmt.setInt(6, aLocation.getAddress().getShipping_area());
-            pstmt.setInt(7, aLocation.getLocationID());
+            // Establish the database connection
+            try (Connection connection = DriverManager.getConnection(URL);
+                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                // Set the parameters for the PreparedStatement
+                pstmt.setString(1, aLocation.getContact());
+                pstmt.setString(2, aLocation.getPhone());
+                pstmt.setString(3, aLocation.getlType());
+                pstmt.setString(4, aLocation.getAddress().getFull_address());
+                pstmt.setInt(5, aLocation.getAddress().getAddress_code());
+                pstmt.setInt(6, aLocation.getAddress().getShipping_area());
+                pstmt.setInt(7, aLocation.getLocationID());
 
-            // Execute the update statement
-            pstmt.executeUpdate();
-        }
+                // Execute the update statement
+                pstmt.executeUpdate();
+            }
+        }else
+            System.out.println("location not exist");
     }
 
     @Override
