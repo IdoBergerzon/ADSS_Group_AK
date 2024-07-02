@@ -1,25 +1,33 @@
 package DataAccessObject;
 
+import Domain.ALocation;
+
 import java.sql.SQLException;
+import java.util.List;
 
-public class ALocationDAO <T> implements IDAO<T> {
+public class ALocationDAO implements IDAO<ALocation> {
     @Override
-    public void add(T t) throws SQLException {
+    public void add(ALocation aLocation) throws SQLException {
 
     }
 
     @Override
-    public void remove(T t) throws SQLException {
+    public void remove(ALocation aLocation) throws SQLException {
 
     }
 
     @Override
-    public void update(T t) throws SQLException {
+    public void update(ALocation aLocation) throws SQLException {
 
     }
 
     @Override
-    public T get(int id) throws SQLException {
+    public ALocation get(int id) throws SQLException {
         return null;
+    }
+
+    @Override
+    public List<ALocation> getAll() throws SQLException {
+        return List.of();
     }
 }

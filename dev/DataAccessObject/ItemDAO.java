@@ -1,25 +1,34 @@
 package DataAccessObject;
 
+import Domain.Item;
+
 import java.sql.SQLException;
+import java.util.List;
 
-public class ItemDAO <T> implements IDAO<T> {
+public class ItemDAO implements IDAO<Item> {
+
     @Override
-    public void add(T t) throws SQLException {
+    public void add(Item item) throws SQLException {
 
     }
 
     @Override
-    public void remove(T t) throws SQLException {
+    public void remove(Item item) throws SQLException {
 
     }
 
     @Override
-    public void update(T t) throws SQLException {
+    public void update(Item item) throws SQLException {
 
     }
 
     @Override
-    public T get(int id) throws SQLException {
+    public Item get(int id) throws SQLException {
         return null;
+    }
+
+    @Override
+    public List<Item> getAll() throws SQLException {
+        return List.of();
     }
 }

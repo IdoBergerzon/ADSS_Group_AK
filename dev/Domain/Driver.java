@@ -16,6 +16,7 @@ public class Driver {
         this.licenseMaxWeight = licenseMaxWeight;
     }
     public int getDriverID() {return driverID;}
+    public String getDriverName() {return driverName;}
     public boolean isAvailable() {return available;}
     public int getLicenseMaxWeight() {return licenseMaxWeight;}
 

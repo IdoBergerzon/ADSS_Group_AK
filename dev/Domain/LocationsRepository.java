@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-public class LocationsRepository<T> implements IRepository<T> {
+public class LocationsRepository implements IRepository<ALocation> {
     private HashMap<Integer, ALocation> locations;
 
     public LocationsRepository() {
@@ -21,9 +21,8 @@ public class LocationsRepository<T> implements IRepository<T> {
     }
 
     @Override
-    public void add(T t) {
-        if (t instanceof ALocation) {
-            ALocation location = (ALocation) t;
+    public void add(ALocation location) {
+        if (!locations.containsKey(location.getLocationID())){
             locations.put(location.getLocationID(), location);
         }
     }
@@ -34,25 +33,22 @@ public class LocationsRepository<T> implements IRepository<T> {
         }
 
     @Override
-    public void update(T t) {
-        if (t instanceof ALocation) {
-            ALocation location = (ALocation) t;
-            if (locations.containsKey(location.getLocationID())) {
-                locations.replace(location.getLocationID(), location);
-            }
+    public void update(ALocation location) {
+        if (locations.containsKey(location.getLocationID())) {
+            locations.replace(location.getLocationID(), location);
         }
     }
 
     @Override
-    public T get(int id) {
+    public ALocation get(int id) {
         if (locations.containsKey(id)) {
-            return (T) locations.get(id);
+            return locations.get(id);
         }
         return null;
     }
 
     @Override
-    public List<T> getAll() {
+    public List<ALocation> getAll() {
         return new ArrayList(this.locations.values());
     }
 }

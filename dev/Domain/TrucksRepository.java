@@ -2,7 +2,7 @@ package Domain;
 
 import java.util.*;
 
-public class TrucksRepository<T> implements IRepository<T> {
+public class TrucksRepository implements IRepository<Truck> {
     private HashMap<Integer, Truck> trucks;
 
     public TrucksRepository() { this.trucks = new HashMap<>();}
@@ -24,9 +24,8 @@ public class TrucksRepository<T> implements IRepository<T> {
     }
 
     @Override
-    public void add(T t) {
-        if (t instanceof Truck) {
-            Truck truck = (Truck) t;
+    public void add(Truck truck) {
+        if (!trucks.containsKey(truck.getTruckID())){
             trucks.put(truck.getTruckID(), truck);
         }
     }
@@ -37,25 +36,22 @@ public class TrucksRepository<T> implements IRepository<T> {
     }
 
     @Override
-    public void update(T t) {
-        if (t instanceof Truck) {
-            Truck truck = (Truck) t;
-            if (trucks.containsKey(truck.getTruckID())) {
-                trucks.replace(truck.getTruckID(), truck);
-            }
+    public void update(Truck truck) {
+        if (trucks.containsKey(truck.getTruckID())) {
+            trucks.replace(truck.getTruckID(), truck);
         }
     }
 
     @Override
-    public T get(int id) {
+    public Truck get(int id) {
         if (trucks.containsKey(id)) {
-            return (T) trucks.get(id);
+            return trucks.get(id);
         }
         return null;
     }
 
     @Override
-    public List<T> getAll() {
+    public List<Truck> getAll() {
         return new ArrayList(this.trucks.values());
     }
 }

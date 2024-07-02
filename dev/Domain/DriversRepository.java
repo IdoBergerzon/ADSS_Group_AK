@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class DriversRepository<T> implements IRepository<T> {
+public class DriversRepository implements IRepository<Driver> {
     private HashMap<Integer,Driver> drivers;
 
     public DriversRepository() {
@@ -41,28 +41,23 @@ public class DriversRepository<T> implements IRepository<T> {
     }
 
     @Override
-    public void update(T t) {
-        if (t instanceof Driver) {
-            Driver driver = (Driver) t;
-            if (drivers.containsKey(driver.getDriverID())) {
-                drivers.replace(driver.getDriverID(), driver);
-            }
+    public void update(Driver driver) {
+        if (drivers.containsKey(driver.getDriverID())) {
+            drivers.replace(driver.getDriverID(), driver);
         }
     }
 
     @Override
-    public void add(T t) {
-        if (t instanceof Driver){
-            Driver driver = (Driver) t;
+    public void add(Driver driver) {
+        if (!drivers.containsKey(driver.getDriverID())){
             drivers.put(driver.getDriverID(),driver);
         }
     }
 
-
     @Override
-    public T get(int id) {
+    public Driver get(int id) {
         if (drivers.containsKey(id)) {
-            return (T) drivers.get(id);
+            return drivers.get(id);
         }
         return null;
     }

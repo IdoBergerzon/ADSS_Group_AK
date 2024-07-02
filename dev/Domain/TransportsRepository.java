@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-public class TransportsRepository<T> implements IRepository<T> {
+public class TransportsRepository implements IRepository<Transport> {
     private HashMap<Integer, Transport> transports;
 
 
@@ -28,12 +28,10 @@ public class TransportsRepository<T> implements IRepository<T> {
     }
 
     @Override
-    public void add(T t) {
-        if (t instanceof Transport) {
-            Transport transport = (Transport) t;
+    public void add(Transport transport) {
+        if (!transports.containsKey(transport.getTransportID()))
             this.transports.put(transport.getTransportID(), transport);
         }
-    }
 
     @Override
     public void remove(int id) {
@@ -41,26 +39,23 @@ public class TransportsRepository<T> implements IRepository<T> {
     }
 
     @Override
-    public void update(T t) {
-        if (t instanceof Transport) {
-            Transport transport = (Transport) t;
-            if (this.transports.containsKey(transport.getTransportID())) {
-                this.transports.replace(transport.getTransportID(), transport);
-            }
+    public void update(Transport transport) {
+        if (this.transports.containsKey(transport.getTransportID())) {
+            this.transports.replace(transport.getTransportID(), transport);
         }
     }
 
     @Override
-    public T get(int id) {
+    public Transport get(int id) {
         if (this.transports.containsKey(id)) {
-            return (T) this.transports.get(id);
+            return this.transports.get(id);
         }
         return null;
     }
 
     @Override
-    public List<T> getAll() {
-        return new ArrayList(this.transports.values());
+    public List<Transport> getAll() {
+        return new ArrayList<>(this.transports.values());
     }
 }
 

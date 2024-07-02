@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-public class ItemsRepository<T> implements IRepository<T>{
+public class ItemsRepository implements IRepository<Item>{
     private HashMap<Integer, Item> items;
 
     public ItemsRepository() { this.items = new HashMap<>(); }
@@ -23,10 +23,9 @@ public class ItemsRepository<T> implements IRepository<T>{
     }
 
     @Override
-    public void add(T t) {
-        if (t instanceof Item) {
-            Item item = (Item) t;
-            items.put(item.getItemID(),item);
+    public void add(Item item) {
+        if (!items.containsKey(item.getItemID())) {
+            items.put(item.getItemID(), item);
         }
     }
 
@@ -36,29 +35,26 @@ public class ItemsRepository<T> implements IRepository<T>{
         }
 
     @Override
-    public void update(T t) {
-        if (t instanceof Item) {
-            Item item = (Item) t;
-            if (items.containsKey(item.getItemID())) {
-                items.replace(item.getItemID(),item);
-                items.put(item.getItemID(),item);
-            }
+    public void update(Item item) {
+        if (items.containsKey(item.getItemID())) {
+            items.replace(item.getItemID(),item);
+            items.put(item.getItemID(),item);
         }
     }
 
     @Override
-    public T get(int id) {
+    public Item get(int id) {
         if (items.containsKey(id)) {
-            return (T) items.get(id);
+            return items.get(id);
         }
         return null;
     }
 
     @Override
-    public List<T> getAll() {
-        List<T> allItems = new ArrayList<>();
+    public List<Item> getAll() {
+        List<Item> allItems = new ArrayList<>();
         for (Item item : items.values()) {
-            allItems.add((T) item);
+            allItems.add(item);
         }
         return allItems;
     }

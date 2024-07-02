@@ -7,6 +7,28 @@ import java.sql.Statement;
 public class TransportTableCreator {
     private static final String URL = "jdbc:sqlite:mydatabase.db"; // Path to the SQLite database file
 
+    public static void createDriversTable() {
+        try {
+            Class.forName("org.sqlite.JDBC");
+
+            try (Connection connection = DriverManager.getConnection(URL);
+                 Statement statement = connection.createStatement()) {
+                String sql = "CREATE TABLE IF NOT EXISTS drivers (" +
+                        "driverID INTEGER PRIMARY KEY, " +
+                        "driverName TEXT NOT NULL, " +
+                        "available BOOLEAN NOT NULL, " +
+                        "licenseMaxWeight INTEGER NOT NULL);";
+
+                statement.execute(sql);
+                System.out.println("Drivers table created or already exists.");
+
+                System.out.println("SQLite database location: " + connection.getMetaData().getURL());
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void createTransportTable() {
         try {
             // Load SQLite JDBC driver class
@@ -36,7 +58,6 @@ public class TransportTableCreator {
 
     public static void main(String[] args) {
         createTransportTable();
-
-    }
+    }
 
 }
