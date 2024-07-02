@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import Domain.Driver;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DriverDAO implements IDAO<Driver>{
@@ -70,22 +71,7 @@ public class DriverDAO implements IDAO<Driver>{
     }
 
     @Override
-    public List<Driver> getAll() throws SQLException {
-        String sql = "SELECT * FROM drivers";
-        List<Driver> drivers = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(URL);
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                int driverID = rs.getInt("driverID");
-                String driverName = rs.getString("driverName");
-                boolean available = rs.getBoolean("available");
-                int licenseMaxWeight = rs.getInt("licenseMaxWeight");
-                Driver driver = new Driver(driverID, driverName, licenseMaxWeight);
-                driver.setAvailable(available);
-                drivers.add(driver);
-            }
-        }
-        return drivers;
+    public HashMap<Integer, Driver> getAll() throws SQLException {
+        return null;
     }
 }

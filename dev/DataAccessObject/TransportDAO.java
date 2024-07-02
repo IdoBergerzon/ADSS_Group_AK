@@ -3,6 +3,7 @@ package DataAccessObject;
 import Domain.Transport;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 public class TransportDAO implements IDAO<Transport> {
@@ -28,7 +29,7 @@ public class TransportDAO implements IDAO<Transport> {
     }
 
     @Override
-    public List<Transport> getAll() throws SQLException {
-        return List.of();
+    public HashMap<Integer, Transport> getAll() throws SQLException {
+        return null;
     }
 }

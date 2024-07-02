@@ -3,6 +3,7 @@ package DataAccessObject;
 import Domain.Delivery_Document;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
@@ -28,7 +29,7 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
     }
 
     @Override
-    public List<Delivery_Document> getAll() throws SQLException {
-        return List.of();
+    public HashMap<Integer, Delivery_Document> getAll() throws SQLException {
+        return null;
     }
 }

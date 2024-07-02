@@ -3,6 +3,7 @@ package DataAccessObject;
 import Domain.ALocation;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 public class ALocationDAO implements IDAO<ALocation> {
@@ -27,7 +28,7 @@ public class ALocationDAO implements IDAO<ALocation> {
     }
 
     @Override
-    public List<ALocation> getAll() throws SQLException {
-        return List.of();
+    public HashMap<Integer,ALocation> getAll() throws SQLException {
+        return null;
     }
 }

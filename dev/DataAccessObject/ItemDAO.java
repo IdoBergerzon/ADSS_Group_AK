@@ -3,6 +3,7 @@ package DataAccessObject;
 import Domain.Item;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 public class ItemDAO implements IDAO<Item> {
@@ -28,7 +29,7 @@ public class ItemDAO implements IDAO<Item> {
     }
 
     @Override
-    public List<Item> getAll() throws SQLException {
-        return List.of();
+    public HashMap<Integer, Item> getAll() throws SQLException {
+        return null;
     }
 }

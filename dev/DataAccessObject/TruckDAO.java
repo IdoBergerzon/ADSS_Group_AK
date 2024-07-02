@@ -4,6 +4,7 @@ import Domain.Truck;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class TruckDAO implements IDAO<Truck>{
@@ -73,23 +74,7 @@ public class TruckDAO implements IDAO<Truck>{
     }
 
     @Override
-    public List<Truck> getAll() throws SQLException {
-        String sql = "SELECT * FROM trucks";
-        List<Truck> trucks = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(URL);
-             Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                int truckID = rs.getInt("truckID");
-                String truckType = rs.getString("truckType");
-                double truckWeight = rs.getDouble("truckWeight");
-                double maxWeight = rs.getDouble("maxWeight");
-                boolean available = rs.getBoolean("available");
-                Truck truck = new Truck(truckID, truckType, truckWeight, maxWeight);
-                truck.setAvailable(available);
-                trucks.add(truck);
-            }
-        }
-        return trucks;
+    public HashMap<Integer, Truck> getAll() throws SQLException {
+        return null;
     }
 }
