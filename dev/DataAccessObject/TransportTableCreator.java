@@ -92,11 +92,17 @@ public class TransportTableCreator {
 
     public static void createDeliveryDocumentsTable() {
         try {
-            createDeliveryDocumentItemsTable();
+            createDeliveryDocumentItemsTable(); // Assuming this method creates another necessary table
             Class.forName("org.sqlite.JDBC");
             try (Connection connection = DriverManager.getConnection(URL);
                  Statement statement = connection.createStatement()) {
-                String sql = "CREATE TABLE IF NOT EXISTS delivery_documents (" +
+
+                // Drop the table if it exists
+                String dropSql = "DROP TABLE IF EXISTS delivery_documents";
+                statement.executeUpdate(dropSql);
+
+                // Create the table
+                String createSql = "CREATE TABLE delivery_documents (" +
                         "documentID INTEGER PRIMARY KEY, " +
                         "sourceID INTEGER NOT NULL, " +
                         "destinationID INTEGER NOT NULL, " +
@@ -106,8 +112,8 @@ public class TransportTableCreator {
                         "FOREIGN KEY (sourceID) REFERENCES locations(locationID), " +
                         "FOREIGN KEY (destinationID) REFERENCES suppliers(locationID));";
 
-                statement.execute(sql);
-                System.out.println("Delivery Documents table created or already exists.");
+                statement.executeUpdate(createSql);
+                System.out.println("Delivery Documents table created.");
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
