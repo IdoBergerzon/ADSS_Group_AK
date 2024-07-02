@@ -43,6 +43,10 @@ public class Delivery_Document {
         this.itemsStatus = status;
     }
 
+    public void setTotalWeight(double weight) {
+        this.totalWeight = weight;
+    }
+
     public int getAmount(Item item) {
         return items.get(item);
     }

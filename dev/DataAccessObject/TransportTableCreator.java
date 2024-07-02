@@ -145,5 +145,7 @@ public class TransportTableCreator {
         createDriversTable();
         createTrucksTable();
         createTransportTable();
+        createItemsTable();
+        createDeliveryDocumentsTable();
     }
 }
