@@ -18,7 +18,7 @@ public class ALocationDAO implements IDAO<ALocation> {
         if (this.getAll().containsKey(aLocation.getLocationID())) {
             System.out.println("location already exist");
         } else {
-            String sql = "INSERT INTO ALocation(locationID, contact, phone, l_type, full_address, address_code, shipping_area) VALUES(?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO ALocation(locationID, contact, phone, ltype, full_address, address_code, shipping_area) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
             // Establish database connection
             try (Connection connection = DriverManager.getConnection(URL);

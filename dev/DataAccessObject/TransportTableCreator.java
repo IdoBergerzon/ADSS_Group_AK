@@ -141,11 +141,33 @@ public class TransportTableCreator {
         }
     }
 
+    public static void createTransportDeliveryDocumentsTable() {
+        try {
+            Class.forName("org.sqlite.JDBC");
+
+            try (Connection connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
+                 Statement statement = connection.createStatement()) {
+                String sql = "CREATE TABLE IF NOT EXISTS transport_delivery_documents (" +
+                        "transportID INTEGER NOT NULL, " +
+                        "documentID INTEGER NOT NULL, " +
+                        "PRIMARY KEY (transportID, documentID), " +
+                        "FOREIGN KEY (transportID) REFERENCES transport(transportID), " +
+                        "FOREIGN KEY (documentID) REFERENCES Delivery_Document(documentID));";
+
+                statement.execute(sql);
+                System.out.println("Transport delivery documents table created or already exists.");
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public static void createTransportTable() {
         try {
             Class.forName("org.sqlite.JDBC");
 
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
                  Statement statement = connection.createStatement()) {
                 String sql = "CREATE TABLE IF NOT EXISTS transport (" +
                         "transportID INTEGER PRIMARY KEY, " +

@@ -10,7 +10,7 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
     private final ItemDAO itemDAO = new ItemDAO();
     private final ALocationDAO locationDAO = new ALocationDAO();
 
-    private DeliveryDocumentDAO() {
+    public DeliveryDocumentDAO() {
         TransportTableCreator.createDeliveryDocumentsTable();
     }
 

@@ -72,6 +72,10 @@ public class Transport {
         return delivery_documents;
     }
 
+    public String getComments() {
+        return comments;
+    }
+
     public boolean isFinished() {
         return finished;
     }
