@@ -3,9 +3,7 @@ package DataAccessObject;
 import java.sql.SQLException;
 import Domain.Driver;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class DriverDAO implements IDAO<Driver>{
     private final String URL = "jdbc:sqlite:sample.db";
@@ -72,6 +70,23 @@ public class DriverDAO implements IDAO<Driver>{
 
     @Override
     public HashMap<Integer, Driver> getAll() throws SQLException {
-        return null;
+        String sql = "SELECT * FROM drivers";
+        HashMap<Integer, Driver> driversMap = new HashMap<>();
+
+        try (Connection connection = DriverManager.getConnection(URL);
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                int driverID = rs.getInt("driverID");
+                String driverName = rs.getString("driverName");
+                boolean available = rs.getBoolean("available");
+                int licenseMaxWeight = rs.getInt("licenseMaxWeight");
+                Driver driver = new Driver(driverID, driverName, licenseMaxWeight);
+                driver.setAvailable(available);
+                driversMap.put(driverID, driver);
+            }
+        }
+        return driversMap;
     }
 }

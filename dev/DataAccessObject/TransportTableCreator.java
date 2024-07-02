@@ -75,6 +75,50 @@ public class TransportTableCreator {
         }
     }
 
+    public static void createItemsTable() {
+        try {
+            Class.forName("org.sqlite.JDBC");
+
+            try (Connection connection = DriverManager.getConnection(URL);
+                 Statement statement = connection.createStatement()) {
+                String sql = "CREATE TABLE IF NOT EXISTS items (" +
+                        "itemID INTEGER PRIMARY KEY, " +
+                        "itemName TEXT NOT NULL, " +
+                        "weight REAL NOT NULL);";
+
+                statement.execute(sql);
+                System.out.println("Items table created or already exists.");
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void createDeliveryDocumentsTable() {
+        try {
+            Class.forName("org.sqlite.JDBC");
+
+            try (Connection connection = DriverManager.getConnection(URL);
+                 Statement statement = connection.createStatement()) {
+                String sql = "CREATE TABLE IF NOT EXISTS delivery_documents (" +
+                        "documentID INTEGER PRIMARY KEY, " +
+                        "source INTEGER NOT NULL, " +
+                        "destination INTEGER NOT NULL, " +
+                        "totalWeight REAL NOT NULL, " +
+                        "delivery_status TEXT NOT NULL, " +
+                        "itemsStatus TEXT NOT NULL, " +
+                        "FOREIGN KEY (source) REFERENCES locations(locationID), " +
+                        "FOREIGN KEY (destination) REFERENCES suppliers(supplierID));";
+
+                statement.execute(sql);
+                System.out.println("Delivery Documents table created or already exists.");
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
         createDriversTable();
         createTrucksTable();

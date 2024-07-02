@@ -3,11 +3,9 @@ package DataAccessObject;
 import Domain.Truck;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-public class TruckDAO implements IDAO<Truck>{
+public class TruckDAO implements IDAO<Truck> {
     private final String URL = "jdbc:sqlite:sample.db";
 
     public TruckDAO() {
@@ -16,7 +14,7 @@ public class TruckDAO implements IDAO<Truck>{
 
     @Override
     public void add(Truck truck) throws SQLException {
-        String sql = "INSERT INTO trucks(truckID, truckType, truckWeight, maxWeight, available) VALUES(?, ?, ?, ?,true)";
+        String sql = "INSERT INTO trucks(truckID, truckType, truckWeight, maxWeight, available) VALUES(?, ?, ?, ?, true)";
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, truck.getTruckID());
@@ -43,11 +41,11 @@ public class TruckDAO implements IDAO<Truck>{
         String sql = "UPDATE trucks SET truckType = ?, truckWeight = ?, maxWeight = ?, available = ? WHERE truckID = ?";
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setInt(1, truck.getTruckID());
-            pstmt.setString(2, truck.getTruckType());
-            pstmt.setDouble(3, truck.getTruckWeight());
-            pstmt.setDouble(4, truck.getMaxWeight());
-            pstmt.setBoolean(5, truck.isAvailable());
+            pstmt.setString(1, truck.getTruckType());
+            pstmt.setDouble(2, truck.getTruckWeight());
+            pstmt.setDouble(3, truck.getMaxWeight());
+            pstmt.setBoolean(4, truck.isAvailable());
+            pstmt.setInt(5, truck.getTruckID());
             pstmt.executeUpdate();
         }
     }
@@ -75,6 +73,24 @@ public class TruckDAO implements IDAO<Truck>{
 
     @Override
     public HashMap<Integer, Truck> getAll() throws SQLException {
-        return null;
+        String sql = "SELECT * FROM trucks";
+        HashMap<Integer, Truck> trucksMap = new HashMap<>();
+
+        try (Connection connection = DriverManager.getConnection(URL);
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                int truckID = rs.getInt("truckID");
+                String truckType = rs.getString("truckType");
+                double truckWeight = rs.getDouble("truckWeight");
+                double maxWeight = rs.getDouble("maxWeight");
+                boolean available = rs.getBoolean("available");
+                Truck truck = new Truck(truckID, truckType, truckWeight, maxWeight);
+                truck.setAvailable(available);
+                trucksMap.put(truckID, truck);
+            }
+        }
+        return trucksMap;
     }
 }

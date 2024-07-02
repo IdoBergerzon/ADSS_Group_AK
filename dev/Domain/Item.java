@@ -11,6 +11,7 @@ public class Item {
         this.weight = weight;
     }
     public int getItemID() { return itemID; }
+    public String getItemName() { return itemName; }
     public double getWeight() { return weight; }
 
     @Override
