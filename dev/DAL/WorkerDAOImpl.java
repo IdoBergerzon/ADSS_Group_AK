@@ -1,6 +1,7 @@
 package DAL;
 
 
+import Domain.Role;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -148,22 +149,5 @@ public class WorkerDAOImpl implements IDao<JsonNode, Integer>{
 
 
 
-//    public static void main(String[] args){
-//        WorkerDAOImpl dao = new WorkerDAOImpl();
-//        Role cashier=new Role(3,"cashiers");
-//        Role store=new Role(4,"store");
-//        Worker ido=new Worker(20,"ido",5000,0,new Date(),1,cashier,2,"cashiers","leumi 5555555");
-//        Worker aviv=new Worker(22,"aviv",5000,0,new Date(),1,cashier,2,"cashiers","leumi 5555555");
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        // Convert Role object to JsonNode
-//        JsonNode jsonNode1 = objectMapper.valueToTree(ido);
-//        JsonNode jsonNode2 = objectMapper.valueToTree(aviv);
-//        //dao.remove(20);
-//        //ido.addNewRole(store);
-//        dao.insert(jsonNode1);
-//        dao.insert(jsonNode2);
-//        dao.retireWorker(ido.getId());
-//        System.out.println(dao.GetAllWorkers());
-//    }
 
 }

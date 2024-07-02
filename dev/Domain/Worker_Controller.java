@@ -11,6 +11,7 @@ public class Worker_Controller {
     public Worker_Controller(int worker_id) {
         new Week(shifts_repository.getMaxWeek()+1);
         this.worker_id = worker_id;
+        new Week(shifts_repository.getMaxWeek());
     }
     public void displayMyDetails(){
         Worker result=workers_memory.get(worker_id);
