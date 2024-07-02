@@ -15,10 +15,6 @@ public class DriversRepository implements IRepository<Driver> {
         this.drivers = drivers;
     }
 
-    public HashMap<Integer,Driver> getDrivers() {
-        return drivers;
-    }
-
     public List getAll() {
         return new ArrayList(drivers.values());
     }
@@ -27,8 +23,8 @@ public class DriversRepository implements IRepository<Driver> {
     public String toString() {
         StringBuilder driversStr = new StringBuilder();
         driversStr.append("All Drivers:\n");
-        for (Driver driver : getDrivers().values()) {
-            driversStr.append(driver + "\n");
+        for (int i = 0; i < drivers.size(); i++) {
+            driversStr.append(drivers.get(i) + "\n");
         }
         return driversStr.toString();
     }

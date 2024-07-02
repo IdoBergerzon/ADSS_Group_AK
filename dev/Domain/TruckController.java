@@ -26,7 +26,7 @@ public class TruckController {
     }
 
     public void addNewTruck(int truckID, String truckType, double truckWeight, double MaxWeight) {
-        if (trucksRepository.getTrucks().containsKey(truckID)) {
+        if (trucksRepository.getAll().contains(truckID)) {
             System.out.println("Truck already exists");
         }
         else {
@@ -57,7 +57,7 @@ public class TruckController {
     }
 
     public Truck getTruck(int truckID) {
-        return (Truck) trucksRepository.get(truckID);
+        return trucksRepository.get(truckID);
     }
 
     public void displayTruck() {
@@ -73,7 +73,7 @@ public class TruckController {
 
     public void displayAllTrucks() {
         Scanner scanner = new Scanner(System.in);
-        if (this.getTrucksData().getTrucks().isEmpty())
+        if (this.getTrucksData().getAll().isEmpty())
             System.out.println("There are no trucks in the system.\n");
         else
             System.out.println(this.getTrucksData().toString() + "\n");

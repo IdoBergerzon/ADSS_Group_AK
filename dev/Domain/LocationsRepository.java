@@ -16,10 +16,6 @@ public class LocationsRepository implements IRepository<ALocation> {
         this.locations = locations;
     }
 
-    public HashMap<Integer, ALocation> getLocations() {
-        return locations;
-    }
-
     @Override
     public void add(ALocation location) {
         if (!locations.containsKey(location.getLocationID())){

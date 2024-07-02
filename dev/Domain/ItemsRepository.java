@@ -9,7 +9,6 @@ public class ItemsRepository implements IRepository<Item>{
     private HashMap<Integer, Item> items;
 
     public ItemsRepository() { this.items = new HashMap<>(); }
-    public HashMap<Integer, Item> getItems() { return items; }
     public void setItems(HashMap<Integer, Item> items) { this.items = items; }
 
     @Override

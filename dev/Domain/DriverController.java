@@ -16,7 +16,7 @@ public class DriverController {
 
     public void addDriver(int driverID, String driverName, int license) {
         Driver newDriver = new Driver(driverID, driverName, license);
-        if (!driversRepository.getDrivers().containsKey(driverID)) {
+        if (!driversRepository.getAll().contains(driverID)) {
             driversRepository.add(newDriver);
             System.out.println("Driver added successfully: " + newDriver);
         } else {
@@ -51,7 +51,7 @@ public class DriverController {
     }
 
     public Driver getDriver(int driverID) {
-        return (Driver) driversRepository.get(driverID);
+        return driversRepository.get(driverID);
     }
 
     public void printAllAvailableDrivers(double weight) {
@@ -78,7 +78,7 @@ public class DriverController {
 
     public void displayAllDrivers() {
         Scanner scanner = new Scanner(System.in);
-        if (this.getDriversData().getDrivers().isEmpty())
+        if (this.getDriversData().getAll().isEmpty())
             System.out.println("There are no drivers in the system.\n");
         else
             System.out.println(this.getDriversData().toString() + "\n");

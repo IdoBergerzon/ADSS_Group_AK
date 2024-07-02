@@ -20,10 +20,10 @@ public class TransportController {
     }
 
     public Transport getTransport(int transportID) {
-        if (!transportsRepository.getTransports().containsKey(transportID)) {
+        if (!transportsRepository.getAll().contains(transportID)) {
             return null;
         }
-        return (Transport) transportsRepository.get(transportID);
+        return transportsRepository.get(transportID);
     }
 
     public void displayTransport() {
@@ -44,7 +44,7 @@ public class TransportController {
 
     public void displayAllTransports() {
         Scanner scanner = new Scanner(System.in);
-        if (this.getTransportsData().getTransports().isEmpty())
+        if (this.getTransportsData().getAll().isEmpty())
             System.out.println("There are no transports in the system.\n");
         else {
             System.out.println(this.getTransportsData().toString() + "\n");
@@ -428,10 +428,10 @@ public class TransportController {
                 System.out.println("Insert item ID to remove:");
                 int itemID = scanner.nextInt();
                 scanner.nextLine();
-                if (deliveryController.getItemsData().getItems().get(itemID) == null) {
+                if (deliveryController.getItemsData().get(itemID) == null) {
                     System.out.println("Item does not exist.\n");
                 } else {
-                    Item removedItem = (Item) deliveryController.getItemsData().getItems().get(itemID);
+                    Item removedItem = deliveryController.getItemsData().get(itemID);
                     if (deliveryDoc.removeItem(removedItem)) {
                         System.out.println("Item" + removedItem + "removed successfully.\n");
                         newTransport.calc_transportWeight();

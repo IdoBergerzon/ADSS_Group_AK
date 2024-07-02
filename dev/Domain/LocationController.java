@@ -16,7 +16,7 @@ public class LocationController {
     }
 
     public void addLocation(int locationID, Address address, String contact, String phone, String l_type) {
-        if (!locationsRepository.getLocations().containsKey(locationID)) {
+        if (!locationsRepository.getAll().contains(locationID)) {
             if (l_type == "Supplier"){
                 Supplier supplier = new Supplier(locationID, address, contact, phone);
                 locationsRepository.add(supplier);
@@ -32,7 +32,7 @@ public class LocationController {
         }
     }
     public ALocation getLocation(int locationID) {
-            if (locationsRepository.getLocations().get(locationID) != null) {
+            if (locationsRepository.getAll().get(locationID) != null) {
                 return (ALocation) locationsRepository.get(locationID);
             }
             return null;

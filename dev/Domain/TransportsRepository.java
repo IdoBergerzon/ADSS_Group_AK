@@ -13,10 +13,6 @@ public class TransportsRepository implements IRepository<Transport> {
         this.transports = new HashMap<>();
     }
 
-    public HashMap<Integer, Transport> getTransports() {
-        return transports;
-    }
-
     @Override
     public String toString() {
         StringBuilder tranStr = new StringBuilder();

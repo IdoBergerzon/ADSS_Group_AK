@@ -6,9 +6,6 @@ public class TrucksRepository implements IRepository<Truck> {
     private HashMap<Integer, Truck> trucks;
 
     public TrucksRepository() { this.trucks = new HashMap<>();}
-
-    public HashMap<Integer, Truck> getTrucks() { return trucks; }
-
     public void setTrucks(HashMap<Integer, Truck> trucks) {
         this.trucks = trucks;
     }

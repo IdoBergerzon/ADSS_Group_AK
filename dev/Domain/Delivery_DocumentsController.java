@@ -15,17 +15,17 @@ public class Delivery_DocumentsController {
     }
 
     public void addDelivery_Document(int delivery_id, Store source, Supplier destination, HashMap<Item,Integer> items){
-        if (documentsRepository.getDelivery_Documents().containsKey(delivery_id)){
+        if (documentsRepository.getAll().contains(delivery_id)){
             System.out.println("delivery " + delivery_id + " already exists");
         }
         else {
             Delivery_Document newDelivery = new Delivery_Document(source, delivery_id, destination, items);
-            documentsRepository.getDelivery_Documents().put(delivery_id, newDelivery);
+            documentsRepository.add(newDelivery);
         }
     }
 
     public Delivery_Document getDelivery_Document(int delivery_id){
-        return (Delivery_Document) documentsRepository.get(delivery_id);
+        return documentsRepository.get(delivery_id);
     }
 
     public void getShippingAreaForDest(int SourceArea){

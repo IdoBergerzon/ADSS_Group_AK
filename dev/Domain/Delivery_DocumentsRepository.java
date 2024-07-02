@@ -12,10 +12,6 @@ public class Delivery_DocumentsRepository implements IRepository<Delivery_Docume
         delivery_Documents = new HashMap<>();
     }
 
-    public HashMap<Integer, Delivery_Document> getDelivery_Documents() {
-        return delivery_Documents;
-    }
-
     @Override
     public void add(Delivery_Document delivery_Document) {
         if (!delivery_Documents.containsKey(delivery_Document.getDocumentID())) {
