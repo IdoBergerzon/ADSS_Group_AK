@@ -12,6 +12,7 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
 
     public DeliveryDocumentDAO() {
         TransportTableCreator.createDeliveryDocumentsTable();
+        TransportTableCreator.createDeliveryDocumentItemsTable();
     }
 
     @Override
@@ -40,12 +41,33 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
     }
 
     private void addItemsToDeliveryDocument(Connection connection, int documentID, Item item, int quantity) throws SQLException {
-        String sql = "INSERT INTO delivery_document_items(documentID, itemID, quantity) VALUES(?, ?, ?)";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setInt(1, documentID);
-            pstmt.setInt(2, item.getItemID());
-            pstmt.setInt(3, quantity);
-            pstmt.executeUpdate();
+        String checkIfExistsSql = "SELECT * FROM delivery_document_items WHERE documentID = ? AND itemID = ?";
+        String updateSql = "UPDATE delivery_document_items SET quantity = quantity + ? WHERE documentID = ? AND itemID = ?";
+        String insertSql = "INSERT INTO delivery_document_items(documentID, itemID, quantity) VALUES(?, ?, ?)";
+
+        try (PreparedStatement checkIfExistsStmt = connection.prepareStatement(checkIfExistsSql)) {
+            checkIfExistsStmt.setInt(1, documentID);
+            checkIfExistsStmt.setInt(2, item.getItemID());
+
+            ResultSet rs = checkIfExistsStmt.executeQuery();
+
+            if (rs.next()) {
+                // If the entry exists, update the quantity
+                try (PreparedStatement updateStmt = connection.prepareStatement(updateSql)) {
+                    updateStmt.setInt(1, quantity);
+                    updateStmt.setInt(2, documentID);
+                    updateStmt.setInt(3, item.getItemID());
+                    updateStmt.executeUpdate();
+                }
+            } else {
+                // If the entry does not exist, insert a new row
+                try (PreparedStatement insertStmt = connection.prepareStatement(insertSql)) {
+                    insertStmt.setInt(1, documentID);
+                    insertStmt.setInt(2, item.getItemID());
+                    insertStmt.setInt(3, quantity);
+                    insertStmt.executeUpdate();
+                }
+            }
         }
     }
 
@@ -91,7 +113,7 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
     }
 
     private void removeItemsFromDeliveryDocument(Connection connection, int documentID) throws SQLException {
-        if (!this.getAll().containsKey(documentID)) {
+        if (this.getAll().containsKey(documentID)) {
             String sql = "DELETE FROM delivery_document_items WHERE documentID = ?";
             try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setInt(1, documentID);
@@ -99,7 +121,7 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
             }
         }
         else
-            System.out.println("delivery Document Already Exists");
+            System.out.println("delivery Document Not Exists");
     }
 
     @Override
@@ -170,19 +192,28 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
                 String deliveryStatusStr = rs.getString("delivery_status");
                 String itemsStatusStr = rs.getString("itemsStatus");
 
+                // Fetch source and destination locations using locationDAO
                 Store source = (Store) locationDAO.get(sourceID);
                 Supplier destination = (Supplier) locationDAO.get(destinationID);
+
+                // Convert delivery status and items status from string to enum
                 Delivery_DocumentStatus deliveryStatus = Delivery_DocumentStatus.valueOf(deliveryStatusStr);
                 Delivery_ItemsStatus itemsStatus = Delivery_ItemsStatus.valueOf(itemsStatusStr);
 
+                // Fetch items associated with the delivery document
                 HashMap<Item, Integer> items = getItemsForDeliveryDocument(connection, documentID);
 
+                // Create Delivery_Document object
                 Delivery_Document deliveryDocument = new Delivery_Document(source, documentID, destination, items);
                 deliveryDocument.setDelivery_status(deliveryStatus);
                 deliveryDocument.setItemsStatus(itemsStatus);
                 deliveryDocument.setTotalWeight(totalWeight);
+
+                // Add deliveryDocument to deliveryDocuments map
+                deliveryDocuments.put(documentID, deliveryDocument);
             }
         }
         return deliveryDocuments;
     }
+
 }

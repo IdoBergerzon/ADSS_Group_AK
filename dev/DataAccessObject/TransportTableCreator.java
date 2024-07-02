@@ -13,6 +13,10 @@ public class TransportTableCreator {
             Class.forName("org.sqlite.JDBC");
             try (Connection connection = DriverManager.getConnection(URL);
                  Statement statement = connection.createStatement()) {
+                // Drop the table if it exists
+                String dropSql = "DROP TABLE IF EXISTS drivers";
+                statement.executeUpdate(dropSql);
+
                 String sql = "CREATE TABLE IF NOT EXISTS drivers (" +
                         "driverID INTEGER PRIMARY KEY, " +
                         "driverName TEXT NOT NULL, " +
@@ -34,6 +38,10 @@ public class TransportTableCreator {
             Class.forName("org.sqlite.JDBC");
             try (Connection connection = DriverManager.getConnection(URL);
                  Statement statement = connection.createStatement()) {
+                // Drop the table if it exists
+                String dropSql = "DROP TABLE IF EXISTS trucks";
+                statement.executeUpdate(dropSql);
+
                 String sql = "CREATE TABLE IF NOT EXISTS trucks (" +
                         "truckID INTEGER PRIMARY KEY, " +
                         "truckType TEXT NOT NULL, " +
@@ -49,12 +57,17 @@ public class TransportTableCreator {
         }
     }
 
-    private static void createDeliveryDocumentItemsTable() {
+    public static void createDeliveryDocumentItemsTable() {
         try {
             Class.forName("org.sqlite.JDBC");
 
             try (Connection connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
                  Statement statement = connection.createStatement()) {
+                // Drop the table if it exists
+                String dropSql = "DROP TABLE IF EXISTS delivery_document_items";
+                statement.executeUpdate(dropSql);
+
+                // Create the table with (documentID, itemID) as primary key
                 String sql = "CREATE TABLE IF NOT EXISTS delivery_document_items (" +
                         "documentID INTEGER NOT NULL, " +
                         "itemID INTEGER NOT NULL, " +
@@ -70,12 +83,16 @@ public class TransportTableCreator {
             e.printStackTrace();
         }
     }
+
     public static void createItemsTable() {
         try {
             Class.forName("org.sqlite.JDBC");
 
             try (Connection connection = DriverManager.getConnection(URL);
                  Statement statement = connection.createStatement()) {
+                // Drop the table if it exists
+                String dropSql = "DROP TABLE IF EXISTS items";
+                statement.executeUpdate(dropSql);
                 String sql = "CREATE TABLE IF NOT EXISTS items (" +
                         "itemID INTEGER PRIMARY KEY, " +
                         "itemName TEXT NOT NULL, " +
@@ -92,7 +109,6 @@ public class TransportTableCreator {
 
     public static void createDeliveryDocumentsTable() {
         try {
-            createDeliveryDocumentItemsTable(); // Assuming this method creates another necessary table
             Class.forName("org.sqlite.JDBC");
             try (Connection connection = DriverManager.getConnection(URL);
                  Statement statement = connection.createStatement()) {
@@ -126,6 +142,9 @@ public class TransportTableCreator {
             Class.forName("org.sqlite.JDBC");
             try (Connection connection = DriverManager.getConnection(URL);
                  Statement statement = connection.createStatement()) {
+                // Drop the table if it exists
+                String dropSql = "DROP TABLE IF EXISTS locations";
+                statement.executeUpdate(dropSql);
                 String createTableSql = "CREATE TABLE IF NOT EXISTS locations (" +
                         "locationID INTEGER PRIMARY KEY, " +
                         "contact TEXT NOT NULL, " +
@@ -148,12 +167,18 @@ public class TransportTableCreator {
 
             try (Connection connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
                  Statement statement = connection.createStatement()) {
+                // Drop the table if it exists
+                String dropSql = "DROP TABLE IF EXISTS transport_delivery_documents";
+                statement.executeUpdate(dropSql);
+
+                // Create the table
                 String sql = "CREATE TABLE IF NOT EXISTS transport_delivery_documents (" +
                         "transportID INTEGER NOT NULL, " +
                         "documentID INTEGER NOT NULL, " +
                         "PRIMARY KEY (transportID, documentID), " +
                         "FOREIGN KEY (transportID) REFERENCES transport(transportID), " +
-                        "FOREIGN KEY (documentID) REFERENCES Delivery_Document(documentID));";
+                        "FOREIGN KEY (documentID) REFERENCES delivery_documents(documentID)" +
+                        ");";
 
                 statement.execute(sql);
                 System.out.println("Transport delivery documents table created or already exists.");
@@ -166,10 +191,10 @@ public class TransportTableCreator {
 
 
 
+
     public static void createTransportTable() {
         try {
             Class.forName("org.sqlite.JDBC");
-            createTransportDeliveryDocumentsTable();
             try (Connection connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
                  Statement statement = connection.createStatement()) {
                 String sql = "CREATE TABLE IF NOT EXISTS transport (" +

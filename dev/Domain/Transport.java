@@ -270,16 +270,18 @@ public class Transport {
 
     @Override
     public String toString() {
-        return "Transport{" +
+        String transportString = "Transport{" +
                 "\ntransportID=" + transportID +
                 "\n date=" + date +
                 "\n timeOfDepurture=" + timeOfDepurture +
                 "\n truck=" + truck +
                 "\n driver=" + driver +
                 "\n source=" + strAllSources() +
-                "\n destinations=" + strAllDestinations() +
-                "\n totalWeight=" + totalWeights.get(totalWeights.size()-1) +
-                "\n comments='" + comments + '\'' +
-                '}';
+                "\n destinations=" + strAllDestinations();
+        if (!totalWeights.isEmpty()) {
+            transportString += "\n totalWeight=" + totalWeights.get(totalWeights.size()-1);
+        }
+        transportString += "\n comments='" + comments + '\'' + '}';
+        return transportString;
     }
 }

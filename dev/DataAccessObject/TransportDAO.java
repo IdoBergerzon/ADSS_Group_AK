@@ -18,42 +18,47 @@ public class TransportDAO implements IDAO<Transport> {
 
     public TransportDAO() {
         TransportTableCreator.createTransportTable();
+        TransportTableCreator.createTransportDeliveryDocumentsTable();
     }
 
     @Override
     public void add(Transport transport) throws SQLException {
-        String sqlTransport = "INSERT INTO transport (transportID, truckID, driverID, comments) VALUES (?, ?, ?, ?)";
-        String sqlDeliveryDocument = "INSERT INTO transport_delivery_documents (transportID, documentID) VALUES (?, ?)";
+        if (!this.getAll().containsKey(transport.getTransportID())) {
+            String sqlTransport = "INSERT INTO transport (transportID, truckID, driverID, comments) VALUES (?, ?, ?, ?)";
+            String sqlDeliveryDocument = "INSERT INTO transport_delivery_documents (transportID, documentID) VALUES (?, ?)";
 
-        try (Connection connection = DriverManager.getConnection(URL);
-             PreparedStatement statementTransport = connection.prepareStatement(sqlTransport);
-             PreparedStatement statementDeliveryDocument = connection.prepareStatement(sqlDeliveryDocument)) {
-            connection.setAutoCommit(false);
+            try (Connection connection = DriverManager.getConnection(URL);
+                 PreparedStatement statementTransport = connection.prepareStatement(sqlTransport);
+                 PreparedStatement statementDeliveryDocument = connection.prepareStatement(sqlDeliveryDocument)) {
+                connection.setAutoCommit(false);
 
-            try {
-                // Insert into transport table
-                statementTransport.setInt(1, transport.getTransportID());
-                statementTransport.setInt(2, transport.getTruck().getTruckID());
-                statementTransport.setInt(3, transport.getDriver().getDriverID());
-                statementTransport.setString(4, transport.getComments());
-                statementTransport.executeUpdate();
+                try {
+                    // Insert into transport table
+                    statementTransport.setInt(1, transport.getTransportID());
+                    statementTransport.setInt(2, transport.getTruck().getTruckID());
+                    statementTransport.setInt(3, transport.getDriver().getDriverID());
+                    statementTransport.setString(4, transport.getComments());
+                    statementTransport.executeUpdate();
 
-                // Insert into transport_delivery_documents table
-                for (Delivery_Document doc : transport.getDelivery_documents()) {
-                    statementDeliveryDocument.setInt(1, transport.getTransportID());
-                    statementDeliveryDocument.setInt(2, doc.getDocumentID());
-                    statementDeliveryDocument.addBatch();
+                    // Insert into transport_delivery_documents table
+                    for (Delivery_Document doc : transport.getDelivery_documents()) {
+                        statementDeliveryDocument.setInt(1, transport.getTransportID());
+                        statementDeliveryDocument.setInt(2, doc.getDocumentID());
+                        statementDeliveryDocument.addBatch();
+                    }
+                    statementDeliveryDocument.executeBatch();
+
+                    connection.commit();
+                } catch (SQLException e) {
+                    connection.rollback();
+                    throw e;
+                } finally {
+                    connection.setAutoCommit(true);
                 }
-                statementDeliveryDocument.executeBatch();
-
-                connection.commit();
-            } catch (SQLException e) {
-                connection.rollback();
-                throw e;
-            } finally {
-                connection.setAutoCommit(true);
             }
         }
+        else
+            System.out.println("Transport already exists");
     }
 
     @Override
@@ -101,27 +106,23 @@ public class TransportDAO implements IDAO<Transport> {
     }
 
     private List<Delivery_Document> getDeliveryDocumentsForTransport(Connection connection, int transportID) throws SQLException {
-        if (this.getAll().containsKey(transportID)) {
-            String sql = "SELECT * FROM Delivery_Document WHERE transportID = ?";
-            List<Delivery_Document> deliveryDocuments = new ArrayList<>();
-
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setInt(1, transportID);
-                try (ResultSet resultSet = statement.executeQuery()) {
-                    while (resultSet.next()) {
-                        int documentID = resultSet.getInt("documentID");
-                        Delivery_Document deliveryDocument = deliveryDocumentDAO.get(documentID);
-                        // Add other fields as necessary
+        String sql = "SELECT documentID FROM transport_delivery_documents WHERE transportID = ?";
+        List<Delivery_Document> deliveryDocuments = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, transportID);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    int documentID = resultSet.getInt("documentID");
+                    Delivery_Document deliveryDocument = deliveryDocumentDAO.get(documentID);
+                    if (deliveryDocument != null) {
                         deliveryDocuments.add(deliveryDocument);
                     }
                 }
             }
-            return deliveryDocuments;
         }
-        else
-            System.out.println("delivery Document Not Exists");
-        return null;
+        return deliveryDocuments;
     }
+
 
     @Override
     public HashMap<Integer, Transport> getAll() throws SQLException {
@@ -132,7 +133,13 @@ public class TransportDAO implements IDAO<Transport> {
              ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
                 int transportID = resultSet.getInt("transportID");
-                Transport transport = get(transportID);
+                int truckID = resultSet.getInt("truckID");
+                Truck truck = truckDAO.get(truckID);
+                int driverID = resultSet.getInt("driverID");
+                Driver driver = driverDAO.get(driverID);
+                String comments = resultSet.getString("comments");
+                List<Delivery_Document> deliveryDocumentList = getDeliveryDocumentsForTransport(connection, transportID);
+                Transport transport = new Transport(transportID, truck, driver, deliveryDocumentList, comments);
                 transports.put(transportID, transport);
             }
         }
