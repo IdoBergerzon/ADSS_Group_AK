@@ -15,23 +15,26 @@ public class ALocationDAO implements IDAO<ALocation> {
 
     @Override
     public void add(ALocation aLocation) throws SQLException {
-        // Define SQL to insert into ALocation table
-        String sql = "INSERT INTO ALocation(locationID, contact, phone, l_type, full_address, address_code, shipping_area) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        if (this.getAll().containsKey(aLocation.getLocationID())) {
+            System.out.println("location already exist");
+        } else {
+            String sql = "INSERT INTO ALocation(locationID, contact, phone, l_type, full_address, address_code, shipping_area) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
-        // Establish database connection
-        try (Connection connection = DriverManager.getConnection(URL);
-             PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            // Set the parameters for the PreparedStatement
-            pstmt.setInt(1, aLocation.getLocationID());
-            pstmt.setString(2, aLocation.getContact());
-            pstmt.setString(3, aLocation.getPhone());
-            pstmt.setString(4, aLocation.getlType());
-            pstmt.setString(5, aLocation.getAddress().getFull_address());
-            pstmt.setInt(6, aLocation.getAddress().getAddress_code());
-            pstmt.setInt(7, aLocation.getAddress().getShipping_area());
+            // Establish database connection
+            try (Connection connection = DriverManager.getConnection(URL);
+                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                // Set the parameters for the PreparedStatement
+                pstmt.setInt(1, aLocation.getLocationID());
+                pstmt.setString(2, aLocation.getContact());
+                pstmt.setString(3, aLocation.getPhone());
+                pstmt.setString(4, aLocation.getlType());
+                pstmt.setString(5, aLocation.getAddress().getFull_address());
+                pstmt.setInt(6, aLocation.getAddress().getAddress_code());
+                pstmt.setInt(7, aLocation.getAddress().getShipping_area());
 
-            // Execute the insert statement
-            pstmt.executeUpdate();
+                // Execute the insert statement
+                pstmt.executeUpdate();
+            }
         }
     }
 

@@ -14,26 +14,31 @@ public class ItemDAO implements IDAO<Item> {
 
     @Override
     public void add(Item item) throws SQLException {
-        String sql = "INSERT INTO items(itemID, itemName, weight) VALUES(?, ?, ?)";
-        try (Connection connection = DriverManager.getConnection(URL);
-             PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setInt(1, item.getItemID());
-            pstmt.setString(2, item.getItemName());
-            pstmt.setDouble(3, item.getWeight());
-            pstmt.executeUpdate();
+        if (this.getAll().containsKey(item.getItemID())) {
+            System.out.println("item already exists");
+        } else {
+            String sql = "INSERT INTO items(itemID, itemName, weight) VALUES(?, ?, ?)";
+            try (Connection connection = DriverManager.getConnection(URL);
+                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                pstmt.setInt(1, item.getItemID());
+                pstmt.setString(2, item.getItemName());
+                pstmt.setDouble(3, item.getWeight());
+                pstmt.executeUpdate();
+            }
         }
     }
-
     @Override
     public void remove(Item item) throws SQLException {
-        String sql = "DELETE FROM items WHERE itemID = ?";
-        try (Connection connection = DriverManager.getConnection(URL);
-             PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setInt(1, item.getItemID());
-            pstmt.executeUpdate();
-        }
+        if (this.getAll().containsKey(item.getItemID())) {
+            String sql = "DELETE FROM items WHERE itemID = ?";
+            try (Connection connection = DriverManager.getConnection(URL);
+                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                pstmt.setInt(1, item.getItemID());
+                pstmt.executeUpdate();
+            }
+        } else
+            System.out.println("item does not exist");
     }
-
     @Override
     public void update(Item item) throws SQLException {
         String sql = "UPDATE items SET itemName = ?, weight = ? WHERE itemID = ?";

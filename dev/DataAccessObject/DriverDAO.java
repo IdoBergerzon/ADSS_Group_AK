@@ -14,25 +14,32 @@ public class DriverDAO implements IDAO<Driver>{
 
     @Override
     public void add(Driver driver) throws SQLException {
-        String sql = "INSERT INTO drivers(driverID, driverName, available, licenseMaxWeight) VALUES(?, ?, ?, ?)";
-        try (Connection connection = DriverManager.getConnection(URL);
-             PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setInt(1, driver.getDriverID());
-            pstmt.setString(2, driver.getDriverName());
-            pstmt.setBoolean(3, driver.isAvailable());
-            pstmt.setInt(4, driver.getLicenseMaxWeight());
-            pstmt.executeUpdate();
+        if (this.getAll().containsKey(driver.getDriverID())) {
+            System.out.println("driver already exist");
+        } else {
+            String sql = "INSERT INTO drivers(driverID, driverName, available, licenseMaxWeight) VALUES(?, ?, ?, ?)";
+            try (Connection connection = DriverManager.getConnection(URL);
+                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                pstmt.setInt(1, driver.getDriverID());
+                pstmt.setString(2, driver.getDriverName());
+                pstmt.setBoolean(3, driver.isAvailable());
+                pstmt.setInt(4, driver.getLicenseMaxWeight());
+                pstmt.executeUpdate();
+            }
         }
     }
 
     @Override
     public void remove(Driver driver) throws SQLException {
-        String sql = "DELETE FROM drivers WHERE driverID = ?";
-        try (Connection connection = DriverManager.getConnection(URL);
-             PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setInt(1, driver.getDriverID());
-            pstmt.executeUpdate();
-        }
+        if (this.getAll().containsKey(driver.getDriverID())) {
+            String sql = "DELETE FROM drivers WHERE driverID = ?";
+            try (Connection connection = DriverManager.getConnection(URL);
+                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                pstmt.setInt(1, driver.getDriverID());
+                pstmt.executeUpdate();
+            }
+        } else
+            System.out.println("driver does not exist");
     }
 
     @Override
