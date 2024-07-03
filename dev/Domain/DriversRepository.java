@@ -9,7 +9,7 @@ import java.util.List;
 
 public class DriversRepository implements IRepository<Driver> {
     private HashMap<Integer,Driver> drivers;
-    private DriverDAO driverDAO;
+    private DriverDAO driverDAO = new DriverDAO();
 
     public DriversRepository() {
         this.drivers = new HashMap<>();

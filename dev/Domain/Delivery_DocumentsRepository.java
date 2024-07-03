@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class Delivery_DocumentsRepository implements IRepository<Delivery_Document> {
     private HashMap<Integer, Delivery_Document> delivery_Documents;
-    private DeliveryDocumentDAO deliveryDocumentDAO;
+    private DeliveryDocumentDAO deliveryDocumentDAO = new DeliveryDocumentDAO();
 
     public Delivery_DocumentsRepository() {
         delivery_Documents = new HashMap<>();

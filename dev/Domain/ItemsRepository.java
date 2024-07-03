@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ItemsRepository implements IRepository<Item>{
     private HashMap<Integer, Item> items;
-    private ItemDAO itemDAO;
+    private ItemDAO itemDAO = new ItemDAO();
 
     public ItemsRepository() { this.items = new HashMap<>(); }
     public void setItems(HashMap<Integer, Item> items) { this.items = items; }

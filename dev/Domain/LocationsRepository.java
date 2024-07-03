@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class LocationsRepository implements IRepository<ALocation> {
     private HashMap<Integer, ALocation> locations;
-    private ALocationDAO locationDAO;
+    private ALocationDAO locationDAO = new ALocationDAO();
 
     public LocationsRepository() {
         this.locations = new HashMap<>();
