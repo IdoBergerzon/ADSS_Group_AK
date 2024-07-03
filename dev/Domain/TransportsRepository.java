@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class TransportsRepository implements IRepository<Transport> {
     private HashMap<Integer, Transport> transports;
-    private TransportDAO transportDAO = new TransportDAO();
+    private final TransportDAO transportDAO = new TransportDAO();
 
 
     public TransportsRepository() {

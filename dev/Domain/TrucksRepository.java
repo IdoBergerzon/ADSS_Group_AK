@@ -7,7 +7,7 @@ import java.util.*;
 
 public class TrucksRepository implements IRepository<Truck> {
     private HashMap<Integer, Truck> trucks;
-    private TruckDAO truckDAO = new TruckDAO();
+    private final TruckDAO truckDAO = new TruckDAO();
 
     public TrucksRepository() { this.trucks = new HashMap<>();}
     public void setTrucks(HashMap<Integer, Truck> trucks) {
