@@ -24,6 +24,11 @@ public class Delivery_DocumentsController {
         }
     }
 
+    public void addItem(int itemID, String itemName, double weight){
+        Item newItem = new Item(itemID, itemName, weight);
+        itemsRepository.add(newItem);
+    }
+
     public Delivery_Document getDelivery_Document(int delivery_id){
         return documentsRepository.get(delivery_id);
     }
