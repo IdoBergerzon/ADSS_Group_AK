@@ -1,5 +1,6 @@
 package Domain;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,7 +17,7 @@ public class DriverController {
 
     public void addDriver(int driverID, String driverName, int license) {
         Driver newDriver = new Driver(driverID, driverName, license);
-        if (!driversRepository.getAll().contains(driverID)) {
+        if (!driversRepository.getAll().containsKey(driverID)) {
             driversRepository.add(newDriver);
             System.out.println("Driver added successfully: " + newDriver);
         } else {
@@ -56,7 +57,7 @@ public class DriverController {
 
     public void printAllAvailableDrivers(double weight) {
         System.out.println("All Available Drivers:");
-        List<Driver> availableDrivers = driversRepository.getAll();
+        HashMap<Integer,Driver> availableDrivers = driversRepository.getAll();
         for (int i = 0; i < availableDrivers.size(); i++) {
             Driver driver = availableDrivers.get(i);
             if (driver.isAvailable() && driver.getLicenseMaxWeight() >= weight) {

@@ -28,12 +28,12 @@ public class ItemDAO implements IDAO<Item> {
         }
     }
     @Override
-    public void remove(Item item) throws SQLException {
-        if (this.getAll().containsKey(item.getItemID())) {
+    public void remove(int itemID) throws SQLException {
+        if (this.getAll().containsKey(itemID)) {
             String sql = "DELETE FROM items WHERE itemID = ?";
             try (Connection connection = DriverManager.getConnection(URL);
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
-                pstmt.setInt(1, item.getItemID());
+                pstmt.setInt(1, itemID);
                 pstmt.executeUpdate();
             }
         } else

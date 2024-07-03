@@ -1,12 +1,14 @@
 package Domain;
 
+import DataAccessObject.ALocationDAO;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 
 public class LocationsRepository implements IRepository<ALocation> {
     private HashMap<Integer, ALocation> locations;
+    private ALocationDAO locationDAO;
 
     public LocationsRepository() {
         this.locations = new HashMap<>();
@@ -18,33 +20,82 @@ public class LocationsRepository implements IRepository<ALocation> {
 
     @Override
     public void add(ALocation location) {
-        if (!locations.containsKey(location.getLocationID())){
-            locations.put(location.getLocationID(), location);
+        int locationID = location.getLocationID();
+        try {
+            if (locationDAO.get(locationID)==null && !locations.containsKey(location.getLocationID())){
+                locations.put(location.getLocationID(), location);
+                locationDAO.add(location);
+            } else if (locationDAO.get(locationID) != null && locations.containsKey(locationID)) {
+                locations.put(location.getLocationID(), location);
+            }
+            else
+                System.out.println("location already exists");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     public void remove(int locationID) {
-        locations.remove(locationID);
+        try {
+            if (locationDAO.get(locationID) != null && locations.containsKey(locationID)) {
+                locationDAO.remove(locationID);
+                locations.remove(locationID);
+            } else if (locationDAO.get(locationID) != null && !locations.containsKey(locationID)) {
+                locationDAO.remove(locationID);
+            }
+            else
+                System.out.println("locationID: " + locationID + " not found");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+    }
 
     @Override
     public void update(ALocation location) {
-        if (locations.containsKey(location.getLocationID())) {
-            locations.replace(location.getLocationID(), location);
+        int locationID = location.getLocationID();
+        try {
+            if (locationDAO.get(locationID) != null && locations.containsKey(locationID)) {
+                locations.replace(location.getLocationID(), location);
+                locationDAO.update(location);
+            } else if (locationDAO.get(locationID) != null && !locations.containsKey(locationID)) {
+                locationDAO.update(location);
+                locations.put(locationID, location);
+            }
+            else
+                System.out.println("location not found");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     public ALocation get(int id) {
-        if (locations.containsKey(id)) {
-            return locations.get(id);
+        try {
+            if (locationDAO.get(id) != null && locations.containsKey(id)) {
+                return locations.get(id);
+            } else if (locationDAO.get(id) != null && !locations.containsKey(id)) {
+                locations.put(id, locationDAO.get(id));
+                return locations.get(id);
+            }
+            else
+                System.out.println("location not found");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return null;
     }
 
     @Override
-    public List<ALocation> getAll() {
-        return new ArrayList(this.locations.values());
+    public HashMap<Integer, ALocation> getAll() {
+        try {
+            if (locationDAO != null) {
+                locations = locationDAO.getAll();
+                return locations;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 }

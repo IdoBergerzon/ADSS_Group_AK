@@ -1,12 +1,15 @@
 package Domain;
 
+import DataAccessObject.ItemDAO;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
 public class ItemsRepository implements IRepository<Item>{
     private HashMap<Integer, Item> items;
+    private ItemDAO itemDAO;
 
     public ItemsRepository() { this.items = new HashMap<>(); }
     public void setItems(HashMap<Integer, Item> items) { this.items = items; }
@@ -23,38 +26,84 @@ public class ItemsRepository implements IRepository<Item>{
 
     @Override
     public void add(Item item) {
-        if (!items.containsKey(item.getItemID())) {
-            items.put(item.getItemID(), item);
+        int itemID = item.getItemID();
+        try {
+            if (itemDAO.get(itemID) != null && !items.containsKey(item.getItemID())) {
+                items.put(itemID, item);
+            } else if (itemDAO.get(itemID) == null) {
+                items.put(itemID, item);
+                itemDAO.add(item);
+            }
+            else
+                System.out.println("Item already exists!");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     public void remove(int itemID) {
-        items.remove(itemID);
+        try {
+            if (itemDAO.get(itemID) != null && items.containsKey(itemID)) {
+                items.remove(itemID);
+                itemDAO.remove(itemID);
+            } else if (itemDAO.get(itemID) != null && !items.containsKey(itemID)) {
+                itemDAO.remove(itemID);
+            }
+            else
+                System.out.println("Item not found");
+            items.remove(itemID);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+    }
 
     @Override
     public void update(Item item) {
-        if (items.containsKey(item.getItemID())) {
-            items.replace(item.getItemID(),item);
-            items.put(item.getItemID(),item);
+        int itemID = item.getItemID();
+        try {
+            if (itemDAO.get(itemID) != null && items.containsKey(itemID)) {
+                items.replace(item.getItemID(),item);
+                itemDAO.update(item);
+            } else if (itemDAO.get(itemID) != null && !items.containsKey(itemID)) {
+                itemDAO.update(item);
+                items.put(item.getItemID(), item);
+            }
+            else
+                System.out.println("Item not found");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     public Item get(int id) {
-        if (items.containsKey(id)) {
-            return items.get(id);
+        try {
+            if (itemDAO.get(id) != null && items.containsKey(id)) {
+                return items.get(id);
+            } else if (itemDAO.get(id) != null && !items.containsKey(id)) {
+                items.put(id, items.get(id));
+                return items.get(id);
+            }
+            else {
+                System.out.println("Item not found");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return null;
     }
 
     @Override
-    public List<Item> getAll() {
-        List<Item> allItems = new ArrayList<>();
-        for (Item item : items.values()) {
-            allItems.add(item);
+    public HashMap<Integer, Item> getAll() {
+        try {
+            if (itemDAO != null) {
+                items = itemDAO.getAll();
+                return items;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return allItems;
+        return null;
     }
 }

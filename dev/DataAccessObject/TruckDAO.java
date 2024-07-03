@@ -31,12 +31,12 @@ public class TruckDAO implements IDAO<Truck> {
     }
 
     @Override
-    public void remove(Truck truck) throws SQLException {
-        if (this.getAll().containsKey(truck.getTruckID())) {
+    public void remove(int truckID) throws SQLException {
+        if (this.getAll().containsKey(truckID)) {
             String sql = "DELETE FROM trucks WHERE truckID = ?";
             try (Connection connection = DriverManager.getConnection(URL);
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
-                pstmt.setInt(1, truck.getTruckID());
+                pstmt.setInt(1, truckID);
                 pstmt.executeUpdate();
             }
         }

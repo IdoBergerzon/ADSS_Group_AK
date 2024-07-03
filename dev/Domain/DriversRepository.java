@@ -1,11 +1,15 @@
 package Domain;
 
+import DataAccessObject.DriverDAO;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class DriversRepository implements IRepository<Driver> {
     private HashMap<Integer,Driver> drivers;
+    private DriverDAO driverDAO;
 
     public DriversRepository() {
         this.drivers = new HashMap<>();
@@ -15,8 +19,16 @@ public class DriversRepository implements IRepository<Driver> {
         this.drivers = drivers;
     }
 
-    public List getAll() {
-        return new ArrayList(drivers.values());
+    public HashMap<Integer,Driver> getAll() {
+        try {
+            if (driverDAO != null) {
+                drivers = driverDAO.getAll();
+                return drivers;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 
     @Override
@@ -31,22 +43,51 @@ public class DriversRepository implements IRepository<Driver> {
 
     @Override
     public void remove(int id) {
-        if (drivers.containsKey(id)) {
-            drivers.remove(id);
+        try {
+            if (!drivers.containsKey(id) && driverDAO.get(id) != null) {
+                driverDAO.remove(id);
+            } else if (drivers.containsKey(id) && driverDAO.get(id) != null) {
+                drivers.remove(id);
+                driverDAO.remove(id);
+            }
+            else
+                System.out.println("Driver not found");
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     public void update(Driver driver) {
-        if (drivers.containsKey(driver.getDriverID())) {
-            drivers.replace(driver.getDriverID(), driver);
+        int driverID = driver.getDriverID();
+        try {
+            if (drivers.containsKey(driverID)) {
+                drivers.replace(driverID, driver);
+                driverDAO.update(driver);
+            } else if (!drivers.containsKey(driverID) && driverDAO.get(driverID) != null) {
+                driverDAO.update(driver);
+                drivers.put(driverID, driver);
+            }
+            else
+                System.out.println("Driver not found");
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     public void add(Driver driver) {
-        if (!drivers.containsKey(driver.getDriverID())){
-            drivers.put(driver.getDriverID(),driver);
+        int driverID = driver.getDriverID();
+        try {
+            if (!drivers.containsKey(driverID) && driverDAO.get(driverID) != null){
+                drivers.put(driver.getDriverID(),driver);
+            } else if (drivers.containsKey(driverID)) {
+                System.out.println("Driver already exists");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -54,6 +95,18 @@ public class DriversRepository implements IRepository<Driver> {
     public Driver get(int id) {
         if (drivers.containsKey(id)) {
             return drivers.get(id);
+        }
+        else {
+            try {
+                if (!drivers.containsKey(id) && driverDAO.get(id) != null) {
+                    drivers.put(id,driverDAO.get(id));
+                    return drivers.get(id);
+                }
+                else
+                    System.out.println("Driver does not exist");
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return null;
     }

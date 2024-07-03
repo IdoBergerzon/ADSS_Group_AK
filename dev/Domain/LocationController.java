@@ -1,9 +1,6 @@
 package Domain;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class LocationController {
     private LocationsRepository locationsRepository;
@@ -16,7 +13,7 @@ public class LocationController {
     }
 
     public void addLocation(int locationID, Address address, String contact, String phone, String l_type) {
-        if (!locationsRepository.getAll().contains(locationID)) {
+        if (!locationsRepository.getAll().containsKey(locationID)) {
             if (l_type == "Supplier"){
                 Supplier supplier = new Supplier(locationID, address, contact, phone);
                 locationsRepository.add(supplier);
@@ -51,7 +48,7 @@ public class LocationController {
 
     public void getAllSourceShippingArea() {
         Set <Integer> ssa = new HashSet();
-        List<ALocation> locationsNew = locationsRepository.getAll();
+        HashMap<Integer,ALocation> locationsNew = locationsRepository.getAll();
         for (int i = 0; i < locationsNew.size(); i++) {
             ALocation location = locationsNew.get(i);
             if (location.getL_type().equals("Store")) {

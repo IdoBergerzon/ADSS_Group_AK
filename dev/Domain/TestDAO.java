@@ -61,11 +61,11 @@ public class TestDAO {
 
 
             // Test removing a truck
-            truckDAO.remove(truck2);
+            truckDAO.remove(truck2.getTruckID());
             System.out.println("Removed Truck: " + truck2);
         } finally {
             // Clean up: Remove added trucks
-            truckDAO.remove(truck1);
+            truckDAO.remove(truck1.getTruckID());
         }
     }
 
@@ -85,11 +85,11 @@ public class TestDAO {
                 System.out.println(driver);
             }
             // Test removing a driver
-            driverDAO.remove(driver2);
+            driverDAO.remove(driver2.getDriverID());
             System.out.println("Removed Driver: " + driver2);
         } finally {
             // Clean up: Remove added drivers
-            driverDAO.remove(driver1);
+            driverDAO.remove(driver1.getDriverID());
         }
     }
 
@@ -117,11 +117,11 @@ public class TestDAO {
             System.out.println("Updated Location: " + aLocationDAO.get(store.getLocationID()));
 
             // Test removing a location
-            aLocationDAO.remove(supplier);
+            aLocationDAO.remove(supplier.getLocationID());
             System.out.println("Removed Location: " + supplier);
         } finally {
             // Clean up: Remove added locations
-            aLocationDAO.remove(store);
+            aLocationDAO.remove(store.getLocationID());
         }
     }
 
@@ -147,11 +147,11 @@ public class TestDAO {
             System.out.println("Updated Item: " + itemDAO.get(item1.getItemID()));
 
             // Test removing an item
-            itemDAO.remove(item2);
+            itemDAO.remove(item2.getItemID());
             System.out.println("Removed Item: " + item2);
         } finally {
             // Clean up: Remove added items
-            itemDAO.remove(item1);
+            itemDAO.remove(item1.getItemID());
         }
     }
 
@@ -195,15 +195,15 @@ public class TestDAO {
             System.out.println("Retrieved Delivery Document by ID: " + retrievedDocument);
 
             // Test removing a delivery document
-            deliveryDocumentDAO.remove(deliveryDocument);
+            deliveryDocumentDAO.remove(deliveryDocument.getDocumentID());
             System.out.println("Removed Delivery Document: " + deliveryDocument);
 
         } finally {
             // Clean up: Remove added items and locations
-            itemDAO.remove(item1);
-            itemDAO.remove(item2);
-            aLocationDAO.remove(source);
-            aLocationDAO.remove(destination);
+            itemDAO.remove(item1.getItemID());
+            itemDAO.remove(item2.getItemID());
+            aLocationDAO.remove(source.getLocationID());
+            aLocationDAO.remove(destination.getLocationID());
         }
     }
 
@@ -254,18 +254,18 @@ public class TestDAO {
             System.out.println("Updated Transport: " + updatedTransport);
 
             // Test removing a transport
-            transportDAO.remove(transport);
+            transportDAO.remove(transport.getTransportID());
             Transport removedTransport = transportDAO.get(transport.getTransportID());
             System.out.println("Removed Transport: " + removedTransport);
         } finally {
             // Clean up: Remove added items and locations
-            itemDAO.remove(item1);
-            itemDAO.remove(item2);
-            aLocationDAO.remove(sourceLocation);
-            aLocationDAO.remove(destinationLocation);
-            truckDAO.remove(truck);
-            driverDAO.remove(driver);
-            driverDAO.remove(driver2); // Ensure to remove driver2 as well
+            itemDAO.remove(item1.getItemID());
+            itemDAO.remove(item2.getItemID());
+            aLocationDAO.remove(sourceLocation.getLocationID());
+            aLocationDAO.remove(destinationLocation.getLocationID());
+            truckDAO.remove(truck.getTruckID());
+            driverDAO.remove(driver.getDriverID());
+            driverDAO.remove(driver2.getDriverID()); // Ensure to remove driver2 as well
         }
     }
 }

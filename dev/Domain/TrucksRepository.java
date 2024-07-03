@@ -1,9 +1,13 @@
 package Domain;
 
+import DataAccessObject.TruckDAO;
+
+import java.sql.SQLException;
 import java.util.*;
 
 public class TrucksRepository implements IRepository<Truck> {
     private HashMap<Integer, Truck> trucks;
+    private TruckDAO truckDAO;
 
     public TrucksRepository() { this.trucks = new HashMap<>();}
     public void setTrucks(HashMap<Integer, Truck> trucks) {
@@ -22,33 +26,83 @@ public class TrucksRepository implements IRepository<Truck> {
 
     @Override
     public void add(Truck truck) {
-        if (!trucks.containsKey(truck.getTruckID())){
-            trucks.put(truck.getTruckID(), truck);
+        int truckID = truck.getTruckID();
+        try {
+            if (!trucks.containsKey(truckID) && truckDAO.get(truckID) == null){
+                trucks.put(truckID, truck);
+                truckDAO.add(truck);
+            } else if (!trucks.containsKey(truckID) && truckDAO.get(truckID) != null) {
+                trucks.put(truckID, truck);
+            }
+            else
+                System.out.println("Truck ID: " + truckID + " already exists");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     public void remove(int truckID) {
+        try {
+            if (trucks.containsKey(truckID)) {
+                trucks.remove(truckID);
+                truckDAO.remove(truckID);
+            } else if (!trucks.containsKey(truckID) && truckDAO.get(truckID) != null) {
+                truckDAO.remove(truckID);
+            }
+            else
+                System.out.println("Truck not found");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         trucks.remove(truckID);
     }
 
     @Override
     public void update(Truck truck) {
-        if (trucks.containsKey(truck.getTruckID())) {
-            trucks.replace(truck.getTruckID(), truck);
+        int truckID = truck.getTruckID();
+        try {
+            if (trucks.containsKey(truckID)) {
+                trucks.replace(truck.getTruckID(), truck);
+                truckDAO.update(truck);
+            } else if (!trucks.containsKey(truckID) && truckDAO.get(truckID)!=null) {
+                truckDAO.update(truck);
+                trucks.put(truck.getTruckID(), truck);
+            }
+            else
+                System.out.println("Truck not found");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     public Truck get(int id) {
-        if (trucks.containsKey(id)) {
-            return trucks.get(id);
+        try {
+            if (trucks.containsKey(id)) {
+                return trucks.get(id);
+            } else if (!trucks.containsKey(id) && truckDAO.get(id) != null) {
+                trucks.put(id, truckDAO.get(id));
+                return trucks.get(id);
+            }
+            else
+                System.out.println("Truck not found");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return null;
     }
 
     @Override
-    public List<Truck> getAll() {
-        return new ArrayList(this.trucks.values());
+    public HashMap<Integer, Truck> getAll() {
+        try {
+            if (truckDAO != null) {
+                trucks = truckDAO.getAll();
+                return trucks;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 }

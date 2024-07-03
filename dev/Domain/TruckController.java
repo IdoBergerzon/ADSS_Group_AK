@@ -1,6 +1,7 @@
 package Domain;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,7 +17,7 @@ public class TruckController {
 
     public void printAllAvailableTrucks(double weight) {
         System.out.println("Available Trucks:");
-        List<Truck> trucksNew = trucksRepository.getAll();
+        HashMap<Integer,Truck> trucksNew = trucksRepository.getAll();
         for (int i = 0; i < trucksNew.size(); i++) {
             Truck truck = trucksNew.get(i);
             if (truck.isAvailable() && truck.getTruckWeight()+truck.getMaxWeight() >= weight) {
@@ -26,7 +27,7 @@ public class TruckController {
     }
 
     public void addNewTruck(int truckID, String truckType, double truckWeight, double MaxWeight) {
-        if (trucksRepository.getAll().contains(truckID)) {
+        if (trucksRepository.getAll().containsKey(truckID)) {
             System.out.println("Truck already exists");
         }
         else {

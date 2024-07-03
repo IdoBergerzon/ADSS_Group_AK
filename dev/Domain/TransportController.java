@@ -1,6 +1,7 @@
 package Domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,7 +21,7 @@ public class TransportController {
     }
 
     public Transport getTransport(int transportID) {
-        if (!transportsRepository.getAll().contains(transportID)) {
+        if (!transportsRepository.getAll().containsKey(transportID)) {
             return null;
         }
         return transportsRepository.get(transportID);
@@ -319,9 +320,9 @@ public class TransportController {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Possible Trucks:\n");
         int count = 0;
-        List<Truck> truckList = truckController.getTrucksData().getAll();
-        for (int i = 0; i < truckList.size(); i++) {
-            Truck truck1 = truckList.get(i);
+        HashMap<Integer,Truck> trucksMap = truckController.getTrucksData().getAll();
+        for (int i = 0; i < trucksMap.size(); i++) {
+            Truck truck1 = trucksMap.get(i);
             if (truck1.getMaxWeight() >= newTransport.getWeight() && truck1.isAvailable()) {
                 System.out.println(truck1);
                 count++;

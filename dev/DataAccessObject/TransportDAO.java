@@ -62,11 +62,11 @@ public class TransportDAO implements IDAO<Transport> {
     }
 
     @Override
-    public void remove(Transport transport) throws SQLException {
+    public void remove(int transportID) throws SQLException {
         String sql = "DELETE FROM transport WHERE transportID = ?";
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, transport.getTransportID());
+            statement.setInt(1, transportID);
             statement.executeUpdate();
         }
     }

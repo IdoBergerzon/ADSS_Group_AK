@@ -72,12 +72,12 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
     }
 
     @Override
-    public void remove(Delivery_Document deliveryDocument) throws SQLException {
-        if (this.getAll().containsKey(deliveryDocument.getDocumentID())) {
+    public void remove(int deliveryID) throws SQLException {
+        if (this.getAll().containsKey(deliveryID)) {
             String sql = "DELETE FROM delivery_documents WHERE documentID = ?";
             try (Connection connection = DriverManager.getConnection(URL);
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
-                pstmt.setInt(1, deliveryDocument.getDocumentID());
+                pstmt.setInt(1, deliveryID);
                 pstmt.executeUpdate();
             }
         }

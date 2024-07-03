@@ -7,5 +7,5 @@ public interface IRepository<T> {
     void remove(int id);
     void update(T t);
     T get(int id);
-    List<T> getAll();
+    HashMap<Integer,T> getAll();
 }

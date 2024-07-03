@@ -42,12 +42,12 @@ public class ALocationDAO implements IDAO<ALocation> {
 
 
     @Override
-    public void remove(ALocation aLocation) throws SQLException {
-        if (this.getAll().containsKey(aLocation.getLocationID())) {
+    public void remove(int locationID) throws SQLException {
+        if (this.getAll().containsKey(locationID)) {
             String sql = "DELETE FROM locations WHERE locationID = ?";
             try (Connection connection = DriverManager.getConnection(URL);
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
-                pstmt.setInt(1, aLocation.getLocationID());
+                pstmt.setInt(1, locationID);
                 pstmt.executeUpdate();
             }
         } else

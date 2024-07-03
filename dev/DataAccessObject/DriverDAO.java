@@ -30,12 +30,12 @@ public class DriverDAO implements IDAO<Driver>{
     }
 
     @Override
-    public void remove(Driver driver) throws SQLException {
-        if (this.getAll().containsKey(driver.getDriverID())) {
+    public void remove(int driverID) throws SQLException {
+        if (this.getAll().containsKey(driverID)) {
             String sql = "DELETE FROM drivers WHERE driverID = ?";
             try (Connection connection = DriverManager.getConnection(URL);
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
-                pstmt.setInt(1, driver.getDriverID());
+                pstmt.setInt(1, driverID);
                 pstmt.executeUpdate();
             }
         }

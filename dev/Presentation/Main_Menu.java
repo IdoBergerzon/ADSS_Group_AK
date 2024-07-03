@@ -1,4 +1,5 @@
 package Presentation;
+import DataAccessObject.*;
 import Domain.*;
 import java.time.LocalTime;
 import java.util.*;
@@ -27,22 +28,60 @@ public class Main_Menu {
             switch (choice) {
 
                 case 1:
-                    HashMap<Integer,Driver> driverHashMap = readDriversFromCSV("dev/DataTable/drivers.csv");
-                    driverController.getDriversData().setDrivers(driverHashMap);
+                    int dc = 0;
+                    if (driverController.getDriversData().getAll() != null) {
+                        HashMap<Integer, Driver> driverHashMap = driverController.getDriversData().getAll();
+                        driverController.getDriversData().setDrivers(driverHashMap);
+                        dc = 1;
+                    }
 
-                    HashMap<Integer, Truck> truckHashMap = readTrucksFromCSV("dev/DataTable/trucks.csv");
-                    truckController.getTrucksData().setTrucks(truckHashMap);
+                    int tc = 0;
+                    if (truckController.getTrucksData().getAll() != null) {
+                        HashMap<Integer, Truck> truckHashMap = truckController.getTrucksData().getAll();
+                        truckController.getTrucksData().setTrucks(truckHashMap);
+                        tc = 1;
+                    }
 
-                    HashMap<Integer, Item> itemHashMap = readItemsFromCSV("dev/DataTable/items.csv");
-                    deliveryController.getItemsData().setItems(itemHashMap);
+                    int ic = 0;
+                    if (deliveryController.getItemsData().getAll() != null) {
+                        HashMap<Integer, Item> itemHashMap = deliveryController.getItemsData().getAll();
+                        deliveryController.getItemsData().setItems(itemHashMap);
+                        ic = 1;
+                    }
 
-                    HashMap<Integer, ALocation> locationHashMap = readLocationsFromCSV("dev/DataTable/location.csv");
-                    locationController.getLocationsData().setLocations(locationHashMap);
+                    int lc = 0;
+                    if (locationController.getLocationsData().getAll() != null) {
+                        HashMap<Integer, ALocation> locationHashMap = locationController.getLocationsData().getAll();
+                        locationController.getLocationsData().setLocations(locationHashMap);
+                        lc = 1;
+                    }
 
-                    createDeliveryDocsData(deliveryController, locationController);
-                    createTransportsData(transportController, deliveryController, truckController, driverController);
+                    int ddc = 0;
+                    if (deliveryController.getDocumentsRepository().getAll() != null) {
+                        HashMap<Integer, Delivery_Document> deliveryDocumentHashMap = deliveryController.getDocumentsRepository().getAll();
+                        deliveryController.getDocumentsRepository().setDelivery_Documents(deliveryDocumentHashMap);
+                        ddc = 1;
+                    }
 
+                    int tcc = 0;
+                    if (transportController.getTransportsData().getAll() != null) {
+                        HashMap<Integer, Transport> transportHashMap = transportController.getTransportsData().getAll();
+                        transportController.getTransportsData().setTransports(transportHashMap);
+                        tcc = 1;
+                    }
 
+                    if (dc == 0)
+                        System.out.println("no driver data found");
+                    if (tc == 0)
+                        System.out.println("no truck data found");
+                    if (ic == 0)
+                        System.out.println("no items data found");
+                    if (lc == 0)
+                        System.out.println("no locations data found");
+                    if (ddc == 0)
+                        System.out.println("no documents data found");
+                    if (tcc == 0)
+                        System.out.println("no transports data found");
 
                     System.out.println("System started with data");
                     break;
@@ -68,7 +107,7 @@ public class Main_Menu {
             System.out.println("6. Exit");
 
             if (localTime.equals(LocalTime.MIDNIGHT)) {
-                List<Transport> transportsList= transportController.getTransportsData().getAll();
+                List<Transport> transportsList= new ArrayList<>(transportController.getTransportsData().getAll().values());
                 for (int i = 0; i < transportsList.size(); i++) {
                     Transport trans =  transportsList.get(i);
                     if (!trans.isFinished()) {
