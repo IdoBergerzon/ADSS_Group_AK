@@ -95,14 +95,15 @@ public class TrucksRepository implements IRepository<Truck> {
 
     @Override
     public HashMap<Integer, Truck> getAll() {
+        HashMap<Integer, Truck> allTrucks = new HashMap<>();
         try {
             if (truckDAO != null) {
-                trucks = truckDAO.getAll();
-                return trucks;
+                allTrucks = truckDAO.getAll();
+                trucks = allTrucks;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        return allTrucks;
     }
 }

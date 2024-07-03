@@ -99,15 +99,17 @@ public class TransportsRepository implements IRepository<Transport> {
 
     @Override
     public HashMap<Integer, Transport> getAll() {
+        HashMap<Integer, Transport> allTransports = new HashMap<>();
         try {
             if (transportDAO != null) {
-                transports = transportDAO.getAll();
+                allTransports= transportDAO.getAll();
+                transports = allTransports;
                 return transports;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        return transports;
     }
 }
 

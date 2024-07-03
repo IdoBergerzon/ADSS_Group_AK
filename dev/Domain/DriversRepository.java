@@ -20,15 +20,17 @@ public class DriversRepository implements IRepository<Driver> {
     }
 
     public HashMap<Integer,Driver> getAll() {
+        HashMap<Integer,Driver> allDrivers = new HashMap<>(this.drivers);
         try {
             if (driverDAO != null) {
-                drivers = driverDAO.getAll();
+                allDrivers = driverDAO.getAll();
+                drivers = allDrivers;
                 return drivers;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        return drivers;
     }
 
     @Override

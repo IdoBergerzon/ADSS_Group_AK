@@ -88,14 +88,16 @@ public class LocationsRepository implements IRepository<ALocation> {
 
     @Override
     public HashMap<Integer, ALocation> getAll() {
+        HashMap<Integer, ALocation> allLocations = new HashMap<>();
         try {
             if (locationDAO != null) {
-                locations = locationDAO.getAll();
+                allLocations = locationDAO.getAll();
+                locations = allLocations;
                 return locations;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        return locations;
     }
 }

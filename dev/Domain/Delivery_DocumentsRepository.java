@@ -87,14 +87,16 @@ public class Delivery_DocumentsRepository implements IRepository<Delivery_Docume
 
     @Override
     public HashMap<Integer, Delivery_Document> getAll() {
+        HashMap<Integer, Delivery_Document> alldelivery_Documents = new HashMap<>();
         try {
             if (deliveryDocumentDAO != null) {
-                delivery_Documents = deliveryDocumentDAO.getAll();
+                alldelivery_Documents = deliveryDocumentDAO.getAll();
+                delivery_Documents = alldelivery_Documents;
                 return delivery_Documents;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        return alldelivery_Documents;
     }
 }

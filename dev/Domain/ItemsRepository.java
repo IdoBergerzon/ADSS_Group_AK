@@ -96,14 +96,16 @@ public class ItemsRepository implements IRepository<Item>{
 
     @Override
     public HashMap<Integer, Item> getAll() {
+        HashMap<Integer, Item> allItems = new HashMap<>();
         try {
             if (itemDAO != null) {
-                items = itemDAO.getAll();
+                allItems = itemDAO.getAll();
+                items = allItems;
                 return items;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        return items;
     }
 }
