@@ -359,7 +359,12 @@ public class Main_Menu {
 
             //Finish Transport
             case 5:
-                transportController.finishTransport();
+                scanner = new Scanner(System.in);
+                System.out.println("Insert transport ID:");
+                int finishTransportID = scanner.nextInt();
+                scanner.nextLine();
+                Transport finishTransport = transportController.getTransport(finishTransportID);
+                transportController.finishTransport(finishTransport, driverController, deliveryController,truckController);
                 break;
 
 /************** Exit *******************************/

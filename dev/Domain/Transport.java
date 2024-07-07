@@ -6,11 +6,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.time.format.DateTimeFormatter;
+
 
 public class Transport {
     private final int transportID;
     private LocalDate date;
-    private LocalTime timeOfDepurture;
+    private String timeOfDepurture;
     private Truck truck;
     private Driver driver;
     private Set<Store> source;
@@ -23,7 +25,7 @@ public class Transport {
     public Transport(int transportID, Truck truck, Driver driver, List<Delivery_Document> delivery_documents, String comments) {
         this.transportID = transportID;
         this.date = LocalDate.now();
-        this.timeOfDepurture = LocalTime.now();
+        this.timeOfDepurture = getCurrentTime();
         truck.setAvailable(false);
         this.truck = truck;
         driver.setAvailable(false);
@@ -46,6 +48,16 @@ public class Transport {
 
     public int getTransportID() {
         return transportID;
+    }
+
+    private String getCurrentTime() {
+        LocalTime now = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        return now.format(formatter);
+    }
+
+    public String getTimeOfDepurture() {
+        return timeOfDepurture;
     }
 
     public Truck getTruck() {

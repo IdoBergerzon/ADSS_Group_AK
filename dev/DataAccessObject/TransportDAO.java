@@ -86,6 +86,8 @@ public class TransportDAO implements IDAO<Transport> {
 
     @Override
     public Transport get(int id) throws SQLException {
+        if (!this.getAll().containsKey(id))
+            return null;
         String sql = "SELECT * FROM transport WHERE transportID = ?";
         try (Connection connection = DriverManager.getConnection(URL);
              PreparedStatement statement = connection.prepareStatement(sql)) {

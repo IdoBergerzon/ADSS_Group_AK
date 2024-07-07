@@ -83,8 +83,11 @@ public class DriversRepository implements IRepository<Driver> {
     public void add(Driver driver) {
         int driverID = driver.getDriverID();
         try {
-            if (!drivers.containsKey(driverID) && driverDAO.get(driverID) != null){
-                drivers.put(driver.getDriverID(),driver);
+            if (!drivers.containsKey(driverID) && driverDAO.get(driverID) != null) {
+                drivers.put(driver.getDriverID(), driver);
+            } else if (!drivers.containsKey(driverID) && driverDAO.get(driverID) == null) {
+                drivers.put(driverID, driver);
+                driverDAO.add(driver);
             } else if (drivers.containsKey(driverID)) {
                 System.out.println("Driver already exists");
             }

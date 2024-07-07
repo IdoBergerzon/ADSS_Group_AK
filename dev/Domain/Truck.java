@@ -7,6 +7,7 @@ public class Truck {
     private double MaxWeight;
     private boolean available;
 
+
     public Truck(int truckID, String truckType, double truckWeight, double MaxWeight) {
         this.truckID = truckID;
         this.truckType = truckType;

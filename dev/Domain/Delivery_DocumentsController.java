@@ -19,6 +19,9 @@ public class Delivery_DocumentsController {
             System.out.println("delivery " + delivery_id + " already exists");
         }
         else {
+            for (Item item : items.keySet()){
+                itemsRepository.add(item);
+            }
             Delivery_Document newDelivery = new Delivery_Document(source, delivery_id, destination, items);
             documentsRepository.add(newDelivery);
         }

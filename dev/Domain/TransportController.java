@@ -21,7 +21,7 @@ public class TransportController {
     }
 
     public Transport getTransport(int transportID) {
-        if (!transportsRepository.getAll().containsKey(transportID)) {
+        if (transportsRepository.get(transportID) == null) {
             return null;
         }
         return transportsRepository.get(transportID);
@@ -52,23 +52,23 @@ public class TransportController {
         }
     }
 
-    public void finishTransport() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Insert transport ID:");
-        int finishTransportID = scanner.nextInt();
-        scanner.nextLine();
+    public void finishTransport(Transport transport,DriverController driverController, Delivery_DocumentsController documentsController,TruckController truckController) {
+        int finishTransportID = transport.getTransportID();
         if (this.getTransport(finishTransportID) == null) {
             System.out.println("Transport does not exist.\n");
         } else if (this.getTransport(finishTransportID).isFinished()) {
             System.out.println("Transport is already finished.\n");
         } else {
-            Transport transport = this.getTransport(finishTransportID);
+            transport.setFinished(true);
             transport.getDriver().setAvailable(true);
             transport.getTruck().setAvailable(true);
             for (Delivery_Document delivery : transport.getDelivery_documents()) {
                 delivery.setDelivery_status(Delivery_DocumentStatus.finished);
+                documentsController.getDocumentsRepository().update(delivery);
             }
-            transport.setFinished(true);
+            driverController.getDriversData().update(transport.getDriver());
+            truckController.getTrucksData().update(transport.getTruck());
+            transportsRepository.update(transport);
             System.out.println("Transport finished successfully");
         }
     }
