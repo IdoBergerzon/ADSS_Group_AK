@@ -36,7 +36,9 @@ public class TransportDAO implements IDAO<Transport> {
                     // Insert into transport table
                     statementTransport.setInt(1, transport.getTransportID());
                     statementTransport.setInt(2, transport.getTruck().getTruckID());
+                    truckDAO.get(transport.getTruck().getTruckID()).setAvailable(false);
                     statementTransport.setInt(3, transport.getDriver().getDriverID());
+                    driverDAO.get(transport.getDriver().getDriverID()).setAvailable(false);
                     statementTransport.setString(4, transport.getComments());
                     statementTransport.executeUpdate();
 

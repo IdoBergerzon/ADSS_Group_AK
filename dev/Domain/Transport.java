@@ -26,9 +26,7 @@ public class Transport {
         this.transportID = transportID;
         this.date = LocalDate.now();
         this.timeOfDepurture = getCurrentTime();
-        truck.setAvailable(false);
         this.truck = truck;
-        driver.setAvailable(false);
         this.driver = driver;
         this.source = new HashSet<>();
         this.destinations = new HashSet<>();
