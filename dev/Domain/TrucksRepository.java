@@ -34,8 +34,6 @@ public class TrucksRepository implements IRepository<Truck> {
             } else if (!trucks.containsKey(truckID) && truckDAO.get(truckID) != null) {
                 trucks.put(truckID, truck);
             }
-            else
-                System.out.println("Truck ID: " + truckID + " already exists");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -50,8 +48,6 @@ public class TrucksRepository implements IRepository<Truck> {
             } else if (!trucks.containsKey(truckID) && truckDAO.get(truckID) != null) {
                 truckDAO.remove(truckID);
             }
-            else
-                System.out.println("Truck not found");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -69,8 +65,6 @@ public class TrucksRepository implements IRepository<Truck> {
                 truckDAO.update(truck);
                 trucks.put(truck.getTruckID(), truck);
             }
-            else
-                System.out.println("Truck not found");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -85,8 +79,6 @@ public class TrucksRepository implements IRepository<Truck> {
                 trucks.put(id, truckDAO.get(id));
                 return trucks.get(id);
             }
-            else
-                System.out.println("Truck not found");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -32,10 +32,7 @@ public class ALocationDAO implements IDAO<ALocation> {
 
                 // Execute the insert statement
                 pstmt.executeUpdate();
-                System.out.println("Location added: " + aLocation);
             }
-        } else {
-            System.out.println("Location with ID " + aLocation.getLocationID() + " already exists.");
         }
     }
 
@@ -50,9 +47,7 @@ public class ALocationDAO implements IDAO<ALocation> {
                 pstmt.setInt(1, locationID);
                 pstmt.executeUpdate();
             }
-        } else
-            System.out.println("location not exist");
-
+        }
     }
 
     @Override
@@ -75,8 +70,7 @@ public class ALocationDAO implements IDAO<ALocation> {
                 // Execute the update statement
                 pstmt.executeUpdate();
             }
-        }else
-            System.out.println("location not exist");
+        }
     }
 
     @Override

@@ -26,8 +26,6 @@ public class TruckDAO implements IDAO<Truck> {
                 pstmt.executeUpdate();
             }
         }
-        else
-            System.out.println("Truck Already Exists");
     }
 
     @Override
@@ -58,8 +56,6 @@ public class TruckDAO implements IDAO<Truck> {
                 pstmt.executeUpdate();
             }
         }
-        else
-            System.out.println("Truck Not Exists");
     }
 
     @Override
@@ -84,7 +80,6 @@ public class TruckDAO implements IDAO<Truck> {
             return truck;
         }
         else {
-            System.out.println("Truck Not Exists");
             return null;
         }
     }

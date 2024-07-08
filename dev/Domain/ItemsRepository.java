@@ -34,8 +34,6 @@ public class ItemsRepository implements IRepository<Item>{
                 items.put(itemID, item);
                 itemDAO.add(item);
             }
-            else
-                System.out.println("Item already exists!");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -50,8 +48,6 @@ public class ItemsRepository implements IRepository<Item>{
             } else if (itemDAO.get(itemID) != null && !items.containsKey(itemID)) {
                 itemDAO.remove(itemID);
             }
-            else
-                System.out.println("Item not found");
             items.remove(itemID);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -69,8 +65,6 @@ public class ItemsRepository implements IRepository<Item>{
                 itemDAO.update(item);
                 items.put(item.getItemID(), item);
             }
-            else
-                System.out.println("Item not found");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -84,9 +78,6 @@ public class ItemsRepository implements IRepository<Item>{
             } else if (itemDAO.get(id) != null && !items.containsKey(id)) {
                 items.put(id, items.get(id));
                 return items.get(id);
-            }
-            else {
-                System.out.println("Item not found");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

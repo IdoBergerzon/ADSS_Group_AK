@@ -36,8 +36,6 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
 
             }
         }
-        else
-            System.out.println("delivery Document Already Exists");
     }
 
     private void addItemsToDeliveryDocument(Connection connection, int documentID, Item item, int quantity) throws SQLException {
@@ -81,8 +79,6 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
                 pstmt.executeUpdate();
             }
         }
-        else
-            System.out.println("delivery Document Not Exists");
     }
 
     @Override
@@ -108,8 +104,6 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
                 }
             }
         }
-        else
-            System.out.println("delivery Document Not Exists");
     }
 
     private void removeItemsFromDeliveryDocument(Connection connection, int documentID) throws SQLException {
@@ -120,8 +114,6 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
                 pstmt.executeUpdate();
             }
         }
-        else
-            System.out.println("delivery Document Not Exists");
     }
 
     @Override
@@ -156,8 +148,6 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
             }
             return deliveryDocument;
         }
-        else
-            System.out.println("delivery Document Not Exists");
         return null;
     }
 

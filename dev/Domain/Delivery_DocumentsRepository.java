@@ -28,8 +28,6 @@ public class Delivery_DocumentsRepository implements IRepository<Delivery_Docume
                 delivery_Documents.put(deliveryID, delivery_Document);
                 deliveryDocumentDAO.add(delivery_Document);
             }
-            else
-                System.out.println("Delivery Document already exist");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -44,8 +42,6 @@ public class Delivery_DocumentsRepository implements IRepository<Delivery_Docume
             } else if (deliveryDocumentDAO.get(documentID) != null && !delivery_Documents.containsKey(documentID)) {
                 deliveryDocumentDAO.remove(documentID);
             }
-            else
-                System.out.println("Delivery Document not found");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -62,7 +58,6 @@ public class Delivery_DocumentsRepository implements IRepository<Delivery_Docume
                 deliveryDocumentDAO.update(delivery);
                 delivery_Documents.put(documentID, delivery);
             }
-            System.out.println("DocumentID: " + documentID + "not found");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -77,8 +72,6 @@ public class Delivery_DocumentsRepository implements IRepository<Delivery_Docume
                 delivery_Documents.put(id, deliveryDocumentDAO.get(id));
                 return deliveryDocumentDAO.get(id);
             }
-            else
-                System.out.println("delivery document not found");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

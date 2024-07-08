@@ -19,9 +19,9 @@ public class TransportTableCreator {
                         "licenseMaxWeight INTEGER NOT NULL);";
 
                 statement.execute(sql);
-                System.out.println("Drivers table created or already exists.");
+                //System.out.println("Drivers table created or already exists.");
 
-                System.out.println("SQLite database location: " + connection.getMetaData().getURL());
+                //System.out.println("SQLite database location: " + connection.getMetaData().getURL());
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -42,7 +42,7 @@ public class TransportTableCreator {
                         "available BOOLEAN NOT NULL);";
 
                 statement.execute(sql);
-                System.out.println("Trucks table created or already exists.");
+                //System.out.println("Trucks table created or already exists.");
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -66,7 +66,7 @@ public class TransportTableCreator {
                         "FOREIGN KEY (itemID) REFERENCES items(itemID));";
 
                 statement.execute(sql);
-                System.out.println("Delivery document items table created or already exists.");
+                //System.out.println("Delivery document items table created or already exists.");
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -85,7 +85,7 @@ public class TransportTableCreator {
                         "weight REAL NOT NULL);";
 
                 statement.execute(sql);
-                System.out.println("Items table created or already exists.");
+                //System.out.println("Items table created or already exists.");
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -103,7 +103,7 @@ public class TransportTableCreator {
                 DatabaseMetaData metaData = connection.getMetaData();
                 ResultSet resultSet = metaData.getTables(null, null, "delivery_documents", null);
                 if (resultSet.next()) {
-                    System.out.println("Delivery Documents table already exists.");
+                    //System.out.println("Delivery Documents table already exists.");
                     return; // Table already exists, no need to create it again
                 }
 
@@ -119,7 +119,7 @@ public class TransportTableCreator {
                         "FOREIGN KEY (destinationID) REFERENCES suppliers(locationID));";
 
                 statement.executeUpdate(createSql);
-                System.out.println("Delivery Documents table created.");
+                //System.out.println("Delivery Documents table created.");
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -142,7 +142,7 @@ public class TransportTableCreator {
                         "address_code INTEGER NOT NULL, " +
                         "shipping_area INTEGER NOT NULL)";
                 statement.execute(createTableSql);
-                System.out.println("Location Table created or already exists.");
+                //System.out.println("Location Table created or already exists.");
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -165,7 +165,7 @@ public class TransportTableCreator {
                         ");";
 
                 statement.execute(sql);
-                System.out.println("Transport delivery documents table created or already exists.");
+                //System.out.println("Transport delivery documents table created or already exists.");
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();

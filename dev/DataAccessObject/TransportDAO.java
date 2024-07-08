@@ -59,8 +59,6 @@ public class TransportDAO implements IDAO<Transport> {
                 }
             }
         }
-        else
-            System.out.println("Transport already exists");
     }
 
     @Override

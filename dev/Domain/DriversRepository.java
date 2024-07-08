@@ -52,8 +52,6 @@ public class DriversRepository implements IRepository<Driver> {
                 drivers.remove(id);
                 driverDAO.remove(id);
             }
-            else
-                System.out.println("Driver not found");
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
@@ -71,8 +69,6 @@ public class DriversRepository implements IRepository<Driver> {
                 driverDAO.update(driver);
                 drivers.put(driverID, driver);
             }
-            else
-                System.out.println("Driver not found");
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
@@ -88,8 +84,6 @@ public class DriversRepository implements IRepository<Driver> {
             } else if (!drivers.containsKey(driverID) && driverDAO.get(driverID) == null) {
                 drivers.put(driverID, driver);
                 driverDAO.add(driver);
-            } else if (drivers.containsKey(driverID)) {
-                System.out.println("Driver already exists");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -107,8 +101,6 @@ public class DriversRepository implements IRepository<Driver> {
                     drivers.put(id,driverDAO.get(id));
                     return drivers.get(id);
                 }
-                else
-                    System.out.println("Driver does not exist");
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

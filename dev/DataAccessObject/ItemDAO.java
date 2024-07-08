@@ -36,9 +36,9 @@ public class ItemDAO implements IDAO<Item> {
                 pstmt.setInt(1, itemID);
                 pstmt.executeUpdate();
             }
-        } else
-            System.out.println("item does not exist");
+        }
     }
+
     @Override
     public void update(Item item) throws SQLException {
         if (this.getAll().containsKey(item.getItemID())) {
@@ -50,9 +50,8 @@ public class ItemDAO implements IDAO<Item> {
                 pstmt.setInt(3, item.getItemID());
                 pstmt.executeUpdate();
             }
-        } else
-                System.out.println("item does not exist");
-            }
+        }
+    }
 
 
     @Override

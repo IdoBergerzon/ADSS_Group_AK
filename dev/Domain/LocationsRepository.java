@@ -28,8 +28,6 @@ public class LocationsRepository implements IRepository<ALocation> {
             } else if (locationDAO.get(locationID) != null && locations.containsKey(locationID)) {
                 locations.put(location.getLocationID(), location);
             }
-            else
-                System.out.println("location already exists");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -44,8 +42,6 @@ public class LocationsRepository implements IRepository<ALocation> {
             } else if (locationDAO.get(locationID) != null && !locations.containsKey(locationID)) {
                 locationDAO.remove(locationID);
             }
-            else
-                System.out.println("locationID: " + locationID + " not found");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -62,8 +58,6 @@ public class LocationsRepository implements IRepository<ALocation> {
                 locationDAO.update(location);
                 locations.put(locationID, location);
             }
-            else
-                System.out.println("location not found");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -78,8 +72,6 @@ public class LocationsRepository implements IRepository<ALocation> {
                 locations.put(id, locationDAO.get(id));
                 return locations.get(id);
             }
-            else
-                System.out.println("location not found");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

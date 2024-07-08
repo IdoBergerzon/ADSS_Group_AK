@@ -36,8 +36,6 @@ public class TransportsRepository implements IRepository<Transport> {
             } else if (transportDAO.get(id) == null && !transports.containsKey(id)) {
                 this.transports.put(id, transport);
                 this.transportDAO.add(transport);
-            } else {
-                System.out.println("Transport already exists");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -52,8 +50,6 @@ public class TransportsRepository implements IRepository<Transport> {
             } else if (transportDAO.get(id) != null && transports.containsKey(id)) {
                 transportDAO.remove(id);
                 transports.remove(id);
-            } else {
-                System.out.println("Transport with ID " + id + " not found");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -67,8 +63,6 @@ public class TransportsRepository implements IRepository<Transport> {
             if (transportDAO.get(id) != null) {
                 this.transports.put(id, transport);
                 this.transportDAO.update(transport);
-            } else {
-                System.out.println("Transport " + id + " not found");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -83,8 +77,6 @@ public class TransportsRepository implements IRepository<Transport> {
             } else if (transportDAO.get(id) != null && !transports.containsKey(id)) {
                 this.transports.put(id, transportDAO.get(id));
                 return this.transports.get(id);
-            } else {
-                System.out.println("No Transport with ID " + id + " found");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

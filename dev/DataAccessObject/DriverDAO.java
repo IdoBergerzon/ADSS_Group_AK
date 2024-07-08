@@ -25,8 +25,6 @@ public class DriverDAO implements IDAO<Driver>{
                 pstmt.executeUpdate();
             }
         }
-        else
-            System.out.println("Driver already exists");
     }
 
     @Override
@@ -39,8 +37,6 @@ public class DriverDAO implements IDAO<Driver>{
                 pstmt.executeUpdate();
             }
         }
-        else
-            System.out.println("Driver does not exist");
     }
 
     @Override
@@ -56,8 +52,6 @@ public class DriverDAO implements IDAO<Driver>{
                 pstmt.executeUpdate();
             }
         }
-        else
-            System.out.println("Driver does not exist");
     }
 
     @Override
@@ -81,7 +75,6 @@ public class DriverDAO implements IDAO<Driver>{
             return driver;
         }
         else {
-            System.out.println("Driver does not exist");
             return null;
         }
     }
