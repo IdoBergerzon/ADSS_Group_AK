@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ALocationDAO implements IDAO<ALocation> {
-    private final String URL = "jdbc:sqlite:sample.db";
+    private final String URL = "myDataBase.db";
 
     public ALocationDAO() {
         TransportTableCreator.createLocationTable();

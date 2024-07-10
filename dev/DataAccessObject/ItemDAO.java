@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.HashMap;
 
 public class ItemDAO implements IDAO<Item> {
-    private final String URL = "jdbc:sqlite:sample.db";
+    private final String URL = "myDataBase.db";
 
     public ItemDAO() {
         TransportTableCreator.createItemsTable();

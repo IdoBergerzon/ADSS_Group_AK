@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class TransportDAO implements IDAO<Transport> {
-    private final String URL = "jdbc:sqlite:sample.db";
+    private final String URL = "myDataBase.db";
     private final DriverDAO driverDAO = new DriverDAO();
     private final TruckDAO truckDAO = new TruckDAO();
     private final ALocationDAO locationDAO = new ALocationDAO();

@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.HashMap;
 
 public class TruckDAO implements IDAO<Truck> {
-    private final String URL = "jdbc:sqlite:sample.db";
+    private final String URL = "myDataBase.db";
 
     public TruckDAO() {
         TransportTableCreator.createTrucksTable();

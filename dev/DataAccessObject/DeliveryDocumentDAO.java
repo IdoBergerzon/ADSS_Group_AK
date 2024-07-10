@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.HashMap;
 
 public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
-    private final String URL = "jdbc:sqlite:sample.db";
+    private final String URL = "myDataBase.db";
     private final ItemDAO itemDAO = new ItemDAO();
     private final ALocationDAO locationDAO = new ALocationDAO();
 

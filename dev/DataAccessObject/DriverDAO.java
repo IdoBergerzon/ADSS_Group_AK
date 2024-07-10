@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.HashMap;
 
 public class DriverDAO implements IDAO<Driver>{
-    private final String URL = "jdbc:sqlite:sample.db";
+    private final String URL = "myDataBase.db";
 
     public DriverDAO() {
         TransportTableCreator.createDriversTable();
