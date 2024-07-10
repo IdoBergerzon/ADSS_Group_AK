@@ -3,7 +3,7 @@ package DataAccessObject;
 import java.sql.*;
 
 public class TransportTableCreator {
-    private static final String URL = "jdbc:sqlite:C:\\Users\\WIN10\\Documents\\שנה ב\\ניתו''צ\\עבודה 1 ניתוצ\\ADSS_Group_AK\\myDataBase.db"; // Path to the SQLite database file
+    private static final String URL = "jdbc:sqlite:C:\\Users\\TAMIR\\Documents\\שנה ב\\סמסטר ב\\נושאים מתקדמים בתכנות\\ADSS_Group_AK\\mydatabase.db"; // Path to the SQLite database file
 
     public static void createDriversTable() {
         try {
