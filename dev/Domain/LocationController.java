@@ -48,9 +48,7 @@ public class LocationController {
 
     public void getAllSourceShippingArea() {
         Set <Integer> ssa = new HashSet();
-        HashMap<Integer,ALocation> locationsNew = locationsRepository.getAll();
-        for (int i = 0; i < locationsNew.size(); i++) {
-            ALocation location = locationsNew.get(i);
+        for (ALocation location:locationsRepository.getAll().values()) {
             if (location.getL_type().equals("Store")) {
                 ssa.add(location.getShippingArea());
             }

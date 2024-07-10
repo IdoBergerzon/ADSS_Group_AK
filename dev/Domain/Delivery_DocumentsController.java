@@ -39,9 +39,7 @@ public class Delivery_DocumentsController {
     public void getShippingAreaForDest(int SourceArea){
         int flag = 0;
         Set<Integer> setArea = new HashSet<>();
-        List<Delivery_Document> deliveryDocumentList = (List<Delivery_Document>) documentsRepository.getAll().values();
-        for (int i = 0; i < deliveryDocumentList.size(); i++){
-            Delivery_Document delivery = deliveryDocumentList.get(i);
+        for (Delivery_Document delivery : documentsRepository.getAll().values()){
             if (delivery.getSource().getShippingArea() == SourceArea && delivery.getDelivery_Status().equals(Delivery_DocumentStatus.waiting)) {
                 setArea.add(delivery.getDestination().getShippingArea());
                 flag = 1;
@@ -144,9 +142,7 @@ public class Delivery_DocumentsController {
     public void getDeliveryInArea(int sourceArea ,int destinationArea){
         System.out.println("Delivery in Shipping Area: Source= " + sourceArea + ", Destination= " + destinationArea + ":");
         int flag = 0;
-        HashMap<Integer,Delivery_Document> deliveryDocumentList = documentsRepository.getAll();
-        for (int i = 0; i < deliveryDocumentList.size(); i++){
-            Delivery_Document delivery = deliveryDocumentList.get(i);
+        for (Delivery_Document delivery:documentsRepository.getAll().values()){
             if (delivery.getSource().getShippingArea()==sourceArea && delivery.getDestination().getShippingArea()==destinationArea
                     && delivery.getDelivery_Status().equals(Delivery_DocumentStatus.waiting)){
                 System.out.println(delivery);

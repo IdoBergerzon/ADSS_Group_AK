@@ -57,9 +57,7 @@ public class DriverController {
 
     public void printAllAvailableDrivers(double weight) {
         System.out.println("All Available Drivers:");
-        HashMap<Integer,Driver> availableDrivers = driversRepository.getAll();
-        for (int i = 0; i < availableDrivers.size(); i++) {
-            Driver driver = availableDrivers.get(i);
+        for (Driver driver: driversRepository.getAll().values()) {
             if (driver.isAvailable() && driver.getLicenseMaxWeight() >= weight) {
                 System.out.println(driver);
             }

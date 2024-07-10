@@ -1,6 +1,7 @@
 package Domain;
 
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -17,9 +18,7 @@ public class TruckController {
 
     public void printAllAvailableTrucks(double weight) {
         System.out.println("Available Trucks:");
-        HashMap<Integer,Truck> trucksNew = trucksRepository.getAll();
-        for (int i = 0; i < trucksNew.size(); i++) {
-            Truck truck = trucksNew.get(i);
+        for (Truck truck : trucksRepository.getAll().values()) {
             if (truck.isAvailable() && truck.getTruckWeight()+truck.getMaxWeight() >= weight) {
                 System.out.println(truck);
             }
