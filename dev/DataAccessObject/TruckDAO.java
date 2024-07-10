@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.HashMap;
 
 public class TruckDAO implements IDAO<Truck> {
-    private final String URL = "myDataBase.db";
+    private final String URL = "jdbc:sqlite:C:\\Users\\WIN10\\Documents\\שנה ב\\ניתו''צ\\עבודה 1 ניתוצ\\ADSS_Group_AK\\myDataBase.db";
 
     public TruckDAO() {
         TransportTableCreator.createTrucksTable();
@@ -16,7 +16,7 @@ public class TruckDAO implements IDAO<Truck> {
     public void add(Truck truck) throws SQLException {
         if (!this.getAll().containsKey(truck.getTruckID())) {
             String sql = "INSERT INTO trucks(truckID, truckType, truckWeight, maxWeight, available) VALUES(?, ?, ?, ?, ?)";
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setInt(1, truck.getTruckID());
                 pstmt.setString(2, truck.getTruckType());
@@ -32,7 +32,7 @@ public class TruckDAO implements IDAO<Truck> {
     public void remove(int truckID) throws SQLException {
         if (this.getAll().containsKey(truckID)) {
             String sql = "DELETE FROM trucks WHERE truckID = ?";
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setInt(1, truckID);
                 pstmt.executeUpdate();
@@ -46,7 +46,7 @@ public class TruckDAO implements IDAO<Truck> {
     public void update(Truck truck) throws SQLException {
         if (this.getAll().containsKey(truck.getTruckID())) {
             String sql = "UPDATE trucks SET truckType = ?, truckWeight = ?, maxWeight = ?, available = ? WHERE truckID = ?";
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setString(1, truck.getTruckType());
                 pstmt.setDouble(2, truck.getTruckWeight());
@@ -63,7 +63,7 @@ public class TruckDAO implements IDAO<Truck> {
         if (this.getAll().containsKey(id)) {
             String sql = "SELECT * FROM trucks WHERE truckID = ?";
             Truck truck = null;
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setInt(1, id);
                 ResultSet rs = pstmt.executeQuery();
@@ -88,7 +88,7 @@ public class TruckDAO implements IDAO<Truck> {
     public HashMap<Integer, Truck> getAll() throws SQLException {
         String sql = "SELECT * FROM trucks";
         HashMap<Integer, Truck> trucksMap = new HashMap<>();
-        try (Connection connection = DriverManager.getConnection(URL);
+        try (Connection connection = DataBase.connect();
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {

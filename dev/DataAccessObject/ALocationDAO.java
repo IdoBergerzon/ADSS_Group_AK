@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ALocationDAO implements IDAO<ALocation> {
-    private final String URL = "myDataBase.db";
+    private final String URL ="jdbc:sqlite:C:\\Users\\WIN10\\Documents\\שנה ב\\ניתו''צ\\עבודה 1 ניתוצ\\ADSS_Group_AK\\myDataBase.db";
 
     public ALocationDAO() {
         TransportTableCreator.createLocationTable();
@@ -19,7 +19,7 @@ public class ALocationDAO implements IDAO<ALocation> {
             String sql = "INSERT INTO locations(locationID, contact, phone, lType, full_address, address_code, shipping_area) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
             // Establish database connection
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 // Set the parameters for the PreparedStatement
                 pstmt.setInt(1, aLocation.getLocationID());
@@ -42,7 +42,7 @@ public class ALocationDAO implements IDAO<ALocation> {
     public void remove(int locationID) throws SQLException {
         if (this.getAll().containsKey(locationID)) {
             String sql = "DELETE FROM locations WHERE locationID = ?";
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setInt(1, locationID);
                 pstmt.executeUpdate();
@@ -56,7 +56,7 @@ public class ALocationDAO implements IDAO<ALocation> {
             String sql = "UPDATE locations SET contact = ?, phone = ?, lType = ?, full_address = ?, address_code = ?, shipping_area = ? WHERE locationID = ?";
 
             // Establish the database connection
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 // Set the parameters for the PreparedStatement
                 pstmt.setString(1, aLocation.getContact());
@@ -78,7 +78,7 @@ public class ALocationDAO implements IDAO<ALocation> {
         String sql = "SELECT * FROM locations WHERE locationID = ?";
         ALocation aLocation = null;
 
-        try (Connection connection = DriverManager.getConnection(URL);
+        try (Connection connection = DataBase.connect();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
@@ -112,7 +112,7 @@ public class ALocationDAO implements IDAO<ALocation> {
 
             String sql = "SELECT * FROM locations";
 
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  PreparedStatement pstmt = connection.prepareStatement(sql);
                  ResultSet rs = pstmt.executeQuery()) {
 

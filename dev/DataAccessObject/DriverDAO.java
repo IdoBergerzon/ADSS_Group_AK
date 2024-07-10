@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.HashMap;
 
 public class DriverDAO implements IDAO<Driver>{
-    private final String URL = "myDataBase.db";
+    private final String URL ="jdbc:sqlite:C:\\Users\\WIN10\\Documents\\שנה ב\\ניתו''צ\\עבודה 1 ניתוצ\\ADSS_Group_AK\\myDataBase.db";
 
     public DriverDAO() {
         TransportTableCreator.createDriversTable();
@@ -16,7 +16,7 @@ public class DriverDAO implements IDAO<Driver>{
     public void add(Driver driver) throws SQLException {
         if (!this.getAll().containsKey(driver.getDriverID())) {
             String sql = "INSERT INTO drivers(driverID, driverName, available, licenseMaxWeight) VALUES(?, ?, ?, ?)";
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setInt(1, driver.getDriverID());
                 pstmt.setString(2, driver.getDriverName());
@@ -31,7 +31,7 @@ public class DriverDAO implements IDAO<Driver>{
     public void remove(int driverID) throws SQLException {
         if (this.getAll().containsKey(driverID)) {
             String sql = "DELETE FROM drivers WHERE driverID = ?";
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setInt(1, driverID);
                 pstmt.executeUpdate();
@@ -43,7 +43,7 @@ public class DriverDAO implements IDAO<Driver>{
     public void update(Driver driver) throws SQLException {
         if (this.getAll().containsKey(driver.getDriverID())) {
             String sql = "UPDATE drivers SET driverName = ?, available = ?, licenseMaxWeight = ? WHERE driverID = ?";
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setString(1, driver.getDriverName());
                 pstmt.setBoolean(2, driver.isAvailable());
@@ -59,7 +59,7 @@ public class DriverDAO implements IDAO<Driver>{
         if (this.getAll().containsKey(id)) {
             String sql = "SELECT * FROM drivers WHERE driverID = ?";
             Driver driver = null;
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setInt(1, id);
                 ResultSet rs = pstmt.executeQuery();
@@ -84,7 +84,7 @@ public class DriverDAO implements IDAO<Driver>{
         String sql = "SELECT * FROM drivers";
         HashMap<Integer, Driver> driversMap = new HashMap<>();
 
-        try (Connection connection = DriverManager.getConnection(URL);
+        try (Connection connection = DataBase.connect();
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 

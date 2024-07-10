@@ -3,12 +3,12 @@ package DataAccessObject;
 import java.sql.*;
 
 public class TransportTableCreator {
-    private static final String URL = "jdbc:sqlite:sample.db"; // Path to the SQLite database file
+    private static final String URL = "jdbc:sqlite:C:\\Users\\WIN10\\Documents\\שנה ב\\ניתו''צ\\עבודה 1 ניתוצ\\ADSS_Group_AK\\myDataBase.db"; // Path to the SQLite database file
 
     public static void createDriversTable() {
         try {
             Class.forName("org.sqlite.JDBC");
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  Statement statement = connection.createStatement()) {
 
 
@@ -31,7 +31,7 @@ public class TransportTableCreator {
     public static void createTrucksTable() {
         try {
             Class.forName("org.sqlite.JDBC");
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  Statement statement = connection.createStatement()) {
 
                 String sql = "CREATE TABLE IF NOT EXISTS trucks (" +
@@ -53,7 +53,7 @@ public class TransportTableCreator {
         try {
             Class.forName("org.sqlite.JDBC");
 
-            try (Connection connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
+            try (Connection connection = DataBase.connect();
                  Statement statement = connection.createStatement()) {
 
                 // Create the table with (documentID, itemID) as primary key
@@ -77,7 +77,7 @@ public class TransportTableCreator {
         try {
             Class.forName("org.sqlite.JDBC");
 
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  Statement statement = connection.createStatement()) {
                 String sql = "CREATE TABLE IF NOT EXISTS items (" +
                         "itemID INTEGER PRIMARY KEY, " +
@@ -96,7 +96,7 @@ public class TransportTableCreator {
     public static void createDeliveryDocumentsTable() {
         try {
             Class.forName("org.sqlite.JDBC");
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  Statement statement = connection.createStatement()) {
 
                 // Check if the table already exists
@@ -131,7 +131,7 @@ public class TransportTableCreator {
     public static void createLocationTable() {
         try {
             Class.forName("org.sqlite.JDBC");
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  Statement statement = connection.createStatement()) {
                 String createTableSql = "CREATE TABLE IF NOT EXISTS locations (" +
                         "locationID INTEGER PRIMARY KEY, " +
@@ -153,7 +153,7 @@ public class TransportTableCreator {
         try {
             Class.forName("org.sqlite.JDBC");
 
-            try (Connection connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
+            try (Connection connection = DataBase.connect();
                  Statement statement = connection.createStatement()) {
                 // Create the table
                 String sql = "CREATE TABLE IF NOT EXISTS transport_delivery_documents (" +
@@ -179,7 +179,7 @@ public class TransportTableCreator {
     public static void createTransportTable() {
         try {
             Class.forName("org.sqlite.JDBC");
-            try (Connection connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
+            try (Connection connection = DataBase.connect();
                  Statement statement = connection.createStatement()) {
                 String sql = "CREATE TABLE IF NOT EXISTS transport (" +
                         "transportID INTEGER PRIMARY KEY, " +

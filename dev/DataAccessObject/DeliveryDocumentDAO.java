@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.HashMap;
 
 public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
-    private final String URL = "myDataBase.db";
+    private final String URL ="jdbc:sqlite:C:\\Users\\WIN10\\Documents\\שנה ב\\ניתו''צ\\עבודה 1 ניתוצ\\ADSS_Group_AK\\myDataBase.db";
     private final ItemDAO itemDAO = new ItemDAO();
     private final ALocationDAO locationDAO = new ALocationDAO();
 
@@ -19,7 +19,7 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
     public void add(Delivery_Document deliveryDocument) throws SQLException {
         if (!this.getAll().containsKey(deliveryDocument.getDocumentID())) {
             String sql = "INSERT INTO delivery_documents(documentID, sourceID, destinationID, totalWeight, delivery_status, itemsStatus) VALUES(?, ?, ?, ?, ?, ?)";
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setInt(1, deliveryDocument.getDocumentID());
                 pstmt.setInt(2, deliveryDocument.getSource().getLocationID());
@@ -73,7 +73,7 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
     public void remove(int deliveryID) throws SQLException {
         if (this.getAll().containsKey(deliveryID)) {
             String sql = "DELETE FROM delivery_documents WHERE documentID = ?";
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setInt(1, deliveryID);
                 pstmt.executeUpdate();
@@ -85,7 +85,7 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
     public void update(Delivery_Document deliveryDocument) throws SQLException {
         if (this.getAll().containsKey(deliveryDocument.getDocumentID())) {
             String sql = "UPDATE delivery_documents SET sourceID = ?, destinationID = ?, totalWeight = ?, delivery_status = ?, itemsStatus = ? WHERE documentID = ?";
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setInt(1, deliveryDocument.getSource().getLocationID());
                 pstmt.setInt(2, deliveryDocument.getDestination().getLocationID());
@@ -121,7 +121,7 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
         if (this.getAll().containsKey(id)) {
             String sql = "SELECT * FROM delivery_documents WHERE documentID = ?";
             Delivery_Document deliveryDocument = null;
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setInt(1, id);
                 ResultSet rs = pstmt.executeQuery();
@@ -171,7 +171,7 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
     public HashMap<Integer, Delivery_Document> getAll() throws SQLException {
         String sql = "SELECT * FROM delivery_documents";
         HashMap<Integer, Delivery_Document> deliveryDocuments = new HashMap<>();
-        try (Connection connection = DriverManager.getConnection(URL);
+        try (Connection connection = DataBase.connect();
              Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {

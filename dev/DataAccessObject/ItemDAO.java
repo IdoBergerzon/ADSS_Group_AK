@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.HashMap;
 
 public class ItemDAO implements IDAO<Item> {
-    private final String URL = "myDataBase.db";
+    private final String URL ="jdbc:sqlite:C:\\Users\\WIN10\\Documents\\שנה ב\\ניתו''צ\\עבודה 1 ניתוצ\\ADSS_Group_AK\\myDataBase.db";
 
     public ItemDAO() {
         TransportTableCreator.createItemsTable();
@@ -18,7 +18,7 @@ public class ItemDAO implements IDAO<Item> {
             System.out.println("item already exists");
         } else {
             String sql = "INSERT INTO items(itemID, itemName, weight) VALUES(?, ?, ?)";
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setInt(1, item.getItemID());
                 pstmt.setString(2, item.getItemName());
@@ -31,7 +31,7 @@ public class ItemDAO implements IDAO<Item> {
     public void remove(int itemID) throws SQLException {
         if (this.getAll().containsKey(itemID)) {
             String sql = "DELETE FROM items WHERE itemID = ?";
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setInt(1, itemID);
                 pstmt.executeUpdate();
@@ -43,7 +43,7 @@ public class ItemDAO implements IDAO<Item> {
     public void update(Item item) throws SQLException {
         if (this.getAll().containsKey(item.getItemID())) {
             String sql = "UPDATE items SET itemName = ?, weight = ? WHERE itemID = ?";
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setString(1, item.getItemName());
                 pstmt.setDouble(2, item.getWeight());
@@ -58,7 +58,7 @@ public class ItemDAO implements IDAO<Item> {
     public Item get(int id) throws SQLException {
         String sql = "SELECT * FROM items WHERE itemID = ?";
         Item item = null;
-        try (Connection connection = DriverManager.getConnection(URL);
+        try (Connection connection = DataBase.connect();
              PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
@@ -76,7 +76,7 @@ public class ItemDAO implements IDAO<Item> {
     public HashMap<Integer, Item> getAll() throws SQLException {
         String sql = "SELECT * FROM items";
         HashMap<Integer, Item> itemsMap = new HashMap<>();
-        try (Connection connection = DriverManager.getConnection(URL);
+        try (Connection connection = DataBase.connect();
              PreparedStatement pstmt = connection.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {

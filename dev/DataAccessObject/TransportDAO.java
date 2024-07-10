@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class TransportDAO implements IDAO<Transport> {
-    private final String URL = "myDataBase.db";
+    private final String URL = "jdbc:sqlite:C:\\Users\\WIN10\\Documents\\שנה ב\\ניתו''צ\\עבודה 1 ניתוצ\\ADSS_Group_AK\\myDataBase.db";
     private final DriverDAO driverDAO = new DriverDAO();
     private final TruckDAO truckDAO = new TruckDAO();
     private final ALocationDAO locationDAO = new ALocationDAO();
@@ -27,7 +27,7 @@ public class TransportDAO implements IDAO<Transport> {
             String sqlTransport = "INSERT INTO transport (transportID, truckID, driverID, comments) VALUES (?, ?, ?, ?)";
             String sqlDeliveryDocument = "INSERT INTO transport_delivery_documents (transportID, documentID) VALUES (?, ?)";
 
-            try (Connection connection = DriverManager.getConnection(URL);
+            try (Connection connection = DataBase.connect();
                  PreparedStatement statementTransport = connection.prepareStatement(sqlTransport);
                  PreparedStatement statementDeliveryDocument = connection.prepareStatement(sqlDeliveryDocument)) {
                 connection.setAutoCommit(false);
@@ -64,7 +64,7 @@ public class TransportDAO implements IDAO<Transport> {
     @Override
     public void remove(int transportID) throws SQLException {
         String sql = "DELETE FROM transport WHERE transportID = ?";
-        try (Connection connection = DriverManager.getConnection(URL);
+        try (Connection connection = DataBase.connect();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, transportID);
             statement.executeUpdate();
@@ -74,7 +74,7 @@ public class TransportDAO implements IDAO<Transport> {
     @Override
     public void update(Transport transport) throws SQLException {
         String sql = "UPDATE transport SET truckID = ?, driverID = ?, comments = ? WHERE transportID = ?";
-        try (Connection connection = DriverManager.getConnection(URL);
+        try (Connection connection = DataBase.connect();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, transport.getTruck().getTruckID());
             statement.setInt(2, transport.getDriver().getDriverID());
@@ -89,7 +89,7 @@ public class TransportDAO implements IDAO<Transport> {
         if (!this.getAll().containsKey(id))
             return null;
         String sql = "SELECT * FROM transport WHERE transportID = ?";
-        try (Connection connection = DriverManager.getConnection(URL);
+        try (Connection connection = DataBase.connect();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -130,7 +130,7 @@ public class TransportDAO implements IDAO<Transport> {
     public HashMap<Integer, Transport> getAll() throws SQLException {
         HashMap<Integer, Transport> transports = new HashMap<>();
         String sql = "SELECT * FROM transport";
-        try (Connection connection = DriverManager.getConnection(URL);
+        try (Connection connection = DataBase.connect();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
