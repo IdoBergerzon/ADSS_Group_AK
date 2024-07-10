@@ -319,16 +319,7 @@ public class TransportController {
     public boolean changeTruck(Transport newTransport, TruckController truckController){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Possible Trucks:\n");
-        int count = 0;
-        HashMap<Integer,Truck> trucksMap = truckController.getTrucksData().getAll();
-        for (int i = 0; i < trucksMap.size(); i++) {
-            Truck truck1 = trucksMap.get(i);
-            if (truck1.getMaxWeight() >= newTransport.getWeight() && truck1.isAvailable()) {
-                System.out.println(truck1);
-                count++;
-            }
-        }
-        if (count != 0) {
+        truckController.printAllAvailableTrucks(newTransport.getWeight());
             System.out.println("Insert new truck ID:\n(Press 0 to return to the Main Menu)\n");
             int newTruckID = scanner.nextInt();
             scanner.nextLine();
@@ -345,8 +336,6 @@ public class TransportController {
                     return false;
                 }
             }
-        } else
-            System.out.println("No Trucks Available.\n");
         return true;
     }
 
