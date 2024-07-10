@@ -190,7 +190,7 @@ public class TransportTableCreator {
                         "FOREIGN KEY (driverID) REFERENCES drivers(driverID));";
 
                 statement.execute(sql);
-                System.out.println("Transport table created or already exists.");
+
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
