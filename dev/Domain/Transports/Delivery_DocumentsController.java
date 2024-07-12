@@ -199,6 +199,7 @@ public class Delivery_DocumentsController {
                 Store newSource = (Store) locationController.getLocation(newSourceID);
                 deliveryDocument.setSource(newSource);
                 System.out.println("Source's document was changed\n" + deliveryDocument);
+                documentsRepository.update(deliveryDocument);
                 break;
 
             //Change destination
@@ -216,6 +217,7 @@ public class Delivery_DocumentsController {
                 Supplier newDestination = (Supplier) locationController.getLocation(newDestinationID);
                 deliveryDocument.setDestination(newDestination);
                 System.out.println("Destination's document was changed\n" + deliveryDocument + "\n");
+                documentsRepository.update(deliveryDocument);
                 break;
 
             //Change delivery status
@@ -234,6 +236,7 @@ public class Delivery_DocumentsController {
                     break;
                 }
                 System.out.println("Delivery document" + deliveryID + ",status was changed to" + deliveryDocument.getDelivery_Status() + "\n");
+                documentsRepository.update(deliveryDocument);
                 break;
 
             //Add item
@@ -253,6 +256,7 @@ public class Delivery_DocumentsController {
                         deliveryDocument.getItems().put(item, itemAmount);
                     System.out.println("item" + item + "was added to the delivery document\n");
                     System.out.println("The weight is " + deliveryDocument.getTotalWeight() + "\n");
+                    documentsRepository.update(deliveryDocument);
                 }
                 break;
 
@@ -272,6 +276,7 @@ public class Delivery_DocumentsController {
                         deliveryDocument.getItems().remove(item);
                         System.out.println("item " + itemID + " was removed from the delivery document\n");
                         System.out.println("The weight is " + deliveryDocument.getTotalWeight() + "\n");
+                        documentsRepository.update(deliveryDocument);
                     } else {
                         System.out.println("item does not exist in the delivery document\n");
                     }

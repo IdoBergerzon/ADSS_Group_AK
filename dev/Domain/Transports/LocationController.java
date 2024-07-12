@@ -108,6 +108,7 @@ public class LocationController {
         ALocation location = (ALocation) locationsRepository.get(locationID);
         location.getAddress().setShipping_area(shippingArea);
         System.out.println("Shipping area set successfully: " + location+"\n");
+        locationsRepository.update(location);
     }
 
     public void updateContact(int locationID) {
@@ -117,6 +118,7 @@ public class LocationController {
         ALocation location = (ALocation) locationsRepository.get(locationID);
         location.setContact(contact);
         System.out.println("Contact updated successfully.\n");
+        locationsRepository.update(location);
     }
 
     public void updatePhone(int locationID) {
@@ -126,7 +128,6 @@ public class LocationController {
         ALocation location = (ALocation) locationsRepository.get(locationID);
         location.setPhone(phoneNumber);
         System.out.println("Phone number updated successfully.\n");
+        locationsRepository.update(location);
     }
-
-
 }

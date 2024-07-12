@@ -45,8 +45,10 @@ public class DriverController {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Insert new max weight license (int):");
         int license = scanner.nextInt();
-        this.getDriver(driverID).setLicenseMaxWeight(license);
+        Driver driver = this.getDriver(driverID);
+        driver.setLicenseMaxWeight(license);
         System.out.println("Driver's license were updated.\n" + this.getDriver(driverID) + "\n");
+        driversRepository.update(driver);
     }
 
     public Driver getDriver(int driverID) {

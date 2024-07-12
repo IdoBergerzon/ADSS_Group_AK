@@ -105,8 +105,12 @@ public class TransportController {
                 scanner.nextLine();
                 if (truckController.getTruck(newTruckID) != null) {
                     Truck newTruck = truckController.getTruck(newTruckID);
+                    Truck oldTruck = transport.getTruck();
                     transport.setTruck(newTruck);
                     System.out.println("Transport's truck was changed\n" + transport + "\n");
+                    transportsRepository.update(transport);
+                    truckController.getTrucksData().update(transport.getTruck());
+                    truckController.getTrucksData().update(oldTruck);
                 } else
                     System.out.println("Truck does not exist.\n");
                 break;
@@ -119,8 +123,12 @@ public class TransportController {
                 scanner.nextLine();
                 if (driverController.getDriver(newDriverID) != null) {
                     Driver newDriver = driverController.getDriver(newDriverID);
+                    Driver oldDriver = transport.getDriver();
                     transport.setDriver(newDriver);
                     System.out.println("Driver's driver was changed\n" + transport + "\n");
+                    transportsRepository.update(transport);
+                    driverController.getDriversData().update(transport.getDriver());
+                    driverController.getDriversData().update(oldDriver);
                 } else
                     System.out.println("Driver does not exist.\n");
                 break;
