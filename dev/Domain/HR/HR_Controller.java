@@ -1,4 +1,7 @@
 package Domain.HR;
+import Domain.Transport.ALocation;
+import Domain.Transport.LocationsRepository;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,7 +12,8 @@ public class HR_Controller {
     private final RequestRepository requests_repository= RequestRepository.getInstance();
     private final ShiftRepository shifts_repository= ShiftRepository.getInstance();
     private final RoleRepository roles_repository= RoleRepository.getInstance();
-    private final BranchRepository branchs_repository= BranchRepository.getInstance();
+    private final LocationsRepository locations_repository = LocationsRepository.getInstance();
+//    private final BranchRepository branchs_repository= BranchRepository.getInstance();
 
     public HR_Controller(){
 
@@ -250,16 +254,16 @@ public class HR_Controller {
 
     }
 
-    public Boolean isBranch(int branch_id){
-        if(branchs_repository.get(branch_id) == null) {
+    public Boolean isLocation(int branch_id){
+        if(locations_repository.get(branch_id) == null) {
             return false;
         }
         return true;
     }
 
     public void createNewRoster(int branch_id){
-        Branch branch=branchs_repository.get(branch_id);
-        Roster new_roster =new Roster(branch);
+//        ALocation branch = LocationsRepository.
+        Roster new_roster =new Roster(branch_id);
         shifts_repository.add(new_roster);
         List<Worker> list=workers_memory.getAllWorkers();
         for (int i=0;i<list.size();i++){

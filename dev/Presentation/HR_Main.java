@@ -184,7 +184,9 @@ public class HR_Main {
             roles_for_shift.add(2);      //in every shift must have a shift manager
             int answer;
             while (true) {
-                System.out.println("enter role id you need to this shift(if you finish insert 0): ");
+                System.out.println("enter role id you need to this shift\n" +
+                        "remember each shift contains Manager (id-2), Driver(id-20), Storekeeper(id-3)\n" +
+                        "(if you finish insert 0): ");
                 answer = sc.nextInt();
                 if (answer == 0) {
                     break;
@@ -252,7 +254,7 @@ public class HR_Main {
         while (true) {
 
             branch_id=sc.nextInt();
-            if(!hr_controller.isBranch(branch_id)){
+            if(!hr_controller.isLocation(branch_id)){
                 System.out.println("branch doesn't exist\n");
                 return;
             }

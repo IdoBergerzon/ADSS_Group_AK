@@ -1,11 +1,12 @@
 package Domain.Transport;
 
 import DAL.Transport.TruckDAO;
+import Domain.HR.IRepository;
 
 import java.sql.SQLException;
 import java.util.*;
 
-public class TrucksRepository implements IRepository<Truck> {
+public class TrucksRepository implements IRepository<Truck, Integer> {
     private HashMap<Integer, Truck> trucks;
     private final TruckDAO truckDAO = new TruckDAO();
 
@@ -40,7 +41,7 @@ public class TrucksRepository implements IRepository<Truck> {
     }
 
     @Override
-    public void remove(int truckID) {
+    public void remove(Integer truckID) {
         try {
             if (trucks.containsKey(truckID)) {
                 trucks.remove(truckID);
@@ -54,7 +55,7 @@ public class TrucksRepository implements IRepository<Truck> {
         trucks.remove(truckID);
     }
 
-    @Override
+
     public void update(Truck truck) {
         int truckID = truck.getTruckID();
         try {
@@ -71,7 +72,7 @@ public class TrucksRepository implements IRepository<Truck> {
     }
 
     @Override
-    public Truck get(int id) {
+    public Truck get(Integer id) {
         try {
             if (trucks.containsKey(id)) {
                 return trucks.get(id);
@@ -85,7 +86,7 @@ public class TrucksRepository implements IRepository<Truck> {
         return null;
     }
 
-    @Override
+
     public HashMap<Integer, Truck> getAll() {
         HashMap<Integer, Truck> allTrucks = new HashMap<>();
         try {

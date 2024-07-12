@@ -1,11 +1,12 @@
 package Domain.Transport;
 
 import DAL.Transport.ItemDAO;
+import Domain.HR.IRepository;
 
 import java.sql.SQLException;
 import java.util.HashMap;
 
-public class ItemsRepository implements IRepository<Item>{
+public class ItemsRepository implements IRepository<Item,Integer> {
     private HashMap<Integer, Item> items;
     private final ItemDAO itemDAO = new ItemDAO();
 
@@ -38,7 +39,7 @@ public class ItemsRepository implements IRepository<Item>{
     }
 
     @Override
-    public void remove(int itemID) {
+    public void remove(Integer itemID) {
         try {
             if (itemDAO.get(itemID) != null && items.containsKey(itemID)) {
                 items.remove(itemID);
@@ -52,7 +53,7 @@ public class ItemsRepository implements IRepository<Item>{
         }
     }
 
-    @Override
+
     public void update(Item item) {
         int itemID = item.getItemID();
         try {
@@ -69,7 +70,7 @@ public class ItemsRepository implements IRepository<Item>{
     }
 
     @Override
-    public Item get(int id) {
+    public Item get(Integer id) {
         try {
             if (itemDAO.get(id) != null && items.containsKey(id)) {
                 return items.get(id);
@@ -83,7 +84,7 @@ public class ItemsRepository implements IRepository<Item>{
         return null;
     }
 
-    @Override
+
     public HashMap<Integer, Item> getAll() {
         HashMap<Integer, Item> allItems = new HashMap<>();
         try {

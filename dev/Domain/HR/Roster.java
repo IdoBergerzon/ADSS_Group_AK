@@ -1,20 +1,22 @@
 package Domain.HR;
 
 
+import Domain.Transport.ALocation;
+
 public class Roster {
-    private Branch branch;
+    private int branch_id;
     private Shift[][] shift_arrangment;
     private int week;
 
-    public Roster(Branch branch, Shift[][] shift_arrangment) {
-        this.branch = branch;
+    public Roster(int branch_id, Shift[][] shift_arrangment) {
+        this.branch_id = branch_id;
         this.shift_arrangment = shift_arrangment;
         //Getting the week number
         this.week = Week.getWeek();
 
     }
-    public Roster(Branch branch) {
-        this.branch = branch;
+    public Roster(int branch_id) {
+        this.branch_id = branch_id;
         //Getting the week number
         this.week = Week.getWeek();
         shift_arrangment = new Shift[7][2];
@@ -26,12 +28,12 @@ public class Roster {
     }
 
 
-    public Branch getBranch() {
-        return branch;
+    public int getBranch_id() {
+        return branch_id;
     }
 
-    public void setBranch(Branch branch) {
-        this.branch = branch;
+    public void setBranch_id(int  branch_id) {
+        this.branch_id = branch_id;
     }
 
     public Shift[][] getShift_arrangment() {
@@ -66,7 +68,7 @@ public class Roster {
 
     public String toString(){
         String str = "Roster's week: " + week + "\n";
-        str+="Branch: " + branch + "\n";
+        str+="Branch: " + branch_id + "\n";
         for(int i=0; i<7; i++){
             for(int j=0; j<2; j++){
                 str+=shift_arrangment[i][j]+"\n";

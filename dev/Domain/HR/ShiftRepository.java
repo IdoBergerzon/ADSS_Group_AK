@@ -47,12 +47,12 @@ public class ShiftRepository implements IRepository<Roster,Pair> {
 
     @Override
     public void add(Roster roster) {
-        Pair<Integer,Integer> requestKey = new Pair<>(roster.getBranch().getBranchID(), roster.getWeek());
+        Pair<Integer,Integer> requestKey = new Pair<>(roster.getBranch_id(), roster.getWeek());
         try {
             dao.insert(JsonNodeConverter.toJsonNode(roster));
             rosters.put(requestKey, roster);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Roster for week:" + roster.getWeek() + " for branch " + roster.getBranch().getBranchID() + " already exists");
+            throw new IllegalArgumentException("Roster for week:" + roster.getWeek() + " for branch " + roster.getBranch_id() + " already exists");
         }
 
     }
@@ -82,8 +82,8 @@ public class ShiftRepository implements IRepository<Roster,Pair> {
         List<Roster> list_rosters = new ArrayList<>();
         for (JsonNode jsonNode : jsonNodes) {
             Roster roster = JsonNodeConverter.fromJsonNode(jsonNode, Roster.class);
-            if(!rosters.containsKey(new Pair<>(roster.getBranch().getBranchID(),roster.getWeek()))){
-                rosters.put(new Pair<>(roster.getBranch().getBranchID(),roster.getWeek()), roster);
+            if(!rosters.containsKey(new Pair<>(roster.getBranch_id(),roster.getWeek()))){
+                rosters.put(new Pair<>(roster.getBranch_id(),roster.getWeek()), roster);
             }
             list_rosters.add(roster);
         }

@@ -1,16 +1,27 @@
 package Domain.Transport;
 
 import DAL.Transport.ALocationDAO;
+import Domain.HR.IRepository;
+import Domain.HR.ShiftRepository;
 
 import java.sql.SQLException;
 import java.util.HashMap;
 
-public class LocationsRepository implements IRepository<ALocation> {
+public class LocationsRepository implements IRepository<ALocation, Integer> {
     private HashMap<Integer, ALocation> locations;
     private final ALocationDAO locationDAO = new ALocationDAO();
 
-    public LocationsRepository() {
+    private LocationsRepository() {
         this.locations = new HashMap<>();
+    }
+    /**
+     * public static method that returns the single instance of the class
+     */
+    private static class InLocationHolder {
+        private final static LocationsRepository INSTANCE = new LocationsRepository();
+    }
+    public static LocationsRepository getInstance() {
+        return LocationsRepository.InLocationHolder.INSTANCE;
     }
 
     public void setLocations(HashMap<Integer, ALocation> locations) {
@@ -33,7 +44,7 @@ public class LocationsRepository implements IRepository<ALocation> {
     }
 
     @Override
-    public void remove(int locationID) {
+    public void remove(Integer locationID) {
         try {
             if (locationDAO.get(locationID) != null && locations.containsKey(locationID)) {
                 locationDAO.remove(locationID);
@@ -46,7 +57,6 @@ public class LocationsRepository implements IRepository<ALocation> {
         }
     }
 
-    @Override
     public void update(ALocation location) {
         int locationID = location.getLocationID();
         try {
@@ -63,7 +73,7 @@ public class LocationsRepository implements IRepository<ALocation> {
     }
 
     @Override
-    public ALocation get(int id) {
+    public ALocation get(Integer id) {
         try {
             if (locationDAO.get(id) != null && locations.containsKey(id)) {
                 return locations.get(id);
@@ -77,7 +87,6 @@ public class LocationsRepository implements IRepository<ALocation> {
         return null;
     }
 
-    @Override
     public HashMap<Integer, ALocation> getAll() {
         HashMap<Integer, ALocation> allLocations = new HashMap<>();
         try {

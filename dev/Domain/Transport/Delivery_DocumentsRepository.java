@@ -1,11 +1,14 @@
 package Domain.Transport;
 
 import DAL.Transport.DeliveryDocumentDAO;
+import Domain.HR.IRepository;
+import Domain.HR.Pair;
+import Domain.HR.Roster;
 
 import java.sql.SQLException;
 import java.util.HashMap;
 
-public class Delivery_DocumentsRepository implements IRepository<Delivery_Document> {
+public class Delivery_DocumentsRepository implements IRepository<Delivery_Document, Integer> {
     private HashMap<Integer, Delivery_Document> delivery_Documents;
     private final DeliveryDocumentDAO deliveryDocumentDAO = new DeliveryDocumentDAO();
 
@@ -33,7 +36,7 @@ public class Delivery_DocumentsRepository implements IRepository<Delivery_Docume
     }
 
     @Override
-    public void remove(int documentID) {
+    public void remove(Integer documentID) {
         try {
             if (deliveryDocumentDAO.get(documentID) != null && delivery_Documents.containsKey(documentID)) {
                 delivery_Documents.remove(documentID);
@@ -46,7 +49,7 @@ public class Delivery_DocumentsRepository implements IRepository<Delivery_Docume
         }
     }
 
-    @Override
+
     public void update(Delivery_Document delivery) {
         int documentID = delivery.getDocumentID();
         try {
@@ -63,7 +66,7 @@ public class Delivery_DocumentsRepository implements IRepository<Delivery_Docume
     }
 
     @Override
-    public Delivery_Document get(int id) {
+    public Delivery_Document get(Integer id) {
         try {
             if (deliveryDocumentDAO.get(id) != null && delivery_Documents.containsKey(id)) {
                 return delivery_Documents.get(id);
@@ -77,7 +80,6 @@ public class Delivery_DocumentsRepository implements IRepository<Delivery_Docume
         return null;
     }
 
-    @Override
     public HashMap<Integer, Delivery_Document> getAll() {
         HashMap<Integer, Delivery_Document> alldelivery_Documents = new HashMap<>();
         try {

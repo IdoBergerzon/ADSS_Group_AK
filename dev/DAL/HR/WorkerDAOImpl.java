@@ -1,6 +1,8 @@
 package DAL.HR;
 
 
+import Domain.HR.Role;
+import Domain.HR.Worker;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -8,6 +10,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -146,7 +150,37 @@ public class WorkerDAOImpl implements IDao<JsonNode, Integer>{
 
 
 
-
-
-
 }
+//class Main {
+//    public static void main(String[] args) {
+//        WorkerDAOImpl workerDAO = new WorkerDAOImpl();
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//
+//        try {
+//            // Create four workers
+//            Worker worker1 = new Worker(1, "Ido", 5000, 25, dateFormat.parse("2020-01-01"), 1, new Role(1,"hr" ), 1, "Engineering", "Bank A");
+//            Worker worker2 = new Worker(2, "Aviv", 6000, 30, dateFormat.parse("2019-05-15"), 1, new Role(2,"shift_manager"), 2, "manager", "Bank B");
+//            Worker worker5 = new Worker(3, "Hezi", 6000, 30, dateFormat.parse("2019-05-15"), 1, new Role(2,"shift_manager"), 2, "manager", "Bank B");
+//            Worker worker3 = new Worker(4, "Lior", 4000, 20, dateFormat.parse("2021-03-10"), 3, new Role(3,"storekeeper"), 2, "Deliveries", "Bank C");
+//            Worker worker4 = new Worker(5, "Asaf", 5500, 28, dateFormat.parse("2018-07-22"), 3, new Role(4,"Cashier"), 2, "Deliveries", "Bank D");
+//
+//            // Convert workers to JSON and insert them into the database
+//            insertWorker(workerDAO, objectMapper, worker1);
+//            insertWorker(workerDAO, objectMapper, worker2);
+//            insertWorker(workerDAO, objectMapper, worker3);
+//            insertWorker(workerDAO, objectMapper, worker4);
+//
+//            System.out.println("Workers inserted successfully.");
+//
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//    private static void insertWorker(WorkerDAOImpl workerDAO, ObjectMapper objectMapper, Worker worker) {
+//        JsonNode workerJson = objectMapper.convertValue(worker, ObjectNode.class);
+//        workerDAO.insert(workerJson);
+//    }
+//}
+
+

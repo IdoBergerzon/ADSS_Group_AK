@@ -1,11 +1,12 @@
 package Domain.Transport;
 
 import DAL.Transport.TransportDAO;
+import Domain.HR.IRepository;
 
 import java.sql.SQLException;
 import java.util.HashMap;
 
-public class TransportsRepository implements IRepository<Transport> {
+public class TransportsRepository implements IRepository<Transport, Integer> {
     private HashMap<Integer, Transport> transports;
     private final TransportDAO transportDAO = new TransportDAO();
 
@@ -43,7 +44,7 @@ public class TransportsRepository implements IRepository<Transport> {
     }
 
     @Override
-    public void remove(int id) {
+    public void remove(Integer id) {
         try {
             if (transportDAO.get(id) != null && !transports.containsKey(id)) {
                 transportDAO.remove(id);
@@ -56,7 +57,6 @@ public class TransportsRepository implements IRepository<Transport> {
         }
     }
 
-    @Override
     public void update(Transport transport) {
         int id = transport.getTransportID();
         try {
@@ -70,7 +70,7 @@ public class TransportsRepository implements IRepository<Transport> {
     }
 
     @Override
-    public Transport get(int id) {
+    public Transport get(Integer id) {
         try {
             if (transportDAO.get(id) != null && this.transports.containsKey(id)) {
                 return this.transports.get(id);
@@ -84,7 +84,7 @@ public class TransportsRepository implements IRepository<Transport> {
         return null;
     }
 
-    @Override
+
     public HashMap<Integer, Transport> getAll() {
         HashMap<Integer, Transport> allTransports = new HashMap<>();
         try {

@@ -5,7 +5,7 @@ import java.util.*;
 public class LocationController {
     private LocationsRepository locationsRepository;
     public LocationController() {
-        locationsRepository = new LocationsRepository();
+        locationsRepository = LocationsRepository.getInstance();
     }
 
     public LocationsRepository getLocationsData() {

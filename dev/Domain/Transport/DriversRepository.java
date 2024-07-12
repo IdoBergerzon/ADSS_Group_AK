@@ -1,11 +1,12 @@
 package Domain.Transport;
 
 import DAL.Transport.DriverDAO;
+import Domain.HR.IRepository;
 
 import java.sql.SQLException;
 import java.util.HashMap;
 
-public class DriversRepository implements IRepository<Driver> {
+public class DriversRepository implements IRepository<Driver, Integer> {
     private HashMap<Integer,Driver> drivers;
     private final DriverDAO driverDAO = new DriverDAO();
 
@@ -42,7 +43,7 @@ public class DriversRepository implements IRepository<Driver> {
     }
 
     @Override
-    public void remove(int id) {
+    public void remove(Integer id) {
         try {
             if (!drivers.containsKey(id) && driverDAO.get(id) != null) {
                 driverDAO.remove(id);
@@ -56,7 +57,7 @@ public class DriversRepository implements IRepository<Driver> {
         }
     }
 
-    @Override
+
     public void update(Driver driver) {
         int driverID = driver.getDriverID();
         try {
@@ -89,7 +90,7 @@ public class DriversRepository implements IRepository<Driver> {
     }
 
     @Override
-    public Driver get(int id) {
+    public Driver get(Integer id) {
         if (drivers.containsKey(id)) {
             return drivers.get(id);
         }
