@@ -140,8 +140,11 @@ public class TransportController {
                         if (!transport.checkTransport()) {
                             transport.removeDeliveryDocument(newDelivery);
                             System.out.println("Overweight.\n");
-                        } else
+                        } else {
                             System.out.println("Delivery's document was changed\n" + transport);
+                            transportsRepository.update(transport);
+                            deliveryController.documentsRepository.update(newDelivery);
+                        }
                     }
                 } else
                     System.out.println("Delivery does not exist.\n");
@@ -159,6 +162,8 @@ public class TransportController {
                     Delivery_Document removeDeliveryDocument = deliveryController.getDelivery_Document(removeID);
                     transport.removeDeliveryDocument(removeDeliveryDocument);
                     System.out.println("Delivery's document was changed\n" + transport);
+                    transportsRepository.update(transport);
+                    deliveryController.documentsRepository.update(removeDeliveryDocument);
                 }
                 break;
 
@@ -330,11 +335,16 @@ public class TransportController {
                 System.out.println("Truck does not exist.\n");
             } else {
                 Truck newTruck = truckController.getTruck(newTruckID);
+                Truck oldTruck = newTransport.getTruck();
                 if (newTransport.setTruck(newTruck)) {
+                    truckController.getTrucksData().update(newTruck);
+                    truckController.getTrucksData().update(oldTruck);
+                    transportsRepository.update(newTransport);
                     System.out.println("Transport OK, truck was changed successfully.\n");
                     return false;
                 }
             }
+            transportsRepository.update(newTransport);
         return true;
     }
 
@@ -355,6 +365,7 @@ public class TransportController {
                     newTransport.removeSource(source);
                     if (newTransport.checkTransport()) {
                         System.out.println("Transport OK, source removed successfully.\n");
+                        transportsRepository.update(newTransport);
                         return false;
                     } else
                         System.out.println("The weight is still exceeded.\n");
@@ -362,6 +373,7 @@ public class TransportController {
                     System.out.println("Source" + source + "does not exist in this transport.\n");
             }
         }
+        transportsRepository.update(newTransport);
         return true;
     }
 
@@ -382,6 +394,7 @@ public class TransportController {
                     newTransport.removeDestination(destination);
                     if (newTransport.checkTransport()) {
                         System.out.println("Transport OK, destination removed successfully.\n");
+                        transportsRepository.update(newTransport);
                         return false;
                     } else
                         System.out.println("The weight is still exceeded.\n");
@@ -389,6 +402,7 @@ public class TransportController {
                     System.out.println("Destination" + destination + "does not exist in this transport.\n");
             }
         }
+        transportsRepository.update(newTransport);
         return true;
     }
 
@@ -426,8 +440,11 @@ public class TransportController {
                         newTransport.calc_transportWeight();
                         if (newTransport.checkTransport()) {
                             System.out.println("Transport OK, item" + itemID + "was removed from the delivery document in this transport.\n");
+                            deliveryController.documentsRepository.update(deliveryDoc);
+                            transportsRepository.update(newTransport);
                             return false;
                         } else
+                            deliveryController.documentsRepository.update(deliveryDoc);
                             System.out.println("The weight is still exceeded.\n");
                     }
                 }
@@ -435,6 +452,7 @@ public class TransportController {
                 System.out.println("Delivery does not exist in this transport.\n");
             }
         }
+        transportsRepository.update(newTransport);
         return true;
     }
 }
