@@ -1,6 +1,6 @@
-package Domain;
+package Domain.HR;
 
-import DAL.WorkerDAOImpl;
+import DAL.HR.WorkerDAOImpl;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -81,7 +81,7 @@ public class WorkerRepository implements IRepository<Worker,Integer> {
 
 
     public void updateWorker(Worker worker) {
-        if (!workers.containsKey(worker.getId())) {
+        if (workers.containsKey(worker.getId())) {
             workers.put(worker.getId(), worker);
 //            dao.updateWorker(JsonNodeConverter.toJsonNode(worker));
         }

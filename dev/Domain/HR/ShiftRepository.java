@@ -1,7 +1,7 @@
-package Domain;
+package Domain.HR;
 
 
-import DAL.RosterDAOImpl;
+import DAL.HR.RosterDAOImpl;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.ArrayList;

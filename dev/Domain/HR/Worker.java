@@ -1,4 +1,4 @@
-package Domain;
+package Domain.HR;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Arrays;

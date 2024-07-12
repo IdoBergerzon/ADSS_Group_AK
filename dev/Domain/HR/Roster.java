@@ -1,4 +1,4 @@
-package Domain;
+package Domain.HR;
 
 
 public class Roster {

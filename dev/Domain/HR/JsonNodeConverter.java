@@ -1,8 +1,7 @@
-package Domain;
+package Domain.HR;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.text.SimpleDateFormat;
 
 
 public class JsonNodeConverter {

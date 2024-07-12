@@ -1,5 +1,5 @@
 package Presentation;
-import Domain.Checking_Controller;
+import Domain.HR.Checking_Controller;
 
 
 import java.util.Scanner;

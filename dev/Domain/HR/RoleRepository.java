@@ -1,6 +1,6 @@
-package Domain;
+package Domain.HR;
 
-import DAL.RoleDAOImpl;
+import DAL.HR.RoleDAOImpl;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.ArrayList;

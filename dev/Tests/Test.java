@@ -1,8 +1,9 @@
 package Tests;
 
-import DAL.*;
-import Domain.*;
+import DAL.HR.RoleDAOImpl;
+import DAL.HR.WorkerDAOImpl;
 
+import Domain.HR.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -20,20 +21,20 @@ public class Test {
 
         //creating Worker//
         String newWorkerDetails = "";
-        newWorkerDetails="20"+",ido"+",55"+",55"+",11"+",2"+",cashiers"+",2"+",leumi: 5555555";
+        newWorkerDetails="20"+",ido"+",55"+",55"+",4"+",2"+",cashiers"+",2"+",leumi: 5555555";
         hr.Add_New_Worker(newWorkerDetails);
 
         //search the worker that insert//
         JsonNode JN=workerDAO.search(20);
         ((ObjectNode) JN).remove("active");
-        Worker to_check=JsonNodeConverter.fromJsonNode(JN,Worker.class);
-        System.out.println(to_check);
+        Worker to_check= JsonNodeConverter.fromJsonNode(JN,Worker.class);
+        //System.out.println(to_check);
 
         //creating the expected worker//
-        Role role=JsonNodeConverter.fromJsonNode(roleDAO.search(11),Role.class);
+        Role role=JsonNodeConverter.fromJsonNode(roleDAO.search(4),Role.class);
         Worker ido=new Worker(20,"ido",55,55,new Date(),2,role,2,"cashiers","leumi: 5555555");
         workerDAO.remove(20);
-        System.out.println(ido);
+      //  System.out.println(ido);
 
         //call to test func//
 
@@ -156,7 +157,7 @@ public class Test {
         RequestRepository requests = RequestRepository.getInstance();
         WorkerRepository workers = WorkerRepository.getInstance();
         Role role = new Role(999, "cash counter");
-        Worker worker = new Worker(30, "david", 55, 55, new Date(), 2, role, 2, "cashiers", "leumi: 1234567");
+        Worker worker = new Worker(32, "david", 55, 55, new Date(), 2, role, 2, "cashiers", "leumi: 1234567");
 
         // Add worker to the repository
         workers.add(worker);
@@ -171,7 +172,7 @@ public class Test {
 
         Pair<Integer, Integer> requestKey = new Pair<>(worker.getId(), request.getWeek());
         Request to_check = requests.get(requestKey);
-        workers.remove(30);
+        workers.remove(32);
         requests.remove(requestKey);
 
         if(assertRequest(request, to_check)){
@@ -185,7 +186,7 @@ public class Test {
         RequestRepository requests = RequestRepository.getInstance();
         WorkerRepository workers = WorkerRepository.getInstance();
         Role role = new Role(999, "cash counter");
-        Worker worker = new Worker(30, "david", 55, 55, new Date(), 2, role, 2, "cashiers", "leumi: 1234567");
+        Worker worker = new Worker(32, "david", 55, 55, new Date(), 2, role, 2, "cashiers", "leumi: 1234567");
 
         // Add worker to the repository
         workers.add(worker);
@@ -213,7 +214,7 @@ public class Test {
 
         Pair<Integer, Integer> requestKey = new Pair<>(worker.getId(), request.getWeek());
         Request to_check = requests.get(requestKey);
-        workers.remove(30);
+        workers.remove(32);
         requests.remove(requestKey);
 
         if(assertRequest(request, to_check)){

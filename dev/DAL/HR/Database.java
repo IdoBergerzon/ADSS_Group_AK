@@ -1,4 +1,4 @@
-package DAL;
+package DAL.HR;
 
 import java.sql.*;
 

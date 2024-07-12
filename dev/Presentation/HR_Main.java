@@ -1,6 +1,6 @@
 package Presentation;
 
-import Domain.HR_Controller;
+import Domain.HR.HR_Controller;
 
 
 import java.util.*;

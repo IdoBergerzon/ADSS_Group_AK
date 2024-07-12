@@ -1,6 +1,6 @@
 package Presentation;
 
-import Domain.Worker_Controller;
+import Domain.HR.Worker_Controller;
 
 import java.util.Scanner;
 

@@ -1,4 +1,4 @@
-package Domain;
+package Domain.HR;
 
 public class Week {
     private static int weekNum=0;
