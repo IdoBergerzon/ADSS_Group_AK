@@ -1,6 +1,6 @@
 package Presentation;
-import DataAccessObject.*;
-import Domain.*;
+import Domain.Transport.*;
+
 import java.time.LocalTime;
 import java.util.*;
 import java.io.BufferedReader;

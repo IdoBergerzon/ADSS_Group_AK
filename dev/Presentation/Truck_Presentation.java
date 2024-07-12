@@ -1,6 +1,6 @@
 package Presentation;
 
-import Domain.TruckController;
+import Domain.Transport.TruckController;
 
 public class Truck_Presentation {
     public TruckController truckController;
