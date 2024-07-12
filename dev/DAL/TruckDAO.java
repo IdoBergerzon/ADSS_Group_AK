@@ -1,4 +1,4 @@
-package DataAccessObject;
+package DAL;
 
 import Domain.Truck;
 

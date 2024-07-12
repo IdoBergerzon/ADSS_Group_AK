@@ -1,8 +1,7 @@
-package DataAccessObject;
+package DAL.Transports_DAL;
 
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 
 public interface IDAO<T> {
     void add(T t) throws SQLException;

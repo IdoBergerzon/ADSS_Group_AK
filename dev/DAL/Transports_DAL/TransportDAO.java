@@ -1,4 +1,4 @@
-package DataAccessObject;
+package DAL.Transports_DAL;
 
 import Domain.*;
 import Domain.Driver;
@@ -7,7 +7,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TransportDAO implements IDAO<Transport> {
     private final String URL = "jdbc:sqlite:C:\\Users\\WIN10\\Documents\\שנה ב\\ניתו''צ\\עבודה 1 ניתוצ\\ADSS_Group_AK\\myDataBase.db";

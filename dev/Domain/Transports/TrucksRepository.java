@@ -1,9 +1,9 @@
-package Domain;
+package Domain.Transports;
 
 import DAL.Transports_DAL.TruckDAO;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.HashMap;
 
 public class TrucksRepository implements IRepository<Truck> {
     private HashMap<Integer, Truck> trucks;

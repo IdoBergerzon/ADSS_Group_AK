@@ -1,8 +1,11 @@
-package DataAccessObject;
+package DAL;
 
 import Domain.Item;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 public class ItemDAO implements IDAO<Item> {

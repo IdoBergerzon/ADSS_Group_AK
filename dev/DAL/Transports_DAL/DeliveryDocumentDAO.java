@@ -1,7 +1,7 @@
-package DataAccessObject;
+package DAL.Transports_DAL;
 
 import Domain.*;
-import DataAccessObject.*;
+
 import java.sql.*;
 import java.util.HashMap;
 

@@ -1,4 +1,4 @@
-package Domain;
+package Domain.Transports;
 
 import DAL.Transports_DAL.ALocationDAO;
 

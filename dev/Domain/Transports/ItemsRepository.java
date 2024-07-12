@@ -1,11 +1,11 @@
-package Domain;
+package Domain.Transports;
 
 import DAL.Transports_DAL.ItemDAO;
 
 import java.sql.SQLException;
 import java.util.HashMap;
 
-public class ItemsRepository implements IRepository<Item>{
+public class ItemsRepository implements IRepository<Item> {
     private HashMap<Integer, Item> items;
     private final ItemDAO itemDAO = new ItemDAO();
 

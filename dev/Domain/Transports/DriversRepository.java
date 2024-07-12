@@ -1,4 +1,4 @@
-package Domain;
+package Domain.Transports;
 
 import DAL.Transports_DAL.DriverDAO;
 
@@ -6,19 +6,19 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 public class DriversRepository implements IRepository<Driver> {
-    private HashMap<Integer,Driver> drivers;
+    private HashMap<Integer, Driver> drivers;
     private final DriverDAO driverDAO = new DriverDAO();
 
     public DriversRepository() {
         this.drivers = new HashMap<>();
     }
 
-    public void setDrivers(HashMap<Integer,Driver> drivers) {
+    public void setDrivers(HashMap<Integer, Driver> drivers) {
         this.drivers = drivers;
     }
 
-    public HashMap<Integer,Driver> getAll() {
-        HashMap<Integer,Driver> allDrivers = new HashMap<>(this.drivers);
+    public HashMap<Integer, Driver> getAll() {
+        HashMap<Integer, Driver> allDrivers = new HashMap<>(this.drivers);
         try {
             if (driverDAO != null) {
                 allDrivers = driverDAO.getAll();
