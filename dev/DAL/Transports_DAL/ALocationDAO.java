@@ -9,7 +9,6 @@ import java.sql.*;
 import java.util.HashMap;
 
 public class ALocationDAO implements IDAO<ALocation> {
-    private final String URL ="jdbc:sqlite:C:\\Users\\WIN10\\Documents\\שנה ב\\ניתו''צ\\עבודה 1 ניתוצ\\ADSS_Group_AK\\myDataBase.db";
 
     public ALocationDAO() {
         TransportTableCreator.createLocationTable();
