@@ -3,7 +3,7 @@ package Domain.Transports;
 import DAL.Transports_DAL.TruckDAO;
 
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.*;
 
 public class TrucksRepository implements IRepository<Truck> {
     private HashMap<Integer, Truck> trucks;

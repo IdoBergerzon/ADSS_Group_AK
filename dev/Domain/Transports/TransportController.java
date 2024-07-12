@@ -51,7 +51,7 @@ public class TransportController {
         }
     }
 
-    public void finishTransport(Transport transport, DriverController driverController, Delivery_DocumentsController documentsController, TruckController truckController) {
+    public void finishTransport(Transport transport,DriverController driverController, Delivery_DocumentsController documentsController,TruckController truckController) {
         int finishTransportID = transport.getTransportID();
         if (this.getTransport(finishTransportID) == null) {
             System.out.println("Transport does not exist.\n");

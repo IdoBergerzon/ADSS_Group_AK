@@ -1,9 +1,9 @@
 package DAL;
 
-import Domain.ALocation;
-import Domain.Address;
-import Domain.Store;
-import Domain.Supplier;
+import Domain.Transports.ALocation;
+import Domain.Transports.Address;
+import Domain.Transports.Store;
+import Domain.Transports.Supplier;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

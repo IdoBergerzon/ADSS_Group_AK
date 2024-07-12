@@ -1,6 +1,6 @@
 package DAL;
 
-import Domain.Driver;
+import Domain.Transports.Driver;
 
 import java.sql.*;
 import java.util.HashMap;

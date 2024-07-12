@@ -1,7 +1,7 @@
 package DAL.Transports_DAL;
 
 import java.sql.SQLException;
-import Domain.Driver;
+import Domain.Transports.Driver;
 import java.sql.*;
 import java.util.HashMap;
 

@@ -1,10 +1,9 @@
 package Presentation;
 
-import Domain.*;
+import Domain.Transports.*;
 import org.junit.jupiter.api.*; // Using JUnit 5 annotations
 
 import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

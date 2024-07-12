@@ -1,6 +1,6 @@
 package DAL.Transports_DAL;
 
-import Domain.Item;
+import Domain.Transports.Item;
 
 import java.sql.*;
 import java.util.HashMap;

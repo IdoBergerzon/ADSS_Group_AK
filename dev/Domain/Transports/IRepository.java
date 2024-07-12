@@ -1,6 +1,6 @@
 package Domain.Transports;
 
-import java.util.HashMap;
+import java.util.*;
 
 public interface IRepository<T> {
     void add(T t);

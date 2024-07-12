@@ -1,5 +1,6 @@
 package Presentation;
-import Domain.*;
+import Domain.Transports.*;
+
 import java.time.LocalTime;
 import java.util.*;
 import java.io.BufferedReader;

@@ -1,6 +1,9 @@
 package DAL.Transports_DAL;
 
-import Domain.*;
+import Domain.Transports.ALocation;
+import Domain.Transports.Address;
+import Domain.Transports.Store;
+import Domain.Transports.Supplier;
 
 import java.sql.*;
 import java.util.HashMap;

@@ -1,9 +1,6 @@
 package Domain.Transports;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class Delivery_DocumentsController {
     Delivery_DocumentsRepository documentsRepository;
@@ -157,7 +154,7 @@ public class Delivery_DocumentsController {
         }
     }
 
-    public boolean updateDeliveryDocument(Delivery_DocumentsController deliveryController, LocationController locationController){
+    public boolean updateDeliveryDocument(Delivery_DocumentsController deliveryController,LocationController locationController){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Insert delivery ID:");
         int deliveryID = scanner.nextInt();

@@ -1,6 +1,6 @@
 package DAL;
 
-import Domain.Item;
+import Domain.Transports.Item;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

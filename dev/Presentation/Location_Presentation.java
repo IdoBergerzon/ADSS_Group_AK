@@ -1,6 +1,6 @@
 package Presentation;
 
-import Domain.LocationController;
+import Domain.Transports.LocationController;
 
 public class Location_Presentation {
     public LocationController locationController;

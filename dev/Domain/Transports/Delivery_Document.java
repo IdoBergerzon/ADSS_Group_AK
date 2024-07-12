@@ -22,7 +22,7 @@ public class Delivery_Document {
     }
 
     public int getDocumentID() {return documentID;}
-    public Store getSource() {return source;}
+    public Store  getSource() {return source;}
     public Supplier getDestination() {return destination;}
     public HashMap<Item,Integer> getItems() {return items;}
     public Delivery_DocumentStatus getDelivery_Status() {return delivery_status;}

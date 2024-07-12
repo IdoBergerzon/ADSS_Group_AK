@@ -1,7 +1,9 @@
 package DAL.Transports_DAL;
 
-import Domain.*;
-import Domain.Driver;
+import Domain.Transports.Driver;
+import Domain.Transports.Delivery_Document;
+import Domain.Transports.Transport;
+import Domain.Transports.Truck;
 
 import java.sql.*;
 import java.util.ArrayList;
