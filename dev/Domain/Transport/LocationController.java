@@ -128,5 +128,18 @@ public class LocationController {
         System.out.println("Phone number updated successfully.\n");
     }
 
+    public Store getStore(int store_id) {
+        ALocation location = locationsRepository.get(store_id);
+        if (location instanceof Store) {
+            return (Store) location;
+        } else {
+            throw new IllegalArgumentException("The location with ID " + store_id + " is not a Store.");
+        }
+    }
+
+    public Supplier getSupplier(int supplier_id){
+        return (Supplier) locationsRepository.get(supplier_id);
+    }
+
 
 }

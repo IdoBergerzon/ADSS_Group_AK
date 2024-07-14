@@ -30,6 +30,7 @@ public class UnitTests {
         documentsController = new Delivery_DocumentsController();
         locationController = new LocationController();
         transportController = new TransportController();
+        roleRepository = RoleRepository.getInstance();
     }
 
     @AfterEach
@@ -103,11 +104,13 @@ public class UnitTests {
 
     @Test
     public void testAddDriver() {
+        System.out.println(driverController.getDriversData().getAll().size());
         driverController.addDriver(11, "John Doe", 6000, 34, new Date(),1 , roleRepository.get(20),1,"Drivers","112233",5000);
         Driver driver = driverController.getDriver(11);
         assertNotNull(driver);
         assertEquals("John Doe", driver.getName());
         assertEquals(5000, driver.getLicenseMaxWeight());
+        System.out.println(driverController.getDriversData().getAll().size());
     }
 
     @Test
@@ -158,9 +161,11 @@ public class UnitTests {
         items.put(documentsController.getItemsData().get(2), 20);
         Address address1 = new Address("Haim Hazaz 4", 5,1);
         Address address2 = new Address("Haim Hai", 98,2);
-        locationController.addLocation(1, address1,"Tamir","0506549848","Store");
-        locationController.addLocation(2, address2,"Asaf","0506555988","Supplier");
-        documentsController.addDelivery_Document(5, (Store) locationController.getLocation(1), (Supplier) locationController.getLocation(2), items);
+        Store store = new Store(3, address1,"Tamir","0506549848");
+        Supplier supplier = new Supplier(4, address2,"Asaf","0506555988");
+        locationController.addLocation(3, address1,"Tamir","0506549848","Store");
+        locationController.addLocation(4, address2,"Asaf","0506555988","Supplier");
+        documentsController.addDelivery_Document(5, store, supplier, items);
         List<Delivery_Document> deliveryDocs = new ArrayList<>();
         Transport transport = new Transport(1, truck, driver, deliveryDocs, "");
         transportController.addTransport(transport);
@@ -179,6 +184,8 @@ public class UnitTests {
         assertEquals("John Doe", location.getContact());
         assertEquals("555-1234", location.getPhone());
     }
+
+
 
     @Test
     public void testAddLocationThatAlreadyExists() {
