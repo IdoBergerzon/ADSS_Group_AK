@@ -1,18 +1,26 @@
 package Domain.Transport;
 
-import Domain.HR.Role;
-import Domain.HR.RoleRepository;
+import Domain.HR.*;
 
 import java.time.LocalDate;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.*;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class DriverController {
     private DriversRepository driversRepository;
     private RoleRepository roleRepository;
+    private ShiftRepository shiftRepository;
 
     public DriverController() {
         this.driversRepository = new DriversRepository();
+        this.roleRepository = RoleRepository.getInstance();
+        this.shiftRepository = ShiftRepository.getInstance();
     }
 
     public DriversRepository getDriversData() {
@@ -74,10 +82,10 @@ public class DriverController {
         return driversRepository.get(driverID);
     }
 
-    public void printAllAvailableDrivers(double weight) {
-        System.out.println("All Available Drivers:");
+    public void printAllAvailableDrivers(double weight, int branch_id) {
+        List<Driver> in_shift = getShiftedDrivers();
         for (Driver driver: driversRepository.getAll().values()) {
-            if (driver.isAvailable() && driver.getLicenseMaxWeight() >= weight) {
+            if (driver.isAvailable() && driver.getLicenseMaxWeight() >= weight && in_shift.contains(driver)) {
                 System.out.println(driver);
             }
         }
@@ -100,5 +108,27 @@ public class DriverController {
             System.out.println("There are no drivers in the system.\n");
         else
             System.out.println(this.getDriversData().toString() + "\n");
+    }
+
+    public List<Driver>  getShiftedDrivers(){
+        int week = Week.getWeek();
+        // Get the current date
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        // Extract the time part from the current date and time
+        LocalTime currentTime = currentDateTime.toLocalTime();
+        DayOfWeek dayOfWeek = currentDateTime.getDayOfWeek();
+        int dayOfWeekValue = dayOfWeek.getValue();
+        LocalTime threePM = LocalTime.of(15, 0);
+        int shift_type = currentTime.isAfter(threePM) ? 1 : 0;
+        Shift shift = shiftRepository.getShift(2,dayOfWeekValue,shift_type,week);
+
+        System.out.println("All Available Drivers:");
+        List<Driver> in_shift = new ArrayList<Driver>();
+        for(Worker worker: shift.getShift_workers()){
+            if(worker instanceof Driver){
+                in_shift.add((Driver) worker);
+            }
+        }
+        return in_shift;
     }
 }

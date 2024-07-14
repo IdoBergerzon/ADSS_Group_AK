@@ -45,6 +45,12 @@ public class ShiftRepository implements IRepository<Roster,Pair> {
 
     }
 
+    public Shift getShift(int branch_id, int shift_day, int shift_type, int week) {
+        Roster roster = this.get(new Pair(branch_id, week));
+        Shift[][] shifts = roster.getShift_arrangment();
+        return shifts[shift_day][shift_type];
+    }
+
     @Override
     public void add(Roster roster) {
         Pair<Integer,Integer> requestKey = new Pair<>(roster.getBranch_id(), roster.getWeek());
