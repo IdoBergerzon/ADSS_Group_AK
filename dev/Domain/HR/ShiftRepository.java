@@ -13,8 +13,6 @@ public class ShiftRepository implements IRepository<Roster,Pair> {
     private final Map<Pair, Roster> rosters;
     private RosterDAOImpl dao;
 
-
-
     private ShiftRepository() {
         rosters = new HashMap<>();
         dao = new RosterDAOImpl();
@@ -79,6 +77,7 @@ public class ShiftRepository implements IRepository<Roster,Pair> {
         Pair key = new Pair<>(shift.getBranch_id(), shift.getWeekNum());
         Roster roster = rosters.get(key);
         roster.addShift(shift);
+        dao.update(key,JsonNodeConverter.toJsonNode(roster));
         rosters.put(key,roster);
     }
 

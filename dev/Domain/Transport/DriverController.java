@@ -7,10 +7,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.*;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class DriverController {
     private DriversRepository driversRepository;
@@ -116,25 +113,38 @@ public class DriverController {
             System.out.println(this.getDriversData().toString() + "\n");
     }
 
-    public List<Driver>  getShiftedDrivers(){
-        int week = Week.getWeek();
+    public List<Driver> getShiftedDrivers() {
+        Map<String, Integer> dayNumbers = new HashMap<>();
+
+        // Populate the map
+        dayNumbers.put("SUNDAY", 0);
+        dayNumbers.put("MONDAY", 1);
+        dayNumbers.put("TUESDAY", 2);
+        dayNumbers.put("WEDNESDAY", 3);
+        dayNumbers.put("THURSDAY", 4);
+        dayNumbers.put("FRIDAY", 5);
+        dayNumbers.put("SATURDAY", 6);
+         int week = shiftRepository.getMaxWeek();
         // Get the current date
         LocalDateTime currentDateTime = LocalDateTime.now();
         // Extract the time part from the current date and time
         LocalTime currentTime = currentDateTime.toLocalTime();
-        DayOfWeek dayOfWeek = currentDateTime.getDayOfWeek();
-        int dayOfWeekValue = dayOfWeek.getValue();
+        String dayOfWeek = currentDateTime.getDayOfWeek().toString();
+        int dayOfWeekValue = dayNumbers.get(dayOfWeek);
+
         LocalTime threePM = LocalTime.of(15, 0);
         int shift_type = currentTime.isAfter(threePM) ? 1 : 0;
-        Shift shift = shiftRepository.getShift(2,dayOfWeekValue,shift_type,week);
+        Shift shift = shiftRepository.getShift(2, dayOfWeekValue, shift_type, week);
 
         System.out.println("All Available Drivers:");
         List<Driver> in_shift = new ArrayList<Driver>();
-        for(Worker worker: shift.getShift_workers()){
-            if(worker instanceof Driver){
-                in_shift.add((Driver) worker);
+        for (Worker worker : shift.getShift_workers()) {
+            if (worker.getRoles()[0].getRoleID()==20) {
+                in_shift.add((driversRepository.get(worker.getId())));
             }
         }
         return in_shift;
     }
+
+
 }

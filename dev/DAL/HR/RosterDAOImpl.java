@@ -22,7 +22,7 @@ public class RosterDAOImpl implements IDao<JsonNode, Pair> {
         String sql = "INSERT INTO rosters (Branch_ID, week,json) VALUES (?, ?, ?)";
         try (Connection connection = Database.connect();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, roster.get("branchID").asInt());
+            statement.setInt(1, roster.get("branch_id").asInt());
             statement.setInt(2, roster.get("week").asInt());
             statement.setString(3, roster.toString());
 
@@ -109,6 +109,22 @@ public class RosterDAOImpl implements IDao<JsonNode, Pair> {
             e.printStackTrace();
         }
         return 0;
+    }
+    public void update(Pair key, JsonNode updatedRoster) {
+        String sql = "UPDATE rosters SET json = ? WHERE Branch_ID = ? AND week = ?";
+        try (Connection connection = Database.connect();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, updatedRoster.toString());
+            statement.setInt(2, (Integer) key.getFirst());
+            statement.setInt(3, (Integer) key.getSecond());
+
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new NullPointerException("Roster does not exist for this Branch_ID and week");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 /*    public static void main(String[] args){
