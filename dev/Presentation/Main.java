@@ -1,6 +1,6 @@
 package Presentation;
 import Domain.HR.Checking_Controller;
-
+import java.lang.reflect.Method;
 
 import java.util.Scanner;
 
@@ -53,6 +53,8 @@ public class Main {
                             hr_menu(userID);
                         } else if (is_manager == 0) {//in case of regular worker
                             worker_menu(userID);
+                        } else if (is_manager==2) {
+                            runAnotherMain("Presentation.Main_Menu");
                         } else{
                             System.out.println("The ID you enter doesn't belong to an existing worker\n");
                         }
@@ -167,6 +169,16 @@ public class Main {
                     System.out.println("Invalid choice. Please enter a number 1 to 7.");
                     break;
             }
+        }
+    }
+    private static void runAnotherMain(String className) {
+        try {
+            Class<?> clazz = Class.forName(className);
+            Method mainMethod = clazz.getMethod("main", String[].class);
+            String[] params = null; // Initialize main method arguments if needed
+            mainMethod.invoke(null, (Object) params);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

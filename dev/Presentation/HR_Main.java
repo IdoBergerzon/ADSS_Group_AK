@@ -181,7 +181,9 @@ public class HR_Main {
         }
 
         else if(is_open.equals("Y")) {
-            roles_for_shift.add(2);      //in every shift must have a shift manager
+            roles_for_shift.add(2); //in every shift must have a shift manager
+            roles_for_shift.add(20);//in every shift must have a driver
+            roles_for_shift.add(3);//in every shift must have a storekeeper
             int answer;
             while (true) {
                 System.out.println("enter role id you need to this shift\n" +

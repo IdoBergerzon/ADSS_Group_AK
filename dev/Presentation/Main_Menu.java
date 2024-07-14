@@ -372,7 +372,7 @@ public class Main_Menu {
             //Exit
             case 6:
                 System.out.println("Good bye.\n");
-                break;
+                return;
 
             default:
                 System.out.println("Invalid choice. Please try again.\n");
