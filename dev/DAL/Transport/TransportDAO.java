@@ -38,8 +38,8 @@ public class TransportDAO implements IDAO<Transport> {
                     statementTransport.setInt(1, transport.getTransportID());
                     statementTransport.setInt(2, transport.getTruck().getTruckID());
                     truckDAO.get(transport.getTruck().getTruckID()).setAvailable(false);
-                    statementTransport.setInt(3, transport.getDriver().getDriverID());
-                    driverDAO.get(transport.getDriver().getDriverID()).setAvailable(false);
+                    statementTransport.setInt(3, transport.getDriver().getId());
+                    driverDAO.get(transport.getDriver().getId()).setAvailable(false);
                     statementTransport.setString(4, transport.getComments());
                     statementTransport.executeUpdate();
 
@@ -78,7 +78,7 @@ public class TransportDAO implements IDAO<Transport> {
         try (Connection connection = DataBase.connect();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, transport.getTruck().getTruckID());
-            statement.setInt(2, transport.getDriver().getDriverID());
+            statement.setInt(2, transport.getDriver().getId());
             statement.setString(3, transport.getComments());
             statement.setInt(4, transport.getTransportID());
             statement.executeUpdate();

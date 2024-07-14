@@ -319,22 +319,22 @@ public class TransportController {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Possible Trucks:\n");
         truckController.printAllAvailableTrucks(newTransport.getWeight());
-            System.out.println("Insert new truck ID:\n(Press 0 to return to the Main Menu)\n");
-            int newTruckID = scanner.nextInt();
-            scanner.nextLine();
-            if (newTruckID == 0) {
-                this.getTransportsData().remove(newTransport.getTransportID());
+        System.out.println("Insert new truck ID:\n(Press 0 to return to the Main Menu)\n");
+        int newTruckID = scanner.nextInt();
+        scanner.nextLine();
+        if (newTruckID == 0) {
+            this.getTransportsData().remove(newTransport.getTransportID());
+            return false;
+        }
+        if (truckController.getTruck(newTruckID) == null) {
+            System.out.println("Truck does not exist.\n");
+        } else {
+            Truck newTruck = truckController.getTruck(newTruckID);
+            if (newTransport.setTruck(newTruck)) {
+                System.out.println("Transport OK, truck was changed successfully.\n");
                 return false;
             }
-            if (truckController.getTruck(newTruckID) == null) {
-                System.out.println("Truck does not exist.\n");
-            } else {
-                Truck newTruck = truckController.getTruck(newTruckID);
-                if (newTransport.setTruck(newTruck)) {
-                    System.out.println("Transport OK, truck was changed successfully.\n");
-                    return false;
-                }
-            }
+        }
         return true;
     }
 
@@ -438,4 +438,3 @@ public class TransportController {
         return true;
     }
 }
-

@@ -1,10 +1,12 @@
 package Presentation;
 
+import Domain.HR.RoleRepository;
 import Domain.Transport.*;
 import org.junit.jupiter.api.*; // Using JUnit 5 annotations
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,6 +20,7 @@ public class UnitTests {
     private Delivery_DocumentsController documentsController;
     private LocationController locationController;
     private TransportController transportController;
+    private RoleRepository roleRepository;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
     @BeforeEach
@@ -100,17 +103,17 @@ public class UnitTests {
 
     @Test
     public void testAddDriver() {
-        driverController.addDriver(11, "John Doe", 5000);
+        driverController.addDriver(11, "John Doe", 6000, 34, new Date(),1 , roleRepository.get(20),1,"Drivers","112233",5000);
         Driver driver = driverController.getDriver(11);
         assertNotNull(driver);
-        assertEquals("John Doe", driver.getDriverName());
+        assertEquals("John Doe", driver.getName());
         assertEquals(5000, driver.getLicenseMaxWeight());
     }
 
     @Test
     public void testCalcWeight_Valid() {
         Truck truck = new Truck(1, "TruckModel", 5000, 10000);
-        Driver driver = new Driver(1, "DriverName", 15000);
+        Driver driver = new Driver(12, "Ido Bergerzon", 10000, 70, new Date(),1 , roleRepository.get(20),1,"Drivers","112233",3000);
         List<Delivery_Document> deliveryDocs = new ArrayList<>();
         Transport transport = new Transport(1, truck, driver, deliveryDocs, "");
 
@@ -121,7 +124,7 @@ public class UnitTests {
     public void testFinishTransport() {
         truckController.addNewTruck(1, "TruckModel", 1000, 1200);
         Truck truck=truckController.getTruck(1);
-        driverController.addDriver(1, "DriverName", 15000);
+        driverController.addDriver(13, "Tamir Cohen", 10000, 70, new Date(),1 , roleRepository.get(20),1,"Drivers","112233",5500);
         Driver driver = driverController.getDriver(1);
         documentsController.addItem(1, "Avocado", 0.3);
         documentsController.addItem(2,"Apple", 0.5);
@@ -146,7 +149,7 @@ public class UnitTests {
     public void testAddTransport() {
         truckController.addNewTruck(1, "TruckModel", 1000, 1200);
         Truck truck=truckController.getTruck(1);
-        driverController.addDriver(1, "DriverName", 15000);
+        driverController.addDriver(14, "Avi Cohen", 7000, 50, new Date(),1 , roleRepository.get(20),2,"Drivers","112233",5500);
         Driver driver = driverController.getDriver(1);
         documentsController.addItem(1, "Avocado", 0.3);
         documentsController.addItem(2,"Apple", 0.5);
@@ -193,7 +196,7 @@ public class UnitTests {
     public void testCalculateTotalWeight() {
         truckController.addNewTruck(1, "TruckModel", 1000, 1200);
         Truck truck=truckController.getTruck(1);
-        driverController.addDriver(1, "DriverName", 15000);
+        driverController.addDriver(15, "Rami Dali", 100000, 700, new Date(),1 , roleRepository.get(20),2,"Drivers","11223355",5500);
         Driver driver = driverController.getDriver(1);
         Address address1 = new Address("123 Main St", 10001,5);
         Address address2 = new Address("456 Elm St", 20002,4);

@@ -1,9 +1,15 @@
 package Domain.Transport;
 
+import Domain.HR.Role;
+import Domain.HR.RoleRepository;
+
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Scanner;
 
 public class DriverController {
     private DriversRepository driversRepository;
+    private RoleRepository roleRepository;
 
     public DriverController() {
         this.driversRepository = new DriversRepository();
@@ -13,8 +19,8 @@ public class DriverController {
         return driversRepository;
     }
 
-    public void addDriver(int driverID, String driverName, int license) {
-        Driver newDriver = new Driver(driverID, driverName, license);
+    public void addDriver(int driverID, String name, int monthly_wage, int hourly_wage, Date start_date, Integer direct_manager_ID, Role role, int branch_id, String departement, String bank_details, int licenseMaxWeight) {
+        Driver newDriver = new Driver(driverID,name,monthly_wage,hourly_wage,start_date,direct_manager_ID,role,branch_id,departement,bank_details, licenseMaxWeight);
         if (!driversRepository.getAll().containsKey(driverID)) {
             driversRepository.add(newDriver);
             System.out.println("Driver added successfully: " + newDriver);
@@ -36,7 +42,22 @@ public class DriverController {
             String driverName = scanner.nextLine();
             System.out.print("Enter max weight license:\n");
             int licenseNumber = scanner.nextInt();
-            this.addDriver(driverID, driverName, licenseNumber);
+            System.out.println("Enter Monthly Wage:\n");
+            int monthlyWage = scanner.nextInt();
+            System.out.print("Enter Hourly Wage:\n");
+            int hourlyWage = scanner.nextInt();
+            Date startDate = new Date();
+            System.out.print("Enter Direct Manager ID:\n");
+            int direct_manager_ID = scanner.nextInt();
+            System.out.print("Enter Role ID:\n");
+            int roleID = scanner.nextInt();
+            System.out.print("Enter Branch ID:\n");
+            int branchID = scanner.nextInt();
+            System.out.print("Enter Departement:\n");
+            String departement = scanner.nextLine();
+            System.out.print("Enter Bank Details:\n");
+            String bank_details = scanner.nextLine();
+            this.addDriver(driverID, driverName ,monthlyWage , hourlyWage, startDate, direct_manager_ID, roleRepository.get(roleID), branchID, departement, bank_details, licenseNumber);
         }
         return true;
     }
@@ -81,5 +102,3 @@ public class DriverController {
             System.out.println(this.getDriversData().toString() + "\n");
     }
 }
-
-
