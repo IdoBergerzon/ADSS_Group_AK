@@ -1,12 +1,14 @@
 package Presentation;
 
 import Domain.HR.HR_Controller;
+import Domain.Transport.DriverController;
 
 
 import java.util.*;
 
 public class HR_Main {
     private HR_Controller hr_controller;
+    private DriverController DR_controller;
 
     public HR_Main() {
         this.hr_controller = new HR_Controller();
@@ -14,29 +16,44 @@ public class HR_Main {
 
     public void addNewWorker(){
         Scanner sc = new Scanner(System.in);
-        String newWorkerDetails = "";
-        //enter all worker details by order id, name, ...
-        System.out.println("Enter worker id:");
-        newWorkerDetails += sc.nextLine()+ ",";
-        System.out.println("Enter worker name:");
-        newWorkerDetails += sc.nextLine()+ ",";
-        System.out.println("Enter worker hourly wage:");
-        newWorkerDetails += sc.nextLine()+ ",";
-        System.out.println("Enter worker monthly wage:");
-        newWorkerDetails += sc.nextLine()+ ",";
-        System.out.println("Enter worker role ID:");
-        newWorkerDetails += sc.nextLine()+ ",";
-        System.out.println("Enter worker branch:");
-        newWorkerDetails += sc.nextLine() + ",";
-        System.out.println("Enter worker department:");
-        newWorkerDetails += sc.nextLine() + ",";
-        System.out.println("Enter managerID:");
-        newWorkerDetails += sc.nextLine() + ",";
-        System.out.println("Enter Bank details:(format: BANK_NAME:ACCOUNT_NUMBER) ");
-        newWorkerDetails += sc.nextLine() + ",";
+        System.out.println("You create driver?");
+        String result=sc.nextLine();
+        if (result=="Y"){
+            DR_controller.createDriver();
+        }
+        else {
+            String newWorkerDetails = "";
+            //enter all worker details by order id, name, ...
+            System.out.println("Enter worker id:");
+            newWorkerDetails += sc.nextLine() + ",";
+            System.out.println("Enter worker name:");
+            newWorkerDetails += sc.nextLine() + ",";
+            System.out.println("Enter worker hourly wage:");
+            newWorkerDetails += sc.nextLine() + ",";
+            System.out.println("Enter worker monthly wage:");
+            newWorkerDetails += sc.nextLine() + ",";
+            System.out.println("Enter worker role ID:");
+            newWorkerDetails += sc.nextLine() + ",";
+            System.out.println("Enter worker branch:");
+            newWorkerDetails += sc.nextLine() + ",";
+            System.out.println("Enter worker department:");
+            newWorkerDetails += sc.nextLine() + ",";
+            System.out.println("Enter managerID:");
+            newWorkerDetails += sc.nextLine() + ",";
+            System.out.println("Enter Bank details:(format: BANK_NAME:ACCOUNT_NUMBER) ");
+            newWorkerDetails += sc.nextLine() + ",";
 
 
-        hr_controller.Add_New_Worker(newWorkerDetails);
+            hr_controller.Add_New_Worker(newWorkerDetails);
+        }
+/*        System.out.println("You create driver?");
+        String result=sc.nextLine();
+        if (result=="Y"){
+            String[] string_details = newWorkerDetails.split(",");
+            int id= Integer.parseInt(string_details[0]);
+            String name=string_details[1];
+
+        }*/
 
 
     }

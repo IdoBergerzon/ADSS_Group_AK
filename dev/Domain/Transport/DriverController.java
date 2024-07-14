@@ -16,11 +16,13 @@ public class DriverController {
     private DriversRepository driversRepository;
     private RoleRepository roleRepository;
     private ShiftRepository shiftRepository;
+    private WorkerRepository workerRepository;
 
     public DriverController() {
         this.driversRepository = new DriversRepository();
         this.roleRepository = RoleRepository.getInstance();
         this.shiftRepository = ShiftRepository.getInstance();
+        this.workerRepository=WorkerRepository.getInstance();
     }
 
     public DriversRepository getDriversData() {
@@ -65,6 +67,10 @@ public class DriverController {
             String departement = scanner.nextLine();
             System.out.print("Enter Bank Details:\n");
             String bank_details = scanner.nextLine();
+
+            Role role=roleRepository.get(roleID);
+            Worker newone=new Worker(driverID,driverName,monthlyWage,hourlyWage,new Date(),direct_manager_ID,role,branchID,departement,bank_details);
+            workerRepository.add(newone);
             this.addDriver(driverID, driverName ,monthlyWage , hourlyWage, startDate, direct_manager_ID, roleRepository.get(roleID), branchID, departement, bank_details, licenseNumber);
         }
         return true;
