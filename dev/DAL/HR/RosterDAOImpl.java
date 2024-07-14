@@ -22,7 +22,7 @@ public class RosterDAOImpl implements IDao<JsonNode, Pair> {
         String sql = "INSERT INTO rosters (Branch_ID, week,json) VALUES (?, ?, ?)";
         try (Connection connection = Database.connect();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, roster.get("branch").get("branchID").asInt());
+            statement.setInt(1, roster.get("branchID").asInt());
             statement.setInt(2, roster.get("week").asInt());
             statement.setString(3, roster.toString());
 

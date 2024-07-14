@@ -2,14 +2,21 @@ package DAL.Transport;
 
 import java.sql.SQLException;
 
+import DAL.HR.WorkerDAOImpl;
 import Domain.HR.Role;
+import Domain.HR.Worker;
 import Domain.Transport.Driver;
+import com.fasterxml.jackson.databind.JsonNode;
+
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
 public class DriverDAO implements IDAO<Driver>{
-    private final String URL ="jdbc:sqlite:C:\\Users\\WIN10\\Documents\\שנה ב\\ניתו''צ\\עבודה 1 ניתוצ\\ADSS_Group_AK\\myDataBase.db";
+    private WorkerDAOImpl workerDao = new WorkerDAOImpl();
 
     public DriverDAO() {
         TransportTableCreator.createDriversTable();
@@ -59,41 +66,59 @@ public class DriverDAO implements IDAO<Driver>{
 
     @Override
     public Driver get(int id) throws SQLException {
-        if (this.getAll().containsKey(id)) {
+        JsonNode worker = workerDao.search(id);
+        if (worker != null) {
+
             String sql = "SELECT * FROM drivers WHERE driverID = ?";
-            Driver driver = null;
             try (Connection connection = DataBase.connect();
                  PreparedStatement pstmt = connection.prepareStatement(sql)) {
                 pstmt.setInt(1, id);
                 ResultSet rs = pstmt.executeQuery();
-                if (rs.next()) {
-                    int driverID = rs.getInt("driverID");
-                    String driverName = rs.getString("driverName");
-                    boolean available = rs.getBoolean("available");
-                    int licenseMaxWeight = rs.getInt("licenseMaxWeight");
-                    int monthly_wage = rs.getInt("monthly_wage");
-                    int hourly_wage = rs.getInt("hourly_wage");
-                    Date start_date = rs.getDate("start_date");
-                    int direct_manager_id = rs.getInt("direct_manager_id");
-                    String roleName = rs.getString("roleName");
-                    int roleId = rs.getInt("roleID");
-                    int branch_id = rs.getInt("branch_id");
-                    String description = rs.getString("description");
-                    String bank_details = rs.getString("bank_details");
-                    driver = new Driver(driverID, driverName, monthly_wage, hourly_wage, start_date, direct_manager_id, new Role(roleId,roleName), branch_id, description, bank_details, licenseMaxWeight);
-                    driver.setAvailable(available);
+
+                String driverName = rs.getString("driverName");
+                boolean available = rs.getBoolean("available");
+                int licenseMaxWeight = rs.getInt("licenseMaxWeight");
+                int monthly_wage = worker.get("monthly_wage").asInt();
+                int hourly_wage = worker.get("hourly_wage").asInt();
+                /// adding The Date
+                String startDateStr = worker.get("start_date").asText();
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date start_date = dateFormat.parse(startDateStr);
+
+                JsonNode rolesNode = worker.get("roles");
+                Role[] roles = new Role[rolesNode.size()];
+                for (int i = 0; i < rolesNode.size(); i++) {
+                    JsonNode roleNode = rolesNode.get(i);
+
+                    // Assuming Role has a constructor or factory method to create Role objects from JsonNode
+                    Role role = new Role(/* Extract values from roleNode */);
+
+                    // Add role to the roles array
+                    roles[i] = role;
                 }
+                int direct_manager_id = worker.get("direct_manager_ID").asInt();
+
+                int branch_id = worker.get("branch_id").asInt();
+                String description = worker.get("departement").asText();
+                String bank_details = worker.get("bank_details").asText();
+                Driver driver = new Driver(id, driverName, monthly_wage, hourly_wage, start_date, direct_manager_id, roles[0], branch_id, description, bank_details, licenseMaxWeight);
+                driver.setAvailable(available);
+                return driver;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
             }
-            return driver;
         }
-        else {
-            return null;
-        }
+        return null;
+
+
+
     }
 
     @Override
     public HashMap<Integer, Driver> getAll() throws SQLException {
-        String sql = "SELECT * FROM drivers";
+        String sql = "SELECT driverID FROM drivers";
         HashMap<Integer, Driver> driversMap = new HashMap<>();
 
         try (Connection connection = DataBase.connect();
@@ -102,20 +127,7 @@ public class DriverDAO implements IDAO<Driver>{
 
             while (rs.next()) {
                 int driverID = rs.getInt("driverID");
-                String driverName = rs.getString("driverName");
-                boolean available = rs.getBoolean("available");
-                int licenseMaxWeight = rs.getInt("licenseMaxWeight");
-                int monthly_wage = rs.getInt("monthly_wage");
-                int hourly_wage = rs.getInt("hourly_wage");
-                Date start_date = rs.getDate("start_date");
-                int direct_manager_id = rs.getInt("direct_manager_id");
-                String roleName = rs.getString("roleName");
-                int roleId = rs.getInt("roleID");
-                int branch_id = rs.getInt("branch_id");
-                String description = rs.getString("description");
-                String bank_details = rs.getString("bank_details");
-                Driver driver = new Driver(driverID, driverName, monthly_wage, hourly_wage, start_date, direct_manager_id, new Role(roleId,roleName), branch_id, description, bank_details, licenseMaxWeight);
-                driver.setAvailable(available);
+                Driver driver = get(driverID);
                 driversMap.put(driverID, driver);
             }
         }

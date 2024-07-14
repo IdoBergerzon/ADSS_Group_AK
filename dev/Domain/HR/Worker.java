@@ -43,6 +43,8 @@ public class Worker {
     }
 
 
+
+
     public void addNewRole(Role role) {
         
         for(int i = 0; i< roles.length; i++) {

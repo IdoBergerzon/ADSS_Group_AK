@@ -11,6 +11,7 @@ public class HR_Main {
     private DriverController DR_controller;
 
     public HR_Main() {
+        this.DR_controller =new DriverController();
         this.hr_controller = new HR_Controller();
     }
 
@@ -18,7 +19,8 @@ public class HR_Main {
         Scanner sc = new Scanner(System.in);
         System.out.println("You create driver?");
         String result=sc.nextLine();
-        if (result=="Y"){
+        if (result.equals("Y")){
+            //sc.close();
             DR_controller.createDriver();
         }
         else {
@@ -45,17 +47,8 @@ public class HR_Main {
 
 
             hr_controller.Add_New_Worker(newWorkerDetails);
+
         }
-/*        System.out.println("You create driver?");
-        String result=sc.nextLine();
-        if (result=="Y"){
-            String[] string_details = newWorkerDetails.split(",");
-            int id= Integer.parseInt(string_details[0]);
-            String name=string_details[1];
-
-        }*/
-
-
     }
     public void Display_Worker_Details(){
         Scanner scanner = new Scanner(System.in);

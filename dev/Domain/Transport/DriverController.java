@@ -40,38 +40,38 @@ public class DriverController {
     }
 
     public boolean createDriver() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner_int = new Scanner(System.in);
+        Scanner scanner_str = new Scanner(System.in);
         System.out.print("Enter Driver ID:\n");
-        int driverID = scanner.nextInt();
-        scanner.nextLine();
-        if (this.getDriver(driverID) != null) {
+        int driverID = scanner_int.nextInt();
+        //scanner.nextLine();
+        if (this.workerRepository.get(driverID) != null) {
             System.out.print("The Driver already exists in the system\n");
             return false;
         } else {
             System.out.print("Enter Driver Name:\n");
-            String driverName = scanner.nextLine();
+            String driverName = scanner_str.nextLine();
             System.out.print("Enter max weight license:\n");
-            int licenseNumber = scanner.nextInt();
+            int licenseNumber = scanner_int.nextInt();
             System.out.println("Enter Monthly Wage:\n");
-            int monthlyWage = scanner.nextInt();
+            int monthlyWage = scanner_int.nextInt();
             System.out.print("Enter Hourly Wage:\n");
-            int hourlyWage = scanner.nextInt();
+            int hourlyWage = scanner_int.nextInt();
             Date startDate = new Date();
             System.out.print("Enter Direct Manager ID:\n");
-            int direct_manager_ID = scanner.nextInt();
-            System.out.print("Enter Role ID:\n");
-            int roleID = scanner.nextInt();
+            int direct_manager_ID = scanner_int.nextInt();
             System.out.print("Enter Branch ID:\n");
-            int branchID = scanner.nextInt();
+            int branchID = scanner_int.nextInt();
             System.out.print("Enter Departement:\n");
-            String departement = scanner.nextLine();
+            String departement = scanner_str.nextLine();
             System.out.print("Enter Bank Details:\n");
-            String bank_details = scanner.nextLine();
+            String bank_details = scanner_str.nextLine();
 
-            Role role=roleRepository.get(roleID);
+            Role role=roleRepository.get(20);
             Worker newone=new Worker(driverID,driverName,monthlyWage,hourlyWage,new Date(),direct_manager_ID,role,branchID,departement,bank_details);
+            this.addDriver(driverID, driverName ,monthlyWage , hourlyWage, startDate, direct_manager_ID, role, branchID, departement, bank_details, licenseNumber);
             workerRepository.add(newone);
-            this.addDriver(driverID, driverName ,monthlyWage , hourlyWage, startDate, direct_manager_ID, roleRepository.get(roleID), branchID, departement, bank_details, licenseNumber);
+
         }
         return true;
     }
