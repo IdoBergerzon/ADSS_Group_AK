@@ -66,21 +66,37 @@ public class DriverDAO implements IDAO<Driver>{
 
     @Override
     public Driver get(int id) throws SQLException {
+        // Check if the worker exists in workerDao first
         JsonNode worker = workerDao.search(id);
-        if (worker != null) {
+        if (worker == null) {
+            return null; // Worker does not exist
+        }
 
-            String sql = "SELECT * FROM drivers WHERE driverID = ?";
-            try (Connection connection = DataBase.connect();
-                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
-                pstmt.setInt(1, id);
-                ResultSet rs = pstmt.executeQuery();
+        // Check if the driver exists in the drivers table
+        String checkSql = "SELECT COUNT(*) FROM drivers WHERE driverID = ?";
+        String sql = "SELECT * FROM drivers WHERE driverID = ?";
+        try (Connection connection = DataBase.connect();
+             PreparedStatement checkStmt = connection.prepareStatement(checkSql);
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
+            // Check if the driver exists
+            checkStmt.setInt(1, id);
+            ResultSet checkRs = checkStmt.executeQuery();
+            if (checkRs.next() && checkRs.getInt(1) == 0) {
+                return null; // Driver does not exist
+            }
+
+            // Retrieve driver details
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
                 String driverName = rs.getString("driverName");
                 boolean available = rs.getBoolean("available");
                 int licenseMaxWeight = rs.getInt("licenseMaxWeight");
                 int monthly_wage = worker.get("monthly_wage").asInt();
                 int hourly_wage = worker.get("hourly_wage").asInt();
-                /// adding The Date
+
+                // Adding the Date
                 String startDateStr = worker.get("start_date").asText();
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 Date start_date = dateFormat.parse(startDateStr);
@@ -97,24 +113,22 @@ public class DriverDAO implements IDAO<Driver>{
                     roles[i] = role;
                 }
                 int direct_manager_id = worker.get("direct_manager_ID").asInt();
-
                 int branch_id = worker.get("branch_id").asInt();
                 String description = worker.get("departement").asText();
                 String bank_details = worker.get("bank_details").asText();
+
                 Driver driver = new Driver(id, driverName, monthly_wage, hourly_wage, start_date, direct_manager_id, roles[0], branch_id, description, bank_details, licenseMaxWeight);
                 driver.setAvailable(available);
                 return driver;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         return null;
-
-
-
     }
+
 
     @Override
     public HashMap<Integer, Driver> getAll() throws SQLException {

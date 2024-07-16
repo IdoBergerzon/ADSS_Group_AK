@@ -27,9 +27,13 @@ public class DriverController {
     }
 
     public void addDriver(int driverID, String name, int monthly_wage, int hourly_wage, Date start_date, Integer direct_manager_ID, Role role, int branch_id, String departement, String bank_details, int licenseMaxWeight) {
+        Worker worker = new Worker(driverID,name,monthly_wage,hourly_wage,start_date,direct_manager_ID,role,branch_id,departement,bank_details);
+
         Driver newDriver = new Driver(driverID,name,monthly_wage,hourly_wage,start_date,direct_manager_ID,role,branch_id,departement,bank_details, licenseMaxWeight);
+
         if (!driversRepository.getAll().containsKey(driverID)) {
             driversRepository.add(newDriver);
+            workerRepository.add(worker);
             System.out.println("Driver added successfully: " + newDriver);
         } else {
             System.out.println("Driver with ID " + driverID + " already exists.");
@@ -65,9 +69,9 @@ public class DriverController {
             String bank_details = scanner_str.nextLine();
 
             Role role=roleRepository.get(20);
-            Worker newone=new Worker(driverID,driverName,monthlyWage,hourlyWage,new Date(),direct_manager_ID,role,branchID,departement,bank_details);
+            //Worker newone=new Worker(driverID,driverName,monthlyWage,hourlyWage,new Date(),direct_manager_ID,role,branchID,departement,bank_details);
             this.addDriver(driverID, driverName ,monthlyWage , hourlyWage, startDate, direct_manager_ID, role, branchID, departement, bank_details, licenseNumber);
-            workerRepository.add(newone);
+            //workerRepository.add(newone);
 
         }
         return true;

@@ -7,7 +7,6 @@ import java.sql.*;
 import java.util.HashMap;
 
 public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
-    private final String URL ="jdbc:sqlite:C:\\Users\\TAMIR\\Documents\\שנה ב\\סמסטר ב\\נושאים מתקדמים בתכנות\\ADSS_Group_AK\\mydatabase.db";
     private final ItemDAO itemDAO = new ItemDAO();
     private final ALocationDAO locationDAO = new ALocationDAO();
 
@@ -134,8 +133,8 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
                     String deliveryStatusStr = rs.getString("delivery_status");
                     String itemsStatusStr = rs.getString("itemsStatus");
 
-                    Store source = (Store) locationDAO.get(sourceID);
-                    Supplier destination = (Supplier) locationDAO.get(destinationID);
+                    Store source = new Store(sourceID,locationDAO.get(sourceID).getAddress(),locationDAO.get(sourceID).getContact(), locationDAO.get(sourceID).getPhone());
+                    Supplier destination = new Supplier(destinationID, locationDAO.get(destinationID).getAddress(),locationDAO.get(destinationID).getContact(), locationDAO.get(destinationID).getPhone());
                     Delivery_DocumentStatus deliveryStatus = Delivery_DocumentStatus.valueOf(deliveryStatusStr);
                     Delivery_ItemsStatus itemsStatus = Delivery_ItemsStatus.valueOf(itemsStatusStr);
 
@@ -184,8 +183,8 @@ public class DeliveryDocumentDAO implements IDAO<Delivery_Document> {
                 String itemsStatusStr = rs.getString("itemsStatus");
 
                 // Fetch source and destination locations using locationDAO
-                Store source = (Store) locationDAO.get(sourceID);
-                Supplier destination = (Supplier) locationDAO.get(destinationID);
+                Store source = new Store(sourceID,locationDAO.get(sourceID).getAddress(),locationDAO.get(sourceID).getContact(), locationDAO.get(sourceID).getPhone());
+                Supplier destination = new Supplier(destinationID, locationDAO.get(destinationID).getAddress(),locationDAO.get(destinationID).getContact(), locationDAO.get(destinationID).getPhone());
 
                 // Convert delivery status and items status from string to enum
                 Delivery_DocumentStatus deliveryStatus = Delivery_DocumentStatus.valueOf(deliveryStatusStr);

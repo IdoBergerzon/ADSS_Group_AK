@@ -14,9 +14,7 @@ public class LocationsRepository implements IRepository<ALocation, Integer> {
     private LocationsRepository() {
         this.locations = new HashMap<>();
     }
-    /**
-     * public static method that returns the single instance of the class
-     */
+
     private static class InLocationHolder {
         private final static LocationsRepository INSTANCE = new LocationsRepository();
     }
@@ -76,10 +74,16 @@ public class LocationsRepository implements IRepository<ALocation, Integer> {
     public ALocation get(Integer id) {
         try {
             if (locationDAO.get(id) != null && locations.containsKey(id)) {
-                return locations.get(id);
+                if (locations.get(id).getL_type().equals("Store"))
+                    return new Store(id, locations.get(id).getAddress(), locations.get(id).getContact(), locations.get(id).getPhone());
+                else
+                    return new Supplier(id, locations.get(id).getAddress(), locations.get(id).getContact(), locations.get(id).getPhone());
             } else if (locationDAO.get(id) != null && !locations.containsKey(id)) {
                 locations.put(id, locationDAO.get(id));
-                return locations.get(id);
+                if (locations.get(id).getL_type().equals("Store"))
+                    return new Store(id, locations.get(id).getAddress(), locations.get(id).getContact(), locations.get(id).getPhone());
+                else
+                    return new Supplier(id, locations.get(id).getAddress(), locations.get(id).getContact(), locations.get(id).getPhone());
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
