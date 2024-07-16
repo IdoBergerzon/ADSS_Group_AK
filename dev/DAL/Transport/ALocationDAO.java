@@ -14,6 +14,10 @@ public class ALocationDAO implements IDAO<ALocation> {
         TransportTableCreator.createLocationTable();
     }
 
+//    public static void Main{
+//
+//    }
+
     @Override
     public void add(ALocation aLocation) throws SQLException {
         if (!this.getAll().containsKey(aLocation.getLocationID())) {

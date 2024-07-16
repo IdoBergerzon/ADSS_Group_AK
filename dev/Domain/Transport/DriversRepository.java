@@ -59,7 +59,7 @@ public class DriversRepository implements IRepository<Driver, Integer> {
 
 
     public void update(Driver driver) {
-        int driverID = driver.getDriverID();
+        int driverID = driver.getId();
         try {
             if (drivers.containsKey(driverID)) {
                 drivers.replace(driverID, driver);
@@ -76,10 +76,10 @@ public class DriversRepository implements IRepository<Driver, Integer> {
 
     @Override
     public void add(Driver driver) {
-        int driverID = driver.getDriverID();
+        int driverID = driver.getId();
         try {
             if (!drivers.containsKey(driverID) && driverDAO.get(driverID) != null) {
-                drivers.put(driver.getDriverID(), driver);
+                drivers.put(driver.getId(), driver);
             } else if (!drivers.containsKey(driverID) && driverDAO.get(driverID) == null) {
                 drivers.put(driverID, driver);
                 driverDAO.add(driver);

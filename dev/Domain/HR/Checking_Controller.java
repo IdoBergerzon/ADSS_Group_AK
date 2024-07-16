@@ -89,11 +89,19 @@ public class Checking_Controller {
         if(result==null){
             return -1;
         }
-
-        if(result.getRoles()[0].getRoleID()==1){
-            return 1;
+        for (int i=0;i<result.getRoles().length;i++){
+            if(result.getRoles()[i].getRoleID()==1){
+                return 1;
+            }
+            if (result.getRoles()[i].getRoleID()==21){
+                return 2;
+            }
         }
-        else return 0;
+
+/*        if(result.getRoles()[0].getRoleID()==1){
+            return 1;
+        }*/
+        return 0;
 
     }
 }

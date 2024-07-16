@@ -113,7 +113,10 @@ public class TransportController {
 
             //Change driver
             case 2:
-                driverController.printAllAvailableDrivers(transport.calc_transportWeight());
+                    System.out.println("For Which brunch:");
+                    System.out.println(transport.getSource());
+                    int storeID = scanner.nextInt();
+                driverController.printAllAvailableDrivers(transport.calc_transportWeight(), storeID);
                 System.out.println("Insert new driver ID:");
                 int newDriverID = scanner.nextInt();
                 scanner.nextLine();
@@ -197,21 +200,6 @@ public class TransportController {
         Truck truck = truckController.getTruck(truckID);
 
 
-        driverController.printAllAvailableDrivers(0);
-        System.out.println("Insert driver ID:");
-        int driverID = scanner.nextInt();
-        scanner.nextLine();
-        if (driverController.getDriver(driverID) == null) {
-            System.out.println("Driver does not exist.\n");
-            return false;
-        }
-        if (!driverController.getDriver(driverID).isAvailable()) {
-            System.out.println("Driver is not available.\n");
-            return false;
-        }
-        Driver driver = driverController.getDriver(driverID);
-
-
         List<Delivery_Document> deliveryDocs;
         deliveryDocs = new ArrayList<Delivery_Document>();
         int searchMore = 1;
@@ -253,6 +241,33 @@ public class TransportController {
             searchMore = scanner.nextInt();
 
         }
+        List <Store> stores = new ArrayList<>();
+        for (Delivery_Document deliveryDoc : deliveryDocs) {
+            stores.add(deliveryDoc.getSource());
+        }
+
+        System.out.println(stores);
+        System.out.println("Insert Store ID:");
+        int storeID = scanner.nextInt();
+        driverController.printAllAvailableDrivers(0, storeID);
+        System.out.println("Insert driver ID:");
+        int driverID = scanner.nextInt();
+        scanner.nextLine();
+        if (driverController.getDriver(driverID) == null) {
+            System.out.println("Driver does not exist.\n");
+            return false;
+        }
+        if (!driverController.getDriver(driverID).isAvailable()) {
+            System.out.println("Driver is not available.\n");
+            return false;
+        }
+
+        Driver driver = driverController.getDriver(driverID);
+        if(!driverController.getShiftedDrivers().contains(driver)){
+            System.out.println("Driver is not shifted.\n");
+            return false;
+        }
+
         //Create transport and add it to TransportData
         Transport newTransport = new Transport(transportID, truck, driver, deliveryDocs, "");
         this.addTransport(newTransport);
@@ -319,22 +334,22 @@ public class TransportController {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Possible Trucks:\n");
         truckController.printAllAvailableTrucks(newTransport.getWeight());
-            System.out.println("Insert new truck ID:\n(Press 0 to return to the Main Menu)\n");
-            int newTruckID = scanner.nextInt();
-            scanner.nextLine();
-            if (newTruckID == 0) {
-                this.getTransportsData().remove(newTransport.getTransportID());
+        System.out.println("Insert new truck ID:\n(Press 0 to return to the Main Menu)\n");
+        int newTruckID = scanner.nextInt();
+        scanner.nextLine();
+        if (newTruckID == 0) {
+            this.getTransportsData().remove(newTransport.getTransportID());
+            return false;
+        }
+        if (truckController.getTruck(newTruckID) == null) {
+            System.out.println("Truck does not exist.\n");
+        } else {
+            Truck newTruck = truckController.getTruck(newTruckID);
+            if (newTransport.setTruck(newTruck)) {
+                System.out.println("Transport OK, truck was changed successfully.\n");
                 return false;
             }
-            if (truckController.getTruck(newTruckID) == null) {
-                System.out.println("Truck does not exist.\n");
-            } else {
-                Truck newTruck = truckController.getTruck(newTruckID);
-                if (newTransport.setTruck(newTruck)) {
-                    System.out.println("Transport OK, truck was changed successfully.\n");
-                    return false;
-                }
-            }
+        }
         return true;
     }
 
@@ -438,4 +453,3 @@ public class TransportController {
         return true;
     }
 }
-

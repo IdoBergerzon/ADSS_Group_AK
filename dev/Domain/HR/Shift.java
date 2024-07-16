@@ -13,8 +13,6 @@ public class Shift {
 
 
 
-
-
     public Shift(int branch_id, int day_of_week, int shift_type, Worker[] shift_workers, List<Role> shift_Roles) {
         this.weekNum = Week.getWeek();
         this.branch_id = branch_id;
